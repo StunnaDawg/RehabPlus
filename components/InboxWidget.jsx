@@ -1,30 +1,41 @@
-import { View, Text, Button } from "react-native"
+import { View, Text } from "react-native"
 import React from "react"
 import { useNavigation } from "@react-navigation/native"
+import {Button, Card} from 'react-native-paper'
 
 const InboxWidget = () => {
   const navigation = useNavigation()
   return (
     <View className="flex-1 flex-row justify-between m-4">
-      <View className="justify-center">
-        <Text className="text-3xl font-bold">Notifications</Text>
-        <Button title="View" onPress={() => navigation.navigate("Inbox")} />
+      <View className=" flex-1 justify-center">
+        <Text className="text-3xl font-bold text-center">Inbox</Text>
+        <Button icon='inbox-full' onPress={() => navigation.navigate("Inbox")}>View</Button>
       </View>
 
       <View>
-        <Text className="text-xl font-bold">Recent Messages</Text>
+        <Text className="text-xl font-bold mb-2">Recent Messages</Text>
         <View>
-          <Text className="text-lg">User</Text>
-          <Text className="text-s">2 Hours ago</Text>
-          <Text className="text-xs">Hello I am messaging.....</Text>
-          <Button title="View" onPress={() => navigation.navigate("Inbox")} />
+          
+          <Card>
+            <Card.Content>
+            <Button icon="account-circle"> Harold</Button>
+          <Text variant="titleSmall" className="text-s">2 Hours ago</Text>
+          <Text variant="bodySmall" className="text-s">Hello Bro</Text>
+            </Card.Content>
+          </Card>
+          <Button onPress={() => navigation.navigate("Inbox")}>View</Button>
         </View>
         <View className="h-px my-1 bg-gray-200 border-0 dark:bg-gray-700"></View>
         <View>
-          <Text className="text-lg">User</Text>
-          <Text className="text-s">2 Hours ago</Text>
-          <Text className="text-xs">Yo, I am here</Text>
-          <Button title="View" onPress={() => navigation.navigate("Inbox")} />
+        
+        <Card>
+        <Card.Content>
+            <Button icon="account-circle"> Kerry </Button>
+          <Text variant="titleSmall" className="text-s">2 Hours ago</Text>
+          <Text variant="bodySmall" className="text-s">Hello Bro</Text>
+            </Card.Content>
+            </Card>
+          <Button onPress={() => navigation.navigate("Inbox")}>View</Button>
         </View>
       </View>
     </View>

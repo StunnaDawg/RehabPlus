@@ -1,4 +1,4 @@
-import { View } from "react-native"
+import { ScrollView, View } from "react-native"
 import React from "react"
 import InboxWidget from "../components/InboxWidget"
 import ClientWidget from "../components/ClientWidget"
@@ -8,11 +8,11 @@ const DashboardScreen = () => {
 
   return (
     <>
-      <View className="flex-1">
+      <ScrollView className="flex-1">
         <InboxWidget />
         <ProtocolWidget />
         <ClientWidget />
-      </View>
+      </ScrollView>
     </>
   )
 }
