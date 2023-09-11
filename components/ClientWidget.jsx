@@ -31,7 +31,7 @@ const ClientWidget = () => {
 
     const navigation = useNavigation()
   return (
-    <View className='flex-1 mx-4'>
+    <View className='flex-1 mx-4 mt-3'>
     <View className="flex-row justify-between" >
         <Text className="text-3xl font-bold">Active Clients</Text>
           <Button

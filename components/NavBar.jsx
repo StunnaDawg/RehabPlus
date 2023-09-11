@@ -9,7 +9,7 @@ import {
   ProtocolScreen,
 } from "../screens"
 import Footer from "./Footer"
-import { UserIcon } from "react-native-heroicons/solid"
+import { IconButton, Avatar } from 'react-native-paper'
 
 const Stack = createNativeStackNavigator()
 
@@ -18,13 +18,13 @@ const NavBar = () => {
 
   return (
     <>
-      <SafeAreaView className="flex-row justify-between">
+      <SafeAreaView className=" flex-row justify-between">
         <Text className="text-xl px-3">Rehab+</Text>
         <View className="flex-row mr-3">
         <Text className="px-3">
           Hello, User
         </Text>
-        <UserIcon size={20}  />
+        <Avatar.Icon size={25} icon='account'/>
         </View>
       </SafeAreaView>
     </>
