@@ -1,4 +1,8 @@
-import Footer from "./Footer";
-import {NavBar, NavBarStack} from "./NavBar";
+import Footer from "./Footer"
+import { NavBar, NavBarStack } from "./NavBar"
 
-export {Footer, NavBar, NavBarStack}
+export {
+  Footer,
+  NavBar,
+  NavBarStack,
+}
