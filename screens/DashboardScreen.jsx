@@ -1,48 +1,18 @@
-import { View, Text, SafeAreaView, Button } from "react-native"
-import React, { useLayoutEffect } from "react"
-import { useNavigation } from "@react-navigation/native"
-import NavBar from "../components/NavBar"
-import Footer from "../components/Footer"
+import { ScrollView, View } from "react-native"
+import React from "react"
+import InboxWidget from "../components/InboxWidget"
+import ClientWidget from "../components/ClientWidget"
+import ProtocolWidget from "../components/ProtocolWidget"
 
 const DashboardScreen = () => {
-  const navigation = useNavigation()
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerShown: false,
-    })
-  }, [])
   return (
     <>
-      <SafeAreaView >
-        <NavBar />
-      </SafeAreaView>
-
-      <View className='flex-1'>
-
-        <View className='flex-1'>
-          <Button title="Inbox" onPress={() => navigation.navigate("Inbox")} />
-        </View>
-
-        <View className='flex-1'>
-          <Button
-            title="Protocols"
-            onPress={() => navigation.navigate("Protocol")}
-          />
-        </View>
-
-        <View className='flex-1'>
-          <Button
-            title="Client"
-            onPress={() => navigation.navigate("Client")}
-          />
-        </View>
-
-        <SafeAreaView >
-          <Footer />
-        </SafeAreaView>
-
-      </View>
+      <ScrollView className="flex-1">
+        <InboxWidget />
+        <ProtocolWidget />
+        <ClientWidget />
+      </ScrollView>
     </>
   )
 }
