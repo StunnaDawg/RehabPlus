@@ -1,6 +1,6 @@
 import { View, Text, Image} from "react-native"
 import { Card , Button } from "react-native-paper"
-import theImage from '../assets/ACL-Repair-Surgery.jpg'
+import theImage from '../../assets/ACL-Repair-Surgery.jpg'
 import React from "react"
 
 const ProtocolScreenWidget = () => {

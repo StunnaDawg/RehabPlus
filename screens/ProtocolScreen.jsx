@@ -1,12 +1,19 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import ProtocolScreenWidget from '../components/ProtocolScreenWidget'
+import { View, Text, ScrollView } from "react-native"
+import React from "react"
+import ProtocolScreenWidget from "../components/ProtocolScreenComponents/ProtocolScreenWidget"
+import ProtocolScreenHeader from "../components/ProtocolScreenComponents/ProtocolScreenHeader"
 
 const ProtocolScreen = () => {
   return (
-    <View>
-      <ProtocolScreenWidget />
-    </View>
+    <>
+      
+      <ScrollView>
+        <ProtocolScreenHeader />
+        <ProtocolScreenWidget />
+        <ProtocolScreenWidget />
+        <ProtocolScreenWidget />
+      </ScrollView>
+    </>
   )
 }
 
