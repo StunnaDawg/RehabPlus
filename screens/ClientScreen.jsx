@@ -1,11 +1,11 @@
-import { View, Text } from 'react-native'
+import { View, Text, ScrollView } from 'react-native'
 import React from 'react'
 
 const ClientScreen = () => {
   return (
-    <View>
+    <ScrollView>
       <Text>ClientScreen</Text>
-    </View>
+    </ScrollView>
   )
 }
 
