@@ -7,6 +7,7 @@ import {
   DashboardScreen,
   InboxScreen,
   ProtocolScreen,
+  CreateNewProtocol
 } from "../screens"
 import Footer from "./Footer"
 import { IconButton, Avatar } from 'react-native-paper'
@@ -40,9 +41,10 @@ const NavBarStack = () => {
     >
       <Stack.Screen name="Footer" component={Footer} />
       <Stack.Screen name="Dashboard" component={DashboardScreen} />
+      <Stack.Screen name="Clients" component={ClientScreen} />
       <Stack.Screen name="Inbox" component={InboxScreen} />
       <Stack.Screen name="Protocol" component={ProtocolScreen} />
-      <Stack.Screen name="Clients" component={ClientScreen} />
+      <Stack.Screen name="NewProtocol" component={CreateNewProtocol} />
     </Stack.Navigator>
   )
 }
