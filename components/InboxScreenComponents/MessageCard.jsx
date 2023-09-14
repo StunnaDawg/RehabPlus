@@ -1,11 +1,13 @@
 import { View, Text } from "react-native"
 import { Card, Avatar } from "react-native-paper"
+import { useNavigation } from "@react-navigation/native"
 import React from "react"
 
 const MessageCard = ({name, message}) => {
+    const navigation = useNavigation()
   return (
     <>
-      <Card className='m-4'>
+      <Card onPress={() => navigation.navigate("Dashboard")} className='mx-4 my-2'>
         <Card.Content>
         <View className="flex-1 flex-row">
           <Avatar.Icon icon="account-circle" size={50} />
