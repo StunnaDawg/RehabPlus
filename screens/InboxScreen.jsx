@@ -1,11 +1,12 @@
-import { View, Text } from 'react-native'
+import { View, Text, ScrollView } from 'react-native'
 import React from 'react'
+import MessageCard from '../components/InboxScreenComponents/MessageCard'
 
 const InboxScreen = () => {
   return (
-    <View>
-      <Text>InboxScreen</Text>
-    </View>
+    <ScrollView>
+      <MessageCard />
+    </ScrollView>
   )
 }
 
