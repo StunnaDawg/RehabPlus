@@ -71,10 +71,7 @@ const NavBarStack = () => {
       {isSignedIn ? (
         <>
           <Stack.Screen name="Footer" component={Footer} />
-          <Stack.Screen name="Dashboard" component={DashboardScreen} />
-          <Stack.Screen name="Inbox" component={InboxScreen} />
-          <Stack.Screen name="Protocol" component={ProtocolScreen} />
-          <Stack.Screen name="Client" component={ClientScreen} />
+          <Stack.Screen name='NewProtocol' component={CreateNewProtocol} />
         </>
       ) : (
         <Stack.Screen

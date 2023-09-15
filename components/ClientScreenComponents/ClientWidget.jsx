@@ -36,7 +36,7 @@ const ClientWidget = () => {
         <Text className="text-3xl font-bold">Active Clients</Text>
           <Button
           icon='account-box-multiple'
-            onPress={() => navigation.navigate("Clients")}
+            onPress={() => navigation.navigate("Client")}
           >View All</Button>
         </View>
 
