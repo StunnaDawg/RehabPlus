@@ -16,14 +16,20 @@ import {
     const [password, setPassword] = useState("")
     const auth = FIREBASE_AUTH
     const navigation = useNavigation()
-  
+    
     useEffect(() => {
-  const unsubscribe = FIREBASE_AUTH.onAuthStateChanged(user => {
-      if (user) {navigation.replace("Home")}
-  })
-  return unsubscribe
-    },[])
-  
+        const unsubscribe = FIREBASE_AUTH.onAuthStateChanged(user => {
+          if (user) {
+            // User is signed in, you might navigate to the dashboard or do something else
+            navigation.navigate('Dashboard');
+          } else {
+            // No user is signed in
+          }
+        });
+        
+        return unsubscribe; // This will unsubscribe the listener when the component is unmounted
+      }, []);
+      
     const handleSignUp = async () => {
       try {
         const response = await createUserWithEmailAndPassword(
