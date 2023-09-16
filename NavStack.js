@@ -6,10 +6,11 @@ import {
   InboxScreen,
   ProtocolScreen,
   CreateNewProtocol,
+  LoginScreen,
+  SignUpScreen
 } from "./screens"
-import LoginScreen from "../screens/LoginScreen"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
-import { AuthContext } from "../context"
+import { AuthContext } from "./context"
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -45,11 +46,18 @@ const Footer = () => {
             <Stack.Screen name='NewProtocol' component={CreateNewProtocol} />
           </>
         ) : (
+            <>
           <Stack.Screen
             options={{ headerShown: false }}
             name="Login"
             component={LoginScreen}
           />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="SignUp"
+            component={SignUpScreen}
+          />
+          </>
         )}
       </Stack.Navigator>
     );
