@@ -11,6 +11,7 @@ import {
 } from "./screens"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { AuthContext } from "./context"
+import { NavBar } from "./components"
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
