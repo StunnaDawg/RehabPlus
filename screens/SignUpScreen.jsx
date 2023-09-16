@@ -8,23 +8,23 @@ import {
   } from "react-native"
   import { useState } from "react"
   import { FIREBASE_AUTH } from "../firebase"
-  import { signInWithEmailAndPassword } from "firebase/auth"
-  import { useNavigation } from "@react-navigation/native"
+  import { createUserWithEmailAndPassword } from "firebase/auth"
+import { useNavigation } from "@react-navigation/native"
   
-  const LoginScreen = () => {
+  const SignUpScreen = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const auth = FIREBASE_AUTH
     const navigation = useNavigation()
 
-    const handleLogin = async () => {
+    const handleSignUp = async () => {
       try {
-        const response = await signInWithEmailAndPassword(
+        const response = await createUserWithEmailAndPassword(
           auth,
           email,
           password
         )
-        console.log(`logged in with ${response.email}`)
+        console.log(response.email)
       } catch (error) {
         console.log(error)
       }
@@ -47,24 +47,26 @@ import {
             secureTextEntry
           />
         </View>
-  
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity onPress={handleLogin} style={styles.button}>
-            <Text style={styles.buttonText}>Login</Text>
-          </TouchableOpacity>
-  
+  <View style={styles.buttonContainer}>
           <TouchableOpacity
-            onPress={() => navigation.replace("SignUp")}
+            onPress={handleSignUp}
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>Create Account</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => navigation.replace("Login")}
             style={[styles.button, styles.buttonOutline]}
           >
-            <Text style={styles.buttonOutlineText}> Create an Account </Text>
+            <Text style={styles.buttonOutlineText}>Have an Account?</Text>
           </TouchableOpacity>
-        </View>
+          </View>
       </KeyboardAvoidingView>
     )
   }
   
-  export default LoginScreen
+  export default SignUpScreen
   
   const styles = StyleSheet.create({
     container: {
@@ -112,4 +114,3 @@ import {
       fontSize: 16,
     },
   })
-  

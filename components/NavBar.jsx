@@ -1,52 +1,33 @@
 import { View, Text, SafeAreaView } from "react-native"
-import React, { useLayoutEffect } from "react"
-import { useNavigation } from "@react-navigation/native"
+import React, { useContext, useEffect, useLayoutEffect, useState } from "react"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import {
-  ClientScreen,
-  DashboardScreen,
-  InboxScreen,
-  ProtocolScreen,
-  CreateNewProtocol
-} from "../screens"
-import Footer from "./Footer"
-import { IconButton, Avatar } from 'react-native-paper'
-
-const Stack = createNativeStackNavigator()
-
+// import Footer from "./Footer"
+import { Button } from "react-native-paper"
+import { FIREBASE_APP, FIREBASE_AUTH } from "../firebase"
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 const NavBar = () => {
-  const navigation = useNavigation()
+
+  const handleSignOut =  () => {
+    try {
+      FIREBASE_AUTH.signOut()
+    } catch(error) {
+      alert(error.message)
+    }
+      
+  }
 
   return (
     <>
       <SafeAreaView className=" flex-row justify-between">
         <Text className="text-xl px-3">Rehab+</Text>
         <View className="flex-row mr-3">
-        <Text className="px-3">
-          Hello, User
-        </Text>
-        <Avatar.Icon size={25} icon='account'/>
+          <Text className="px-3">Hello {FIREBASE_AUTH.currentUser?.email}</Text>
+          <Button onPress={handleSignOut} size={25} icon="account" />
         </View>
       </SafeAreaView>
     </>
   )
 }
 
-const NavBarStack = () => {
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        header: () => <NavBar />,
-      }}
-    >
-      <Stack.Screen name="Footer" component={Footer} />
-      <Stack.Screen name="Dashboard" component={DashboardScreen} />
-      <Stack.Screen name="Clients" component={ClientScreen} />
-      <Stack.Screen name="Inbox" component={InboxScreen} />
-      <Stack.Screen name="Protocol" component={ProtocolScreen} />
-      <Stack.Screen name="NewProtocol" component={CreateNewProtocol} />
-    </Stack.Navigator>
-  )
-}
 
-export { NavBarStack, NavBar }
+export { NavBar }

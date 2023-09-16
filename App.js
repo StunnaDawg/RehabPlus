@@ -1,14 +1,16 @@
 import { NavigationContainer } from "@react-navigation/native"
-import { NavBarStack } from "./components"
+import { NavStack } from "./NavStack"
 import { Provider as PaperProvider } from "react-native-paper"
-import { ScrollView } from "react-native"
+import { AuthProvider } from "./context"
 
 export default function App() {
   return (
-    <PaperProvider>
-      <NavigationContainer>
-        <NavBarStack />
-      </NavigationContainer>
-    </PaperProvider>
+    <AuthProvider>
+      <PaperProvider>
+        <NavigationContainer>
+          <NavStack />
+        </NavigationContainer>
+      </PaperProvider>
+    </AuthProvider>
   )
 }
