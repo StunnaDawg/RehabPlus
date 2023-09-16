@@ -1,0 +1,58 @@
+import React, { useContext } from "react"
+import { createNativeStackNavigator } from "@react-navigation/native-stack"
+import {
+  ClientScreen,
+  DashboardScreen,
+  InboxScreen,
+  ProtocolScreen,
+  CreateNewProtocol,
+} from "./screens"
+import LoginScreen from "../screens/LoginScreen"
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import { AuthContext } from "../context"
+
+const Stack = createNativeStackNavigator()
+const Tab = createBottomTabNavigator()
+
+const Footer = () => {
+    return (
+      <Tab.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <Tab.Screen name="Dashboard" component={DashboardScreen} />
+        <Tab.Screen name="Inbox" component={InboxScreen} />
+        <Tab.Screen name="Protocol" component={ProtocolScreen} />
+        <Tab.Screen name="Client" component={ClientScreen} />
+      </Tab.Navigator>
+    )
+  }
+  
+  const NavStack = () => {
+    const { isSignedIn, setIsSignedIn } = useContext(AuthContext);
+  
+    return (
+  
+      <Stack.Navigator
+        screenOptions={{
+          header: () => (isSignedIn ? <NavBar /> : null),
+        }}
+      >
+        {isSignedIn ? (
+          <>
+            <Stack.Screen name="Footer" component={Footer} />
+            <Stack.Screen name='NewProtocol' component={CreateNewProtocol} />
+          </>
+        ) : (
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Login"
+            component={LoginScreen}
+          />
+        )}
+      </Stack.Navigator>
+    );
+  };
+
+  export {NavStack}

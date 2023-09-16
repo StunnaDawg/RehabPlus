@@ -1,8 +1,8 @@
 import Footer from "./Footer"
-import { NavBar, NavBarStack } from "./NavBar"
+import { NavBar, NavStack } from "./NavBar"
 
 export {
   Footer,
   NavBar,
-  NavBarStack,
+  NavStack,
 }
