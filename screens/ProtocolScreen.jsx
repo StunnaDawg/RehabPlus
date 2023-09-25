@@ -1,4 +1,5 @@
-import { View, Text, ScrollView } from "react-native"
+import { ScrollView } from "react-native"
+import { useIsFocused } from "@react-navigation/native"
 import React, { useEffect, useState } from "react"
 import ProtocolScreenWidget from "../components/ProtocolScreenComponents/ProtocolScreenWidget"
 import ProtocolScreenHeader from "../components/ProtocolScreenComponents/ProtocolScreenHeader"
@@ -8,6 +9,7 @@ import { getDocs, collection } from "firebase/firestore"
 const ProtocolScreen = () => {
   const [protocolList, setProtocolList] = useState([])
   const protocolsCollectionRef = collection(db, "protocols")
+  const isFocused = useIsFocused()
 
   useEffect(() => {
     const getProtocolList = async () => {
@@ -24,7 +26,7 @@ const ProtocolScreen = () => {
       }
     }
     getProtocolList()
-  }, [])
+  }, [isFocused])
   return (
     <>
       <ScrollView>
