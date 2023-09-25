@@ -2,6 +2,7 @@ import { View, Text } from "react-native"
 import { TextInput } from "react-native-paper"
 import { useState } from "react"
 import DropDownDays from "./components/DropDownDays"
+import CreateButton from "./components/CreateButton"
 
 const StartPage = () => {
   const [expanded, setExpanded] = useState(true)
@@ -36,6 +37,7 @@ const StartPage = () => {
       </View>
 
       <DropDownDays setTheDays={setDaysPerWeek} chosenDays={daysPerWeek} />
+      <CreateButton />
     </>
   )
 }

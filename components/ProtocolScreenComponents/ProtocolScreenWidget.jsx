@@ -3,13 +3,13 @@ import { Card , Button } from "react-native-paper"
 import theImage from '../../assets/ACL-Repair-Surgery.jpg'
 import React from "react"
 
-const ProtocolScreenWidget = () => {
+const ProtocolScreenWidget = ({protocolTitle, weeks, outline}) => {
   return (
     <View>
       <Card className='m-3'>
         <Card.Content>
             <View className='justify-center items-center'>
-        <Text variant='titleLarge' className='font-bold text-2xl'> ACL Phase 1 <Button icon='pencil'>Edit</Button></Text>
+        <Text variant='titleLarge' className='font-bold text-2xl'> {protocolTitle} <Button icon='pencil'>Edit</Button></Text>
         
         <Button icon='account'>Assign to Client</Button>
         </View>
@@ -20,8 +20,8 @@ const ProtocolScreenWidget = () => {
           />
         <View className='flex-1 flex-row justify-between'>
           <View className='flex-col'>
-          <Text className='m-2 font-bold'>Weeks:</Text>
-          <Text className='m-2 font-bold'>Description:</Text>
+          <Text className='m-2 font-bold'>Weeks: {weeks}</Text>
+          <Text className='m-2 font-bold'>Description: {outline}</Text>
           <Card className='m-2'>
             <Card.Content>
             </Card.Content>
