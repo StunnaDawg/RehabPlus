@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react"
 import ProtocolScreenWidget from "../components/ProtocolScreenComponents/ProtocolScreenWidget"
 import ProtocolScreenHeader from "../components/ProtocolScreenComponents/ProtocolScreenHeader"
 import { db } from "../firebase"
-import { getDocs, collection } from "firebase/firestore"
+import {collection } from "firebase/firestore"
 import getFireStoreData from "../functions/getProtocols"
 
 const ProtocolScreen = () => {

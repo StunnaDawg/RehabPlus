@@ -2,7 +2,7 @@ import { View, Text } from 'react-native'
 import { Button } from 'react-native-paper'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { db } from '../../../firebase'
+import { db, FIREBASE_AUTH } from '../../../firebase'
 import { addDoc, collection } from 'firebase/firestore'
 
 const CreateButton = ({protocolTitle, protocolOutline, protocolDaysPerWeek, protocolWeeks}) => {
@@ -15,7 +15,8 @@ const CreateButton = ({protocolTitle, protocolOutline, protocolDaysPerWeek, prot
             title: protocolTitle,
             description: protocolOutline,
             daysPerWeek: protocolDaysPerWeek,
-            weeks: protocolWeeks
+            weeks: protocolWeeks,
+            userId: FIREBASE_AUTH?.currentUser?.uid
         })
         navigation.navigate("Protocol")
     } catch(err) {
