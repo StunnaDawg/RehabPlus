@@ -2,12 +2,29 @@ import { View, Text } from 'react-native'
 import { Button } from 'react-native-paper'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
+import { db } from '../../../firebase'
+import { addDoc, collection } from 'firebase/firestore'
 
-const CreateButton = () => {
+const CreateButton = ({protocolTitle, protocolOutline, protocolDaysPerWeek, protocolWeeks}) => {
     const navigation = useNavigation()
+    const protocolsCollectionRef = collection(db, "protocols")
+
+    const onSubmitProtocol = async () => {
+        try{
+        await addDoc(protocolsCollectionRef, {
+            title: protocolTitle,
+            description: protocolOutline,
+            daysPerWeek: protocolDaysPerWeek,
+            weeks: protocolWeeks
+        })
+        navigation.navigate("Protocol")
+    } catch(err) {
+        console.error(err)
+    }
+    }
   return (
     <View>
-      <Button onPress={() => navigation.navigate("Protocol")}>Create Protocol</Button>
+      <Button onPress={onSubmitProtocol}>Create Protocol</Button>
     </View>
   )
 }

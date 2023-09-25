@@ -3,10 +3,12 @@ import { TextInput } from "react-native-paper"
 import { useState } from "react"
 import DropDownDays from "./components/DropDownDays"
 import CreateButton from "./components/CreateButton"
+import { db } from "../../firebase"
+import {collection} from "firebase/firestore"
 
 const StartPage = () => {
   const [expanded, setExpanded] = useState(true)
-  const [text, setTitleText] = useState("")
+  const [titleText, setTitleText] = useState("")
   const [outlineText, setOutlineText] = useState("")
   const [weeksText, setWeeksText] = useState("")
   const [daysPerWeek, setDaysPerWeek] = useState("1")
@@ -37,7 +39,7 @@ const StartPage = () => {
       </View>
 
       <DropDownDays setTheDays={setDaysPerWeek} chosenDays={daysPerWeek} />
-      <CreateButton />
+      <CreateButton protocolDaysPerWeek={Number(daysPerWeek)} protocolOutline={outlineText} protocolTitle={titleText} protocolWeeks={Number(weeksText)}/>
     </>
   )
 }
