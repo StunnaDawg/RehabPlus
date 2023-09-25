@@ -1,6 +1,7 @@
 import { View, Text } from 'react-native'
-import { TextInput, TextInputProps, List } from 'react-native-paper'
+import { TextInput } from 'react-native-paper'
 import { useState } from 'react';
+import DropDownDays from './components/DropDownDays';
 
 const StartPage = () => {
 
@@ -8,12 +9,12 @@ const StartPage = () => {
     const [text, setTitleText] = useState('')
     const [outlineText, setOutlineText] = useState('')
     const [weeksText, setWeeksText] = useState('')
-  const handlePress = () => setExpanded(!expanded);
+    const [daysPerWeek, setDaysPerWeek] = useState('1')
   return (
     <>
     <View className='mx-4 my-1'>
         <Text>Protocol Title</Text>
-        <TextInput mode='outlined' onChangeText={text => setText(text)}></TextInput>
+        <TextInput mode='outlined' onChangeText={text => setTitleText(text)}></TextInput>
     </View>
 
     <View className='mx-4 my-1'>
@@ -26,20 +27,7 @@ const StartPage = () => {
         <TextInput mode='outlined' onChangeText={text => setWeeksText(text)}></TextInput>
     </View>
 
-    <View className='mx-4'>
-        <List.Section title='Days per Week'>
-        <List.Accordion
-        left={props => <List.Icon {...props} icon="calendar" />}>
-        <List.Item title="1" />
-        <List.Item title="2" />
-        <List.Item title="3" />
-        <List.Item title="4" />
-        <List.Item title="5" />
-        <List.Item title="6" />
-        <List.Item title="7" />
-      </List.Accordion>
-        </List.Section>
-    </View>
+<DropDownDays setTheDays={setDaysPerWeek} chosenDays={daysPerWeek}/>
     </>
   )
 }
