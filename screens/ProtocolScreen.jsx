@@ -5,6 +5,7 @@ import ProtocolScreenWidget from "../components/ProtocolScreenComponents/Protoco
 import ProtocolScreenHeader from "../components/ProtocolScreenComponents/ProtocolScreenHeader"
 import { db } from "../firebase"
 import { getDocs, collection } from "firebase/firestore"
+import getFireStoreData from "../functions/getProtocols"
 
 const ProtocolScreen = () => {
   const [protocolList, setProtocolList] = useState([])
@@ -12,20 +13,7 @@ const ProtocolScreen = () => {
   const isFocused = useIsFocused()
 
   useEffect(() => {
-    const getProtocolList = async () => {
-      try {
-        const data = await getDocs(protocolsCollectionRef)
-        const filteredData = data.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-        }))
-        console.log(filteredData)
-        setProtocolList(filteredData)
-      } catch (err) {
-        console.error(err)
-      }
-    }
-    getProtocolList()
+    getFireStoreData(setProtocolList, protocolsCollectionRef)
   }, [isFocused])
   return (
     <>
