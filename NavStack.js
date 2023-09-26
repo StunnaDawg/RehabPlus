@@ -12,6 +12,7 @@ import {
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { AuthContext } from "./context"
 import { NavBar } from "./components"
+import CreateNewClient from "./screens/CreateNewClient"
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -45,6 +46,7 @@ const Footer = () => {
           <>
             <Stack.Screen name="Footer" component={Footer} />
             <Stack.Screen name='NewProtocol' component={CreateNewProtocol} />
+            <Stack.Screen name='NewClient' component={CreateNewClient} />
           </>
         ) : (
             <>
