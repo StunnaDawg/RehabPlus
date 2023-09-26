@@ -1,19 +1,21 @@
-import { View, Text } from 'react-native'
-import React, { useState } from 'react'
-import { TextInput } from 'react-native-paper'
-import CreateButton from './components/CreateButton'
+import { View, Text } from "react-native"
+import React, { useState } from "react"
+import { Checkbox, TextInput } from "react-native-paper"
+import CreateButton from "./components/CreateButton"
 
 const NewClient = () => {
-  const [nameText, setNameText] = useState("")
-  const [outlineText, setOutlineText] = useState("")
+  const [clientName, setClientName] = useState("")
+  const [injuryOutline, setInjuryOutline] = useState("")
   const [email, setEmail] = useState("")
+  const [active, setActive] = useState(true)
+
   return (
     <>
-    <View className="mx-4 my-1">
+      <View className="mx-4 my-1">
         <Text>Client Name</Text>
         <TextInput
           mode="outlined"
-          onChangeText={(text) => setNameText(text)}
+          onChangeText={(text) => setClientName(text)}
         ></TextInput>
       </View>
 
@@ -21,7 +23,7 @@ const NewClient = () => {
         <Text>Outline</Text>
         <TextInput
           mode="outlined"
-          onChangeText={(text) => setOutlineText(text)}
+          onChangeText={(text) => setInjuryOutline(text)}
         ></TextInput>
       </View>
 
@@ -33,8 +35,8 @@ const NewClient = () => {
         ></TextInput>
       </View>
 
-      <CreateButton />
-      </>
+      <CreateButton clientEmail={email} clientName={clientName} clientOutline={injuryOutline} active={active}/>
+    </>
   )
 }
 
