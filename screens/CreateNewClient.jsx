@@ -1,11 +1,12 @@
-import { View, Text } from 'react-native'
+import { View, Text, ScrollView } from 'react-native'
 import React from 'react'
+import NewClient from '../components/CreateClientComponents/NewClient'
 
 const CreateNewClient = () => {
   return (
-    <View>
-      <Text>CreateNewClient</Text>
-    </View>
+    <ScrollView>
+      <NewClient />
+    </ScrollView>
   )
 }
 
