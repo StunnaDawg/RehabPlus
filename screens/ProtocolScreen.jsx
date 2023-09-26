@@ -5,7 +5,7 @@ import ProtocolScreenWidget from "../components/ProtocolScreenComponents/Protoco
 import ProtocolScreenHeader from "../components/ProtocolScreenComponents/ProtocolScreenHeader"
 import { db } from "../firebase"
 import {collection } from "firebase/firestore"
-import getFireStoreData from "../functions/getProtocols"
+import getFireStoreData from "../functions/getFireStoreData"
 
 const ProtocolScreen = () => {
   const [protocolList, setProtocolList] = useState([])
