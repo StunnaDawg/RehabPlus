@@ -1,10 +1,8 @@
 import { View, Text } from "react-native"
 import { TextInput } from "react-native-paper"
-import { useContext, useEffect, useState } from "react"
+import { useState } from "react"
 import DropDownDays from "./components/DropDownDays"
 import UpdateButton from "./components/CreateButton"
-import { db } from "../../firebase"
-import {collection} from "firebase/firestore"
 import { useSingleProtocolContext } from "../../protocolContext"
 
 const EditStartPage = () => {
@@ -15,11 +13,6 @@ const EditStartPage = () => {
   const [weeksText, setWeeksText] = useState(protocolEditData.weeks)
   const [daysPerWeek, setDaysPerWeek] = useState(protocolEditData.daysPerWeek)
 
-  useEffect(() => {
-console.log("protocol edit data", protocolEditData)
-console.log('id', protocolEditData.id)
-  }, [protocolEditData])
-
   return (
     <>
       <View className="mx-4 my-1">
@@ -27,7 +20,9 @@ console.log('id', protocolEditData.id)
         <TextInput
           mode="outlined"
           onChangeText={(text) => setTitleText(text)}
-        >{titleText}</TextInput>
+          placeholder={titleText}
+          placeholderTextColor='black'
+        ></TextInput>
       </View>
 
       <View className="mx-4 my-1">
@@ -35,7 +30,9 @@ console.log('id', protocolEditData.id)
         <TextInput
           mode="outlined"
           onChangeText={(text) => setOutlineText(text)}
-        >{outlineText}</TextInput>
+          placeholder={outlineText}
+          placeholderTextColor='black'
+        ></TextInput>
       </View>
 
       <View className="mx-4 my-1">
@@ -43,11 +40,13 @@ console.log('id', protocolEditData.id)
         <TextInput
           mode="outlined"
           onChangeText={(text) => setWeeksText(text)}
-        >{weeksText}</TextInput>
+          placeholder={`${weeksText}`}
+          placeholderTextColor='black'
+        ></TextInput>
       </View>
 
       <DropDownDays setTheDays={setDaysPerWeek} chosenDays={daysPerWeek} />
-      <UpdateButton protocolDaysPerWeek={Number(daysPerWeek)} protocolOutline={outlineText} protocolTitle={titleText} protocolWeeks={Number(weeksText)}/>
+      <UpdateButton id={protocolEditData.id} protocolDaysPerWeek={Number(daysPerWeek)} protocolOutline={outlineText} protocolTitle={titleText} protocolWeeks={Number(weeksText)}/>
     </>
   )
 }
