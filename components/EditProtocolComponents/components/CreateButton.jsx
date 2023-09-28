@@ -2,7 +2,7 @@ import { View, Text } from 'react-native'
 import { Button } from 'react-native-paper'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { db, FIREBASE_AUTH } from '../../../firebase'
+import { db } from '../../../firebase'
 import { updateDoc, collection, doc } from 'firebase/firestore'
 
 const UpdateButton = ({protocolTitle, protocolOutline, protocolDaysPerWeek, protocolWeeks, id}) => {

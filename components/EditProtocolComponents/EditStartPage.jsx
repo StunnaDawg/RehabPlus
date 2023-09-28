@@ -4,10 +4,10 @@ import { useState } from "react"
 import DropDownDays from "./components/DropDownDays"
 import UpdateButton from "./components/CreateButton"
 import { useSingleProtocolContext } from "../../protocolContext"
+import DeleteButton from "./components/DeleteButton"
 
 const EditStartPage = () => {
   const [protocolEditData] = useSingleProtocolContext()
-  const [expanded, setExpanded] = useState(true)
   const [titleText, setTitleText] = useState(protocolEditData.title)
   const [outlineText, setOutlineText] = useState(protocolEditData.description)
   const [weeksText, setWeeksText] = useState(protocolEditData.weeks)
@@ -21,7 +21,7 @@ const EditStartPage = () => {
           mode="outlined"
           onChangeText={(text) => setTitleText(text)}
           placeholder={titleText}
-          placeholderTextColor='black'
+          placeholderTextColor="black"
         ></TextInput>
       </View>
 
@@ -31,7 +31,7 @@ const EditStartPage = () => {
           mode="outlined"
           onChangeText={(text) => setOutlineText(text)}
           placeholder={outlineText}
-          placeholderTextColor='black'
+          placeholderTextColor="black"
         ></TextInput>
       </View>
 
@@ -41,12 +41,19 @@ const EditStartPage = () => {
           mode="outlined"
           onChangeText={(text) => setWeeksText(text)}
           placeholder={`${weeksText}`}
-          placeholderTextColor='black'
+          placeholderTextColor="black"
         ></TextInput>
       </View>
 
       <DropDownDays setTheDays={setDaysPerWeek} chosenDays={daysPerWeek} />
-      <UpdateButton id={protocolEditData.id} protocolDaysPerWeek={Number(daysPerWeek)} protocolOutline={outlineText} protocolTitle={titleText} protocolWeeks={Number(weeksText)}/>
+      <UpdateButton
+        id={protocolEditData.id}
+        protocolDaysPerWeek={Number(daysPerWeek)}
+        protocolOutline={outlineText}
+        protocolTitle={titleText}
+        protocolWeeks={Number(weeksText)}
+      />
+      <DeleteButton id={protocolEditData.id} userId={protocolEditData.userId}/>
     </>
   )
 }
