@@ -1,20 +1,23 @@
 import { View, Text, Image } from "react-native"
 import { Card, Button } from "react-native-paper"
 import theImage from "../../assets/ACL-Repair-Surgery.jpg"
-import React, { createContext, useState } from "react"
+import React, { createContext, useContext, useEffect, useState } from "react"
 import { useNavigation } from "@react-navigation/native"
 import GetSingleDoc from "../../functions/getSingleDoc"
 import { collection } from "firebase/firestore"
 import { db } from "../../firebase"
-
-const singleProtocolContext = createContext()
+import { useSingleProtocolContext } from "../../protocolContext"
 
 const ProtocolScreenWidget = ({ protocolTitle, weeks, outline, id }) => {
-  const [protocolEditData, setProtocolEditData] = useState([])
+  const [protocolEditData, setProtocolEditData] = useSingleProtocolContext()
   const protocolsCollectionRef = collection(db, "protocols")
   const navigation = useNavigation()
+
+  useEffect(() => {
+    console.log('State Data:', protocolEditData)
+  }, [protocolEditData])
+
   return (
-    <singleProtocolContext.Provider value={protocolEditData}>
       <View>
         <Card className="m-3">
           <Card.Content>
@@ -30,7 +33,6 @@ const ProtocolScreenWidget = ({ protocolTitle, weeks, outline, id }) => {
                       protocolsCollectionRef,
                       id
                     )
-                    console.log(protocolEditData)
                     navigation.navigate("EditProtocol")
                   }}
                 >
@@ -55,7 +57,6 @@ const ProtocolScreenWidget = ({ protocolTitle, weeks, outline, id }) => {
           </Card.Content>
         </Card>
       </View>
-      </singleProtocolContext.Provider>
   )
 }
 

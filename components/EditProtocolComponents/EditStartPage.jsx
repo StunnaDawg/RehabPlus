@@ -1,19 +1,23 @@
 import { View, Text } from "react-native"
 import { TextInput } from "react-native-paper"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import DropDownDays from "./components/DropDownDays"
 import CreateButton from "./components/CreateButton"
 import { db } from "../../firebase"
 import {collection} from "firebase/firestore"
-import ProtocolScreenWidget from "../ProtocolScreenComponents/ProtocolScreenWidget"
 
 const EditStartPage = () => {
-  // const [protocolEditData] = useContext(ProtocolScreenWidget)
+  const protocolEditData = useContext('')
   const [expanded, setExpanded] = useState(true)
-  const [titleText, setTitleText] = useState("")
+  const [titleText, setTitleText] = useState("protocolEditData")
   const [outlineText, setOutlineText] = useState("")
   const [weeksText, setWeeksText] = useState("")
   const [daysPerWeek, setDaysPerWeek] = useState("1")
+
+  useEffect(() => {
+console.log(protocolEditData)
+  }, [protocolEditData])
+
   return (
     <>
     <View><Text>hi</Text></View>
