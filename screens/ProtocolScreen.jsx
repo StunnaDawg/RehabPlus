@@ -25,6 +25,7 @@ const ProtocolScreen = () => {
             weeks={protocol.weeks}
             protocolTitle={protocol.title}
             outline={protocol.description}
+            id={protocol.id}
           />
         ))}
       </ScrollView>
