@@ -5,22 +5,23 @@ import DropDownDays from "./components/DropDownDays"
 import CreateButton from "./components/CreateButton"
 import { db } from "../../firebase"
 import {collection} from "firebase/firestore"
+import { useSingleProtocolContext } from "../../protocolContext"
 
 const EditStartPage = () => {
-  const protocolEditData = useContext('')
+  const [protocolEditData] = useSingleProtocolContext()
   const [expanded, setExpanded] = useState(true)
-  const [titleText, setTitleText] = useState("protocolEditData")
+  const [titleText, setTitleText] = useState(protocolEditData.title)
   const [outlineText, setOutlineText] = useState("")
   const [weeksText, setWeeksText] = useState("")
   const [daysPerWeek, setDaysPerWeek] = useState("1")
 
   useEffect(() => {
-console.log(protocolEditData)
+console.log("protocol edit data", protocolEditData)
   }, [protocolEditData])
 
   return (
     <>
-    <View><Text>hi</Text></View>
+    <View><Text>{titleText}</Text></View>
       {/* <View className="mx-4 my-1">
         <Text>Protocol Title</Text>
         <TextInput
