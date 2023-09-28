@@ -2,7 +2,7 @@ import { View, Text } from "react-native"
 import React, { useEffect, useState } from "react"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import { IconButton, Button, Card, Divider } from "react-native-paper"
-import getFireStoreData from "../../functions/getProtocols"
+import getFireStoreData from "../../functions/getFireStoreData"
 import { collection } from "firebase/firestore"
 import { db } from "../../firebase"
 
