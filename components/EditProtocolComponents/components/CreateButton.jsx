@@ -5,13 +5,14 @@ import { useNavigation } from '@react-navigation/native'
 import { db, FIREBASE_AUTH } from '../../../firebase'
 import { updateDoc, collection } from 'firebase/firestore'
 
-const CreateButton = ({protocolTitle, protocolOutline, protocolDaysPerWeek, protocolWeeks}) => {
+const UpdateButton = ({protocolTitle, protocolOutline, protocolDaysPerWeek, protocolWeeks, id}) => {
     const navigation = useNavigation()
     const protocolsCollectionRef = collection(db, "protocols")
+    const currentProtocol = (protocolsCollectionRef, id)
 
     const onSubmitProtocol = async () => {
         try{
-        await updateDoc(protocolsCollectionRef, {
+        await updateDoc(currentProtocol, {
             title: protocolTitle,
             description: protocolOutline,
             daysPerWeek: protocolDaysPerWeek,
@@ -24,9 +25,9 @@ const CreateButton = ({protocolTitle, protocolOutline, protocolDaysPerWeek, prot
     }
   return (
     <View>
-      <Button onPress={onSubmitProtocol}>Create Protocol</Button>
+      <Button onPress={onSubmitProtocol}>Update Protocol</Button>
     </View>
   )
 }
 
-export default CreateButton
+export default UpdateButton

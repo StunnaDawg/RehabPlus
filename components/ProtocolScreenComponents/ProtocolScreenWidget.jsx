@@ -13,10 +13,6 @@ const ProtocolScreenWidget = ({ protocolTitle, weeks, outline, id }) => {
   const protocolsCollectionRef = collection(db, "protocols")
   const navigation = useNavigation()
 
-  useEffect(() => {
-    console.log('State Data:', protocolEditData)
-  }, [protocolEditData])
-
   return (
       <View>
         <Card className="m-3">
