@@ -13,7 +13,7 @@ const UpdateClientButton = ({
   userId
 }) => {
   const navigation = useNavigation()
-  const clientsCollectionRef = collection(db, "client")
+  const clientsCollectionRef = collection(db, "clients")
   const currentClient = doc(clientsCollectionRef, id)
 
   const onSubmitProtocol = async () => {
@@ -25,7 +25,7 @@ const UpdateClientButton = ({
           injuryDescription: clientInjuryDescription,
           email: clientEmail,
         })
-        navigation.navigate("Protocol")
+        navigation.navigate("Client")
       } catch (err) {
         console.error(err)
       }
