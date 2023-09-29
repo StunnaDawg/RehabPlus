@@ -1,31 +1,41 @@
-import { View, Text } from 'react-native'
-import { Button } from 'react-native-paper'
-import React from 'react'
-import { useNavigation } from '@react-navigation/native'
-import { db } from '../../../firebase'
-import { updateDoc, collection, doc } from 'firebase/firestore'
+import { View, Text } from "react-native"
+import { Button } from "react-native-paper"
+import React from "react"
+import { useNavigation } from "@react-navigation/native"
+import { FIREBASE_AUTH, db } from "../../../firebase"
+import { updateDoc, collection, doc } from "firebase/firestore"
 
-const UpdateClientButton = ({ id }) => {
-    const navigation = useNavigation()
-    const protocolsCollectionRef = collection(db, "client")
-    // const currentProtocol = doc(protocolsCollectionRef, id)
+const UpdateClientButton = ({
+  clientName,
+  clientInjuryDescription,
+  clientEmail,
+  id,
+  userId
+}) => {
+  const navigation = useNavigation()
+  const clientsCollectionRef = collection(db, "client")
+  const currentClient = doc(clientsCollectionRef, id)
 
-    const onSubmitProtocol = async () => {
-        try{
-        await updateDoc(currentProtocol, {
-            title: protocolTitle,
-            description: protocolOutline,
-            daysPerWeek: protocolDaysPerWeek,
-            weeks: protocolWeeks,
+  const onSubmitProtocol = async () => {
+    console.log(' client userId:', userId, 'current userId:', FIREBASE_AUTH?.currentUser?.uid) 
+    if (userId == FIREBASE_AUTH?.currentUser?.uid) {
+      try {
+        await updateDoc(currentClient, {
+          name: clientName,
+          injuryDescription: clientInjuryDescription,
+          email: clientEmail,
         })
         navigation.navigate("Protocol")
-    } catch(err) {
+      } catch (err) {
         console.error(err)
+      }
+    } else {
+        console.log('error with Auth')
     }
-    }
+  }
   return (
     <View>
-      <Button onPress={onSubmitProtocol}>Update Protocol</Button>
+      <Button onPress={onSubmitProtocol}>Update Client Info</Button>
     </View>
   )
 }
