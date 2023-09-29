@@ -14,6 +14,7 @@ import { AuthContext } from "./context"
 import { NavBar } from "./components"
 import CreateNewClient from "./screens/CreateNewClient"
 import EditProtocol from "./screens/EditProtocol"
+import EditClientScreen from "./screens/EditClientScreen"
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -49,6 +50,7 @@ const Footer = () => {
             <Stack.Screen name='NewProtocol' component={CreateNewProtocol} />
             <Stack.Screen name='EditProtocol' component={EditProtocol} />
             <Stack.Screen name='NewClient' component={CreateNewClient} />
+            <Stack.Screen name='EditClient' component={EditClientScreen} />
           </>
         ) : (
             <>

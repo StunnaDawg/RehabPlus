@@ -27,8 +27,8 @@ const ClientTable = () => {
         </DataTable.Header>
         {clientList.map((client) => (
         <DataTable.Row key={client.id}>
-        <DataTable.Cell onPress={() => {navigation.navigate("Dashboard")}}><Button icon="account-circle" size={20}></Button></DataTable.Cell>
-        <DataTable.Cell onPress={() => navigation.navigate("Dashboard")}>{client.name}</DataTable.Cell>
+        <DataTable.Cell onPress={() => {navigation.navigate("EditClient")}}><Button icon="account-circle" size={20}></Button></DataTable.Cell>
+        <DataTable.Cell onPress={() => navigation.navigate("EditClient")}>{client.name}</DataTable.Cell>
           <DataTable.Cell onPress={() => navigation.navigate("Protocol")}>protocol</DataTable.Cell>
           <DataTable.Cell><IconButton icon='checkbox-blank-circle' iconColor={client.status ? 'green' : 'red'}></IconButton></DataTable.Cell>
           {/* <DataTable.Cell><Button icon='account-eye'>View</Button></DataTable.Cell> */}
