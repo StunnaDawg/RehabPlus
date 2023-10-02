@@ -49,7 +49,7 @@ const ClientTable = () => {
                   client.id
                 );
           
-                // navigation.navigate("EditClient");
+                navigation.navigate("EditClient");
               } catch (err) {
                 console.error(err);
               }
@@ -66,7 +66,7 @@ const ClientTable = () => {
                     client.id
                   );
             
-                  // navigation.navigate("EditClient");
+                  navigation.navigate("EditClient");
                 } catch (err) {
                   console.error(err);
                 }
