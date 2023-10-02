@@ -13,7 +13,6 @@ const ClientTable = () => {
   const [clientEditData, setClientEditData] = useSingleClientContext()
   const [clientList, setClientList] = useState([])
   const [clientProtocol, setClientProtocol] = useState([])
-  const [selectedClient, setSelectedClient] = useState([])
   const clientsCollectionRef = collection(db, "clients")
   const navigation = useNavigation()
   const isFocused = useIsFocused()
@@ -26,9 +25,9 @@ const ClientTable = () => {
   //   console.log('selected client', {selectedClient}, 'client protocol', {clientProtocol})
   // }, [selectedClient, clientProtocol])
 
-  // useEffect(() => {
-  //   console.log('client edit data:', clientEditData)
-  // }, [clientEditData])
+  useEffect(() => {
+    console.log('client edit data:', clientEditData)
+  }, [clientEditData])
 
   return (
     <View>
@@ -44,24 +43,11 @@ const ClientTable = () => {
             <DataTable.Cell
              onPress={async () => {
               try {
-                const selectedClientData = await GetSingleDoc(
-                  setSelectedClient,
+                 await GetSingleDoc(
+                  setClientEditData,
                   clientsCollectionRef,
                   client.id
                 );
-                setSelectedClient(selectedClientData); // set state here
-          
-                const protocolData = await protocolRefClient(
-                  selectedClientData,
-                  setClientProtocol
-                );
-                setClientProtocol(protocolData); // set state here
-          
-                const editData = {
-                  selectedClient: selectedClientData,
-                  clientProtocol: protocolData,
-                };
-                setClientEditData(editData); // set state here
           
                 // navigation.navigate("EditClient");
               } catch (err) {
@@ -74,24 +60,11 @@ const ClientTable = () => {
             <DataTable.Cell
               onPress={async () => {
                 try {
-                  const selectedClientData = await GetSingleDoc(
-                    setSelectedClient,
+                   await GetSingleDoc(
+                    setClientEditData,
                     clientsCollectionRef,
                     client.id
                   );
-                  setSelectedClient(selectedClientData); // set state here
-            
-                  const protocolData = await protocolRefClient(
-                    selectedClientData,
-                    setClientProtocol
-                  );
-                  setClientProtocol(protocolData); // set state here
-            
-                  const editData = {
-                    selectedClient: selectedClientData,
-                    clientProtocol: protocolData,
-                  };
-                  setClientEditData(editData); // set state here
             
                   // navigation.navigate("EditClient");
                 } catch (err) {

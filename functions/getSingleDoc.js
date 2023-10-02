@@ -5,6 +5,7 @@ const GetSingleDoc = async (setState, collectionRef, id) => {
   try {
     const docRef = doc(collectionRef, id) // Get the document reference.
     const docSnap = await getDoc(docRef) // Fetch the document.
+    let protocolData = null;
 
     if (docSnap.exists()) {
         const clientData = {...docSnap.data()}
@@ -18,13 +19,13 @@ const GetSingleDoc = async (setState, collectionRef, id) => {
     
         if (protocolDoc.exists()) {
           // If the document exists, access the data here
-          const protocolData = protocolDoc.data();
+          protocolData = protocolDoc.data();
           console.log('Protocol Data:', protocolData);
         }
       }
     //   console.log("id", docId)
 
-      const docData = { clientData, id: docId, protocol: protocolData }
+      const docData = { ...clientData, id: docId, clientProtocol: protocolData }
       console.log("Document data:", docData)
       setState(docData)
     } else {
