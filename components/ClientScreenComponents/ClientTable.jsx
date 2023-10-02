@@ -13,6 +13,7 @@ const ClientTable = () => {
   const [clientEditData, setClientEditData] = useSingleClientContext()
   const [clientList, setClientList] = useState([])
   const [clientProtocol, setClientProtocol] = useState([])
+  const [selectedClient, setSelectedClient] = useState([])
   const clientsCollectionRef = collection(db, "clients")
   const navigation = useNavigation()
   const isFocused = useIsFocused()
@@ -22,9 +23,13 @@ const ClientTable = () => {
   }, [isFocused])
 
   useEffect(() => {
-    protocolRefClient(clientEditData, setClientProtocol)
-    console.log('client protocol useEffect',clientProtocol)
+    console.log(selectedClient, clientProtocol)
+  }, [selectedClient])
+
+  useEffect(() => {
+    console.log('client edit data:', clientEditData)
   }, [clientEditData])
+
   return (
     <View>
       <DataTable>
@@ -38,24 +43,36 @@ const ClientTable = () => {
           <DataTable.Row key={client.id}>
             <DataTable.Cell
               onPress={async () => {
-                await GetSingleDoc(
-                  setClientEditData,
-                  clientsCollectionRef,
-                  client.id
-                )
-                navigation.navigate("EditClient")
+                try {
+                  await GetSingleDoc(
+                 setSelectedClient,
+                 clientsCollectionRef,
+                 client.id
+               )
+               await  protocolRefClient(selectedClient, setClientProtocol)
+               await setClientEditData([selectedClient, clientProtocol])
+              //  navigation.navigate("EditClient")
+               } catch (err) {
+                 console.info(error)
+               }
               }}
             >
               <Button icon="account-circle" size={20}></Button>
             </DataTable.Cell>
             <DataTable.Cell
               onPress={async () => {
-                await GetSingleDoc(
-                  setClientEditData,
+                try {
+                   await GetSingleDoc(
+                  setSelectedClient,
                   clientsCollectionRef,
                   client.id
                 )
-                navigation.navigate("EditClient")
+                await  protocolRefClient(selectedClient, setClientProtocol)
+                await setClientEditData({...selectedClient, ...clientProtocol})
+                // navigation.navigate("EditClient")
+                } catch (err) {
+                  console.error(err)
+                }
               }}
             >
               {client.name}

@@ -9,10 +9,12 @@ const GetSingleDoc = async (setState, collectionRef, id) => {
     if (docSnap.exists()) {
       // Check if the document exists.
       const docId = docSnap.id
-      console.log("id", docId)
+      const docProtocol = docSnap.protocol
+      console.log("Protocol", ...docProtocol)
+    //   console.log("id", docId)
 
       const docData = { ...docSnap.data(), id: docId }
-      console.log("Document data:", docData)
+    //   console.log("Document data:", docData)
       setState(docData)
     } else {
       console.log("No such document!")

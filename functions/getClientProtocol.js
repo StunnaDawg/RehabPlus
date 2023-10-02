@@ -7,7 +7,7 @@ export const protocolRefClient = async (clientData, setClientState) => {
       const protocolDoc = await getDoc(protocolRef)
       if (protocolDoc.exists()) {
         const protocolData = [protocolDoc.data()]
-        console.log('Clients Protocol:', protocolData)
+        // console.log('Clients Protocol:', protocolData)
         setClientState(protocolData)
       }
     }
