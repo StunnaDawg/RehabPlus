@@ -10,6 +10,7 @@ const getFireStoreData = async (setState, collection) => {
         .map((doc) => ({
           ...doc.data(),
           id: doc.id,
+          protocol: [doc.protocol]
         }))
         setState(filteredData)
       } catch (err) {

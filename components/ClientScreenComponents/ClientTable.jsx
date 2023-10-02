@@ -3,10 +3,11 @@ import { DataTable, Button, IconButton } from "react-native-paper"
 import { useEffect, useState } from "react"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import { db } from "../../firebase"
-import { collection } from "firebase/firestore"
+import { collection, getDoc } from "firebase/firestore"
 import getFireStoreData from "../../functions/getFireStoreData"
 import { useSingleClientContext } from "../../clientContext"
 import GetSingleDoc from "../../functions/getSingleDoc"
+import { protocolRefClient } from "../../functions/getClientProtocol"
 
 const ClientTable = () => {
   const [clientEditData, setClientEditData] = useSingleClientContext()
@@ -17,9 +18,11 @@ const ClientTable = () => {
 
   useEffect(() => {
     getFireStoreData(setClientList, clientsCollectionRef)
-    console.log("dashboard client")
   }, [isFocused])
 
+  useEffect(() => {
+    protocolRefClient(clientEditData)
+  }, [clientEditData])
   return (
     <View>
       <DataTable>
@@ -32,7 +35,7 @@ const ClientTable = () => {
         {clientList.map((client) => (
           <DataTable.Row key={client.id}>
             <DataTable.Cell
-               onPress={async () => {
+              onPress={async () => {
                 await GetSingleDoc(
                   setClientEditData,
                   clientsCollectionRef,
@@ -47,7 +50,7 @@ const ClientTable = () => {
               onPress={async () => {
                 await GetSingleDoc(
                   setClientEditData,
-                 clientsCollectionRef,
+                  clientsCollectionRef,
                   client.id
                 )
                 navigation.navigate("EditClient")
@@ -56,7 +59,7 @@ const ClientTable = () => {
               {client.name}
             </DataTable.Cell>
             <DataTable.Cell onPress={() => navigation.navigate("Protocol")}>
-              protocol
+              {client.protocol}
             </DataTable.Cell>
             <DataTable.Cell>
               <IconButton
