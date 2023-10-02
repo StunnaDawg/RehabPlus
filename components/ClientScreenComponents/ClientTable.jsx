@@ -22,13 +22,13 @@ const ClientTable = () => {
     getFireStoreData(setClientList, clientsCollectionRef)
   }, [isFocused])
 
-  useEffect(() => {
-    console.log(selectedClient, clientProtocol)
-  }, [selectedClient])
+  // useEffect(() => {
+  //   console.log('selected client', {selectedClient}, 'client protocol', {clientProtocol})
+  // }, [selectedClient, clientProtocol])
 
-  useEffect(() => {
-    console.log('client edit data:', clientEditData)
-  }, [clientEditData])
+  // useEffect(() => {
+  //   console.log('client edit data:', clientEditData)
+  // }, [clientEditData])
 
   return (
     <View>
@@ -42,36 +42,60 @@ const ClientTable = () => {
         {clientList.map((client) => (
           <DataTable.Row key={client.id}>
             <DataTable.Cell
-              onPress={async () => {
-                try {
-                  await GetSingleDoc(
-                 setSelectedClient,
-                 clientsCollectionRef,
-                 client.id
-               )
-               await  protocolRefClient(selectedClient, setClientProtocol)
-               await setClientEditData([selectedClient, clientProtocol])
-              //  navigation.navigate("EditClient")
-               } catch (err) {
-                 console.info(error)
-               }
-              }}
+             onPress={async () => {
+              try {
+                const selectedClientData = await GetSingleDoc(
+                  setSelectedClient,
+                  clientsCollectionRef,
+                  client.id
+                );
+                setSelectedClient(selectedClientData); // set state here
+          
+                const protocolData = await protocolRefClient(
+                  selectedClientData,
+                  setClientProtocol
+                );
+                setClientProtocol(protocolData); // set state here
+          
+                const editData = {
+                  selectedClient: selectedClientData,
+                  clientProtocol: protocolData,
+                };
+                setClientEditData(editData); // set state here
+          
+                // navigation.navigate("EditClient");
+              } catch (err) {
+                console.error(err);
+              }
+            }}
             >
               <Button icon="account-circle" size={20}></Button>
             </DataTable.Cell>
             <DataTable.Cell
               onPress={async () => {
                 try {
-                   await GetSingleDoc(
-                  setSelectedClient,
-                  clientsCollectionRef,
-                  client.id
-                )
-                await  protocolRefClient(selectedClient, setClientProtocol)
-                await setClientEditData({...selectedClient, ...clientProtocol})
-                // navigation.navigate("EditClient")
+                  const selectedClientData = await GetSingleDoc(
+                    setSelectedClient,
+                    clientsCollectionRef,
+                    client.id
+                  );
+                  setSelectedClient(selectedClientData); // set state here
+            
+                  const protocolData = await protocolRefClient(
+                    selectedClientData,
+                    setClientProtocol
+                  );
+                  setClientProtocol(protocolData); // set state here
+            
+                  const editData = {
+                    selectedClient: selectedClientData,
+                    clientProtocol: protocolData,
+                  };
+                  setClientEditData(editData); // set state here
+            
+                  // navigation.navigate("EditClient");
                 } catch (err) {
-                  console.error(err)
+                  console.error(err);
                 }
               }}
             >
