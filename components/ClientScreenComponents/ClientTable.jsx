@@ -6,12 +6,13 @@ import { db } from "../../firebase"
 import { collection, getDoc } from "firebase/firestore"
 import getFireStoreData from "../../functions/getFireStoreData"
 import { useSingleClientContext } from "../../clientContext"
-import GetSingleClient from "../../functions/getSingleClient"
+import GetSingleDoc from "../../functions/getSingleDoc"
+import { protocolRefClient } from "../../functions/getClientProtocol"
 
 const ClientTable = () => {
   const [clientEditData, setClientEditData] = useSingleClientContext()
   const [clientList, setClientList] = useState([])
-  const [clientProtocol, setClientProtocol] = useState('')
+  const [clientProtocol, setClientProtocol] = useState([])
   const clientsCollectionRef = collection(db, "clients")
   const navigation = useNavigation()
   const isFocused = useIsFocused()
@@ -20,9 +21,10 @@ const ClientTable = () => {
     getFireStoreData(setClientList, clientsCollectionRef)
   }, [isFocused])
 
-  // useEffect(() => {
-  //   protocolRefClient(clientEditData, setClientList)
-  // }, [clientEditData])
+  useEffect(() => {
+    protocolRefClient(clientEditData, setClientProtocol)
+    console.log('client protocol useEffect',clientProtocol)
+  }, [clientEditData])
   return (
     <View>
       <DataTable>
@@ -36,7 +38,7 @@ const ClientTable = () => {
           <DataTable.Row key={client.id}>
             <DataTable.Cell
               onPress={async () => {
-                await GetSingleClient(
+                await GetSingleDoc(
                   setClientEditData,
                   clientsCollectionRef,
                   client.id
@@ -48,7 +50,7 @@ const ClientTable = () => {
             </DataTable.Cell>
             <DataTable.Cell
               onPress={async () => {
-                await GetSingleClient(
+                await GetSingleDoc(
                   setClientEditData,
                   clientsCollectionRef,
                   client.id
