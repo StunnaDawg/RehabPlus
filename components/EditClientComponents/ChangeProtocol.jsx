@@ -13,6 +13,7 @@ const ChangeClientProtocolScreen = () => {
 
   useEffect(() => {
     getFireStoreData(setProtocolList, protocolsCollectionRef)
+    console.log('edit client protocol:', [protocolList])
   }, [isFocused])
   return (
     <>
