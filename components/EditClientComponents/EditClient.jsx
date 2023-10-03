@@ -90,7 +90,7 @@ const EditClient = () => {
         clientInjuryDescription={injuryOutline}
         id={clientEditData.id}
         userId={clientEditData.userId}
-        protocolId={`protocols/${protocol}`}
+        protocolId={protocol}
       />
     </>
   )

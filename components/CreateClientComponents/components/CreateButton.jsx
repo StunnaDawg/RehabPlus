@@ -7,17 +7,18 @@ import { FIREBASE_AUTH, db } from '../../../firebase'
 
 const CreateButton = ({clientName, clientOutline, active, clientEmail}) => {
     const navigation = useNavigation()
-    const protocolsCollectionRef = collection(db, "clients")
+    const clientsCollectionRef = collection(db, "clients")
+    const protocolRef = doc(db, "protocols", "JGTIoQp9tYTvWvYoZ6Y4");
 
     const onSubmitClient = async () => {
         try{
-        await addDoc(protocolsCollectionRef, {
+        await addDoc(clientsCollectionRef, {
             name: clientName,
             injuryDescription: clientOutline,
             status: active,
             email: clientEmail,
             userId: FIREBASE_AUTH?.currentUser?.uid,
-            protocol: "protocols/JGTIoQp9tYTvWvYoZ6Y4"
+            protocol: protocolRef
         })
         navigation.navigate("Client")
     } catch(err) {
