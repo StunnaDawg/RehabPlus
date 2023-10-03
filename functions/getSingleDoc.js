@@ -5,27 +5,35 @@ const GetSingleDoc = async (setState, collectionRef, id) => {
   try {
     const docRef = doc(collectionRef, id) // Get the document reference.
     const docSnap = await getDoc(docRef) // Fetch the document.
-    let protocolData = null;
+    let protocolData = null
+    let spreadProtocolData = null
+    let protocolId = null
 
     if (docSnap.exists()) {
-        const clientData = {...docSnap.data()}
+      const clientData = { ...docSnap.data() }
       // Check if the document exists.
       const docId = docSnap.id
-      const protocolRef = clientData.protocol;
+      const protocolRef = clientData.protocol
 
       if (protocolRef) {
         // Fetch the document the reference is pointing to
-        const protocolDoc = await getDoc(protocolRef);
-    
+        const protocolDoc = await getDoc(protocolRef)
+
         if (protocolDoc.exists()) {
           // If the document exists, access the data here
-          protocolData = protocolDoc.data();
-          console.log('Protocol Data:', protocolData);
+          protocolData = protocolDoc.data()
+          protocolId = protocolDoc.id
+          console.log("Protocol Data:", protocolData)
         }
       }
-    //   console.log("id", docId)
+      //   console.log("id", docId)
 
-      const docData = { ...clientData, id: docId, clientProtocol: protocolData }
+      const docData = {
+        ...clientData,
+        id: docId,
+        clientProtocol: protocolData,
+        clientProtocolId: protocolId,
+      }
       console.log("Document data:", docData)
       setState(docData)
     } else {

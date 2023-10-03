@@ -1,6 +1,6 @@
 import { View, Text } from "react-native"
 import React, { useState } from "react"
-import { TextInput } from "react-native-paper"
+import { Button, TextInput } from "react-native-paper"
 import UpdateClientButton from "./components/EditButton"
 import { useSingleClientContext } from "../../clientContext"
 
@@ -9,6 +9,7 @@ const EditClient = () => {
   const [clientName, setClientName] = useState(clientEditData.name)
   const [injuryOutline, setInjuryOutline] = useState(clientEditData.injuryDescription)
   const [email, setEmail] = useState(clientEditData.email)
+  const [protocol, setCurrentProtocol] = useState()
 
   return (
     <>
@@ -40,6 +41,12 @@ const EditClient = () => {
           placeholder={clientEditData.email}
           placeholderTextColor="black"
         ></TextInput>
+      </View>
+
+      <View>
+        <Text>Current Protocol</Text>
+        <Text>{clientEditData.clientProtocol.title}</Text>
+        <Button>Change Protocol?</Button>
       </View>
 
       <UpdateClientButton
