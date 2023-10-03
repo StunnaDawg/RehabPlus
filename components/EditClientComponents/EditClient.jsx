@@ -3,6 +3,7 @@ import React, { useState } from "react"
 import { Button, TextInput } from "react-native-paper"
 import UpdateClientButton from "./components/EditButton"
 import { useSingleClientContext } from "../../clientContext"
+import { useNavigation } from "@react-navigation/native"
 
 const EditClient = () => {
   const [clientEditData] = useSingleClientContext()
@@ -10,6 +11,8 @@ const EditClient = () => {
   const [injuryOutline, setInjuryOutline] = useState(clientEditData.injuryDescription)
   const [email, setEmail] = useState(clientEditData.email)
   const [protocol, setCurrentProtocol] = useState()
+
+  const navigation = useNavigation()
 
   return (
     <>
@@ -46,7 +49,8 @@ const EditClient = () => {
       <View>
         <Text>Current Protocol</Text>
         <Text>{clientEditData.clientProtocol.title}</Text>
-        <Button>Change Protocol?</Button>
+        <Text>{clientEditData.clientProtocolId}</Text>
+        <Button onPress={() => navigation.navigate("ChangeProtocolScreen")}>Change Protocol?</Button>
       </View>
 
       <UpdateClientButton
