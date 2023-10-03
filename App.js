@@ -9,17 +9,17 @@ import { EditProtocolProvider } from "./components/EditClientComponents/function
 export default function App() {
   return (
     <AuthProvider>
-      <EditProtocolProvider>
       <SingleClientProvider>
         <SingleProtocolProvider>
-          <PaperProvider>
-            <NavigationContainer>
-              <NavStack />
-            </NavigationContainer>
-          </PaperProvider>
+          <EditProtocolProvider>
+            <PaperProvider>
+              <NavigationContainer>
+                <NavStack />
+              </NavigationContainer>
+            </PaperProvider>
+          </EditProtocolProvider>
         </SingleProtocolProvider>
       </SingleClientProvider>
-      </EditProtocolProvider>
     </AuthProvider>
   )
 }

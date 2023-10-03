@@ -18,15 +18,27 @@ const ClientTable = () => {
   const isFocused = useIsFocused()
 
   useEffect(() => {
-    getFireStoreData(setClientList, clientsCollectionRef)
-  }, [isFocused])
+
+    const fetchFireStoredata = async () => {
+      try {
+        getFireStoreData(setClientList, clientsCollectionRef)
+      }catch(err) {
+        console.error(err)
+       }
+    }
+   fetchFireStoredata()
+  }, [])
+
+  useEffect(() => {
+      console.log(clientList)
+  }, [clientList])
 
   // useEffect(() => {
   //   console.log('selected client', {selectedClient}, 'client protocol', {clientProtocol})
   // }, [selectedClient, clientProtocol])
 
   useEffect(() => {
-    console.log('client edit data:', clientEditData)
+    console.log('client edit data in client table:', clientEditData)
   }, [clientEditData])
 
   return (

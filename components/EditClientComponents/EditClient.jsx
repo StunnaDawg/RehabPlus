@@ -40,6 +40,10 @@ const EditClient = () => {
     }
   }, [isFocused, newClientProtocol])
 
+  useEffect(() => {
+ console.log('edit client page data:', clientEditData)
+  }, [])
+
   return (
     <>
       <View className="mx-4 my-1">
@@ -74,7 +78,6 @@ const EditClient = () => {
 
       <View>
         <Text>Current Protocol</Text>
-        <Text>{clientEditData.clientProtocol.title}</Text>
         <Text>{`${protocol}`}</Text>
         <Button onPress={() => navigation.navigate("ChangeProtocolScreen")}>
           Change Protocol?

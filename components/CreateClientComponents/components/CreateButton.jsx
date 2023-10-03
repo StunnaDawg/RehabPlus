@@ -16,7 +16,8 @@ const CreateButton = ({clientName, clientOutline, active, clientEmail}) => {
             injuryDescription: clientOutline,
             status: active,
             email: clientEmail,
-            userId: FIREBASE_AUTH?.currentUser?.uid
+            userId: FIREBASE_AUTH?.currentUser?.uid,
+            protocol: "protocols/JGTIoQp9tYTvWvYoZ6Y4"
         })
         navigation.navigate("Client")
     } catch(err) {
