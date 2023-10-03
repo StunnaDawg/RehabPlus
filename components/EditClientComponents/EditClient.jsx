@@ -10,7 +10,7 @@ const EditClient = () => {
   const [clientName, setClientName] = useState(clientEditData.name)
   const [injuryOutline, setInjuryOutline] = useState(clientEditData.injuryDescription)
   const [email, setEmail] = useState(clientEditData.email)
-  const [protocol, setCurrentProtocol] = useState()
+  const [protocol, setCurrentProtocol] = useState(clientEditData.clientProtocolId)
 
   const navigation = useNavigation()
 
@@ -50,7 +50,7 @@ const EditClient = () => {
         <Text>Current Protocol</Text>
         <Text>{clientEditData.clientProtocol.title}</Text>
         <Text>{clientEditData.clientProtocolId}</Text>
-        <Button onPress={() => navigation.navigate("ChangeProtocolScreen")}>Change Protocol?</Button>
+        <Button onPress={() => navigation.navigate("ChangeProtocolScreen", { updateProtocol: (newProtocolValue) => setCurrentProtocol(newProtocolValue),})}>Change Protocol?</Button>
       </View>
 
       <UpdateClientButton
@@ -59,6 +59,7 @@ const EditClient = () => {
         clientInjuryDescription={injuryOutline}
         id={clientEditData.id}
         userId={clientEditData.userId}
+        protocolId={`protocols/${protocol}`}
       />
     </>
   )

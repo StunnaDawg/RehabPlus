@@ -10,7 +10,8 @@ const UpdateClientButton = ({
   clientInjuryDescription,
   clientEmail,
   id,
-  userId
+  userId,
+  protocolId
 }) => {
   const navigation = useNavigation()
   const clientsCollectionRef = collection(db, "clients")
@@ -24,6 +25,7 @@ const UpdateClientButton = ({
           name: clientName,
           injuryDescription: clientInjuryDescription,
           email: clientEmail,
+          protocol: protocolId
         })
         navigation.navigate("Client")
       } catch (err) {
