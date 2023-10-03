@@ -3,23 +3,42 @@ import React, { useEffect, useState } from "react"
 import { Button, TextInput } from "react-native-paper"
 import UpdateClientButton from "./components/EditButton"
 import { useSingleClientContext } from "../../clientContext"
-import { useNavigation } from "@react-navigation/native"
+import { useIsFocused, useNavigation } from "@react-navigation/native"
 import { useChangeClientProtocol } from "./functions/EditProtocolContext"
 
 const EditClient = () => {
   const [clientEditData] = useSingleClientContext()
   const [newClientProtocol, setClientProtocol] = useChangeClientProtocol()
   const [clientName, setClientName] = useState(clientEditData.name)
-  const [injuryOutline, setInjuryOutline] = useState(clientEditData.injuryDescription)
+  const [injuryOutline, setInjuryOutline] = useState(
+    clientEditData.injuryDescription
+  )
   const [email, setEmail] = useState(clientEditData.email)
-  const [protocol, setCurrentProtocol] = useState(clientEditData.clientProtocolId)
-
+  const [protocol, setCurrentProtocol] = useState(
+    clientEditData.clientProtocolId
+  )
+  const isFocused = useIsFocused()
   const navigation = useNavigation()
 
-useEffect(() => {
-setCurrentProtocol(newClientProtocol)
-console.log(protocol)
-}, [newClientProtocol])
+  useEffect(() => {
+    let isMounted = true
+    const updateStatePLEASE = async () => {
+      try {
+        if (newClientProtocol !== null && isMounted) {
+          console.log("context state:", newClientProtocol)
+          setCurrentProtocol(newClientProtocol)
+          console.log("protocol state:", protocol)
+        }
+      } catch (err) {
+        console.error(err)
+      }
+    }
+
+    updateStatePLEASE()
+    return () => {
+      isMounted = false
+    }
+  }, [isFocused, newClientProtocol])
 
   return (
     <>
@@ -56,8 +75,10 @@ console.log(protocol)
       <View>
         <Text>Current Protocol</Text>
         <Text>{clientEditData.clientProtocol.title}</Text>
-        <Text>{clientEditData.clientProtocolId}</Text>
-        <Button onPress={() => navigation.navigate("ChangeProtocolScreen")}>Change Protocol?</Button>
+        <Text>{`${protocol}`}</Text>
+        <Button onPress={() => navigation.navigate("ChangeProtocolScreen")}>
+          Change Protocol?
+        </Button>
       </View>
 
       <UpdateClientButton

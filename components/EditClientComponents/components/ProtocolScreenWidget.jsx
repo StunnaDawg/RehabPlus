@@ -20,7 +20,7 @@ const ProtocolEditScreenWidget = ({ protocolTitle, weeks, outline, id }) => {
             </Text>
             <Button
               onPress={ async () => {
-                await setClientProtocol(id)
+                await setClientProtocol(id);
                 navigation.goBack()
               }}
               icon="account"
