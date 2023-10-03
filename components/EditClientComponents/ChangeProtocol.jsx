@@ -18,8 +18,6 @@ const ChangeClientProtocolScreen = () => {
     <>
       <ScrollView>
         {protocolList.map((protocol) => (
-            <>
-            
           <ProtocolEditScreenWidget
           key={protocol.id}
             weeks={protocol.weeks}
@@ -27,8 +25,6 @@ const ChangeClientProtocolScreen = () => {
             outline={protocol.description}
             id={protocol.id}
           />
-         
-          </>
         ))}
       </ScrollView>
     </>

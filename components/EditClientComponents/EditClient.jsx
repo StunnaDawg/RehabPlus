@@ -1,18 +1,25 @@
 import { View, Text } from "react-native"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Button, TextInput } from "react-native-paper"
 import UpdateClientButton from "./components/EditButton"
 import { useSingleClientContext } from "../../clientContext"
 import { useNavigation } from "@react-navigation/native"
+import { useChangeClientProtocol } from "./functions/EditProtocolContext"
 
 const EditClient = () => {
   const [clientEditData] = useSingleClientContext()
+  const [newClientProtocol, setClientProtocol] = useChangeClientProtocol()
   const [clientName, setClientName] = useState(clientEditData.name)
   const [injuryOutline, setInjuryOutline] = useState(clientEditData.injuryDescription)
   const [email, setEmail] = useState(clientEditData.email)
   const [protocol, setCurrentProtocol] = useState(clientEditData.clientProtocolId)
 
   const navigation = useNavigation()
+
+useEffect(() => {
+setCurrentProtocol(newClientProtocol)
+console.log(protocol)
+}, [newClientProtocol])
 
   return (
     <>
@@ -50,7 +57,7 @@ const EditClient = () => {
         <Text>Current Protocol</Text>
         <Text>{clientEditData.clientProtocol.title}</Text>
         <Text>{clientEditData.clientProtocolId}</Text>
-        <Button onPress={() => navigation.navigate("ChangeProtocolScreen", { updateProtocol: (newProtocolValue) => setCurrentProtocol(newProtocolValue),})}>Change Protocol?</Button>
+        <Button onPress={() => navigation.navigate("ChangeProtocolScreen")}>Change Protocol?</Button>
       </View>
 
       <UpdateClientButton

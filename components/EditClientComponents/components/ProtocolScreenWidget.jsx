@@ -3,14 +3,10 @@ import { Card, Button } from "react-native-paper"
 import theImage from "../../../assets/ACL-Repair-Surgery.jpg"
 import React, { useEffect, useState } from "react"
 import { useNavigation } from "@react-navigation/native"
-import GetSingleDoc from "../../../functions/getSingleDoc"
-import { collection } from "firebase/firestore"
-import { db } from "../../../firebase"
-import { useSingleProtocolContext } from "../../../protocolContext"
+import { useChangeClientProtocol } from "../functions/EditProtocolContext"
 
 const ProtocolEditScreenWidget = ({ protocolTitle, weeks, outline, id }) => {
-  const [protocolEditData, setProtocolEditData] = useSingleProtocolContext()
-  const protocolsCollectionRef = collection(db, "protocols")
+  const [newClientProtocol, setClientProtocol] = useChangeClientProtocol()
   const navigation = useNavigation()
 
   return (
@@ -23,8 +19,8 @@ const ProtocolEditScreenWidget = ({ protocolTitle, weeks, outline, id }) => {
               {protocolTitle}{" "}
             </Text>
             <Button
-              onPress={() => {
-                route.params?.updateProtocol("NewProtocolValueFromSecondScreen")
+              onPress={ async () => {
+                await setClientProtocol(id)
                 navigation.goBack()
               }}
               icon="account"
