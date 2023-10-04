@@ -45,7 +45,6 @@ const ProtocolScreenWidget = ({ protocolTitle, weeks, outline, id }) => {
                   <Text className="m-2 font-bold">Weeks: {weeks}</Text>
                   <Text className="m-2 font-bold">Description: {outline}</Text>
                   <Card className="m-2">
-                    <Card.Content></Card.Content>
                   </Card>
                 </View>
               </View>

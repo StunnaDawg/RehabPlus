@@ -15,6 +15,8 @@ import { NavBar } from "./components"
 import CreateNewClient from "./screens/CreateNewClient"
 import EditProtocol from "./screens/EditProtocol"
 import EditClientScreen from "./screens/EditClientScreen"
+import ChangeClientProtocolScreen from "./components/EditClientComponents/ChangeProtocol"
+import AddClientProtocolScreen from "./components/CreateClientComponents/AddProtocolScreen"
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -51,6 +53,8 @@ const Footer = () => {
             <Stack.Screen name='EditProtocol' component={EditProtocol} />
             <Stack.Screen name='NewClient' component={CreateNewClient} />
             <Stack.Screen name='EditClient' component={EditClientScreen} />
+            <Stack.Screen name='ChangeProtocolScreen' component={ChangeClientProtocolScreen} />
+            <Stack.Screen name='AddProtocolScreen' component={AddClientProtocolScreen} />
           </>
         ) : (
             <>

@@ -1,13 +1,39 @@
 import { View, Text } from "react-native"
-import React, { useState } from "react"
-import { Checkbox, TextInput } from "react-native-paper"
+import React, { useEffect, useState } from "react"
+import { Checkbox, TextInput, Button } from "react-native-paper"
 import CreateButton from "./components/CreateButton"
+import { useIsFocused, useNavigation } from "@react-navigation/native"
+import { useAddClientProtocol } from "./functions/AddProtocolContext"
 
 const NewClient = () => {
   const [clientName, setClientName] = useState("")
+  const [newClientProtocol, setClientProtocol] = useAddClientProtocol()
   const [injuryOutline, setInjuryOutline] = useState("")
   const [email, setEmail] = useState("")
   const [active, setActive] = useState(true)
+  const [protocol, setProtocol] = useState("")
+  const navigation = useNavigation()
+  const isFocused = useIsFocused()
+
+  useEffect(() => {
+    let isMounted = true
+    const updateStatePLEASE = async () => {
+      try {
+        if (newClientProtocol !== null && isMounted) {
+          console.log("New CLient context state:", newClientProtocol)
+          setProtocol(newClientProtocol)
+          console.log("New Client protocol state:", protocol)
+        }
+      } catch (err) {
+        console.error(err)
+      }
+    }
+
+    updateStatePLEASE()
+    return () => {
+      isMounted = false
+    }
+  }, [isFocused, newClientProtocol])
 
   return (
     <>
@@ -35,7 +61,14 @@ const NewClient = () => {
         ></TextInput>
       </View>
 
-      <CreateButton clientEmail={email} clientName={clientName} clientOutline={injuryOutline} active={active}/>
+      <View>
+        <Text>{`${protocol}`}</Text>
+        <Button onPress={() => navigation.navigate("AddProtocolScreen")}>
+          Add Protocol
+        </Button>
+      </View>
+
+      <CreateButton clientEmail={email} clientName={clientName} clientOutline={injuryOutline} active={active} protocolId={protocol}/>
     </>
   )
 }

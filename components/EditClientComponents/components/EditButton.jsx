@@ -10,12 +10,13 @@ const UpdateClientButton = ({
   clientInjuryDescription,
   clientEmail,
   id,
-  userId
+  userId,
+  protocolId
 }) => {
   const navigation = useNavigation()
   const clientsCollectionRef = collection(db, "clients")
   const currentClient = doc(clientsCollectionRef, id)
-
+  const protocolRef = doc(db, "protocols", protocolId);
   const onSubmitProtocol = async () => {
     console.log(' client userId:', userId, 'current userId:', FIREBASE_AUTH?.currentUser?.uid) 
     if (userId == FIREBASE_AUTH?.currentUser?.uid) {
@@ -24,6 +25,7 @@ const UpdateClientButton = ({
           name: clientName,
           injuryDescription: clientInjuryDescription,
           email: clientEmail,
+          protocol: protocolRef
         })
         navigation.navigate("Client")
       } catch (err) {

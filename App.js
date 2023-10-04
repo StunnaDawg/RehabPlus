@@ -4,17 +4,23 @@ import { Provider as PaperProvider } from "react-native-paper"
 import { AuthProvider } from "./context"
 import { SingleProtocolProvider } from "./protocolContext"
 import { SingleClientProvider } from "./clientContext"
+import { EditProtocolProvider } from "./components/EditClientComponents/functions/EditProtocolContext"
+import { AddProtocolProvider } from "./components/CreateClientComponents/functions/AddProtocolContext"
 
 export default function App() {
   return (
     <AuthProvider>
       <SingleClientProvider>
         <SingleProtocolProvider>
-          <PaperProvider>
-            <NavigationContainer>
-              <NavStack />
-            </NavigationContainer>
-          </PaperProvider>
+          <AddProtocolProvider>
+            <EditProtocolProvider>
+              <PaperProvider>
+                <NavigationContainer>
+                  <NavStack />
+                </NavigationContainer>
+              </PaperProvider>
+            </EditProtocolProvider>
+          </AddProtocolProvider>
         </SingleProtocolProvider>
       </SingleClientProvider>
     </AuthProvider>

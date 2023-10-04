@@ -3,22 +3,43 @@ import { DataTable, Button, IconButton } from "react-native-paper"
 import { useEffect, useState } from "react"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import { db } from "../../firebase"
-import { collection } from "firebase/firestore"
-import getFireStoreData from "../../functions/getFireStoreData"
+import { collection, getDoc } from "firebase/firestore"
+import getClientFireStoreData from "../../functions/getClientFireStoreData"
 import { useSingleClientContext } from "../../clientContext"
 import GetSingleDoc from "../../functions/getSingleDoc"
+import { protocolRefClient } from "../../functions/getClientProtocol"
 
 const ClientTable = () => {
   const [clientEditData, setClientEditData] = useSingleClientContext()
   const [clientList, setClientList] = useState([])
+  const [clientProtocol, setClientProtocol] = useState([])
   const clientsCollectionRef = collection(db, "clients")
   const navigation = useNavigation()
   const isFocused = useIsFocused()
 
   useEffect(() => {
-    getFireStoreData(setClientList, clientsCollectionRef)
-    console.log("dashboard client")
+
+    const fetchFireStoredata = async () => {
+      try {
+        getClientFireStoreData(setClientList, clientsCollectionRef)
+      }catch(err) {
+        console.error(err)
+       }
+    }
+   fetchFireStoredata()
   }, [isFocused])
+
+  useEffect(() => {
+      console.log(clientList)
+  }, [clientList])
+
+  // useEffect(() => {
+  //   console.log('selected client', {selectedClient}, 'client protocol', {clientProtocol})
+  // }, [selectedClient, clientProtocol])
+
+  useEffect(() => {
+    console.log('client edit data in client table:', clientEditData)
+  }, [clientEditData])
 
   return (
     <View>
@@ -32,31 +53,41 @@ const ClientTable = () => {
         {clientList.map((client) => (
           <DataTable.Row key={client.id}>
             <DataTable.Cell
-               onPress={async () => {
-                await GetSingleDoc(
+             onPress={async () => {
+              try {
+                 await GetSingleDoc(
                   setClientEditData,
                   clientsCollectionRef,
                   client.id
-                )
-                navigation.navigate("EditClient")
-              }}
+                );
+          
+                navigation.navigate("EditClient");
+              } catch (err) {
+                console.error(err);
+              }
+            }}
             >
               <Button icon="account-circle" size={20}></Button>
             </DataTable.Cell>
             <DataTable.Cell
               onPress={async () => {
-                await GetSingleDoc(
-                  setClientEditData,
-                 clientsCollectionRef,
-                  client.id
-                )
-                navigation.navigate("EditClient")
+                try {
+                   await GetSingleDoc(
+                    setClientEditData,
+                    clientsCollectionRef,
+                    client.id
+                  );
+            
+                  navigation.navigate("EditClient");
+                } catch (err) {
+                  console.error(err);
+                }
               }}
             >
               {client.name}
             </DataTable.Cell>
             <DataTable.Cell onPress={() => navigation.navigate("Protocol")}>
-              protocol
+              {client.protocol.title}
             </DataTable.Cell>
             <DataTable.Cell>
               <IconButton

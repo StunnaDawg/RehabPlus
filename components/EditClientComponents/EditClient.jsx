@@ -1,14 +1,48 @@
 import { View, Text } from "react-native"
-import React, { useState } from "react"
-import { TextInput } from "react-native-paper"
+import React, { useEffect, useState } from "react"
+import { Button, TextInput } from "react-native-paper"
 import UpdateClientButton from "./components/EditButton"
 import { useSingleClientContext } from "../../clientContext"
+import { useIsFocused, useNavigation } from "@react-navigation/native"
+import { useChangeClientProtocol } from "./functions/EditProtocolContext"
 
 const EditClient = () => {
   const [clientEditData] = useSingleClientContext()
+  const [newClientProtocol, setClientProtocol] = useChangeClientProtocol()
   const [clientName, setClientName] = useState(clientEditData.name)
-  const [injuryOutline, setInjuryOutline] = useState(clientEditData.injuryDescription)
+  const [injuryOutline, setInjuryOutline] = useState(
+    clientEditData.injuryDescription
+  )
   const [email, setEmail] = useState(clientEditData.email)
+  const [protocol, setCurrentProtocol] = useState(
+    clientEditData.clientProtocolId
+  )
+  const isFocused = useIsFocused()
+  const navigation = useNavigation()
+
+  useEffect(() => {
+    let isMounted = true
+    const updateStatePLEASE = async () => {
+      try {
+        if (newClientProtocol !== null && isMounted) {
+          console.log("context state:", newClientProtocol)
+          setCurrentProtocol(newClientProtocol)
+          console.log("protocol state:", protocol)
+        }
+      } catch (err) {
+        console.error(err)
+      }
+    }
+
+    updateStatePLEASE()
+    return () => {
+      isMounted = false
+    }
+  }, [isFocused, newClientProtocol])
+
+  useEffect(() => {
+ console.log('edit client page data:', clientEditData)
+  }, [])
 
   return (
     <>
@@ -42,12 +76,21 @@ const EditClient = () => {
         ></TextInput>
       </View>
 
+      <View>
+        <Text>Current Protocol</Text>
+        <Text>{`${protocol}`}</Text>
+        <Button onPress={() => navigation.navigate("ChangeProtocolScreen")}>
+          Change Protocol?
+        </Button>
+      </View>
+
       <UpdateClientButton
         clientEmail={email}
         clientName={clientName}
         clientInjuryDescription={injuryOutline}
         id={clientEditData.id}
         userId={clientEditData.userId}
+        protocolId={protocol}
       />
     </>
   )
