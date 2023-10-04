@@ -27,7 +27,7 @@ const ClientTable = () => {
        }
     }
    fetchFireStoredata()
-  }, [])
+  }, [isFocused])
 
   useEffect(() => {
       console.log(clientList)
