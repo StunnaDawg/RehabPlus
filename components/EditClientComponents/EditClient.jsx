@@ -5,6 +5,7 @@ import UpdateClientButton from "./components/EditButton"
 import { useSingleClientContext } from "../../clientContext"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import { useChangeClientProtocol } from "./functions/EditProtocolContext"
+import DeleteButton from "./components/DeleteButton"
 
 const EditClient = () => {
   const [clientEditData] = useSingleClientContext()
@@ -92,6 +93,8 @@ const EditClient = () => {
         userId={clientEditData.userId}
         protocolId={protocol}
       />
+
+      <DeleteButton id={clientEditData.id} userId={clientEditData.userId}/>
     </>
   )
 }
