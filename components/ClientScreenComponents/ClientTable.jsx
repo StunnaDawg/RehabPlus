@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import { db } from "../../firebase"
 import { collection, getDoc } from "firebase/firestore"
-import getFireStoreData from "../../functions/getFireStoreData"
+import getClientFireStoreData from "../../functions/getClientFireStoreData"
 import { useSingleClientContext } from "../../clientContext"
 import GetSingleDoc from "../../functions/getSingleDoc"
 import { protocolRefClient } from "../../functions/getClientProtocol"
@@ -21,7 +21,7 @@ const ClientTable = () => {
 
     const fetchFireStoredata = async () => {
       try {
-        getFireStoreData(setClientList, clientsCollectionRef)
+        getClientFireStoreData(setClientList, clientsCollectionRef)
       }catch(err) {
         console.error(err)
        }
@@ -87,7 +87,7 @@ const ClientTable = () => {
               {client.name}
             </DataTable.Cell>
             <DataTable.Cell onPress={() => navigation.navigate("Protocol")}>
-              {client.protocol}
+              {client.protocol.title}
             </DataTable.Cell>
             <DataTable.Cell>
               <IconButton
