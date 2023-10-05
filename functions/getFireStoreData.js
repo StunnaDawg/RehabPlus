@@ -6,7 +6,7 @@ const getFireStoreData = async (setState, collection) => {
       try {
         const data = await getDocs(collection)
         const filteredData = data.docs
-        .filter(doc => doc.data().userId === FIREBASE_AUTH?.currentUser?.uid)
+        .filter(doc => doc.data().userId === FIREBASE_AUTH?.currentUser?.uid || doc.data().public === true)
         .map((doc) => ({
           ...doc.data(),
           id: doc.id,

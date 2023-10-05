@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native'
 import { db, FIREBASE_AUTH } from '../../../firebase'
 import { addDoc, collection } from 'firebase/firestore'
 
-const CreateButton = ({protocolTitle, protocolOutline, protocolDaysPerWeek, protocolWeeks}) => {
+const CreateButton = ({protocolTitle, protocolOutline, protocolDaysPerWeek, protocolWeeks, protocolPublic}) => {
     const navigation = useNavigation()
     const protocolsCollectionRef = collection(db, "protocols")
 
@@ -16,7 +16,8 @@ const CreateButton = ({protocolTitle, protocolOutline, protocolDaysPerWeek, prot
             description: protocolOutline,
             daysPerWeek: protocolDaysPerWeek,
             weeks: protocolWeeks,
-            userId: FIREBASE_AUTH?.currentUser?.uid
+            userId: FIREBASE_AUTH?.currentUser?.uid,
+            public: protocolPublic
         })
         navigation.navigate("Protocol")
     } catch(err) {

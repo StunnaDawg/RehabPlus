@@ -12,6 +12,8 @@ const navigation = useNavigation()
       <Text className="font-bold text-3xl">My Protocols</Text>
       <IconButton onPress={() => navigation.navigate("NewProtocol")} icon='plus'></IconButton>
       </View>
+      <View>
+      </View>
       <View className='flex-1'>
       <Searchbar
         placeholder="Search Protocols"
