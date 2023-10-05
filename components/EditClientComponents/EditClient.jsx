@@ -6,7 +6,6 @@ import UpdateClientButton from "./components/EditButton"
 import { useSingleClientContext } from "../../clientContext"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import { useChangeClientProtocol } from "./functions/EditProtocolContext"
-import { FIREBASE_AUTH } from "../../firebase"
 
 const EditClient = () => {
   const [clientEditData] = useSingleClientContext()
