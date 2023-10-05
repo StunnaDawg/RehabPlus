@@ -87,7 +87,7 @@ const ClientTable = () => {
               {client.name}
             </DataTable.Cell>
             <DataTable.Cell onPress={() => navigation.navigate("Protocol")}>
-              {client.protocol.title}
+              {client?.protocol?.title || "No Protocol"}
             </DataTable.Cell>
             <DataTable.Cell>
               <IconButton
