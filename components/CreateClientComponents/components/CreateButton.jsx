@@ -13,16 +13,21 @@ const CreateButton = ({clientName, clientOutline, active, clientEmail, protocolI
         protocolRef = doc(db, 'protocols', protocolId);
     }
     const onSubmitClient = async () => {
-        try{
-        await addDoc(clientsCollectionRef, {
-            name: clientName,
-            injuryDescription: clientOutline,
-            status: active,
-            email: clientEmail,
-            userId: FIREBASE_AUTH?.currentUser?.uid,
-            protocol: protocolRef
-        })
-        navigation.navigate("Client")
+        try {
+            const newClientData = {
+                name: clientName,
+                injuryDescription: clientOutline,
+                status: active,
+                email: clientEmail,
+                userId: FIREBASE_AUTH?.currentUser?.uid
+            };
+    
+            if (protocolRef) {
+                newClientData.protocol = protocolRef;
+            }
+    
+            await addDoc(clientsCollectionRef, newClientData);
+            navigation.navigate("Client");
     } catch(err) {
         console.error(err)
     }

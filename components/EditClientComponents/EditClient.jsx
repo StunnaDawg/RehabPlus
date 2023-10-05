@@ -1,6 +1,7 @@
 import { View, Text } from "react-native"
 import React, { useEffect, useState } from "react"
 import { Button, TextInput } from "react-native-paper"
+import DeleteButton from "./components/DeleteClientButton"
 import UpdateClientButton from "./components/EditButton"
 import { useSingleClientContext } from "../../clientContext"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
@@ -92,6 +93,8 @@ const EditClient = () => {
         userId={clientEditData.userId}
         protocolId={protocol}
       />
+
+      <DeleteButton id={clientEditData.id} userId={clientEditData.userId}/>
     </>
   )
 }

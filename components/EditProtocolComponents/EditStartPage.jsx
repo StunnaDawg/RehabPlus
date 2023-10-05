@@ -12,9 +12,9 @@ const EditStartPage = () => {
   const [outlineText, setOutlineText] = useState(protocolEditData.description)
   const [weeksText, setWeeksText] = useState(protocolEditData.weeks)
   const [daysPerWeek, setDaysPerWeek] = useState(protocolEditData.daysPerWeek)
-  const [isSwitchOn, setIsSwitchOn] = useState(protocolEditData?.public || false)
+  const [isPublic, setIsPublic] = useState(protocolEditData?.public || false)
 
-  const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn)
+  const onToggleSwitch = () => setIsPublic(!isPublic)
 
   return (
     <>
@@ -64,7 +64,7 @@ const EditStartPage = () => {
       </View>
       <View className='flex-1 flex-row items-center justify-between mx-5'>
         <Text className="text">Public Protocol</Text>
-        <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />
+        <Switch value={isPublic} onValueChange={onToggleSwitch} />
       </View>
 
       <View className="flex-1 flex-row justify-center">
@@ -74,6 +74,7 @@ const EditStartPage = () => {
           protocolOutline={outlineText}
           protocolTitle={titleText}
           protocolWeeks={Number(weeksText)}
+          protocolPublic={isPublic}
         />
         <DeleteButton
           id={protocolEditData.id}
