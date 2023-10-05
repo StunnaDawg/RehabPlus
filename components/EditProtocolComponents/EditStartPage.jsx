@@ -1,5 +1,5 @@
 import { View, Text } from "react-native"
-import { TextInput } from "react-native-paper"
+import { TextInput, Switch } from "react-native-paper"
 import { useState } from "react"
 import DropDownDays from "./components/DropDownDays"
 import UpdateButton from "./components/CreateButton"
@@ -12,6 +12,9 @@ const EditStartPage = () => {
   const [outlineText, setOutlineText] = useState(protocolEditData.description)
   const [weeksText, setWeeksText] = useState(protocolEditData.weeks)
   const [daysPerWeek, setDaysPerWeek] = useState(protocolEditData.daysPerWeek)
+  const [isSwitchOn, setIsSwitchOn] = useState(false)
+
+  const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn)
 
   return (
     <>
@@ -46,14 +49,25 @@ const EditStartPage = () => {
       </View>
 
       <DropDownDays setTheDays={setDaysPerWeek} chosenDays={daysPerWeek} />
-      <UpdateButton
-        id={protocolEditData.id}
-        protocolDaysPerWeek={Number(daysPerWeek)}
-        protocolOutline={outlineText}
-        protocolTitle={titleText}
-        protocolWeeks={Number(weeksText)}
-      />
-      <DeleteButton id={protocolEditData.id} userId={protocolEditData.userId}/>
+
+      <View className='flex-1 flex-row items-center justify-between mx-5'>
+        <Text className="text">Public Protocol</Text>
+        <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />
+      </View>
+
+      <View className="flex-1 flex-row justify-center">
+        <UpdateButton
+          id={protocolEditData.id}
+          protocolDaysPerWeek={Number(daysPerWeek)}
+          protocolOutline={outlineText}
+          protocolTitle={titleText}
+          protocolWeeks={Number(weeksText)}
+        />
+        <DeleteButton
+          id={protocolEditData.id}
+          userId={protocolEditData.userId}
+        />
+      </View>
     </>
   )
 }
