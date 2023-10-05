@@ -2,7 +2,7 @@ import { View, Text } from "react-native"
 import { TextInput, Switch } from "react-native-paper"
 import { useState } from "react"
 import DropDownDays from "./components/DropDownDays"
-import UpdateButton from "./components/CreateButton"
+import UpdateButton from "./components/UpdateProtocolButton"
 import { useSingleProtocolContext } from "../../protocolContext"
 import DeleteButton from "./components/DeleteButton"
 
@@ -12,7 +12,7 @@ const EditStartPage = () => {
   const [outlineText, setOutlineText] = useState(protocolEditData.description)
   const [weeksText, setWeeksText] = useState(protocolEditData.weeks)
   const [daysPerWeek, setDaysPerWeek] = useState(protocolEditData.daysPerWeek)
-  const [isSwitchOn, setIsSwitchOn] = useState(false)
+  const [isSwitchOn, setIsSwitchOn] = useState(protocolEditData?.public || false)
 
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn)
 
@@ -45,11 +45,23 @@ const EditStartPage = () => {
           onChangeText={(text) => setWeeksText(text)}
           placeholder={`${weeksText}`}
           placeholderTextColor="black"
+          keyboardType="numeric"
         ></TextInput>
       </View>
 
-      <DropDownDays setTheDays={setDaysPerWeek} chosenDays={daysPerWeek} />
+      {/* <DropDownDays setTheDays={setDaysPerWeek} chosenDays={daysPerWeek} /> */}
 
+      <View className="mx-4 my-1">
+        <Text>Days per Week</Text>
+        <TextInput
+          mode="outlined"
+          onChangeText={(text) => setDaysPerWeek(text)}
+          placeholder={`${weeksText}`}
+          placeholderTextColor="black"
+          keyboardType="numeric"
+        ></TextInput>
+
+      </View>
       <View className='flex-1 flex-row items-center justify-between mx-5'>
         <Text className="text">Public Protocol</Text>
         <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />
