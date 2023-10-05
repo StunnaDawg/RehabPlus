@@ -7,8 +7,9 @@ import GetSingleDoc from "../../functions/getSingleDoc"
 import { collection } from "firebase/firestore"
 import { db } from "../../firebase"
 import { useSingleProtocolContext } from "../../protocolContext"
+import { FIREBASE_AUTH } from "../../firebase"
 
-const ProtocolScreenWidget = ({ protocolTitle, weeks, outline, id }) => {
+const ProtocolScreenWidget = ({ protocolTitle, weeks, outline, id, userId }) => {
   const [protocolEditData, setProtocolEditData] = useSingleProtocolContext()
   const protocolsCollectionRef = collection(db, "protocols")
   const navigation = useNavigation()
@@ -21,7 +22,7 @@ const ProtocolScreenWidget = ({ protocolTitle, weeks, outline, id }) => {
               <Text variant="titleLarge" className="font-bold text-2xl">
                 {" "}
                 {protocolTitle}{" "}
-                <Button
+                {userId == FIREBASE_AUTH?.currentUser?.uid ? <Button
                   icon="pencil"
                   onPress={async () => {
                     await GetSingleDoc(
@@ -33,7 +34,7 @@ const ProtocolScreenWidget = ({ protocolTitle, weeks, outline, id }) => {
                   }}
                 >
                   Edit
-                </Button>
+                </Button>: <Button>Copy Protocol</Button>}
               </Text>
 
               <Button icon="account">Assign to Client</Button>
@@ -44,6 +45,7 @@ const ProtocolScreenWidget = ({ protocolTitle, weeks, outline, id }) => {
                 <View className="flex-col">
                   <Text className="m-2 font-bold">Weeks: {weeks}</Text>
                   <Text className="m-2 font-bold">Description: {outline}</Text>
+                  {userId !== FIREBASE_AUTH?.currentUser?.uid ? <Text className="m-2 font-bold">Created by: {userId}</Text> : null}
                   <Card className="m-2">
                   </Card>
                 </View>

@@ -1,6 +1,7 @@
 import { View, Text } from "react-native"
 import { TextInput, Switch } from "react-native-paper"
 import { useState } from "react"
+import { FIREBASE_AUTH } from "../../firebase"
 import DropDownDays from "./components/DropDownDays"
 import UpdateButton from "./components/UpdateProtocolButton"
 import { useSingleProtocolContext } from "../../protocolContext"
