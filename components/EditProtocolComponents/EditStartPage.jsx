@@ -56,7 +56,7 @@ const EditStartPage = () => {
         <TextInput
           mode="outlined"
           onChangeText={(text) => setDaysPerWeek(text)}
-          placeholder={`${weeksText}`}
+          placeholder={`${daysPerWeek}`}
           placeholderTextColor="black"
           keyboardType="numeric"
         ></TextInput>
