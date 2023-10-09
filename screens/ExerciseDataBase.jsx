@@ -1,12 +1,22 @@
-import { View, Text, ScrollView } from 'react-native'
-import React from 'react'
-import Database from '../components/ExerciseDataBaseComponents/Database'
+import { View } from "react-native"
+import React from "react"
+import DatabaseHeader from "../components/ExerciseDataBaseComponents/DatabaseHeader"
+import DatabaseCategories from "../components/ExerciseDataBaseComponents/DatabaseCategories"
 
 const ExerciseDataBase = () => {
   return (
-    <ScrollView>
-      <Database />
-    </ScrollView>
+    <>
+      <View>
+
+        <View className='my-4'>
+        <DatabaseHeader />
+        </View>
+
+        <View>
+        <DatabaseCategories />
+        </View>
+      </View>
+    </>
   )
 }
 
