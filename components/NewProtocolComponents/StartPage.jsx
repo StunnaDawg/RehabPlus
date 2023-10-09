@@ -1,18 +1,16 @@
 import { View, Text } from "react-native"
-import { Switch, TextInput } from "react-native-paper"
+import { Button, Switch, TextInput } from "react-native-paper"
 import { useState } from "react"
-import DropDownDays from "./components/DropDownDays"
 import CreateButton from "./components/CreateButton"
-import { db } from "../../firebase"
-import { collection } from "firebase/firestore"
+import { useNavigation } from "@react-navigation/native"
 
 const StartPage = () => {
-  const [expanded, setExpanded] = useState(true)
   const [titleText, setTitleText] = useState("")
   const [outlineText, setOutlineText] = useState("")
   const [weeksText, setWeeksText] = useState("")
   const [daysPerWeek, setDaysPerWeek] = useState("1")
   const [isPublic, setIsPublic] = useState(false)
+  const navigation  = useNavigation()
 
   const onToggleSwitch = () => setIsPublic(!isPublic)
   return (
@@ -42,7 +40,6 @@ const StartPage = () => {
         ></TextInput>
       </View>
 
-      {/* <DropDownDays setTheDays={setDaysPerWeek} chosenDays={daysPerWeek} /> */}
       <View className="mx-4 my-1">
         <Text>Days per Week</Text>
         <TextInput
@@ -55,6 +52,9 @@ const StartPage = () => {
       <View className="flex-1 flex-row items-center justify-between mx-5">
         <Text className="text">Public Protocol</Text>
         <Switch value={isPublic} onValueChange={onToggleSwitch} />
+      </View>
+      <View>
+        <Button onPress={() => navigation.navigate('AddProtocolWorkoutScreen')}>Add Workouts</Button>
       </View>
       <CreateButton
         protocolDaysPerWeek={Number(daysPerWeek)}
