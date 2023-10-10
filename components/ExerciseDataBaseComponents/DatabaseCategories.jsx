@@ -27,11 +27,12 @@ const DatabaseCategories = () => {
   }, [isFocused])
 
   useEffect(() => {
-    console.log(exerciseCategories)
+    console.log('database data', ...exerciseCategories)
   }, [exerciseCategories])
 
   const renderItem = ({ item: category }) => (
     <Button
+    key={category.id}
       className="mx-1 py-0"
       mode={pressedButtonId === category.id ? "contained" : "outlined"}
       onPress={() => {
@@ -54,13 +55,12 @@ const DatabaseCategories = () => {
       showsHorizontalScrollIndicator={false}
     />
       <ScrollView>
-        <DatabaseExercise />
-        <DatabaseExercise />
-        <DatabaseExercise />
-        <DatabaseExercise />
-        <DatabaseExercise />
-        <DatabaseExercise />
-        <DatabaseExercise />
+        {exerciseCategories.map(category => (
+            category.exercises.map(exercise => {
+                <DatabaseExercise key={exercise.id} exerciseName={exercise.name} />
+            })
+        ))}
+        
       </ScrollView>
     </>
   )
