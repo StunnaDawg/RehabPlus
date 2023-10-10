@@ -3,11 +3,10 @@ import { DataTable, Button, IconButton } from "react-native-paper"
 import { useEffect, useState } from "react"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import { db } from "../../firebase"
-import { collection, getDoc } from "firebase/firestore"
+import { collection } from "firebase/firestore"
 import getClientFireStoreData from "../../functions/getClientFireStoreData"
 import { useSingleClientContext } from "../../clientContext"
 import GetSingleDoc from "../../functions/getSingleDoc"
-import { protocolRefClient } from "../../functions/getClientProtocol"
 
 const ClientTable = () => {
   const [clientEditData, setClientEditData] = useSingleClientContext()
