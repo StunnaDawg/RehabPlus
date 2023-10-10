@@ -1,6 +1,7 @@
-import { View, Text, FlatList } from "react-native"
+import { View, Text, FlatList, ScrollView } from "react-native"
 import React, { useState } from "react"
 import { Button, Searchbar, Title, ButtonProps } from "react-native-paper"
+import DatabaseExercise from "./DatabaseExercise";
 
 const Categories = [
     { id: 1, title: "Bicep" },
@@ -43,12 +44,18 @@ const DatabaseCategories = () => {
   );
   
   return (
+    <>
     <FlatList
     horizontal={true}
       data={Categories}
       renderItem={renderItem}
       keyExtractor={(item) => item.id.toString()}
     />
+    <ScrollView>
+    <DatabaseExercise />
+    <DatabaseExercise /><DatabaseExercise /><DatabaseExercise /><DatabaseExercise /><DatabaseExercise /><DatabaseExercise />
+    </ScrollView>
+    </>
   )
 }
 
