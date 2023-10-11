@@ -1,44 +1,38 @@
-import { getDoc, doc } from "firebase/firestore"
-import { FIREBASE_AUTH } from "../firebase"
+import { getDoc, doc, collection } from "firebase/firestore"
+import { FIREBASE_AUTH, db } from "../firebase"
 
-const GetSingleExercise = async (collectionRef, id) => {
+const GetSingleExercise = async (id, categoryId, setState) => {
   try {
-    const docRef = doc(db, 'exerciseCategories', id) // Get the document reference.
-    const docSnap = await getDoc(docRef) // Fetch the document.
-    let protocolData = null
-    let spreadProtocolData = null
-    let protocolId = null
+    const exerciseDocRef = doc(db, 'exerciseCategories', categoryId, 'exercises', id) // Get the document reference.
+    const docSnap = await getDoc(exerciseDocRef) // Fetch the document.
 
-    if (docSnap.exists()) {
-      const clientData = { ...docSnap.data() }
-      // Check if the document exists.
-      const docId = docSnap.id
-      const protocolRef = clientData.protocol
+    // let exerciseFetchedData = null
+    // let exerciseId = null
 
-      if (protocolRef) {
-        // Fetch the document the reference is pointing to
-        const protocolDoc = await getDoc(protocolRef)
+    // if (docSnap.exists()) {
+    //   const exerciseData = { ...docSnap.data() }
+    //   // Check if the document exists.
+    //   const docId = docSnap.id
+    //   const exerciseRef = exerciseData.protocol
 
-        if (protocolDoc.exists()) {
-          // If the document exists, access the data here
-          protocolData = protocolDoc.data()
-          protocolId = protocolDoc.id
-          console.log("Protocol Data:", protocolData)
-        }
-      }
+    //   if (exerciseRef) {
+    //     // Fetch the document the reference is pointing to
+    //     const exerciseDoc = await getDoc(exerciseRef)
+
+    //     if (exerciseDoc.exists()) {
+    //       // If the document exists, access the data here
+    //       exerciseFetchedData = exerciseDoc.data()
+    //       exerciseId = exerciseDoc.id
+    //       console.log("Exercise Widget Data:", exerciseFetchedData)
+    //     }
+    //   }
       //   console.log("id", docId)
 
-      const docData = {
-        ...clientData,
-        id: docId,
-        clientProtocol: protocolData,
-        clientProtocolId: protocolId,
+      const exerciseData = {
+        ...docSnap.data()
       }
-      console.log("Document data:", docData)
-      setState(docData)
-    } else {
-      console.log("No such document!")
-    }
+      console.log("Document data:", exerciseData)
+      setState(exerciseData)
   } catch (err) {
     console.error(err)
   }

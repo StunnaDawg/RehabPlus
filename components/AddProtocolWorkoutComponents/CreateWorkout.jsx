@@ -44,7 +44,7 @@ const CreateWorkout = () => {
       <ScrollView className="pb-96">
         {exerciseWorkoutData.map((exercise) => {
             const [exerciseId, categoryId] = exercise
-          return <ExerciseWidget key={exerciseId} id={exerciseId} />
+          return <ExerciseWidget key={exerciseId} id={exerciseId} categoryId={categoryId} />
         })}
       </ScrollView>
     </>
