@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react"
 import { useSingleWorkoutContext } from "../../workoutContext"
 import { useNavigation } from "@react-navigation/native"
 
-const DatabaseExercise = ({ exerciseName, id }) => {
+const ExerciseWidget = ({ exerciseName, id }) => {
   const [exerciseWorkoutData, setExerciseWorkoutData] = useSingleWorkoutContext([])
   const navigation = useNavigation()
 
@@ -30,4 +30,4 @@ useEffect(() => {
   )
 }
 
-export default DatabaseExercise
+export default ExerciseWidget
