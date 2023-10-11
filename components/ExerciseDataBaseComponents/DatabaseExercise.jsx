@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react"
 import { useSingleWorkoutContext } from "../../workoutContext"
 import { useNavigation } from "@react-navigation/native"
 
-const DatabaseExercise = ({ exerciseName, id }) => {
+const DatabaseExercise = ({ exerciseName, id, idOfCategory }) => {
   const [exerciseWorkoutData, setExerciseWorkoutData] = useSingleWorkoutContext([])
   const navigation = useNavigation()
 
@@ -21,7 +21,7 @@ useEffect(() => {
         <Card.Cover className="w-20 h-20" source={ExerciseImage} />
         <Card.Actions className="flex-1 flex-col">
           <Button className="my-1">View</Button>
-          <Button onPress={async () => {await setExerciseWorkoutData([...exerciseWorkoutData, id]); navigation.goBack()} }>
+          <Button onPress={async () => {await setExerciseWorkoutData([...exerciseWorkoutData, [id, idOfCategory]]); navigation.goBack()} }>
             Add Workout
           </Button>
         </Card.Actions>

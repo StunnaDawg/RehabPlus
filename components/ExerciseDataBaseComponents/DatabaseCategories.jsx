@@ -10,7 +10,7 @@ import { useSingleWorkoutContext } from "../../workoutContext"
 
 const DatabaseCategories = () => {
   const [exerciseCategories, setExerciseCategories] = useState([])
-  const [exerciseWorkoutData, setExerciseWorkoutData] = useSingleWorkoutContext([])
+  const [exerciseWorkoutData, setExerciseWorkoutData] = useSingleWorkoutContext({})
   const [pressedButtonId, setPressedButtonId] = useState('85ZJ5LvyxECGoN0GMjHZ')
   const exercisesCollectionRef = collection(db, "exerciseCategories")
   const isFocused = useIsFocused()
@@ -76,6 +76,7 @@ const DatabaseCategories = () => {
       <View>
         <DatabaseExercise
           id={item.id}
+          idOfCategory={pressedButtonId}
           exerciseName={exerciseTitle}
         />
       </View>

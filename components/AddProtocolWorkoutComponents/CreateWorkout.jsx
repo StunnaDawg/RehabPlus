@@ -14,7 +14,7 @@ const CreateWorkout = () => {
   const navigation = useNavigation()
 
   useEffect(() => {
-console.log('workout WIdget page:', exerciseWorkoutData)
+    console.log("workout WIdget page:", exerciseWorkoutData)
   }, [exerciseWorkoutData])
   return (
     <>
@@ -33,7 +33,7 @@ console.log('workout WIdget page:', exerciseWorkoutData)
           onChangeText={(text) => setWorkoutDescriptionText(text)}
         ></TextInput>
       </View>
- <View className="mx-4 my-1">
+      <View className="mx-4 my-1">
         <Button
           icon="dumbbell"
           onPress={() => navigation.navigate("ExerciseDataBase")}
@@ -41,13 +41,12 @@ console.log('workout WIdget page:', exerciseWorkoutData)
           Add Exercise
         </Button>
       </View>
-      <ScrollView className='pb-96'>
+      <ScrollView className="pb-96">
         {exerciseWorkoutData.map((exercise) => {
-            <ExerciseWidget exerciseName={'yo'} id={exercise} />
+            const [exerciseId, categoryId] = exercise
+          return <ExerciseWidget key={exerciseId} id={exerciseId} />
         })}
       </ScrollView>
-
-     
     </>
   )
 }
