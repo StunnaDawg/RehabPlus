@@ -9,7 +9,7 @@ import { collection } from "firebase/firestore"
 
 const DatabaseCategories = () => {
   const [exerciseCategories, setExerciseCategories] = useState([])
-  const [pressedButtonId, setPressedButtonId] = useState(null)
+  const [pressedButtonId, setPressedButtonId] = useState('85ZJ5LvyxECGoN0GMjHZ')
   const exercisesCollectionRef = collection(db, "exerciseCategories")
   const isFocused = useIsFocused()
 
