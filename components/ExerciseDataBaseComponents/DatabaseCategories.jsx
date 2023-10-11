@@ -6,9 +6,11 @@ import getExerciseFireStoreData from "../../functions/getExerciseData"
 import { db } from "../../firebase"
 import { useIsFocused } from "@react-navigation/native"
 import { collection } from "firebase/firestore"
+import { useSingleWorkoutContext } from "../../workoutContext"
 
 const DatabaseCategories = () => {
   const [exerciseCategories, setExerciseCategories] = useState([])
+  const [exerciseWorkoutData, setExerciseWorkoutData] = useSingleWorkoutContext([])
   const [pressedButtonId, setPressedButtonId] = useState('85ZJ5LvyxECGoN0GMjHZ')
   const exercisesCollectionRef = collection(db, "exerciseCategories")
   const isFocused = useIsFocused()
@@ -44,6 +46,16 @@ const DatabaseCategories = () => {
     </Button>
   )
 
+  const getExercisesForCategory = (categoryId) => {
+    const category = exerciseCategories.find(cat => cat.id === categoryId);
+    
+    if (category) {
+      return category.exercises;
+    }
+  
+    return [];
+  };
+
   return (
     <>
       <FlatList
@@ -53,27 +65,24 @@ const DatabaseCategories = () => {
         keyExtractor={(item) => item.id.toString()}
         showsHorizontalScrollIndicator={false}
       />
-      <ScrollView>
-      {exerciseCategories.map((category) => {
-  if (category.id === pressedButtonId) {
-    return category.exercises.map((exercise) => {
-      const exerciseNameKey = Object.keys(exercise).find(
-        (key) => key !== "id"
-      );
-      const exerciseTitle = exercise[exerciseNameKey].title;
-      return (
-        <View key={exercise.id}>
-          <DatabaseExercise
-            id={exercise.id}
-            exerciseName={exerciseTitle}
-          />
-        </View>
-      );
-    });
-  }
-  return null; // Or some default rendering if there's none matching pressedButtonId
-})}
-      </ScrollView>
+     <FlatList className='pb-96'
+  data={getExercisesForCategory(pressedButtonId)}
+  keyExtractor={(item) => item.id}
+  renderItem={({ item }) => {
+    const exerciseNameKey = Object.keys(item).find(key => key !== "id");
+    const exerciseTitle = item[exerciseNameKey].title;
+
+    return (
+      <View>
+        <DatabaseExercise
+          id={item.id}
+          exerciseName={exerciseTitle}
+        />
+      </View>
+    );
+  }}
+/>
+
     </>
   )
 }
