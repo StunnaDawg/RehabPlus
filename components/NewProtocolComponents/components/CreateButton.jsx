@@ -4,10 +4,13 @@ import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { db, FIREBASE_AUTH } from '../../../firebase'
 import { addDoc, collection } from 'firebase/firestore'
+import { useCompleteWorkoutContext } from '../../../completeWorkoutContext'
 
 const CreateButton = ({protocolTitle, protocolOutline, protocolDaysPerWeek, protocolWeeks, protocolPublic, protocolWorkouts}) => {
     const navigation = useNavigation()
     const protocolsCollectionRef = collection(db, "protocols")
+    const [completeWorkoutData, setCompleteWorkoutData] =
+    useCompleteWorkoutContext([])
 
     const onSubmitProtocol = async () => {
         try{
@@ -31,7 +34,7 @@ const CreateButton = ({protocolTitle, protocolOutline, protocolDaysPerWeek, prot
             userId: FIREBASE_AUTH?.currentUser?.uid,
           } );
       }
-
+      setCompleteWorkoutData([])
         navigation.navigate("Protocol")
     } catch(err) {
         console.error(err)
