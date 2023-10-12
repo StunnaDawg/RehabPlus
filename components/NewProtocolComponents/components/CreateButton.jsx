@@ -11,7 +11,7 @@ const CreateButton = ({protocolTitle, protocolOutline, protocolDaysPerWeek, prot
 
     const onSubmitProtocol = async () => {
         try{
-        await addDoc(protocolsCollectionRef, {
+        const protocolDocRef = await addDoc(protocolsCollectionRef, {
             title: protocolTitle,
             description: protocolOutline,
             daysPerWeek: protocolDaysPerWeek,
@@ -22,10 +22,12 @@ const CreateButton = ({protocolTitle, protocolOutline, protocolDaysPerWeek, prot
           // 2. Now, add a document to the "workouts" sub-collection of the newly created protocol document
         // First, get the reference to the sub-collection
         const workoutsSubCollectionRef = collection(protocolDocRef, 'workouts');
-        
+        console.log(protocolWorkouts)
         // Add a document to the sub-collection (assuming you have some workoutData you want to add)
 
-        await addDoc(workoutsSubCollectionRef, protocolWorkouts);
+        for (const workout of protocolWorkouts) {
+          await addDoc(workoutsSubCollectionRef, workout);
+      }
 
         navigation.navigate("Protocol")
     } catch(err) {

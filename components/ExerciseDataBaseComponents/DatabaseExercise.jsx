@@ -6,12 +6,14 @@ import { useSingleWorkoutContext } from "../../workoutContext"
 import { useNavigation } from "@react-navigation/native"
 
 const DatabaseExercise = ({ exerciseName, id, idOfCategory }) => {
-  const [exerciseWorkoutData, setExerciseWorkoutData] = useSingleWorkoutContext([])
+  const [exerciseWorkoutData, setExerciseWorkoutData] = useSingleWorkoutContext(
+    []
+  )
   const navigation = useNavigation()
 
-useEffect(() => {
+  useEffect(() => {
     console.log(exerciseWorkoutData)
-}, [exerciseWorkoutData])
+  }, [exerciseWorkoutData])
   return (
     <Card mode="contained" className="mt-3 mx-8 ">
       <Card.Content className="flex-1 flex-row justify-center">
@@ -21,7 +23,15 @@ useEffect(() => {
         <Card.Cover className="w-20 h-20" source={ExerciseImage} />
         <Card.Actions className="flex-1 flex-col">
           <Button className="my-1">View</Button>
-          <Button onPress={async () => {await setExerciseWorkoutData([...exerciseWorkoutData, [id, idOfCategory]]); navigation.goBack()} }>
+          <Button
+            onPress={async () => {
+              await setExerciseWorkoutData((prevData) => [
+                ...prevData,
+                { exerciseId: id, categoryId: idOfCategory },
+              ])
+              navigation.goBack()
+            }}
+          >
             Add Workout
           </Button>
         </Card.Actions>

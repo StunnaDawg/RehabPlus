@@ -65,7 +65,7 @@ const StartPage = () => {
         protocolTitle={titleText}
         protocolWeeks={Number(weeksText)}
         protocolPublic={isPublic}
-        protocolWorkouts={[completeWorkoutData]}
+        protocolWorkouts={completeWorkoutData}
       />
       <AddWorkout />
     </>
