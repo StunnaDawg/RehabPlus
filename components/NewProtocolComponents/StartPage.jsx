@@ -1,18 +1,20 @@
 import { View, Text } from "react-native"
-import { Switch, TextInput } from "react-native-paper"
+import { Button, Switch, TextInput } from "react-native-paper"
 import { useState } from "react"
-import DropDownDays from "./components/DropDownDays"
 import CreateButton from "./components/CreateButton"
-import { db } from "../../firebase"
-import { collection } from "firebase/firestore"
+import { useNavigation } from "@react-navigation/native"
+import AddWorkout from "../AddProtocolWorkoutComponents/AddWorkout"
+import { useCompleteWorkoutContext } from "../../completeWorkoutContext"
 
 const StartPage = () => {
-  const [expanded, setExpanded] = useState(true)
+  const [completeWorkoutData, setCompleteWorkoutData] =
+    useCompleteWorkoutContext([])
   const [titleText, setTitleText] = useState("")
   const [outlineText, setOutlineText] = useState("")
   const [weeksText, setWeeksText] = useState("")
   const [daysPerWeek, setDaysPerWeek] = useState("1")
   const [isPublic, setIsPublic] = useState(false)
+  const navigation  = useNavigation()
 
   const onToggleSwitch = () => setIsPublic(!isPublic)
   return (
@@ -42,7 +44,6 @@ const StartPage = () => {
         ></TextInput>
       </View>
 
-      {/* <DropDownDays setTheDays={setDaysPerWeek} chosenDays={daysPerWeek} /> */}
       <View className="mx-4 my-1">
         <Text>Days per Week</Text>
         <TextInput
@@ -56,13 +57,17 @@ const StartPage = () => {
         <Text className="text">Public Protocol</Text>
         <Switch value={isPublic} onValueChange={onToggleSwitch} />
       </View>
+      <View>
+      </View>
       <CreateButton
         protocolDaysPerWeek={Number(daysPerWeek)}
         protocolOutline={outlineText}
         protocolTitle={titleText}
         protocolWeeks={Number(weeksText)}
         protocolPublic={isPublic}
+        protocolWorkouts={completeWorkoutData}
       />
+      <AddWorkout />
     </>
   )
 }

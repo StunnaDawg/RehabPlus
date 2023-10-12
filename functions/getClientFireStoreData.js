@@ -1,4 +1,3 @@
-
 import { getDocs, getDoc } from "firebase/firestore"
 import { FIREBASE_AUTH } from "../firebase"
 
