@@ -26,7 +26,10 @@ const CreateButton = ({protocolTitle, protocolOutline, protocolDaysPerWeek, prot
         // Add a document to the sub-collection (assuming you have some workoutData you want to add)
 
         for (const workout of protocolWorkouts) {
-          await addDoc(workoutsSubCollectionRef, workout);
+          await addDoc(workoutsSubCollectionRef,{
+            workout,
+            userId: FIREBASE_AUTH?.currentUser?.uid,
+          } );
       }
 
         navigation.navigate("Protocol")
