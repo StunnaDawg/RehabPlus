@@ -5,33 +5,28 @@ import React, { useEffect, useState } from "react"
 import GetSingleExercise from "../../../functions/getSingleExercise"
 import { useIsFocused } from "@react-navigation/native" 
 
-const CompleteWorkoutWidget = ({ id, categoryId }) => {
+const CompleteWorkoutWidget = ({ id, categoryId, workoutTitle, workoutDescription }) => {
     const [widgetData, setWidgetData] = useState({})
     const isFocused = useIsFocused()
-    useEffect(() => {
-      const getData = async () => {
-        try {
-          GetSingleExercise(id, categoryId, setWidgetData)
-        } catch (err) {
-          console.error("exercise widget error:", err)
-        }
-      }
-      getData()
-    }, [isFocused])
+    // useEffect(() => {
+    //   const getData = async () => {
+    //     try {
+    //       GetSingleExercise(id, categoryId, setWidgetData)
+    //     } catch (err) {
+    //       console.error("exercise widget error:", err)
+    //     }
+    //   }
+    //   getData()
+    // }, [isFocused])
   
-    useEffect(() => {
-      console.log({ ...widgetData })
-    }, [widgetData])
+    // useEffect(() => {
+    //   console.log({ ...widgetData })
+    // }, [widgetData])
     return (
       <Card mode="contained" className="mt-3 mx-8 ">
         <Card.Content className="flex-1 flex-row justify-center">
           <Text variant="titleLarge">
-            {" "}
-            {widgetData &&
-            Object.values(widgetData)[0] &&
-            Object.values(widgetData)[0].title
-              ? Object.values(widgetData)[0].title
-              : "Loading..."}
+           {workoutTitle}
           </Text>
         </Card.Content>
         <Card.Content className="flex-1 flex-row">
