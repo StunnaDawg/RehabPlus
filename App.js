@@ -7,10 +7,14 @@ import { SingleClientProvider } from "./clientContext"
 import { EditProtocolProvider } from "./components/EditClientComponents/functions/EditProtocolContext"
 import { AddProtocolProvider } from "./components/CreateClientComponents/functions/AddProtocolContext"
 import { ExerciseContextProvider } from "./workoutContext"
+import { WorkoutContextProvider } from "./addWorkoutProtocol"
+import { CompleteWorkoutContextProvider } from "./completeWorkoutContext"
 
 export default function App() {
   return (
     <AuthProvider>
+      <CompleteWorkoutContextProvider>
+      <WorkoutContextProvider>
       <ExerciseContextProvider>
         <SingleClientProvider>
           <SingleProtocolProvider>
@@ -26,6 +30,8 @@ export default function App() {
           </SingleProtocolProvider>
         </SingleClientProvider>
       </ExerciseContextProvider>
+      </WorkoutContextProvider>
+      </CompleteWorkoutContextProvider>
     </AuthProvider>
   )
 }

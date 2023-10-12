@@ -4,6 +4,7 @@ import { Button, TextInput } from "react-native-paper"
 import { useNavigation } from "@react-navigation/native"
 import { useSingleWorkoutContext } from "../../workoutContext"
 import ExerciseWidget from "./WorkoutWidget"
+import CreateWorkoutButton from "./CreateWorkoutButton"
 
 const CreateWorkout = () => {
   const [workoutTitleText, setWorkoutTitleText] = useState("")
@@ -18,6 +19,9 @@ const CreateWorkout = () => {
   }, [exerciseWorkoutData])
   return (
     <>
+    <View className="mx-4 my-1">
+        <CreateWorkoutButton title={workoutTitleText} description={workoutDescriptionText} exercises={exerciseWorkoutData} />
+      </View>
       <View className="mx-4 my-1">
         <Text>Workout Title</Text>
         <TextInput
@@ -37,6 +41,7 @@ const CreateWorkout = () => {
         <Button
           icon="dumbbell"
           onPress={() => navigation.navigate("ExerciseDataBase")}
+          
         >
           Add Exercise
         </Button>
