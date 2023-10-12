@@ -12,7 +12,7 @@ const AddWorkout = () => {
   const navigation = useNavigation()
   const isFocused = useIsFocused()
   useEffect(() => {
-    console.log("complete workout data", ...completeWorkoutData)
+    console.log("complete workout data in add workout", ...completeWorkoutData)
   }, [isFocused])
   return (
     <>
@@ -26,9 +26,9 @@ const AddWorkout = () => {
       </View>
 
       <View>
-        {completeWorkoutData.map((workout, index) => (
-          <CompleteWorkoutWidget key={index} workoutTitle={workout[0]} />
-        ))}
+      {completeWorkoutData.map((workout, index) => (
+    <CompleteWorkoutWidget key={index} workoutTitle={workout.title} />
+  ))}
       </View>
     </>
   )

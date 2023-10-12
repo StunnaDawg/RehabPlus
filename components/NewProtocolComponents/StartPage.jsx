@@ -3,8 +3,12 @@ import { Button, Switch, TextInput } from "react-native-paper"
 import { useState } from "react"
 import CreateButton from "./components/CreateButton"
 import { useNavigation } from "@react-navigation/native"
+import AddWorkout from "../AddProtocolWorkoutComponents/AddWorkout"
+import { useCompleteWorkoutContext } from "../../completeWorkoutContext"
 
 const StartPage = () => {
+  const [completeWorkoutData, setCompleteWorkoutData] =
+    useCompleteWorkoutContext([])
   const [titleText, setTitleText] = useState("")
   const [outlineText, setOutlineText] = useState("")
   const [weeksText, setWeeksText] = useState("")
@@ -54,7 +58,6 @@ const StartPage = () => {
         <Switch value={isPublic} onValueChange={onToggleSwitch} />
       </View>
       <View>
-        <Button onPress={() => navigation.navigate('AddProtocolWorkoutScreen')}>Add Workouts</Button>
       </View>
       <CreateButton
         protocolDaysPerWeek={Number(daysPerWeek)}
@@ -62,7 +65,9 @@ const StartPage = () => {
         protocolTitle={titleText}
         protocolWeeks={Number(weeksText)}
         protocolPublic={isPublic}
+        protocolWorkouts={[completeWorkoutData]}
       />
+      <AddWorkout />
     </>
   )
 }
