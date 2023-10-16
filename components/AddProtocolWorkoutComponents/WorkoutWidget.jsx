@@ -1,5 +1,5 @@
-import { View } from "react-native"
-import { Button, Card, Text } from "react-native-paper"
+import { StyleSheet, View } from "react-native"
+import { Button, Card, Divider, IconButton, Text, TextInput } from "react-native-paper"
 import ExerciseImage from "../../assets/physcial-medicine.jpg"
 import React, { useEffect, useState } from "react"
 import GetSingleExercise from "../../functions/getSingleExercise"
@@ -23,26 +23,38 @@ const ExerciseWidget = ({ id, categoryId }) => {
     console.log({ ...widgetData })
   }, [widgetData])
   return (
-    <Card mode="contained" className="mt-3 mx-8 ">
-      <Card.Content className="flex-1 flex-row justify-center">
-        <Text variant="titleLarge">
+    <Card mode="outlined" className=" flex-1 mt-3 mx-8 bg-blue-400" >
+      <Card.Content className="flex-1 flex-row justify-center items-center">
+        <Text variant="titleMedium">
           {" "}
           {widgetData &&
           Object.values(widgetData)[0] &&
           Object.values(widgetData)[0].title
             ? Object.values(widgetData)[0].title
             : "Loading..."}
-        </Text>
+        </Text> 
+        <IconButton icon='eye' size={18}>View</IconButton>
+          <IconButton icon='delete' size={18}>Delete</IconButton>
       </Card.Content>
-      <Card.Content className="flex-1 flex-row">
-        <Card.Cover className="w-20 h-20" source={ExerciseImage} />
-        <Card.Actions className="flex-1 flex-col">
-          <Button className="my-1">View</Button>
-          <Button className="my-1">Delete</Button>
+      <Card.Content className='flex-1 flex-row justify-center items-center '>
+        <Card.Actions>
+        <Text>Sets:</Text>
+          <TextInput style={styles.textInput} underlineColor='black' selectionColor="blue" dense={true} mode="flat" keyboardType="numeric"></TextInput>
+          <Divider/>
+          <Text>Reps:</Text>
+          <TextInput style={styles.textInput} dense={true} mode="flat" keyboardType="numeric" ></TextInput>
         </Card.Actions>
       </Card.Content>
+     
     </Card>
   )
 }
+
+const styles = StyleSheet.create({
+    textInput: { // Set the desired width
+      height: 30, 
+      width: 40,
+    },
+  });
 
 export default ExerciseWidget
