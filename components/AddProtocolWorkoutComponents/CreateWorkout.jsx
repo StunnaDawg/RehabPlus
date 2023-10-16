@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react"
 import { Button, TextInput } from "react-native-paper"
 import { useNavigation } from "@react-navigation/native"
 import { useSingleWorkoutContext } from "../../workoutContext"
-import ExerciseWidget from "./WorkoutWidget"
+import ExerciseWidget from "./ExerciseWidget"
 import CreateWorkoutButton from "./CreateWorkoutButton"
 
 const CreateWorkout = () => {
@@ -47,8 +47,15 @@ const CreateWorkout = () => {
         </Button>
       </View>
       <ScrollView className="pb-96">
-      {exerciseWorkoutData.map((exercise) => {
-        return <ExerciseWidget key={exercise.exerciseId} id={exercise.exerciseId} categoryId={exercise.categoryId} />
+      {exerciseWorkoutData.map((exercise, index) => {
+        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
+        const letterData = letters[index % letters.length];
+
+        console.log(index, exercise.exerciseId)
+        return (
+        <ExerciseWidget key={exercise.exerciseId} id={exercise.exerciseId} categoryId={exercise.categoryId} letter={letterData} index={index+1}/>
+        )
     })}
       </ScrollView>
     </>
