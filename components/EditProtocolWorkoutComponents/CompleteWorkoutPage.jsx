@@ -19,16 +19,20 @@ const EditWorkoutsPage = ({ id }) => {
   const workoutsSubCollectionRef = collection(protocolDocRef, protocolEditData.id, 'workouts');
   const navigation = useNavigation()
   const isFocused = useIsFocused()
-  // useEffect(() => {
-  //   const fetchClientWorkout = async () => {
-  //     await GetProtocolWorkouts(setClientWorkouts, workoutsSubCollectionRef)
-  //   }
+  useEffect(() => {
+    const fetchClientWorkout = async () => {
+      await GetProtocolWorkouts(setClientWorkouts, workoutsSubCollectionRef);
+    }
 
-  //   fetchClientWorkout()
-  // }, [isFocused])
+    fetchClientWorkout()
+  }, [isFocused])
 
   useEffect(() => {
-    console.log('workouts',  workoutsSubCollectionRef)
+    console.log('client workouts', clientWorkouts)
+  }, [clientWorkouts])
+
+  useEffect(() => {
+    console.log('workout collection', workoutsSubCollectionRef)
   }, [])
   return (
     <>
@@ -42,9 +46,9 @@ const EditWorkoutsPage = ({ id }) => {
       </View>
 
       <View>
-        {clientWorkouts.map((workout, index) => (
-          <CompleteWorkoutEditWidget key={index} workoutTitle={workout.title} />
-        ))}
+      {clientWorkouts.map((widget, index) => (
+  <CompleteWorkoutEditWidget key={index} workoutTitle={widget.title} />
+))}
       </View>
     </>
   )

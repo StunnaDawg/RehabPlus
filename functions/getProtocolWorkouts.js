@@ -2,37 +2,18 @@ import { getDoc, doc, getDocs } from "firebase/firestore"
 import { FIREBASE_AUTH } from "../firebase"
 
 const GetProtocolWorkouts = async (setState, collectionRef) => {
-  try {
-    const docRef = doc(collectionRef) // Get the document reference.
-    const docSnap = await getDoc(docRef) // Fetch the document.
-    let protocolData = null
-    let protocolId = null
-
-    let workoutData = null
-
-    if (docSnap.exists()) {
-
-      if (workoutsRef) {
-        const workoutDocs = await getDoc(workoutsRef)
-
-        if (workoutDocs.exists()) {
-          workoutData = {...workoutDocs.data()}
-          console.log("Workout Data:", protocolData)
-        }
+    try {
+        const data = await getDocs(collectionRef)
+        const filteredData = data.docs
+        .map((doc) => ({
+          ...doc.data(),
+        }))
+        console.log(filteredData)
+        setState(filteredData)
+      } catch (err) {
+        console.error(err)
       }
-
-      const docData = {
-        workouts: workoutData
-      }
-      console.log("Document data:", docData)
-      setState(docData)
-    } else {
-      console.log("No such document!")
     }
-  } catch (err) {
-    console.error(err)
-  }
-}
 
 export default GetProtocolWorkouts
 
