@@ -6,6 +6,7 @@ import DropDownDays from "./components/DropDownDays"
 import UpdateButton from "./components/UpdateProtocolButton"
 import { useSingleProtocolContext } from "../../protocolContext"
 import DeleteButton from "./components/DeleteButton"
+import UpdateWorkouts from "./components/UpdateWorkouts"
 
 const EditStartPage = () => {
   const [protocolEditData] = useSingleProtocolContext()
@@ -19,6 +20,10 @@ const EditStartPage = () => {
 
   return (
     <>
+    <DeleteButton
+          id={protocolEditData.id}
+          userId={protocolEditData.userId}
+        />
       <View className="mx-4 my-1">
         <Text>Protocol Title</Text>
         <TextInput
@@ -77,10 +82,8 @@ const EditStartPage = () => {
           protocolWeeks={Number(weeksText)}
           protocolPublic={isPublic}
         />
-        <DeleteButton
-          id={protocolEditData.id}
-          userId={protocolEditData.userId}
-        />
+        
+        <UpdateWorkouts />
       </View>
     </>
   )
