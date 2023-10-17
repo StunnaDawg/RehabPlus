@@ -47,7 +47,7 @@ const EditWorkoutsPage = ({ id }) => {
 
       <View>
       {clientWorkouts.map((widget, index) => (
-  <CompleteWorkoutEditWidget key={index} workoutTitle={widget.title} />
+  <CompleteWorkoutEditWidget key={index} workoutTitle={widget.workout.title} />
 ))}
       </View>
     </>
