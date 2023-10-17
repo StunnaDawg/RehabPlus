@@ -28,7 +28,7 @@ const EditWorkoutsPage = ({ id }) => {
   }, [isFocused])
 
   useEffect(() => {
-    console.log('client workouts', clientWorkouts)
+    console.log('client edit workouts page', clientWorkouts)
   }, [clientWorkouts])
 
   useEffect(() => {
@@ -46,9 +46,11 @@ const EditWorkoutsPage = ({ id }) => {
       </View>
 
       <View>
-      {clientWorkouts.map((widget, index) => (
-  <CompleteWorkoutEditWidget key={index} workoutTitle={widget.workout.title} />
-))}
+      {clientWorkouts.map((widget) => {
+        console.log(widget.id)
+        return (
+  <CompleteWorkoutEditWidget key={widget.id} workoutTitle={widget.workout.title} id={widget.id} protocolId={protocolEditData.id} />
+)})}
       </View>
     </>
   )
