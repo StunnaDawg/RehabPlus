@@ -12,11 +12,7 @@ const CompleteWorkoutEditWidget = ({ id , protocolId, workoutTitle }) => {
     const navigation = useNavigation()
 
     const getData = async () => {
-          try {
-            GetSingleWorkout(id, protocolId, setEditWorkoutData)
-          } catch (err) {
-            console.error("Workout widget error:", err)
-          }
+            await GetSingleWorkout(id, protocolId, setEditWorkoutData)
         }
   
     useEffect(() => {

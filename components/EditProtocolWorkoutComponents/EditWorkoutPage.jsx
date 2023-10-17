@@ -16,9 +16,10 @@ const EditWorkout = () => {
   const isFocused = useIsFocused()
   let defaultWorkoutTitle = editWorkoutData.workout.title
   let defaultWorkoutDescription = editWorkoutData.workout.description
+  let defaultExercises = editWorkoutData.workout.exercises
 
   useEffect(() => {
-        console.log('workout to be edited', editWorkoutData.workout)
+        console.log('workout to be edited', defaultExercises)
 
   }, [isFocused])
 
@@ -53,18 +54,18 @@ const EditWorkout = () => {
           Add Exercise
         </Button>
       </View>
-      {/* <ScrollView className="pb-96">
-      {exerciseWorkoutData.map((exercise, index) => {
+      <ScrollView className="pb-96">
+      {defaultExercises.map((exercise, index) => {
         const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
         const letterData = letters[index % letters.length];
 
-        console.log(index, exercise.exerciseId)
+        console.log('exercsie edit widget', index, exercise.exerciseId)
         return (
         <ExerciseWidget key={exercise.exerciseId} id={exercise.exerciseId} categoryId={exercise.categoryId} letter={letterData} index={index+1}/>
         )
     })}
-      </ScrollView> */}
+      </ScrollView>
     </>
   )
 }

@@ -7,7 +7,8 @@ const GetSingleWorkout = async (workoutId, protocolId, setState) => {
     const docSnap = await getDoc(workoutDocRef) // Fetch the document.
 
       const workoutData = {
-        ...docSnap.data()
+        ...docSnap.data(),
+        title: docSnap.data().title
       }
       console.log("Document data:", workoutData)
       setState(workoutData)
