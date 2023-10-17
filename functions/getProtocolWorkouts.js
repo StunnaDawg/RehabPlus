@@ -1,38 +1,28 @@
-import { getDoc, doc } from "firebase/firestore"
+import { getDoc, doc, getDocs } from "firebase/firestore"
 import { FIREBASE_AUTH } from "../firebase"
 
-const GetProtocolWorkouts = async (setState, collectionRef, id) => {
+const GetProtocolWorkouts = async (setState, collectionRef) => {
   try {
-    const docRef = doc(collectionRef, id) // Get the document reference.
+    const docRef = doc(collectionRef) // Get the document reference.
     const docSnap = await getDoc(docRef) // Fetch the document.
     let protocolData = null
-    let spreadProtocolData = null
     let protocolId = null
 
+    let workoutData = null
+
     if (docSnap.exists()) {
-      const clientData = { ...docSnap.data() }
-      // Check if the document exists.
-      const docId = docSnap.id
-      const protocolRef = clientData.protocol
 
-      if (protocolRef) {
-        // Fetch the document the reference is pointing to
-        const protocolDoc = await getDoc(protocolRef)
+      if (workoutsRef) {
+        const workoutDocs = await getDoc(workoutsRef)
 
-        if (protocolDoc.exists()) {
-          // If the document exists, access the data here
-          protocolData = protocolDoc.data()
-          protocolId = protocolDoc.id
-          console.log("Protocol Data:", protocolData)
+        if (workoutDocs.exists()) {
+          workoutData = {...workoutDocs.data()}
+          console.log("Workout Data:", protocolData)
         }
       }
-      //   console.log("id", docId)
 
       const docData = {
-        ...clientData,
-        id: docId,
-        clientProtocol: protocolData,
-        clientProtocolId: protocolId,
+        workouts: workoutData
       }
       console.log("Document data:", docData)
       setState(docData)
@@ -45,3 +35,10 @@ const GetProtocolWorkouts = async (setState, collectionRef, id) => {
 }
 
 export default GetProtocolWorkouts
+
+
+// for (const workout of protocolWorkouts) {
+//     await addDoc(workoutsSubCollectionRef,{
+//       workout,
+//       userId: FIREBASE_AUTH?.currentUser?.uid,
+//     } );

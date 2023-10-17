@@ -9,22 +9,26 @@ import { useIsFocused } from "@react-navigation/native"
 import CompleteWorkoutEditWidget from "./components/CompleteWorkoutEditWIdget"
 import GetProtocolWorkouts from "../../functions/getProtocolWorkouts"
 import { useSingleProtocolContext } from "../../protocolContext"
+import { collection } from "firebase/firestore"
+import { db } from "../../firebase"
 
 const EditWorkoutsPage = ({ id }) => {
   const [protocolEditData] = useSingleProtocolContext()
   const [clientWorkouts, setClientWorkouts] = useState([])
+  const protocolDocRef = collection(db, "protocols")
+  const workoutsSubCollectionRef = collection(protocolDocRef, protocolEditData.id, 'workouts');
   const navigation = useNavigation()
   const isFocused = useIsFocused()
   // useEffect(() => {
   //   const fetchClientWorkout = async () => {
-  //     await GetProtocolWorkouts()
+  //     await GetProtocolWorkouts(setClientWorkouts, workoutsSubCollectionRef)
   //   }
 
   //   fetchClientWorkout()
   // }, [isFocused])
 
   useEffect(() => {
-    console.log('protocol id',  protocolEditData.id)
+    console.log('workouts',  workoutsSubCollectionRef)
   }, [])
   return (
     <>
