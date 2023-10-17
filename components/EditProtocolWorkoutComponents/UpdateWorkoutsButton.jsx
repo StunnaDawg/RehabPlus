@@ -6,19 +6,20 @@ import { useNavigation } from "@react-navigation/native"
 import { useCompleteWorkoutContext } from "../../completeWorkoutContext"
 import { useSingleWorkoutContext } from "../../workoutContext"
 
-const CreateWorkoutButton = ({title, description, exercises}) => {
+const UpdateWorkoutsButton = ({title, description, exercises}) => {
     const [workoutData, setNewWorkoutData] = useWorkoutContext([])
     const [completeWorkoutData, setCompleteWorkoutData] = useCompleteWorkoutContext([])
     const [exerciseWorkoutData, setExerciseWorkoutData] = useSingleWorkoutContext(
         []
       )
     const navigation = useNavigation()
+    
   return (
     <Button
       icon="plus"
       onPress={async () => {await setCompleteWorkoutData(prevData => ([
         ...prevData,
-        { title, description, exercises}
+        { title, description, exercises }
       ])); setNewWorkoutData([]); setExerciseWorkoutData([]); navigation.navigate("NewProtocol")}}
     >
       Create Workout
@@ -26,4 +27,4 @@ const CreateWorkoutButton = ({title, description, exercises}) => {
   )
 }
 
-export default CreateWorkoutButton
+export default UpdateWorkoutsButton

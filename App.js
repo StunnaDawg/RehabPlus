@@ -9,10 +9,12 @@ import { AddProtocolProvider } from "./components/CreateClientComponents/functio
 import { ExerciseContextProvider } from "./workoutContext"
 import { WorkoutContextProvider } from "./addWorkoutProtocol"
 import { CompleteWorkoutContextProvider } from "./completeWorkoutContext"
+import { EditWorkoutContextProvider } from "./editWorkoutContext"
 
 export default function App() {
   return (
     <AuthProvider>
+      <EditWorkoutContextProvider>
       <CompleteWorkoutContextProvider>
       <WorkoutContextProvider>
       <ExerciseContextProvider>
@@ -32,6 +34,7 @@ export default function App() {
       </ExerciseContextProvider>
       </WorkoutContextProvider>
       </CompleteWorkoutContextProvider>
+      </EditWorkoutContextProvider>
     </AuthProvider>
   )
 }

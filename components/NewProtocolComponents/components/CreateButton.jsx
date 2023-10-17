@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native'
 import { db, FIREBASE_AUTH } from '../../../firebase'
 import { addDoc, collection } from 'firebase/firestore'
 import { useCompleteWorkoutContext } from '../../../completeWorkoutContext'
+import 'react-native-get-random-values'
 
 const CreateButton = ({protocolTitle, protocolOutline, protocolDaysPerWeek, protocolWeeks, protocolPublic, protocolWorkouts}) => {
     const navigation = useNavigation()

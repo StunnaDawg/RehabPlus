@@ -6,7 +6,7 @@ import { useSingleWorkoutContext } from "../../workoutContext"
 import ExerciseWidget from "./ExerciseWidget"
 import CreateWorkoutButton from "./CreateWorkoutButton"
 
-const CreateWorkout = () => {
+const EditWorkout = () => {
   const [workoutTitleText, setWorkoutTitleText] = useState("")
   const [workoutDescriptionText, setWorkoutDescriptionText] = useState("")
   const [exerciseWorkoutData, setExerciseWorkoutData] = useSingleWorkoutContext(
@@ -62,4 +62,4 @@ const CreateWorkout = () => {
   )
 }
 
-export default CreateWorkout
+export default EditWorkout
