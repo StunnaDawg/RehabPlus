@@ -83,7 +83,7 @@ const EditStartPage = () => {
           protocolPublic={isPublic}
         />
         
-        <UpdateWorkouts />
+        <UpdateWorkouts id={protocolEditData.id} />
       </View>
     </>
   )
