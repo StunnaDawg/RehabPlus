@@ -22,11 +22,9 @@ const CreateButton = ({protocolTitle, protocolOutline, protocolDaysPerWeek, prot
             userId: FIREBASE_AUTH?.currentUser?.uid,
             public: protocolPublic
         })
-          // 2. Now, add a document to the "workouts" sub-collection of the newly created protocol document
-        // First, get the reference to the sub-collection
+          
         const workoutsSubCollectionRef = collection(protocolDocRef, 'workouts');
         console.log(protocolWorkouts)
-        // Add a document to the sub-collection (assuming you have some workoutData you want to add)
 
         for (const workout of protocolWorkouts) {
           await addDoc(workoutsSubCollectionRef,{
