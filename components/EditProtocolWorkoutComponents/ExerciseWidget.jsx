@@ -20,8 +20,8 @@ const ExerciseWidget = ({ id, categoryId, letter, index }) => {
     []
   )
   const [widgetData, setWidgetData] = useState({})
-  const [exerciseSets, setExerciseSets] = useState("0")
-  const [exerciseReps, setExerciseReps] = useState("0")
+  const [exerciseSets, setExerciseSets] = useState(exerciseWorkoutData.sets || "0")
+  const [exerciseReps, setExerciseReps] = useState(exerciseWorkoutData.reps || "0")
   const isFocused = useIsFocused()
 
   useEffect(() => {

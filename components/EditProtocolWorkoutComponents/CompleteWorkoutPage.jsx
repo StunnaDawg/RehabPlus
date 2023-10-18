@@ -16,23 +16,27 @@ const EditWorkoutsPage = ({ id }) => {
   const [protocolEditData] = useSingleProtocolContext()
   const [clientWorkouts, setClientWorkouts] = useState([])
   const protocolDocRef = collection(db, "protocols")
-  const workoutsSubCollectionRef = collection(protocolDocRef, protocolEditData.id, 'workouts');
+  const workoutsSubCollectionRef = collection(
+    protocolDocRef,
+    protocolEditData.id,
+    "workouts"
+  )
   const navigation = useNavigation()
   const isFocused = useIsFocused()
   useEffect(() => {
     const fetchClientWorkout = async () => {
-      await GetProtocolWorkouts(setClientWorkouts, workoutsSubCollectionRef);
+      await GetProtocolWorkouts(setClientWorkouts, workoutsSubCollectionRef)
     }
 
     fetchClientWorkout()
   }, [isFocused])
 
   useEffect(() => {
-    console.log('client edit workouts page', clientWorkouts)
+    console.log("client edit workouts page", clientWorkouts)
   }, [clientWorkouts])
 
   useEffect(() => {
-    console.log('workout collection', workoutsSubCollectionRef)
+    console.log("workout collection", workoutsSubCollectionRef)
   }, [])
   return (
     <>
@@ -46,11 +50,17 @@ const EditWorkoutsPage = ({ id }) => {
       </View>
 
       <View>
-      {clientWorkouts.map((widget) => {
-        console.log(widget.id)
-        return (
-  <CompleteWorkoutEditWidget key={widget.id} workoutTitle={widget.workout.title} id={widget.id} protocolId={protocolEditData.id} />
-)})}
+        {clientWorkouts.map((widget) => {
+          console.log(widget.id)
+          return (
+            <CompleteWorkoutEditWidget
+              key={widget.id}
+              workoutTitle={widget.workout.title}
+              id={widget.id}
+              protocolId={protocolEditData.id}
+            />
+          )
+        })}
       </View>
     </>
   )
