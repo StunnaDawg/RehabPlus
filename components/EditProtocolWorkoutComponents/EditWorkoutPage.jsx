@@ -10,6 +10,9 @@ import { useIsFocused } from "@react-navigation/native"
 
 const EditWorkout = () => {
   const [editWorkoutData, setEditWorkoutData] = useSingleEditWorkoutContext([])
+  const [exerciseWorkoutData, setExerciseWorkoutData] = useSingleWorkoutContext(
+    []
+  )
   const [workoutTitleText, setWorkoutTitleText] = useState('')
   const [workoutDescriptionText, setWorkoutDescriptionText] = useState('')
   const navigation = useNavigation()
@@ -19,8 +22,11 @@ const EditWorkout = () => {
   let defaultExercises = editWorkoutData.workout.exercises
 
   useEffect(() => {
-        console.log('workout to be edited', defaultExercises)
-
+     if (!editWorkoutData) {
+      setExerciseWorkoutData(defaultExercises)
+     }
+        
+        console.log('exerciseState', exerciseWorkoutData)
   }, [isFocused])
 
   return (
@@ -55,7 +61,7 @@ const EditWorkout = () => {
         </Button>
       </View>
       <ScrollView className="pb-96">
-      {defaultExercises.map((exercise, index) => {
+      {exerciseWorkoutData.map((exercise, index) => {
         const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
         const letterData = letters[index % letters.length];
