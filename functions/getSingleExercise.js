@@ -9,7 +9,7 @@ const GetSingleExercise = async (id, categoryId, setState) => {
       const exerciseData = {
         ...docSnap.data()
       }
-      console.log("Document data:", exerciseData)
+      console.log("Document data for exercises:", exerciseData)
       setState(exerciseData)
   } catch (err) {
     console.error(err)

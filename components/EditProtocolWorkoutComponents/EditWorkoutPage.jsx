@@ -8,14 +8,16 @@ import CreateWorkoutButton from "./CreateWorkoutButton"
 import { useSingleEditWorkoutContext } from "../../editWorkoutContext"
 import { useIsFocused } from "@react-navigation/native"
 import UpdateWorkoutsButton from "./UpdateWorkoutsButton"
+import { useSingleProtocolContext } from "../../protocolContext"
 
 const EditWorkout = () => {
   const [editWorkoutData, setEditWorkoutData] = useSingleEditWorkoutContext([])
+  const [protocolEditData] = useSingleProtocolContext()
   const [exerciseWorkoutData, setExerciseWorkoutData] = useSingleWorkoutContext(
     []
   )
-  const [workoutTitleText, setWorkoutTitleText] = useState("")
-  const [workoutDescriptionText, setWorkoutDescriptionText] = useState("")
+  const [workoutTitleText, setWorkoutTitleText] = useState(defaultWorkoutTitle)
+  const [workoutDescriptionText, setWorkoutDescriptionText] = useState(defaultWorkoutDescription)
   const [isNewWorkout, setIsNewWorkout] = useState(false)
   const [onAppear, setOnAppear] = useState(true)
   const navigation = useNavigation()
@@ -23,13 +25,18 @@ const EditWorkout = () => {
   let defaultWorkoutTitle = editWorkoutData.workout.title
   let defaultWorkoutDescription = editWorkoutData.workout.description
   let defaultExercises = editWorkoutData.workout.exercises
+  let workoutId = editWorkoutData.id
 
   useEffect(() => {
+    console.log('workout data', editWorkoutData)
     if (onAppear) {
       setExerciseWorkoutData(defaultExercises)
+      console.log('if onAppear workoutdata',exerciseWorkoutData)
     } 
 
-    console.log("exerciseState", exerciseWorkoutData)
+    console.log("exerciseState update id", editWorkoutData.id)
+    console.log("exerciseState protocol id", protocolEditData.id)
+    
   }, [isFocused])
 
   return (
@@ -37,16 +44,15 @@ const EditWorkout = () => {
       <View className="mx-4 my-1">
         {!isNewWorkout ? (
           <UpdateWorkoutsButton
-            title={workoutTitleText}
-            description={workoutDescriptionText}
-            exercises={exerciseWorkoutData}
+            workoutTitle={workoutTitleText}
+            workoutDescription={workoutDescriptionText}
+            workoutExercises={exerciseWorkoutData}
+            setOnAppear={setOnAppear}
+            workoutId={editWorkoutData.id}
+            protocolId={protocolEditData.id}
           />
         ) : (
-          <CreateWorkoutButton
-            title={workoutTitleText}
-            description={workoutDescriptionText}
-            exercises={exerciseWorkoutData}
-          />
+          null
         )}
       </View>
       <View className="mx-4 my-1">

@@ -5,12 +5,15 @@ const GetSingleWorkout = async (workoutId, protocolId, setState) => {
   try {
     const workoutDocRef = doc(db, 'protocols', protocolId, 'workouts', workoutId) // Get the document reference.
     const docSnap = await getDoc(workoutDocRef) // Fetch the document.
+    const docId = workoutId
 
       const workoutData = {
+        id: docId,
         ...docSnap.data(),
-        title: docSnap.data().title
+        
       }
-      console.log("Document data:", workoutData)
+      console.log('workout id filtered', workoutId)
+      console.log("Document data for Workout:", workoutData)
       setState(workoutData)
   } catch (err) {
     console.error(err)
