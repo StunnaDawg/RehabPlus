@@ -35,7 +35,7 @@ const EditWorkout = () => {
     } 
 
     console.log("exerciseState update id", editWorkoutData.id)
-    console.log("exerciseState protocol id", protocolEditData.id)
+    console.log("exerciseState protocol id", protocolEditData.userId)
     
   }, [isFocused])
 
@@ -102,6 +102,9 @@ const EditWorkout = () => {
               index={index + 1}
               sets={exercise.sets}
               reps={exercise.reps}
+              protocolId={protocolEditData.id}
+              workoutId={editWorkoutData.id}
+              userId={protocolEditData.userId}
             />
           )
         })}

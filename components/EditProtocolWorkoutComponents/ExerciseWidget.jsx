@@ -14,8 +14,11 @@ import { useIsFocused } from "@react-navigation/native"
 import { useSingleWorkoutContext } from "../../workoutContext"
 import "react-native-get-random-values"
 import { v4 as uuidv4 } from "uuid"
+import ExercsieWidgetDeleteButton from "./components/ExercsieWidgetDeleteButton"
+import ExerciseWidgetDeleteButton from "./components/ExercsieWidgetDeleteButton"
 
-const ExerciseWidget = ({ id, categoryId, letter, index, reps, sets }) => {
+// id is the exercise id, change la
+const ExerciseWidget = ({ id, categoryId, letter, index, reps, sets, protocolId, workoutId, userId }) => {
   const [exerciseWorkoutData, setExerciseWorkoutData] = useSingleWorkoutContext(
     []
   )
@@ -64,9 +67,7 @@ const ExerciseWidget = ({ id, categoryId, letter, index, reps, sets }) => {
         <IconButton icon="eye" size={18}>
           View
         </IconButton>
-        <IconButton icon="delete" size={18}>
-          Delete
-        </IconButton>
+        <ExerciseWidgetDeleteButton workoutId={workoutId} protocolId={protocolId} exerciseId={id} userId={userId} setExerciseState={setExerciseWorkoutData} />
       </Card.Content>
       <Card.Content className="flex-1 flex-row justify-center items-center ">
         <Card.Actions>
