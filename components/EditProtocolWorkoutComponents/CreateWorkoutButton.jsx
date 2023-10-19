@@ -13,12 +13,13 @@ const CreateWorkoutButton = ({title, description, exercises}) => {
         []
       )
     const navigation = useNavigation()
+    
   return (
     <Button
       icon="plus"
       onPress={async () => {await setCompleteWorkoutData(prevData => ([
         ...prevData,
-        { title, description, exercises}
+        { title, description, exercises }
       ])); setNewWorkoutData([]); setExerciseWorkoutData([]); navigation.navigate("NewProtocol")}}
     >
       Create Workout

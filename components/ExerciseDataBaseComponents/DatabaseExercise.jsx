@@ -12,7 +12,7 @@ const DatabaseExercise = ({ exerciseName, id, idOfCategory }) => {
   const navigation = useNavigation()
 
   useEffect(() => {
-    console.log(exerciseWorkoutData)
+    console.log('edit workout data',exerciseWorkoutData)
   }, [exerciseWorkoutData])
   return (
     <Card mode="contained" className="mt-3 mx-8 ">
