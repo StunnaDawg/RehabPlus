@@ -7,7 +7,14 @@ const InboxWidget = () => {
   const navigation = useNavigation()
   return (
     <View className="flex-1 justify-between m-4">
-      <View className=" flex-1 flex-row justify-center">
+      <View className='flex-1 items-center flex-row justify-center mt-2'>
+      <Text className='text-3xl font-extrabold text-center'>Inbox</Text>
+      <Button icon='inbox-full' onPress={() => navigation.navigate("Inbox")}>View</Button>
+      </View>
+      <View className='flex-1 items-center flex-row justify-center mt-9'>
+        <Text className='text-xl font-extrabold'>Coming soon...</Text>
+        </View>
+      {/* <View className=" flex-1 flex-row justify-center">
         <Text className="text-3xl font-bold text-center">Inbox</Text>
         <Button icon='inbox-full' onPress={() => navigation.navigate("Inbox")}>View</Button>
       </View>
@@ -46,7 +53,7 @@ const InboxWidget = () => {
             </Card>
           <Button onPress={() => navigation.navigate("Inbox")}>View</Button>
         </View>
-      </View>
+      </View> */}
     </View>
     
   )

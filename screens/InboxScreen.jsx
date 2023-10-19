@@ -7,13 +7,16 @@ const InboxScreen = () => {
   return (
     <ScrollView>
         <InboxHeader />
-      <MessageCard name={'Jorge'} message={'Hey man...'} />
+        <View className='flex-1 items-center flex-row justify-center mt-52'>
+        <Text className='text-3xl font-extrabold'>Coming soon...</Text>
+        </View>
+      {/* <MessageCard name={'Jorge'} message={'Hey man...'} />
       <MessageCard name={'Kerry'} message={'Question'} />
       <MessageCard name={'Danielle'} message={'Dog'} />
       <MessageCard name={'Harold'} message={'Cat jfkdsdfksdfn'} />
       <MessageCard name={'Sevn'} message={'asdfsdfsf'} />
       <MessageCard name={'Chad'} message={'rrrfrfrfrf'} />
-      <MessageCard name={'Kenny'} message={'sdfsdfsdfsd'} />
+      <MessageCard name={'Kenny'} message={'sdfsdfsdfsd'} /> */}
     </ScrollView>
   )
 }
