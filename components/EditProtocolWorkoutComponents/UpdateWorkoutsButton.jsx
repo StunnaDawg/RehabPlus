@@ -11,9 +11,10 @@ import { db } from "../../firebase"
 const UpdateWorkoutsButton = ({workoutTitle, workoutDescription, workoutExercises, setOnAppear, workoutId, protocolId}) => {
   const navigation = useNavigation()
   const workoutDocRef = doc(db, "protocols", protocolId, 'workouts', workoutId)
-  const onSubmitProtocol = async () => {
+  const onSubmitUpdateWorkout = async () => {
       try{
 console.log(workoutDocRef)
+console.log("exercises to add to document", workoutExercises)
 const updateData = {};
 if (workoutTitle) {
     updateData["workout.title"] = workoutTitle;
@@ -21,6 +22,11 @@ if (workoutTitle) {
 if (workoutDescription) {
     updateData["workout.description"] = workoutDescription;
 }
+
+if (workoutExercises) {
+  updateData["workout.exercises"] = workoutExercises;
+}
+
 
 if (Object.keys(updateData).length > 0) { // Only update if there's data to update
     await updateDoc(workoutDocRef, updateData);
@@ -33,7 +39,7 @@ if (Object.keys(updateData).length > 0) { // Only update if there's data to upda
   }
 return (
   <View>
-    <Button onPress={onSubmitProtocol}>Update Protocol</Button>
+    <Button onPress={onSubmitUpdateWorkout} icon='pencil'>Update Workout</Button>
   </View>
 )
 }
