@@ -15,13 +15,13 @@ import { useSingleWorkoutContext } from "../../workoutContext"
 import "react-native-get-random-values"
 import { v4 as uuidv4 } from "uuid"
 
-const ExerciseWidget = ({ id, categoryId, letter, index }) => {
+const ExerciseWidget = ({ id, categoryId, letter, index, reps, sets }) => {
   const [exerciseWorkoutData, setExerciseWorkoutData] = useSingleWorkoutContext(
     []
   )
   const [widgetData, setWidgetData] = useState({})
-  const [exerciseSets, setExerciseSets] = useState(exerciseWorkoutData.sets || "0")
-  const [exerciseReps, setExerciseReps] = useState(exerciseWorkoutData.reps || "0")
+  const [exerciseSets, setExerciseSets] = useState(sets || "0")
+  const [exerciseReps, setExerciseReps] = useState(reps || "0")
   const isFocused = useIsFocused()
 
   useEffect(() => {
@@ -42,13 +42,6 @@ const ExerciseWidget = ({ id, categoryId, letter, index }) => {
   useEffect(() => {
     setWidgetData({ ...widgetData, sets: exerciseSets })
   }, [exerciseSets])
-
-  // useEffect(() => {
-  //   setExerciseWorkoutData((prevData) => [
-  //     ...prevData,
-  //     { sets: exerciseSets, reps: exerciseReps },
-  //   ]);
-  // }, [exerciseSets, exerciseReps]);
 
   useEffect(() => {
     console.log("exercise widget data", { ...widgetData })
@@ -98,7 +91,9 @@ const ExerciseWidget = ({ id, categoryId, letter, index }) => {
             mode="flat"
             defaultValue={exerciseReps}
             keyboardType="numeric"
-            onChangeText={(reps) => setExerciseReps(reps)}
+            onChangeText={(reps) => {
+              setExerciseReps(reps)
+            }}
           ></TextInput>
         </Card.Actions>
       </Card.Content>
@@ -107,23 +102,24 @@ const ExerciseWidget = ({ id, categoryId, letter, index }) => {
           <Button
             onPress={async () => {
               await setExerciseWorkoutData((prevData) => {
-                const updatedData = [...prevData];
-                // Find the existing exercise data object in the array
+                const updatedData = [...prevData]
                 const existingExerciseData = updatedData.find(
                   (exercise) => exercise.exerciseId === id
-                );
-              
+                )
+
                 if (existingExerciseData) {
-                  // Merge the reps and sets into the existing object
-                  existingExerciseData.reps = exerciseReps;
-                  existingExerciseData.sets = exerciseSets;
+                  existingExerciseData.reps = exerciseReps
+                  existingExerciseData.sets = exerciseSets
                 } else {
-                  // If the exercise data doesn't exist, add it as a new object
-                  updatedData.push({ exerciseId, reps: exerciseReps, sets: exerciseSets });
+                  updatedData.push({
+                    exerciseId,
+                    reps: exerciseReps,
+                    sets: exerciseSets,
+                  })
                 }
-              
-                return updatedData;
-              });
+
+                return updatedData
+              })
             }}
             icon="pencil"
           >

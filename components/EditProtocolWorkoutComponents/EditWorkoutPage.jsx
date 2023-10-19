@@ -100,6 +100,8 @@ const EditWorkout = () => {
               categoryId={exercise.categoryId}
               letter={letterData}
               index={index + 1}
+              sets={exercise.sets}
+              reps={exercise.reps}
             />
           )
         })}
