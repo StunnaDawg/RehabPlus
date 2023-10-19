@@ -36,7 +36,7 @@ const EditWorkoutsPage = ({ id }) => {
   }, [clientWorkouts])
 
   useEffect(() => {
-    console.log("workout collection", workoutsSubCollectionRef)
+    console.log("workout userId", protocolEditData.userId)
   }, [])
   return (
     <>
@@ -58,6 +58,7 @@ const EditWorkoutsPage = ({ id }) => {
               workoutTitle={widget.workout.title}
               id={widget.id}
               protocolId={protocolEditData.id}
+              userId={protocolEditData.userId}
             />
           )
         })}

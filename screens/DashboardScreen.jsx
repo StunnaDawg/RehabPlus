@@ -5,13 +5,12 @@ import ClientWidget from "../components/ClientScreenComponents/ClientWidget"
 import ProtocolWidget from "../components/ProtocolScreenComponents/ProtocolWidget"
 
 const DashboardScreen = () => {
-
   return (
     <>
       <ScrollView className="flex-1">
-        <InboxWidget />
         <ProtocolWidget />
         <ClientWidget />
+        <InboxWidget />
       </ScrollView>
     </>
   )
