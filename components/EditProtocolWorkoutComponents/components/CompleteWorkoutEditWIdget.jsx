@@ -6,6 +6,7 @@ import { useIsFocused, useNavigation } from "@react-navigation/native"
 import { useSingleEditWorkoutContext } from "../../../editWorkoutContext"
 import GetSingleWorkout from "../../../functions/getSingleWorkout"
 import DeleteWorkoutButton from "./DeleteWorkoutButton"
+import { useRefreshContext } from "../../../refreshKey"
 
 const CompleteWorkoutEditWidget = ({
   id,
@@ -14,6 +15,7 @@ const CompleteWorkoutEditWidget = ({
   userId,
 }) => {
   const [editWorkoutData, setEditWorkoutData] = useSingleEditWorkoutContext([])
+  const [refreshKey, setRefreshKey] = useRefreshContext(false)
   const isFocused = useIsFocused()
   const navigation = useNavigation()
 
@@ -28,6 +30,14 @@ const CompleteWorkoutEditWidget = ({
       workoutTitle,
       userId,)
   }, [])
+
+  useEffect(() => {
+    console.log('refresh')
+    const getRefreshData = async () => {
+      await GetSingleWorkout(id, protocolId, setEditWorkoutData)
+    }
+    getRefreshData()
+  }, [refreshKey])
 
   useEffect(() => {
     console.log("workout to be edited", editWorkoutData)

@@ -1,5 +1,5 @@
 import { View, Text, ScrollView } from "react-native"
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import { Button, TextInput } from "react-native-paper"
 import { useNavigation } from "@react-navigation/native"
 import { useSingleWorkoutContext } from "../../workoutContext"
@@ -9,6 +9,7 @@ import { useSingleEditWorkoutContext } from "../../editWorkoutContext"
 import { useIsFocused } from "@react-navigation/native"
 import UpdateWorkoutsButton from "./UpdateWorkoutsButton"
 import { useSingleProtocolContext } from "../../protocolContext"
+import { useRefreshContext } from "../../refreshKey"
 
 const EditWorkout = () => {
   const [editWorkoutData, setEditWorkoutData] = useSingleEditWorkoutContext([])
@@ -16,15 +17,18 @@ const EditWorkout = () => {
   const [exerciseWorkoutData, setExerciseWorkoutData] = useSingleWorkoutContext(
     []
   )
+  const [refreshKey, setRefreshKey] = useRefreshContext(false)
   const [workoutTitleText, setWorkoutTitleText] = useState(defaultWorkoutTitle)
   const [workoutDescriptionText, setWorkoutDescriptionText] = useState(defaultWorkoutDescription)
   const [isNewWorkout, setIsNewWorkout] = useState(false)
   const [onAppear, setOnAppear] = useState(true)
   const navigation = useNavigation()
   const isFocused = useIsFocused()
-  let defaultWorkoutTitle = editWorkoutData.workout.title
-  let defaultWorkoutDescription = editWorkoutData.workout.description
-  let defaultExercises = editWorkoutData.workout.exercises
+  const defaultWorkoutTitle = useMemo(() => editWorkoutData.workout.title, [editWorkoutData]);
+
+const defaultWorkoutDescription = useMemo(() => editWorkoutData.workout.description, [editWorkoutData]);
+
+const defaultExercises = useMemo(() => editWorkoutData.workout.exercises, [editWorkoutData]);
   let workoutId = editWorkoutData.id
 
   useEffect(() => {
@@ -38,6 +42,13 @@ const EditWorkout = () => {
     console.log("exerciseState protocol id", protocolEditData.userId)
     
   }, [isFocused])
+
+  useEffect(() => {
+    console.log('workout data', editWorkoutData)
+      setExerciseWorkoutData(defaultExercises)
+      console.log('if onAppear workoutdata',exerciseWorkoutData)
+    
+  }, [refreshKey])
 
   return (
     <>

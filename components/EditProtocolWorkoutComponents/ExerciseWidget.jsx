@@ -18,7 +18,17 @@ import ExercsieWidgetDeleteButton from "./components/ExercsieWidgetDeleteButton"
 import ExerciseWidgetDeleteButton from "./components/ExercsieWidgetDeleteButton"
 
 // id is the exercise id, change la
-const ExerciseWidget = ({ id, categoryId, letter, index, reps, sets, protocolId, workoutId, userId }) => {
+const ExerciseWidget = ({
+  id,
+  categoryId,
+  letter,
+  index,
+  reps,
+  sets,
+  protocolId,
+  workoutId,
+  userId,
+}) => {
   const [exerciseWorkoutData, setExerciseWorkoutData] = useSingleWorkoutContext(
     []
   )
@@ -67,7 +77,13 @@ const ExerciseWidget = ({ id, categoryId, letter, index, reps, sets, protocolId,
         <IconButton icon="eye" size={18}>
           View
         </IconButton>
-        <ExerciseWidgetDeleteButton workoutId={workoutId} protocolId={protocolId} exerciseId={id} userId={userId} setExerciseState={setExerciseWorkoutData} />
+        <ExerciseWidgetDeleteButton
+          workoutId={workoutId}
+          protocolId={protocolId}
+          exerciseId={id}
+          userId={userId}
+          setExerciseState={setExerciseWorkoutData}
+        />
       </Card.Content>
       <Card.Content className="flex-1 flex-row justify-center items-center ">
         <Card.Actions>

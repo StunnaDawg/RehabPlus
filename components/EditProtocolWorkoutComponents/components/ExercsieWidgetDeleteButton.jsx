@@ -4,8 +4,10 @@ import { Button, IconButton } from 'react-native-paper'
 import { FIREBASE_AUTH, db } from '../../../firebase'
 import { collection, deleteDoc, doc, getDoc, updateDoc, deleteField } from 'firebase/firestore'
 import { useNavigation } from '@react-navigation/native'
+import { useRefreshContext } from '../../../refreshKey'
 
 const ExerciseWidgetDeleteButton = ({workoutId, protocolId, exerciseId, userId}) => {
+    const [refreshKey, setRefreshKey] = useRefreshContext(false)
     const navigation = useNavigation()
     const protocolRef = doc(db, "protocols", protocolId)
     const currentWorkout = doc(protocolRef, 'workouts', workoutId)
@@ -19,6 +21,7 @@ const ExerciseWidgetDeleteButton = ({workoutId, protocolId, exerciseId, userId})
       },
       {text: 'Delete', onPress: async () => {
         if (userId === FIREBASE_AUTH?.currentUser?.uid) {
+            console.log('before set', refreshKey)
             try {
                 console.log('Delete pressed');
     
@@ -38,6 +41,8 @@ const ExerciseWidgetDeleteButton = ({workoutId, protocolId, exerciseId, userId})
     
                     // Update the workout document with the modified exercises array
                     await updateDoc(currentWorkout, { "workout.exercises": exercises });
+                    setRefreshKey(!refreshKey);
+                    console.log('after set', refreshKey)
                 }
 
     
