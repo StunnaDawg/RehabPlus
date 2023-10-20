@@ -48,7 +48,7 @@ const defaultExercises = useMemo(() => editWorkoutData.workout.exercises, [editW
       setExerciseWorkoutData(defaultExercises)
       console.log('if onAppear workoutdata',exerciseWorkoutData)
     
-  }, [refreshKey])
+  }, [refreshKey, editWorkoutData])
 
   return (
     <>
