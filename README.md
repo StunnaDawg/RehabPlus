@@ -1,7 +1,7 @@
 # RehabPlus
 Designed for orthopedic surgeons, physiotherapists, and patients, Rehab Plus is a post-surgical/injury recovery application. Built with React Native and React Navigation, it offers robust backend support with Firebase integration for Authentication and Firestore for the database.
 
-Features:
+## Features
 
 Patients can access protocols assigned by their practitioner, allowing for structured and efficient recovery. Each exercise within these protocols comes with a detailed video and description.
 
