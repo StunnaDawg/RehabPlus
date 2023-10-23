@@ -2,14 +2,14 @@ import { View, Text, ScrollView } from "react-native"
 import React, { useEffect, useMemo, useState } from "react"
 import { Button, TextInput } from "react-native-paper"
 import { useNavigation } from "@react-navigation/native"
-import { useSingleWorkoutContext } from "../../workoutContext"
+import { useSingleWorkoutContext } from "../../context/workoutContext"
 import ExerciseWidget from "./ExerciseWidget"
 import CreateWorkoutButton from "./CreateWorkoutButton"
-import { useSingleEditWorkoutContext } from "../../editWorkoutContext"
+import { useSingleEditWorkoutContext } from "../../context/editWorkoutContext"
 import { useIsFocused } from "@react-navigation/native"
 import UpdateWorkoutsButton from "./UpdateWorkoutsButton"
-import { useSingleProtocolContext } from "../../protocolContext"
-import { useRefreshContext } from "../../refreshKey"
+import { useSingleProtocolContext } from "../../context/protocolContext"
+import { useRefreshContext } from "../../context/refreshKey"
 
 const EditWorkout = () => {
   const [editWorkoutData, setEditWorkoutData] = useSingleEditWorkoutContext([])

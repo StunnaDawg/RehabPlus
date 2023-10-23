@@ -10,7 +10,7 @@ import {
   SignUpScreen
 } from "./screens"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
-import { AuthContext } from "./context"
+import { AuthContext } from "./context/context"
 import { NavBar } from "./components"
 import CreateNewClient from "./screens/CreateNewClient"
 import EditProtocol from "./screens/EditProtocol"

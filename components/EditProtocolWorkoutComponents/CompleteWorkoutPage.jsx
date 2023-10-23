@@ -2,13 +2,12 @@ import { View, Text } from "react-native"
 import React, { useEffect, useState } from "react"
 import { Button } from "react-native-paper"
 import { useNavigation } from "@react-navigation/native"
-import { useCompleteWorkoutContext } from "../../completeWorkoutContext"
 
 import { useIsFocused } from "@react-navigation/native"
 
 import CompleteWorkoutEditWidget from "./components/CompleteWorkoutEditWIdget"
 import GetProtocolWorkouts from "../../functions/getProtocolWorkouts"
-import { useSingleProtocolContext } from "../../protocolContext"
+import { useSingleProtocolContext } from "../../context/protocolContext"
 import { collection } from "firebase/firestore"
 import { db } from "../../firebase"
 

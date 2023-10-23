@@ -5,7 +5,6 @@ import { db } from "../../firebase"
 import {collection } from "firebase/firestore"
 import getFireStoreData from "../../functions/getFireStoreData"
 import ProtocolAddScreenWidget from "./components/AddProtocolScreenWidget"
-import { useAddClientProtocol } from "./functions/AddProtocolContext"
 
 const AddClientProtocolScreen = () => {
   const [protocolList, setProtocolList] = useState([])

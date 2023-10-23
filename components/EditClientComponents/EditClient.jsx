@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react"
 import { Button, TextInput } from "react-native-paper"
 import DeleteButton from "./components/DeleteClientButton"
 import UpdateClientButton from "./components/EditButton"
-import { useSingleClientContext } from "../../clientContext"
+import { useSingleClientContext } from "../../context/clientContext"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
-import { useChangeClientProtocol } from "./functions/EditProtocolContext"
+import { useChangeClientProtocol } from "../../context/EditProtocolContext"
 
 const EditClient = () => {
   const [clientEditData] = useSingleClientContext()

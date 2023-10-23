@@ -1,16 +1,17 @@
 import { NavigationContainer } from "@react-navigation/native"
 import { NavStack } from "./NavStack"
 import { Provider as PaperProvider } from "react-native-paper"
-import { AuthProvider } from "./context"
-import { SingleProtocolProvider } from "./protocolContext"
-import { SingleClientProvider } from "./clientContext"
-import { EditProtocolProvider } from "./components/EditClientComponents/functions/EditProtocolContext"
-import { AddProtocolProvider } from "./components/CreateClientComponents/functions/AddProtocolContext"
-import { ExerciseContextProvider } from "./workoutContext"
-import { WorkoutContextProvider } from "./addWorkoutProtocol"
-import { CompleteWorkoutContextProvider } from "./completeWorkoutContext"
-import { EditWorkoutContextProvider } from "./editWorkoutContext"
-import { RefreshContextProvider } from "./refreshKey"
+import { AuthProvider } from "./context/context"
+import { RefreshContextProvider } from "./context/refreshKey"
+import { EditWorkoutContextProvider } from "./context/editWorkoutContext"
+import { CompleteWorkoutContextProvider } from "./context/completeWorkoutContext"
+import { WorkoutContextProvider } from "./context/addWorkoutProtocol"
+import { ExerciseContextProvider } from "./context/workoutContext"
+import { SingleClientProvider } from "./context/clientContext"
+import { SingleProtocolProvider } from "./context/protocolContext"
+import { AddProtocolProvider } from "./context/AddProtocolContext"
+import { EditProtocolProvider } from "./context/EditProtocolContext"
+
 
 export default function App() {
   return (

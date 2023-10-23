@@ -6,7 +6,7 @@ import { useNavigation } from "@react-navigation/native"
 import GetSingleDoc from "../../functions/getSingleDoc"
 import { collection } from "firebase/firestore"
 import { db } from "../../firebase"
-import { useSingleProtocolContext } from "../../protocolContext"
+import { useSingleProtocolContext } from "../../context/protocolContext"
 import { FIREBASE_AUTH } from "../../firebase"
 
 const ProtocolScreenWidget = ({ protocolTitle, weeks, outline, id, userId }) => {

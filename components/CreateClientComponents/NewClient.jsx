@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react"
 import { Checkbox, TextInput, Button } from "react-native-paper"
 import CreateButton from "./components/CreateButton"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
-import { useAddClientProtocol } from "./functions/AddProtocolContext"
+import { useAddClientProtocol } from "../../context/AddProtocolContext"
 
 const NewClient = () => {
   const [clientName, setClientName] = useState("")

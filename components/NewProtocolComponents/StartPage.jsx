@@ -4,7 +4,7 @@ import { useState } from "react"
 import CreateButton from "./components/CreateButton"
 import { useNavigation } from "@react-navigation/native"
 import AddWorkout from "../AddProtocolWorkoutComponents/AddWorkout"
-import { useCompleteWorkoutContext } from "../../completeWorkoutContext"
+import { useCompleteWorkoutContext } from "../../context/completeWorkoutContext"
 
 const StartPage = () => {
   const [completeWorkoutData, setCompleteWorkoutData] =

@@ -3,10 +3,11 @@ import { Button, Card, Text } from "react-native-paper"
 // import ExerciseImage from "../../../assets/physcial-medicine.jpg"
 import React, { useEffect, useState } from "react"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
-import { useSingleEditWorkoutContext } from "../../../editWorkoutContext"
+
 import GetSingleWorkout from "../../../functions/getSingleWorkout"
 import DeleteWorkoutButton from "./DeleteWorkoutButton"
-import { useRefreshContext } from "../../../refreshKey"
+import { useRefreshContext } from "../../../context/refreshKey"
+import { useSingleEditWorkoutContext } from "../../../context/editWorkoutContext"
 
 const CompleteWorkoutEditWidget = ({
   id,

@@ -1,10 +1,10 @@
 import { View, Text } from "react-native"
 import React, { useEffect } from "react"
 import { Button } from "react-native-paper"
-import { useWorkoutContext } from "../../addWorkoutProtocol"
+import { useWorkoutContext } from "../../context/addWorkoutProtocol"
 import { useNavigation } from "@react-navigation/native"
-import { useCompleteWorkoutContext } from "../../completeWorkoutContext"
-import { useSingleWorkoutContext } from "../../workoutContext"
+import { useCompleteWorkoutContext } from "../../context/completeWorkoutContext"
+import { useSingleWorkoutContext } from "../../context/workoutContext"
 import { collection, doc, updateDoc } from "firebase/firestore"
 import { db } from "../../firebase"
 

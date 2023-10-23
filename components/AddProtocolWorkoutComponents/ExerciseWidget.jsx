@@ -11,9 +11,7 @@ import ExerciseImage from "../../assets/physcial-medicine.jpg"
 import React, { useEffect, useState } from "react"
 import GetSingleExercise from "../../functions/getSingleExercise"
 import { useIsFocused } from "@react-navigation/native"
-import { useSingleWorkoutContext } from "../../workoutContext"
-import "react-native-get-random-values"
-import { v4 as uuidv4 } from "uuid"
+import { useSingleWorkoutContext } from "../../context/workoutContext"
 
 const ExerciseWidget = ({ id, categoryId, letter, index }) => {
   const [exerciseWorkoutData, setExerciseWorkoutData] = useSingleWorkoutContext(

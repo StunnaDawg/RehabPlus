@@ -3,7 +3,7 @@ import { Card, Button } from "react-native-paper"
 import theImage from "../../../assets/ACL-Repair-Surgery.jpg"
 import React, { useEffect, useState } from "react"
 import { useNavigation } from "@react-navigation/native"
-import { useChangeClientProtocol } from "../functions/EditProtocolContext"
+import { useChangeClientProtocol } from "../../../context/EditProtocolContext"
 
 const ProtocolEditScreenWidget = ({ protocolTitle, weeks, outline, id }) => {
   const [newClientProtocol, setClientProtocol] = useChangeClientProtocol()
