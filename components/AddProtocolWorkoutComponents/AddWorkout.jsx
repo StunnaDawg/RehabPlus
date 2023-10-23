@@ -2,9 +2,10 @@ import { View, Text } from "react-native"
 import React, { useEffect } from "react"
 import { Button } from "react-native-paper"
 import { useNavigation } from "@react-navigation/native"
-import { useCompleteWorkoutContext } from "../../completeWorkoutContext"
+
 import CompleteWorkoutWidget from "./components/CompleteWorkoutWIdget"
 import { useIsFocused } from "@react-navigation/native"
+import { useCompleteWorkoutContext } from "../../context/completeWorkoutContext"
 
 const AddWorkout = () => {
   const [completeWorkoutData, setCompleteWorkoutData] =

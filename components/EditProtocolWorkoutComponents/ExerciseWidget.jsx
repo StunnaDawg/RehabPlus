@@ -11,10 +11,7 @@ import ExerciseImage from "../../assets/physcial-medicine.jpg"
 import React, { useEffect, useState } from "react"
 import GetSingleExercise from "../../functions/getSingleExercise"
 import { useIsFocused } from "@react-navigation/native"
-import { useSingleWorkoutContext } from "../../workoutContext"
-import "react-native-get-random-values"
-import { v4 as uuidv4 } from "uuid"
-import ExercsieWidgetDeleteButton from "./components/ExercsieWidgetDeleteButton"
+import { useSingleWorkoutContext } from "../../context/workoutContext"
 import ExerciseWidgetDeleteButton from "./components/ExercsieWidgetDeleteButton"
 
 // id is the exercise id, change la

@@ -3,58 +3,49 @@ import React, { useEffect, useMemo, useState } from "react"
 import { Button, TextInput } from "react-native-paper"
 import { useNavigation } from "@react-navigation/native"
 import { useSingleWorkoutContext } from "../../context/workoutContext"
-import ExerciseWidget from "./ExerciseWidget"
-import CreateWorkoutButton from "./CreateWorkoutButton"
 import { useSingleEditWorkoutContext } from "../../context/editWorkoutContext"
 import { useIsFocused } from "@react-navigation/native"
-import UpdateWorkoutsButton from "./UpdateWorkoutsButton"
 import { useSingleProtocolContext } from "../../context/protocolContext"
 import { useRefreshContext } from "../../context/refreshKey"
+import AddWorkoutButton from "./CreateWorkoutButton"
+import AddWorkoutExerciseWidget from "./AddWorkoutExerciseWidget"
 
-const EditWorkout = () => {
+const AddWorkoutCurrentProtocol = () => {
   const [editWorkoutData, setEditWorkoutData] = useSingleEditWorkoutContext([])
   const [protocolEditData] = useSingleProtocolContext()
   const [exerciseWorkoutData, setExerciseWorkoutData] = useSingleWorkoutContext(
     []
   )
   const [refreshKey, setRefreshKey] = useRefreshContext(false)
-  const [workoutTitleText, setWorkoutTitleText] = useState(defaultWorkoutTitle)
-  const [workoutDescriptionText, setWorkoutDescriptionText] = useState(defaultWorkoutDescription)
-  const [isNewWorkout, setIsNewWorkout] = useState(false)
+  const [workoutTitleText, setWorkoutTitleText] = useState('')
+  const [workoutDescriptionText, setWorkoutDescriptionText] = useState('')
   const [onAppear, setOnAppear] = useState(true)
   const navigation = useNavigation()
   const isFocused = useIsFocused()
-  const defaultWorkoutTitle = useMemo(() => editWorkoutData.workout.title, [editWorkoutData]);
 
-const defaultWorkoutDescription = useMemo(() => editWorkoutData.workout.description, [editWorkoutData]);
+  // useEffect(() => {
+  //   console.log('workout data', editWorkoutData)
+  //   if (onAppear) {
+  //     setExerciseWorkoutData(defaultExercises)
+  //     console.log('if onAppear workoutdata',exerciseWorkoutData)
+  //   } 
 
-const defaultExercises = useMemo(() => editWorkoutData.workout.exercises, [editWorkoutData]);
-  let workoutId = editWorkoutData.id
-
-  useEffect(() => {
-    console.log('workout data', editWorkoutData)
-    if (onAppear) {
-      setExerciseWorkoutData(defaultExercises)
-      console.log('if onAppear workoutdata',exerciseWorkoutData)
-    } 
-
-    console.log("exerciseState update id", editWorkoutData.id)
-    console.log("exerciseState protocol id", protocolEditData.userId)
+  //   console.log("exerciseState update id", editWorkoutData.id)
+  //   console.log("exerciseState protocol id", protocolEditData.userId)
     
-  }, [isFocused])
+  // }, [isFocused])
 
-  useEffect(() => {
-    console.log('workout data', editWorkoutData)
-      setExerciseWorkoutData(defaultExercises)
-      console.log('if onAppear workoutdata',exerciseWorkoutData)
+  // useEffect(() => {
+  //   console.log('workout data', editWorkoutData)
+  //     setExerciseWorkoutData(defaultExercises)
+  //     console.log('if onAppear workoutdata',exerciseWorkoutData)
     
-  }, [refreshKey, editWorkoutData])
+  // }, [refreshKey, editWorkoutData])
 
   return (
     <>
       <View className="mx-4 my-1">
-        {!isNewWorkout ? (
-          <UpdateWorkoutsButton
+          <AddWorkoutButton
             workoutTitle={workoutTitleText}
             workoutDescription={workoutDescriptionText}
             workoutExercises={exerciseWorkoutData}
@@ -62,17 +53,11 @@ const defaultExercises = useMemo(() => editWorkoutData.workout.exercises, [editW
             workoutId={editWorkoutData.id}
             protocolId={protocolEditData.id}
           />
-        ) : (
-          null
-        )}
       </View>
       <View className="mx-4 my-1">
         <Text>Workout Title</Text>
         <TextInput
           mode="outlined"
-          defaultValue={
-            defaultWorkoutTitle !== null ? defaultWorkoutTitle : "loading..."
-          }
           onChangeText={(text) => setWorkoutTitleText(text)}
         ></TextInput>
       </View>
@@ -81,11 +66,6 @@ const defaultExercises = useMemo(() => editWorkoutData.workout.exercises, [editW
         <Text>Workout Description</Text>
         <TextInput
           mode="outlined"
-          defaultValue={
-            defaultWorkoutDescription !== null
-              ? defaultWorkoutDescription
-              : "loading..."
-          }
           onChangeText={(text) => setWorkoutDescriptionText(text)}
         ></TextInput>
       </View>
@@ -105,7 +85,7 @@ const defaultExercises = useMemo(() => editWorkoutData.workout.exercises, [editW
 
           console.log("exercsie edit widget", index, exercise.exerciseId)
           return (
-            <ExerciseWidget
+            <AddWorkoutExerciseWidget
               key={exercise.exerciseId}
               id={exercise.exerciseId}
               categoryId={exercise.categoryId}
@@ -124,4 +104,4 @@ const defaultExercises = useMemo(() => editWorkoutData.workout.exercises, [editW
   )
 }
 
-export default EditWorkout
+export default AddWorkoutCurrentProtocol

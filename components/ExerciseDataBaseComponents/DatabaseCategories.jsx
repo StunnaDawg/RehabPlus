@@ -6,7 +6,7 @@ import getExerciseFireStoreData from "../../functions/getExerciseData"
 import { db } from "../../firebase"
 import { useIsFocused } from "@react-navigation/native"
 import { collection } from "firebase/firestore"
-import { useSingleWorkoutContext } from "../../workoutContext"
+import { useSingleWorkoutContext } from "../../context/workoutContext"
 
 const DatabaseCategories = () => {
   const [exerciseCategories, setExerciseCategories] = useState([])

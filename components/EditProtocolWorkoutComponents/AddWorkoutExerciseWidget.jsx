@@ -13,7 +13,7 @@ import GetSingleExercise from "../../functions/getSingleExercise"
 import { useIsFocused } from "@react-navigation/native"
 import { useSingleWorkoutContext } from "../../context/workoutContext"
 
-const ExerciseWidget = ({ id, categoryId, letter, index }) => {
+const AddWorkoutExerciseWidget = ({ id, categoryId, letter, index }) => {
   const [exerciseWorkoutData, setExerciseWorkoutData] = useSingleWorkoutContext(
     []
   )
@@ -105,23 +105,27 @@ const ExerciseWidget = ({ id, categoryId, letter, index }) => {
           <Button
             onPress={async () => {
               await setExerciseWorkoutData((prevData) => {
-                const updatedData = [...prevData];
+                const updatedData = [...prevData]
                 // Find the existing exercise data object in the array
                 const existingExerciseData = updatedData.find(
                   (exercise) => exercise.exerciseId === id
-                );
-              
+                )
+
                 if (existingExerciseData) {
                   // Merge the reps and sets into the existing object
-                  existingExerciseData.reps = exerciseReps;
-                  existingExerciseData.sets = exerciseSets;
+                  existingExerciseData.reps = exerciseReps
+                  existingExerciseData.sets = exerciseSets
                 } else {
                   // If the exercise data doesn't exist, add it as a new object
-                  updatedData.push({ exerciseId, reps: exerciseReps, sets: exerciseSets });
+                  updatedData.push({
+                    exerciseId,
+                    reps: exerciseReps,
+                    sets: exerciseSets,
+                  })
                 }
-              
-                return updatedData;
-              });
+
+                return updatedData
+              })
             }}
             icon="pencil"
           >
@@ -142,4 +146,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default ExerciseWidget
+export default AddWorkoutExerciseWidget

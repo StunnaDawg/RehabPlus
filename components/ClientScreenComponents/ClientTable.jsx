@@ -5,8 +5,8 @@ import { useIsFocused, useNavigation } from "@react-navigation/native"
 import { db } from "../../firebase"
 import { collection } from "firebase/firestore"
 import getClientFireStoreData from "../../functions/getClientFireStoreData"
-import { useSingleClientContext } from "../../clientContext"
 import GetSingleDoc from "../../functions/getSingleDoc"
+import { useSingleClientContext } from "../../context/clientContext"
 
 const ClientTable = () => {
   const [clientEditData, setClientEditData] = useSingleClientContext()

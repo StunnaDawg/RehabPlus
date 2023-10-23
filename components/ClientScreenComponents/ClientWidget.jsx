@@ -2,7 +2,6 @@ import { View, Text, ScrollView } from "react-native"
 import { useState, useEffect } from "react"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import { DataTable, Button, IconButton } from "react-native-paper"
-import { UserIcon } from "react-native-heroicons/solid"
 import { db } from "../../firebase"
 import { collection } from "firebase/firestore"
 import getFireStoreData from "../../functions/getFireStoreData"
@@ -38,19 +37,20 @@ const ClientWidget = () => {
             <DataTable.Title></DataTable.Title>
           </DataTable.Header>
 
-          {clientWidgetList.map((client) => (
-            client.status ?
-            <DataTable.Row key={client.id}>
-              <DataTable.Cell>
-                <IconButton icon="account-circle" size={20}></IconButton>
-              </DataTable.Cell>
-              <DataTable.Cell>{client.name}</DataTable.Cell>
-              <DataTable.Cell>protocol</DataTable.Cell>
-              <DataTable.Cell>
-                <Button icon="account-eye">View</Button>
-              </DataTable.Cell>
-            </DataTable.Row> : null
-          ))}
+          {clientWidgetList.map((client) =>
+            client.status ? (
+              <DataTable.Row key={client.id}>
+                <DataTable.Cell>
+                  <IconButton icon="account-circle" size={20}></IconButton>
+                </DataTable.Cell>
+                <DataTable.Cell>{client.name}</DataTable.Cell>
+                <DataTable.Cell>protocol</DataTable.Cell>
+                <DataTable.Cell>
+                  <Button icon="account-eye">View</Button>
+                </DataTable.Cell>
+              </DataTable.Row>
+            ) : null
+          )}
         </DataTable>
       </ScrollView>
     </View>

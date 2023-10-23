@@ -4,7 +4,7 @@ import { Button, IconButton } from 'react-native-paper'
 import { FIREBASE_AUTH, db } from '../../../firebase'
 import { collection, deleteDoc, doc, getDoc, updateDoc, deleteField } from 'firebase/firestore'
 import { useNavigation } from '@react-navigation/native'
-import { useRefreshContext } from '../../../refreshKey'
+import { useRefreshContext } from '../../../context/refreshKey'
 
 const ExerciseWidgetDeleteButton = ({workoutId, protocolId, exerciseId, userId}) => {
     const [refreshKey, setRefreshKey] = useRefreshContext(false)

@@ -2,7 +2,7 @@ import { View } from "react-native"
 import { Button, Card, Text } from "react-native-paper"
 import ExerciseImage from "../../assets/physcial-medicine.jpg"
 import React, { useEffect, useState } from "react"
-import { useSingleWorkoutContext } from "../../workoutContext"
+import { useSingleWorkoutContext } from "../../context/workoutContext"
 import { useNavigation } from "@react-navigation/native"
 
 const DatabaseExercise = ({ exerciseName, id, idOfCategory }) => {

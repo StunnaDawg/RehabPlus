@@ -2,9 +2,9 @@ import { View, Text, ScrollView } from "react-native"
 import React, { useEffect, useState } from "react"
 import { Button, TextInput } from "react-native-paper"
 import { useNavigation } from "@react-navigation/native"
-import { useSingleWorkoutContext } from "../../workoutContext"
 import ExerciseWidget from "./ExerciseWidget"
 import CreateWorkoutButton from "./CreateWorkoutButton"
+import { useSingleWorkoutContext } from "../../context/workoutContext"
 
 const CreateWorkout = () => {
   const [workoutTitleText, setWorkoutTitleText] = useState("")
