@@ -1,30 +1,58 @@
 import { View, Text } from "react-native"
 import React, { useEffect } from "react"
 import { Button } from "react-native-paper"
-import { useWorkoutContext } from "../../context/addWorkoutProtocol"
 import { useNavigation } from "@react-navigation/native"
-import { useCompleteWorkoutContext } from "../../context/completeWorkoutContext"
-import { useSingleWorkoutContext } from "../../context/workoutContext"
+import { addDoc, collection, doc, setLogLevel, LogLevel } from "firebase/firestore"
+import { FIREBASE_AUTH, db } from "../../firebase"
 
-const CreateWorkoutButton = ({title, description, exercises}) => {
-    const [workoutData, setNewWorkoutData] = useWorkoutContext([])
-    const [completeWorkoutData, setCompleteWorkoutData] = useCompleteWorkoutContext([])
-    const [exerciseWorkoutData, setExerciseWorkoutData] = useSingleWorkoutContext(
-        []
-      )
-    const navigation = useNavigation()
-    
+const AddWorkoutButton = ({
+  workoutTitle,
+  workoutDescription,
+  workoutExercises,
+  protocolId,
+}) => {
+  const navigation = useNavigation()
+  const workoutCollectionRef = collection(
+    db,
+    "protocols",
+    protocolId,
+    "workouts"
+  )
+  const onSubmitAddWorkout = async () => {
+    try {
+      console.log(workoutCollectionRef)
+      console.log("exercises to add to document", workoutExercises, 'in protocol', protocolId)
+      const newWorkoutData = {}
+      if (workoutTitle) {
+        newWorkoutData["title"] = workoutTitle
+      }
+      if (workoutDescription) {
+        newWorkoutData["description"] = workoutDescription
+      }
+
+      if (workoutExercises) {
+        newWorkoutData["exercises"] = workoutExercises
+      }
+
+      if (Object.keys(newWorkoutData).length > 0) {
+        console.log(newWorkoutData)
+        await addDoc(workoutCollectionRef,  {workout: newWorkoutData,
+          userId: FIREBASE_AUTH?.currentUser?.uid,
+        })
+      }
+
+      navigation.navigate("EditProtocolWorkoutScreen")
+    } catch (err) {
+      console.error(err)
+    }
+  }
   return (
-    <Button
-      icon="plus"
-      onPress={async () => {await setCompleteWorkoutData(prevData => ([
-        ...prevData,
-        { title, description, exercises }
-      ])); setNewWorkoutData([]); setExerciseWorkoutData([]); console.log('ya you pressed me'); navigation.navigate("EditProtocolWorkoutScreen")}}
-    >
-      Create Workout
-    </Button>
+    <View>
+      <Button onPress={onSubmitAddWorkout} icon="plus">
+        Add Workout
+      </Button>
+    </View>
   )
 }
 
-export default CreateWorkoutButton
+export default AddWorkoutButton

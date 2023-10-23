@@ -12,26 +12,14 @@ import React, { useEffect, useState } from "react"
 import GetSingleExercise from "../../functions/getSingleExercise"
 import { useIsFocused } from "@react-navigation/native"
 import { useSingleWorkoutContext } from "../../context/workoutContext"
-import ExerciseWidgetDeleteButton from "./components/ExercsieWidgetDeleteButton"
 
-// id is the exercise id, change la
-const ExerciseWidget = ({
-  id,
-  categoryId,
-  letter,
-  index,
-  reps,
-  sets,
-  protocolId,
-  workoutId,
-  userId,
-}) => {
+const AddWorkoutExerciseWidget = ({ id, categoryId, letter, index }) => {
   const [exerciseWorkoutData, setExerciseWorkoutData] = useSingleWorkoutContext(
     []
   )
   const [widgetData, setWidgetData] = useState({})
-  const [exerciseSets, setExerciseSets] = useState(sets || "0")
-  const [exerciseReps, setExerciseReps] = useState(reps || "0")
+  const [exerciseSets, setExerciseSets] = useState("0")
+  const [exerciseReps, setExerciseReps] = useState("0")
   const isFocused = useIsFocused()
 
   useEffect(() => {
@@ -52,6 +40,13 @@ const ExerciseWidget = ({
   useEffect(() => {
     setWidgetData({ ...widgetData, sets: exerciseSets })
   }, [exerciseSets])
+
+  // useEffect(() => {
+  //   setExerciseWorkoutData((prevData) => [
+  //     ...prevData,
+  //     { sets: exerciseSets, reps: exerciseReps },
+  //   ]);
+  // }, [exerciseSets, exerciseReps]);
 
   useEffect(() => {
     console.log("exercise widget data", { ...widgetData })
@@ -74,13 +69,9 @@ const ExerciseWidget = ({
         <IconButton icon="eye" size={18}>
           View
         </IconButton>
-        <ExerciseWidgetDeleteButton
-          workoutId={workoutId}
-          protocolId={protocolId}
-          exerciseId={id}
-          userId={userId}
-          setExerciseState={setExerciseWorkoutData}
-        />
+        <IconButton icon="delete" size={18}>
+          Delete
+        </IconButton>
       </Card.Content>
       <Card.Content className="flex-1 flex-row justify-center items-center ">
         <Card.Actions>
@@ -105,9 +96,7 @@ const ExerciseWidget = ({
             mode="flat"
             defaultValue={exerciseReps}
             keyboardType="numeric"
-            onChangeText={(reps) => {
-              setExerciseReps(reps)
-            }}
+            onChangeText={(reps) => setExerciseReps(reps)}
           ></TextInput>
         </Card.Actions>
       </Card.Content>
@@ -117,14 +106,17 @@ const ExerciseWidget = ({
             onPress={async () => {
               await setExerciseWorkoutData((prevData) => {
                 const updatedData = [...prevData]
+                // Find the existing exercise data object in the array
                 const existingExerciseData = updatedData.find(
                   (exercise) => exercise.exerciseId === id
                 )
 
                 if (existingExerciseData) {
+                  // Merge the reps and sets into the existing object
                   existingExerciseData.reps = exerciseReps
                   existingExerciseData.sets = exerciseSets
                 } else {
+                  // If the exercise data doesn't exist, add it as a new object
                   updatedData.push({
                     exerciseId,
                     reps: exerciseReps,
@@ -154,4 +146,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default ExerciseWidget
+export default AddWorkoutExerciseWidget

@@ -22,6 +22,7 @@ import CreateWorkout from "./components/AddProtocolWorkoutComponents/CreateWorko
 import ExerciseDataBase from "./screens/ExerciseDataBase"
 import EditProtocolWorkout from "./screens/EditProtocolWorkout"
 import EditWorkout from "./components/EditProtocolWorkoutComponents/EditWorkoutPage"
+import AddWorkoutCurrentProtocol from "./components/EditProtocolWorkoutComponents/AddNewWorkout"
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -65,6 +66,7 @@ const Footer = () => {
             <Stack.Screen name='ExerciseDataBase' component={ExerciseDataBase} />
             <Stack.Screen name='EditProtocolWorkoutScreen' component={EditProtocolWorkout} />
             <Stack.Screen name='EditWorkoutScreen' component={EditWorkout} />
+            <Stack.Screen name='AddNewWorkoutScreen' component={AddWorkoutCurrentProtocol} />
           </>
         ) : (
             <>
