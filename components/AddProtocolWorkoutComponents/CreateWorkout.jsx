@@ -1,22 +1,36 @@
 import { View, Text, ScrollView } from "react-native"
 import React, { useEffect, useState } from "react"
 import { Button, TextInput } from "react-native-paper"
-import { useNavigation } from "@react-navigation/native"
+import { useIsFocused, useNavigation } from "@react-navigation/native"
 import ExerciseWidget from "./ExerciseWidget"
 import CreateWorkoutButton from "./CreateWorkoutButton"
 import { useSingleWorkoutContext } from "../../context/workoutContext"
+import { useRefreshContext } from "../../context/refreshKey"
 
 const CreateWorkout = () => {
   const [workoutTitleText, setWorkoutTitleText] = useState("")
+  const [refreshKey, setRefreshKey] = useRefreshContext()
   const [workoutDescriptionText, setWorkoutDescriptionText] = useState("")
   const [exerciseWorkoutData, setExerciseWorkoutData] = useSingleWorkoutContext(
     []
   )
+  const [exerciseMap, setExerciseMap] = useState([])
   const navigation = useNavigation()
+  const isFocused = useIsFocused()
+const exercises = exerciseWorkoutData
+  useEffect(() => {
+    const awaitLoading = async () => {
+    setExerciseMap(exercises)
+    console.log('widget map', exerciseMap)
+    }
+    awaitLoading()
+    
+  }, [isFocused])
 
   useEffect(() => {
-    console.log("workout WIdget page:", exerciseWorkoutData)
-  }, [exerciseWorkoutData])
+    setExerciseMap(exerciseWorkoutData)
+  }, [exerciseWorkoutData, refreshKey])
+
   return (
     <>
     <View className="mx-4 my-1">
@@ -47,7 +61,7 @@ const CreateWorkout = () => {
         </Button>
       </View>
       <ScrollView className="pb-96">
-      {exerciseWorkoutData.map((exercise, index) => {
+      {exerciseMap.map((exercise, index) => {
         const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
         const letterData = letters[index % letters.length];
