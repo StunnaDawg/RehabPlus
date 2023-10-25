@@ -7,7 +7,7 @@ import { addDoc, collection } from 'firebase/firestore'
 import 'react-native-get-random-values'
 import { useCompleteWorkoutContext } from '../../../context/completeWorkoutContext'
 
-const CreateButton = ({protocolTitle, protocolOutline, protocolDaysPerWeek, protocolWeeks, protocolPublic, protocolWorkouts}) => {
+const CreateButton = ({protocolTitle, protocolOutline, protocolDaysPerWeek, protocolWeeks, protocolPublic, protocolPhases, protocolWorkouts}) => {
     const navigation = useNavigation()
     const protocolsCollectionRef = collection(db, "protocols")
     const [completeWorkoutData, setCompleteWorkoutData] =
@@ -23,16 +23,26 @@ const CreateButton = ({protocolTitle, protocolOutline, protocolDaysPerWeek, prot
             userId: FIREBASE_AUTH?.currentUser?.uid,
             public: protocolPublic
         })
-          
-        const workoutsSubCollectionRef = collection(protocolDocRef, 'workouts');
-        console.log(protocolWorkouts)
 
-        for (const workout of protocolWorkouts) {
-          await addDoc(workoutsSubCollectionRef,{
-            workout,
+          const phasesSubCollectionRef = collection(protocolDocRef, 'phases');
+        console.log(protocolPhases)
+
+        for (const phases of protocolPhases) {
+          await addDoc(phasesSubCollectionRef,{
+            phases,
             userId: FIREBASE_AUTH?.currentUser?.uid,
           } );
       }
+          
+      //   const workoutsSubCollectionRef = collection(protocolDocRef, 'workouts');
+      //   console.log(protocolWorkouts)
+
+      //   for (const workout of protocolWorkouts) {
+      //     await addDoc(workoutsSubCollectionRef,{
+      //       workout,
+      //       userId: FIREBASE_AUTH?.currentUser?.uid,
+      //     } );
+      // }
       setCompleteWorkoutData([])
         navigation.navigate("Protocol")
     } catch(err) {

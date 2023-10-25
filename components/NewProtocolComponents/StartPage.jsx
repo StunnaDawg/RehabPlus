@@ -1,19 +1,26 @@
 import { View, Text } from "react-native"
-import { Button, Switch, TextInput } from "react-native-paper"
+import { Button, Modal, Portal, Switch, TextInput } from "react-native-paper"
 import { useState } from "react"
 import CreateButton from "./components/CreateButton"
 import { useNavigation } from "@react-navigation/native"
 import AddWorkout from "../AddProtocolWorkoutComponents/AddWorkout"
 import { useCompleteWorkoutContext } from "../../context/completeWorkoutContext"
+import ModalContent from "./components/ModalContent"
+import { usePhasesContext } from "../../context/phasesAddContext"
 
 const StartPage = () => {
-  const [completeWorkoutData, setCompleteWorkoutData] =
-    useCompleteWorkoutContext([])
+  const [phasesData, setPhasesData] = usePhasesContext([])
   const [titleText, setTitleText] = useState("")
   const [outlineText, setOutlineText] = useState("")
   const [weeksText, setWeeksText] = useState("")
   const [daysPerWeek, setDaysPerWeek] = useState("1")
   const [isPublic, setIsPublic] = useState(false)
+  const [visible, setVisible] = useState(false);
+  const [phases, setPhases] = useState ([])
+
+  const showModal = () => setVisible(true);
+  const hideModal = () => setVisible(false);
+  const containerStyle = {backgroundColor: 'white', padding: 20};
   const navigation  = useNavigation()
 
   const onToggleSwitch = () => setIsPublic(!isPublic)
@@ -65,8 +72,16 @@ const StartPage = () => {
         protocolTitle={titleText}
         protocolWeeks={Number(weeksText)}
         protocolPublic={isPublic}
-        protocolWorkouts={completeWorkoutData}
+        protocolPhases={phases}
+        // protocolWorkouts={completeWorkoutData}
       />
+      <Portal>
+        <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle}>
+          <ModalContent />
+        </Modal>
+      </Portal>
+      <Button icon='plus' onPress={showModal}>Add Phase</Button>
+      {}
       <AddWorkout />
     </>
   )
