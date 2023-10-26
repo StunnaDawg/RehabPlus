@@ -13,6 +13,7 @@ const CreateWorkoutButton = ({title, description, exercises}) => {
         []
       )
     const navigation = useNavigation()
+
   return (
     <Button
       icon="plus"
@@ -25,5 +26,4 @@ const CreateWorkoutButton = ({title, description, exercises}) => {
     </Button>
   )
 }
-
 export default CreateWorkoutButton

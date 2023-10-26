@@ -6,20 +6,40 @@ import { useNavigation } from "@react-navigation/native"
 import CompleteWorkoutWidget from "./components/CompleteWorkoutWIdget"
 import { useIsFocused } from "@react-navigation/native"
 import { useCompleteWorkoutContext } from "../../context/completeWorkoutContext"
+import { collection } from "firebase/firestore"
+import { db } from "../../firebase"
 
-const AddWorkout = ({protocolTitle, protocolOutline, protocolPublic, protocolPhases}) => {
+const AddWorkout = ({protocolTitle, protocolOutline, protocolPublic, protocolPhases, phaseId}) => {
   const [completeWorkoutData, setCompleteWorkoutData] =
     useCompleteWorkoutContext([])
+    const protocolsCollectionRef = collection(db, "protocols")
   const navigation = useNavigation()
-  const isFocused = useIsFocused()
-  useEffect(() => {
-    console.log("complete workout data in add workout", ...completeWorkoutData)
-  }, [isFocused])
+  const onSubmitProtocol = async () => {
+    try{
+    const protocolDocRef = await addDoc(protocolsCollectionRef, {
+        title: protocolTitle,
+        description: protocolOutline,
+        userId: FIREBASE_AUTH?.currentUser?.uid,
+        public: protocolPublic
+    })
+
+      const phasesSubCollectionRef = collection(protocolDocRef, 'phases');
+    console.log(protocolPhases)
+
+    for (const phases of protocolPhases) {
+      await addDoc(phasesSubCollectionRef,{
+        phases,
+        userId: FIREBASE_AUTH?.currentUser?.uid,
+      } );
+  }
+} catch(err) {
+      console.error(err)
+  }
   return (
     <>
       <View>
         <Button
-          onPress={() => navigation.navigate("CreateWorkout")}
+          onPress={async () => {await onSubmitProtocol(); navigation.navigate("CreateWorkout")}}
           icon="plus"
         >
           Add Workout
@@ -33,6 +53,7 @@ const AddWorkout = ({protocolTitle, protocolOutline, protocolPublic, protocolPha
       </View>
     </>
   )
+}
 }
 
 export default AddWorkout

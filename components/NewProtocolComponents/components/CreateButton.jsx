@@ -5,14 +5,12 @@ import { useNavigation } from '@react-navigation/native'
 import { db, FIREBASE_AUTH } from '../../../firebase'
 import { addDoc, collection } from 'firebase/firestore'
 import 'react-native-get-random-values'
-import { useCompleteWorkoutContext } from '../../../context/completeWorkoutContext'
+import { usePhasesContext } from '../../../context/phasesAddContext'
 
-const CreateButton = ({protocolTitle, protocolOutline, protocolPublic, protocolPhases}) => {
-    const navigation = useNavigation()
+const CreateButton = ({protocolTitle, protocolOutline, protocolPublic}) => {
+  const [phasesData, setPhasesData] = usePhasesContext([])
     const protocolsCollectionRef = collection(db, "protocols")
-    const [completeWorkoutData, setCompleteWorkoutData] =
-    useCompleteWorkoutContext([])
-
+const navigation = useNavigation()
     const onSubmitProtocol = async () => {
         try{
         const protocolDocRef = await addDoc(protocolsCollectionRef, {
@@ -23,9 +21,9 @@ const CreateButton = ({protocolTitle, protocolOutline, protocolPublic, protocolP
         })
 
           const phasesSubCollectionRef = collection(protocolDocRef, 'phases');
-        console.log(protocolPhases)
+        console.log('protocol phases create protocol', phasesData)
 
-        for (const phases of protocolPhases) {
+        for (const phases of phasesData) {
           await addDoc(phasesSubCollectionRef,{
             phases,
             userId: FIREBASE_AUTH?.currentUser?.uid,
@@ -41,7 +39,7 @@ const CreateButton = ({protocolTitle, protocolOutline, protocolPublic, protocolP
       //       userId: FIREBASE_AUTH?.currentUser?.uid,
       //     } );
       // }
-      setCompleteWorkoutData([])
+      setPhasesData([])
         navigation.navigate("Protocol")
     } catch(err) {
         console.error(err)
@@ -49,7 +47,7 @@ const CreateButton = ({protocolTitle, protocolOutline, protocolPublic, protocolP
     }
   return (
     <View>
-      <Button onPress={onSubmitProtocol}>Create Protocol</Button>
+      <Button onPress={onSubmitProtocol}>Save</Button>
     </View>
   )
 }

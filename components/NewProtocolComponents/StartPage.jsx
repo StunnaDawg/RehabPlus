@@ -1,32 +1,56 @@
 import { View, Text } from "react-native"
-import { Button, Modal, Portal, Switch, TextInput } from "react-native-paper"
-import { useState } from "react"
+import { Button, IconButton, Modal, Portal, Switch, TextInput } from "react-native-paper"
+import { useEffect, useState } from "react"
 import CreateButton from "./components/CreateButton"
-import { useNavigation } from "@react-navigation/native"
+import { useNavigation, useRoute } from "@react-navigation/native"
 import AddWorkout from "../AddProtocolWorkoutComponents/AddWorkout"
 import { useCompleteWorkoutContext } from "../../context/completeWorkoutContext"
 import ModalContent from "./components/ModalContent"
 import { usePhasesContext } from "../../context/phasesAddContext"
 import PhasesWidget from "./components/PhasesWidget"
+import { collection, deleteDoc, doc } from "firebase/firestore"
+import { FIREBASE_AUTH, db } from "../../firebase"
+import GetSingleDoc from "../../functions/getSingleDoc"
+import { useNewProtocolContext } from "../../context/newProtocolContext"
 
 const StartPage = () => {
+  const [newProtocolData, setNewProtocol] = useNewProtocolContext()
   const [phasesData, setPhasesData] = usePhasesContext([])
   const [titleText, setTitleText] = useState("")
   const [outlineText, setOutlineText] = useState("")
-  // const [weeksText, setWeeksText] = useState("")
-  // const [daysPerWeek, setDaysPerWeek] = useState("1")
   const [isPublic, setIsPublic] = useState(false)
   const [visible, setVisible] = useState(false);
   const [phases, setPhases] = useState ([])
-
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
   const containerStyle = {backgroundColor: 'white', padding: 20, marginBottom: 150};
   const navigation  = useNavigation()
+  const route = useRoute();
+  const protocolId = route.params.protocolId;
+  const currentProtocolRef = collection(db, 'protocols')
+  const currentProtocol = doc(currentProtocolRef, protocolId)
+  const userId = newProtocolData.userId
 
   const onToggleSwitch = () => setIsPublic(!isPublic)
+
+  const onGoBackDeleteProtocol = async () => {
+    try{
+      console.log(currentProtocol)
+      if (userId === FIREBASE_AUTH?.currentUser?.uid) {
+        await deleteDoc(currentProtocol)
+     } } catch (err) {
+      console.error(err)
+    }
+  }
+
+
+  useEffect(() => {
+    GetSingleDoc(setNewProtocol, currentProtocolRef, protocolId)
+  }, [])
+
   return (
     <>
+    <Button onPress={async () => {await onGoBackDeleteProtocol(); navigation.goBack()}}>Go Back</Button>
       <View className="mx-4 my-1">
         <Text>Protocol Title</Text>
         <TextInput
@@ -71,7 +95,6 @@ const StartPage = () => {
         protocolOutline={outlineText}
         protocolTitle={titleText}
         protocolPublic={isPublic}
-        protocolPhases={phases}
         // protocolWorkouts={completeWorkoutData}
       />
       <Portal>

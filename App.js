@@ -12,10 +12,12 @@ import { SingleProtocolProvider } from "./context/protocolContext"
 import { AddProtocolProvider } from "./context/AddProtocolContext"
 import { EditProtocolProvider } from "./context/EditProtocolContext"
 import { PhasesContextProvider } from "./context/phasesAddContext"
+import { NewProtocolContextProvider } from "./context/newProtocolContext"
 
 export default function App() {
   return (
     <AuthProvider>
+      <NewProtocolContextProvider>
       <RefreshContextProvider>
         <PhasesContextProvider>
           <EditWorkoutContextProvider>
@@ -41,6 +43,7 @@ export default function App() {
           </EditWorkoutContextProvider>
         </PhasesContextProvider>
       </RefreshContextProvider>
+      </NewProtocolContextProvider>
     </AuthProvider>
   )
 }

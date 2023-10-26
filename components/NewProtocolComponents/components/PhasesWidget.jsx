@@ -22,7 +22,6 @@ const PhasesWidget = ({ phasesTitle
         <Text variant="titleLarge">{phasesTitle}</Text>
       </Card.Content>
       <Card.Actions className="flex-1 flex-row justify-center items-center">
-      <AddWorkout />
         {/* <Card.Cover className="w-20 h-20" source={ExerciseImage} /> */}
       </Card.Actions>
     </Card>
