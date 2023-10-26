@@ -78,7 +78,7 @@ const StartPage = () => {
       )
     }
     awaitPhasesGet()
-    console.log(phasesData)
+    console.log('phaseData', phasesData)
   }, [])
 
   useEffect(() => {
@@ -161,8 +161,8 @@ const StartPage = () => {
       <Button icon="plus" onPress={showModal}>
         Add Phase
       </Button>
-      {phasesData.map((phase, index) => {
-        return <PhasesWidget />
+      {phasesData.map((phase) => {
+        return <PhasesWidget key={phase.id} phasesTitle={phase.title} />
       })}
     </>
   )
