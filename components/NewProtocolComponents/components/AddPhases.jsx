@@ -3,10 +3,10 @@ import { usePhasesContext } from "../../../context/phasesAddContext"
 import { useEffect } from "react"
 import { useIsFocused } from "@react-navigation/native"
 
-const AddPhaseButton = ({phaseTitle, phaseOutline, weeksText}) => {
+const AddPhaseButton = ({phaseTitle, phaseOutline, weeksText, setVisible}) => {
   const [phasesData, setPhasesData] = usePhasesContext([])
 
-  const handlePhaseAdd = () => {
+  const handlePhaseAdd = async () => {
 setPhasesData([...phasesData, {title: phaseTitle, outline: phaseOutline, weeks: weeksText}])
     
   }
@@ -16,7 +16,7 @@ console.log(phasesData)
   }, [phasesData])
   return (
     <>
-      <Button onPress={async () => handlePhaseAdd()}>Add Phase</Button>
+      <Button onPress={async () => {await handlePhaseAdd(); setVisible(false)}}>Add Phase</Button>
     </>
   )
 }

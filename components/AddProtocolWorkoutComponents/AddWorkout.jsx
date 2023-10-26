@@ -7,7 +7,7 @@ import CompleteWorkoutWidget from "./components/CompleteWorkoutWIdget"
 import { useIsFocused } from "@react-navigation/native"
 import { useCompleteWorkoutContext } from "../../context/completeWorkoutContext"
 
-const AddWorkout = () => {
+const AddWorkout = ({protocolTitle, protocolOutline, protocolPublic, protocolPhases}) => {
   const [completeWorkoutData, setCompleteWorkoutData] =
     useCompleteWorkoutContext([])
   const navigation = useNavigation()

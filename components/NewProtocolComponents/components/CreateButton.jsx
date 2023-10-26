@@ -7,7 +7,7 @@ import { addDoc, collection } from 'firebase/firestore'
 import 'react-native-get-random-values'
 import { useCompleteWorkoutContext } from '../../../context/completeWorkoutContext'
 
-const CreateButton = ({protocolTitle, protocolOutline, protocolDaysPerWeek, protocolWeeks, protocolPublic, protocolPhases, protocolWorkouts}) => {
+const CreateButton = ({protocolTitle, protocolOutline, protocolPublic, protocolPhases}) => {
     const navigation = useNavigation()
     const protocolsCollectionRef = collection(db, "protocols")
     const [completeWorkoutData, setCompleteWorkoutData] =
@@ -18,8 +18,6 @@ const CreateButton = ({protocolTitle, protocolOutline, protocolDaysPerWeek, prot
         const protocolDocRef = await addDoc(protocolsCollectionRef, {
             title: protocolTitle,
             description: protocolOutline,
-            daysPerWeek: protocolDaysPerWeek,
-            weeks: protocolWeeks,
             userId: FIREBASE_AUTH?.currentUser?.uid,
             public: protocolPublic
         })

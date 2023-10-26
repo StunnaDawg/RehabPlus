@@ -4,7 +4,7 @@ import { useCompleteWorkoutContext } from '../../../context/completeWorkoutConte
 import { Button, TextInput } from 'react-native-paper'
 import AddPhaseButton from './AddPhases'
 
-const ModalContent = (phases, setPhases) => {
+const ModalContent = ({setVisible}) => {
     const [completeWorkoutData, setCompleteWorkoutData] =
     useCompleteWorkoutContext([])
   const [phaseTitleText, setPhaseTitle] = useState("")
@@ -36,7 +36,7 @@ const ModalContent = (phases, setPhases) => {
           keyboardType="numeric"
         ></TextInput>
       </View>
-<AddPhaseButton phaseTitle={phaseTitleText} phaseOutline={outlineText} weeksText={weeksText}/>
+<AddPhaseButton phaseTitle={phaseTitleText} phaseOutline={outlineText} weeksText={weeksText} setVisible={setVisible}/>
     </>
   )
 }
