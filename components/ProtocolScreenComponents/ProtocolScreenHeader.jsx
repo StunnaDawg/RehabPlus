@@ -4,8 +4,10 @@ import { Searchbar, IconButton, Button } from "react-native-paper"
 import { useNavigation } from "@react-navigation/native"
 import { DocumentReference, addDoc, collection } from "firebase/firestore"
 import { FIREBASE_AUTH, db } from "../../firebase"
+import { useNewProtocolContext } from "../../context/newProtocolContext"
 
 const ProtocolScreenHeader = () => {
+  const [newProtocolData, setNewProtocol] = useNewProtocolContext()
   const [searchQuery, setSearchQuery] = useState("")
   const navigation = useNavigation()
   const protocolsCollectionRef = collection(db, "protocols")
@@ -20,7 +22,7 @@ const ProtocolScreenHeader = () => {
       const newProtocolId = DocRef.id
 
       console.log("New Protocol ID:", newProtocolId)
-
+      
       return newProtocolId
     } catch (err) {
       console.error(err)

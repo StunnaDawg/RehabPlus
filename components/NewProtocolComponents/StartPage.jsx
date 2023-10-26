@@ -1,56 +1,108 @@
 import { View, Text } from "react-native"
-import { Button, IconButton, Modal, Portal, Switch, TextInput } from "react-native-paper"
+import {
+  Button,
+  IconButton,
+  Modal,
+  Portal,
+  Switch,
+  TextInput,
+} from "react-native-paper"
 import { useEffect, useState } from "react"
 import CreateButton from "./components/CreateButton"
 import { useNavigation, useRoute } from "@react-navigation/native"
-import AddWorkout from "../AddProtocolWorkoutComponents/AddWorkout"
-import { useCompleteWorkoutContext } from "../../context/completeWorkoutContext"
+import { useRefreshContext } from "../../context/refreshKey"
 import ModalContent from "./components/ModalContent"
-import { usePhasesContext } from "../../context/phasesAddContext"
+
 import PhasesWidget from "./components/PhasesWidget"
 import { collection, deleteDoc, doc } from "firebase/firestore"
 import { FIREBASE_AUTH, db } from "../../firebase"
 import GetSingleDoc from "../../functions/getSingleDoc"
 import { useNewProtocolContext } from "../../context/newProtocolContext"
+import { useCurrentPhasesContext } from "../../context/phasesAddContext"
+import GetProtocolWorkouts from "../../functions/getProtocolWorkouts"
+import GetProtocolPhases from "../../functions/gteProtocolPhases"
 
 const StartPage = () => {
   const [newProtocolData, setNewProtocol] = useNewProtocolContext()
-  const [phasesData, setPhasesData] = usePhasesContext([])
+  const [currentPhasesData, setCurrentPhasesData] = useCurrentPhasesContext()
+  const [refreshKey, setRefreshKey] = useRefreshContext()
+  const [phasesData, setPhasesData] = useState([])
   const [titleText, setTitleText] = useState("")
   const [outlineText, setOutlineText] = useState("")
   const [isPublic, setIsPublic] = useState(false)
-  const [visible, setVisible] = useState(false);
-  const [phases, setPhases] = useState ([])
-  const showModal = () => setVisible(true);
-  const hideModal = () => setVisible(false);
-  const containerStyle = {backgroundColor: 'white', padding: 20, marginBottom: 150};
-  const navigation  = useNavigation()
-  const route = useRoute();
-  const protocolId = route.params.protocolId;
-  const currentProtocolRef = collection(db, 'protocols')
+  const [visible, setVisible] = useState(false)
+  const [phases, setPhases] = useState([])
+  const showModal = () => setVisible(true)
+  const hideModal = () => setVisible(false)
+  const containerStyle = {
+    backgroundColor: "white",
+    padding: 20,
+    marginBottom: 150,
+  }
+  const navigation = useNavigation()
+  const route = useRoute()
+  const protocolId = route.params.protocolId
+  const currentProtocolRef = collection(db, "protocols")
   const currentProtocol = doc(currentProtocolRef, protocolId)
-  const userId = newProtocolData.userId
+  const currentProtocolPhases = collection(currentProtocol, "phases")
 
   const onToggleSwitch = () => setIsPublic(!isPublic)
 
   const onGoBackDeleteProtocol = async () => {
-    try{
+    try {
+      const userId = newProtocolData.userId
       console.log(currentProtocol)
       if (userId === FIREBASE_AUTH?.currentUser?.uid) {
         await deleteDoc(currentProtocol)
-     } } catch (err) {
+        setNewProtocol()
+        setPhasesData([])
+      }
+    } catch (err) {
       console.error(err)
     }
   }
 
+  useEffect(() => {
+    const awaitProtocolGet = async () => {
+      await GetSingleDoc(setNewProtocol, currentProtocolRef, protocolId)
+    }
+    awaitProtocolGet()
+  }, [])
 
   useEffect(() => {
-    GetSingleDoc(setNewProtocol, currentProtocolRef, protocolId)
+    const awaitPhasesGet = async () => {
+      await GetProtocolPhases(
+        setPhasesData,
+        setRefreshKey,
+        currentProtocolPhases
+      )
+    }
+    awaitPhasesGet()
+    console.log(phasesData)
   }, [])
+
+  useEffect(() => {
+    const awaitPhasesGet = async () => {
+      await GetProtocolPhases(
+        setPhasesData,
+        setRefreshKey,
+        currentProtocolPhases
+      )
+    }
+    awaitPhasesGet()
+    console.log(phasesData)
+  }, [refreshKey])
 
   return (
     <>
-    <Button onPress={async () => {await onGoBackDeleteProtocol(); navigation.goBack()}}>Go Back</Button>
+      <Button
+        onPress={async () => {
+          await onGoBackDeleteProtocol()
+          navigation.goBack()
+        }}
+      >
+        Go Back
+      </Button>
       <View className="mx-4 my-1">
         <Text>Protocol Title</Text>
         <TextInput
@@ -89,24 +141,28 @@ const StartPage = () => {
         <Text className="text">Public Protocol</Text>
         <Switch value={isPublic} onValueChange={onToggleSwitch} />
       </View>
-      <View>
-      </View>
+      <View></View>
       <CreateButton
         protocolOutline={outlineText}
         protocolTitle={titleText}
         protocolPublic={isPublic}
+        protocolId={protocolId}
         // protocolWorkouts={completeWorkoutData}
       />
       <Portal>
-        <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle}>
+        <Modal
+          visible={visible}
+          onDismiss={hideModal}
+          contentContainerStyle={containerStyle}
+        >
           <ModalContent setVisible={setVisible} />
         </Modal>
       </Portal>
-      <Button icon='plus' onPress={showModal}>Add Phase</Button>
+      <Button icon="plus" onPress={showModal}>
+        Add Phase
+      </Button>
       {phasesData.map((phase, index) => {
-        return (
-<PhasesWidget key={index} phasesTitle={phase.title}/>
-        )
+        return <PhasesWidget />
       })}
     </>
   )

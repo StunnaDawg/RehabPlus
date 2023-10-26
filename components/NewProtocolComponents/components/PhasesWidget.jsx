@@ -20,10 +20,10 @@ const PhasesWidget = ({ phasesTitle
     <Card mode="contained" className="mt-3 mx-14 ">
       <Card.Content className="flex-1 flex-row justify-center items-center">
         <Text variant="titleLarge">{phasesTitle}</Text>
-      </Card.Content>
       <Card.Actions className="flex-1 flex-row justify-center items-center">
-        {/* <Card.Cover className="w-20 h-20" source={ExerciseImage} /> */}
+        <AddWorkout />
       </Card.Actions>
+      </Card.Content>
     </Card>
   )
 }
