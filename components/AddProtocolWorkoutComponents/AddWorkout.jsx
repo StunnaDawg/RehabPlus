@@ -1,49 +1,31 @@
 import { View, Text } from "react-native"
 import React, { useEffect } from "react"
 import { Button } from "react-native-paper"
-import { useNavigation } from "@react-navigation/native"
+import { useNavigation, useRoute } from "@react-navigation/native"
 
 import CompleteWorkoutWidget from "./components/CompleteWorkoutWIdget"
 import { useIsFocused } from "@react-navigation/native"
 import { useCompleteWorkoutContext } from "../../context/completeWorkoutContext"
 import { collection } from "firebase/firestore"
 import { db } from "../../firebase"
+import SaveWorkoutsToPhaseButton from "./components/CreateProtocolButton"
 
-const AddWorkout = ({protocolTitle, protocolOutline, protocolPublic, protocolPhases, phaseId}) => {
+const AddWorkout = () => {
   const [completeWorkoutData, setCompleteWorkoutData] =
     useCompleteWorkoutContext([])
-    const protocolsCollectionRef = collection(db, "protocols")
   const navigation = useNavigation()
-  const onSubmitProtocol = async () => {
-    try{
-    const protocolDocRef = await addDoc(protocolsCollectionRef, {
-        title: protocolTitle,
-        description: protocolOutline,
-        userId: FIREBASE_AUTH?.currentUser?.uid,
-        public: protocolPublic
-    })
-
-      const phasesSubCollectionRef = collection(protocolDocRef, 'phases');
-    console.log(protocolPhases)
-
-    for (const phases of protocolPhases) {
-      await addDoc(phasesSubCollectionRef,{
-        phases,
-        userId: FIREBASE_AUTH?.currentUser?.uid,
-      } );
-  }
-} catch(err) {
-      console.error(err)
-  }
+  const route = useRoute()
+  const phaseId = route.params.phaseId
   return (
     <>
-      <View>
+      <View className='flex-1 flex-row justify-around'>
         <Button
-          onPress={async () => {await onSubmitProtocol(); navigation.navigate("CreateWorkout")}}
+          onPress={ () => navigation.navigate("CreateWorkout")}
           icon="plus"
         >
           Add Workout
         </Button>
+        <SaveWorkoutsToPhaseButton phaseId={phaseId} />
       </View>
 
       <View>
@@ -53,7 +35,6 @@ const AddWorkout = ({protocolTitle, protocolOutline, protocolPublic, protocolPha
       </View>
     </>
   )
-}
 }
 
 export default AddWorkout

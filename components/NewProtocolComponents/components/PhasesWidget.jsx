@@ -6,7 +6,7 @@ import { useIsFocused, useNavigation } from "@react-navigation/native"
 import { useRefreshContext } from "../../../context/refreshKey"
 import AddWorkout from "../../AddProtocolWorkoutComponents/AddWorkout"
 
-const PhasesWidget = ({ phasesTitle
+const PhasesWidget = ({ phasesTitle, phaseId
 }) => {
   const [refreshKey, setRefreshKey] = useRefreshContext(false)
   const isFocused = useIsFocused()
@@ -21,7 +21,7 @@ const PhasesWidget = ({ phasesTitle
       <Card.Content className="flex-1 flex-row justify-center items-center">
         <Text variant="titleLarge">{phasesTitle}</Text>
       <Card.Actions className="flex-1 flex-row justify-center items-center">
-        <AddWorkout />
+        <Button onPress={() => navigation.navigate('AddProtocolWorkoutScreen', { phaseId: phaseId })}>Add Workout</Button>
       </Card.Actions>
       </Card.Content>
     </Card>

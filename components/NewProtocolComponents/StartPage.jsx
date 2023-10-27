@@ -41,7 +41,7 @@ const StartPage = () => {
   }
   const navigation = useNavigation()
   const route = useRoute()
-  const protocolId = route.params.protocolId
+  const protocolId = route.params?.protocolId
   const currentProtocolRef = collection(db, "protocols")
   const currentProtocol = doc(currentProtocolRef, protocolId)
   const currentProtocolPhases = collection(currentProtocol, "phases")
@@ -78,7 +78,7 @@ const StartPage = () => {
       )
     }
     awaitPhasesGet()
-    console.log('phaseData', phasesData)
+    console.log("phaseData", phasesData)
   }, [])
 
   useEffect(() => {
@@ -155,14 +155,26 @@ const StartPage = () => {
           onDismiss={hideModal}
           contentContainerStyle={containerStyle}
         >
-          <ModalContent setVisible={setVisible} />
+          <ModalContent
+            setVisible={setVisible}
+            protocolOutline={outlineText}
+            protocolTitle={titleText}
+            protocolId={protocolId}
+            protocolPublic={isPublic}
+          />
         </Modal>
       </Portal>
       <Button icon="plus" onPress={showModal}>
         Add Phase
       </Button>
       {phasesData.map((phase) => {
-        return <PhasesWidget key={phase.id} phasesTitle={phase.title} />
+        return (
+          <PhasesWidget
+            key={phase.id}
+            phasesTitle={phase.title}
+            phaseId={phase.id}
+          />
+        )
       })}
     </>
   )

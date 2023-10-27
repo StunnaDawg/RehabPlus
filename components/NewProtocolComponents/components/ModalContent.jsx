@@ -1,11 +1,17 @@
-import { View, Text } from 'react-native'
-import React, { useState } from 'react'
-import { useCompleteWorkoutContext } from '../../../context/completeWorkoutContext'
-import { Button, TextInput } from 'react-native-paper'
-import AddPhaseButton from './AddPhases'
+import { View, Text } from "react-native"
+import React, { useState } from "react"
+import { useCompleteWorkoutContext } from "../../../context/completeWorkoutContext"
+import { Button, TextInput } from "react-native-paper"
+import AddPhaseButton from "./AddPhases"
 
-const ModalContent = ({setVisible}) => {
-    const [completeWorkoutData, setCompleteWorkoutData] =
+const ModalContent = ({
+  setVisible,
+  protocolOutline,
+  protocolTitle,
+  protocolId,
+  protocolPublic
+}) => {
+  const [completeWorkoutData, setCompleteWorkoutData] =
     useCompleteWorkoutContext([])
   const [phaseTitleText, setPhaseTitle] = useState("")
   const [outlineText, setOutlineText] = useState("")
@@ -36,7 +42,16 @@ const ModalContent = ({setVisible}) => {
           keyboardType="numeric"
         ></TextInput>
       </View>
-<AddPhaseButton phaseTitle={phaseTitleText} phaseOutline={outlineText} weeksText={weeksText} setVisible={setVisible}/>
+      <AddPhaseButton
+        phaseTitle={phaseTitleText}
+        phaseOutline={outlineText}
+        weeksText={weeksText}
+        setVisible={setVisible}
+        protocolOutline={protocolOutline}
+        protocolTitle={protocolTitle}
+        protocolId={protocolId}
+        protocolPublic={protocolPublic}
+      />
     </>
   )
 }
