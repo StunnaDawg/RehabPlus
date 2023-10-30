@@ -3,36 +3,33 @@ import { Button } from 'react-native-paper'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { db, FIREBASE_AUTH } from '../../../firebase'
-import { addDoc, collection } from 'firebase/firestore'
+import { addDoc, collection, doc, updateDoc } from 'firebase/firestore'
 import 'react-native-get-random-values'
+import { useCurrentPhasesContext } from '../../../context/phasesAddContext'
 import { useCompleteWorkoutContext } from '../../../context/completeWorkoutContext'
 
-const CreateButton = ({protocolTitle, protocolOutline, protocolDaysPerWeek, protocolWeeks, protocolPublic, protocolWorkouts}) => {
-    const navigation = useNavigation()
-    const protocolsCollectionRef = collection(db, "protocols")
-    const [completeWorkoutData, setCompleteWorkoutData] =
-    useCompleteWorkoutContext([])
-
+const CreateButton = ({protocolTitle, protocolOutline, protocolPublic, protocolId}) => {
+  const [completeWorkoutData, setCompleteWorkoutData] = useCompleteWorkoutContext([])
+    const protocolsCollectionRef = doc(db, "protocols", protocolId)
+const navigation = useNavigation()
     const onSubmitProtocol = async () => {
         try{
-        const protocolDocRef = await addDoc(protocolsCollectionRef, {
+        await updateDoc(protocolsCollectionRef, {
             title: protocolTitle,
             description: protocolOutline,
-            daysPerWeek: protocolDaysPerWeek,
-            weeks: protocolWeeks,
             userId: FIREBASE_AUTH?.currentUser?.uid,
             public: protocolPublic
         })
           
-        const workoutsSubCollectionRef = collection(protocolDocRef, 'workouts');
-        console.log(protocolWorkouts)
+      //   const workoutsSubCollectionRef = collection(protocolDocRef, 'workouts');
+      //   console.log(protocolWorkouts)
 
-        for (const workout of protocolWorkouts) {
-          await addDoc(workoutsSubCollectionRef,{
-            workout,
-            userId: FIREBASE_AUTH?.currentUser?.uid,
-          } );
-      }
+      //   for (const workout of protocolWorkouts) {
+      //     await addDoc(workoutsSubCollectionRef,{
+      //       workout,
+      //       userId: FIREBASE_AUTH?.currentUser?.uid,
+      //     } );
+      // }
       setCompleteWorkoutData([])
         navigation.navigate("Protocol")
     } catch(err) {
@@ -41,7 +38,7 @@ const CreateButton = ({protocolTitle, protocolOutline, protocolDaysPerWeek, prot
     }
   return (
     <View>
-      <Button onPress={onSubmitProtocol}>Create Protocol</Button>
+      <Button onPress={onSubmitProtocol}>Save</Button>
     </View>
   )
 }

@@ -11,34 +11,39 @@ import { SingleClientProvider } from "./context/clientContext"
 import { SingleProtocolProvider } from "./context/protocolContext"
 import { AddProtocolProvider } from "./context/AddProtocolContext"
 import { EditProtocolProvider } from "./context/EditProtocolContext"
-
+import { PhasesContextProvider } from "./context/phasesAddContext"
+import { NewProtocolContextProvider } from "./context/newProtocolContext"
 
 export default function App() {
   return (
     <AuthProvider>
+      <NewProtocolContextProvider>
       <RefreshContextProvider>
-        <EditWorkoutContextProvider>
-          <CompleteWorkoutContextProvider>
-            <WorkoutContextProvider>
-              <ExerciseContextProvider>
-                <SingleClientProvider>
-                  <SingleProtocolProvider>
-                    <AddProtocolProvider>
-                      <EditProtocolProvider>
-                        <PaperProvider>
-                          <NavigationContainer>
-                            <NavStack />
-                          </NavigationContainer>
-                        </PaperProvider>
-                      </EditProtocolProvider>
-                    </AddProtocolProvider>
-                  </SingleProtocolProvider>
-                </SingleClientProvider>
-              </ExerciseContextProvider>
-            </WorkoutContextProvider>
-          </CompleteWorkoutContextProvider>
-        </EditWorkoutContextProvider>
+        <PhasesContextProvider>
+          <EditWorkoutContextProvider>
+            <CompleteWorkoutContextProvider>
+              <WorkoutContextProvider>
+                <ExerciseContextProvider>
+                  <SingleClientProvider>
+                    <SingleProtocolProvider>
+                      <AddProtocolProvider>
+                        <EditProtocolProvider>
+                          <PaperProvider>
+                            <NavigationContainer>
+                              <NavStack />
+                            </NavigationContainer>
+                          </PaperProvider>
+                        </EditProtocolProvider>
+                      </AddProtocolProvider>
+                    </SingleProtocolProvider>
+                  </SingleClientProvider>
+                </ExerciseContextProvider>
+              </WorkoutContextProvider>
+            </CompleteWorkoutContextProvider>
+          </EditWorkoutContextProvider>
+        </PhasesContextProvider>
       </RefreshContextProvider>
+      </NewProtocolContextProvider>
     </AuthProvider>
   )
 }

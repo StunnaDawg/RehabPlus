@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native"
+import { Alert, StyleSheet, View } from "react-native"
 import {
   Button,
   Card,
@@ -12,15 +12,31 @@ import React, { useEffect, useState } from "react"
 import GetSingleExercise from "../../functions/getSingleExercise"
 import { useIsFocused } from "@react-navigation/native"
 import { useSingleWorkoutContext } from "../../context/workoutContext"
+import { useRefreshContext } from "../../context/refreshKey"
 
 const ExerciseWidget = ({ id, categoryId, letter, index }) => {
   const [exerciseWorkoutData, setExerciseWorkoutData] = useSingleWorkoutContext(
     []
   )
+  const [refreshKey, setRefreshKey] = useRefreshContext()
   const [widgetData, setWidgetData] = useState({})
   const [exerciseSets, setExerciseSets] = useState("0")
   const [exerciseReps, setExerciseReps] = useState("0")
   const isFocused = useIsFocused()
+
+  const deleteWidget = async (exerciseToRemove)  => {
+    // Alert.alert('Warning', 'Are you sure you want to delete this exercise?', [
+    // {
+    //   text: 'Cancel',
+    //   onPress: () => console.log('Cancel Pressed'),
+    //   style: 'cancel',
+    // },  {text: 'Delete', onPress: async () => {
+       await setExerciseWorkoutData(exercsies => exercsies.filter(exercise=> exercise.exerciseId !== exerciseToRemove))
+    }
+    
+  // }])
+
+  
 
   useEffect(() => {
     const getData = async () => {
@@ -69,7 +85,8 @@ const ExerciseWidget = ({ id, categoryId, letter, index }) => {
         <IconButton icon="eye" size={18}>
           View
         </IconButton>
-        <IconButton icon="delete" size={18}>
+        {/* Delete Button */}
+        <IconButton icon="delete" size={18} onPress={async () => {await deleteWidget(id); setRefreshKey(+1)}}>
           Delete
         </IconButton>
       </Card.Content>
@@ -105,23 +122,27 @@ const ExerciseWidget = ({ id, categoryId, letter, index }) => {
           <Button
             onPress={async () => {
               await setExerciseWorkoutData((prevData) => {
-                const updatedData = [...prevData];
+                const updatedData = [...prevData]
                 // Find the existing exercise data object in the array
                 const existingExerciseData = updatedData.find(
                   (exercise) => exercise.exerciseId === id
-                );
-              
+                )
+
                 if (existingExerciseData) {
                   // Merge the reps and sets into the existing object
-                  existingExerciseData.reps = exerciseReps;
-                  existingExerciseData.sets = exerciseSets;
+                  existingExerciseData.reps = exerciseReps
+                  existingExerciseData.sets = exerciseSets
                 } else {
                   // If the exercise data doesn't exist, add it as a new object
-                  updatedData.push({ exerciseId, reps: exerciseReps, sets: exerciseSets });
+                  updatedData.push({
+                    exerciseId,
+                    reps: exerciseReps,
+                    sets: exerciseSets,
+                  })
                 }
-              
-                return updatedData;
-              });
+
+                return updatedData
+              })
             }}
             icon="pencil"
           >
@@ -133,7 +154,6 @@ const ExerciseWidget = ({ id, categoryId, letter, index }) => {
     </Card>
   )
 }
-
 const styles = StyleSheet.create({
   textInput: {
     // Set the desired width
