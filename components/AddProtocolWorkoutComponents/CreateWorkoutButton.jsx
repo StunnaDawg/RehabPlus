@@ -20,7 +20,7 @@ const CreateWorkoutButton = ({title, description, exercises}) => {
       onPress={async () => {console.log({title, description, exercises}); await setCompleteWorkoutData(prevData => ([
         ...(Array.isArray(prevData) ? prevData : []),
         { title, description, exercises}
-      ])); setNewWorkoutData([]); setExerciseWorkoutData([]); navigation.navigate("NewProtocol")}}
+      ])); setNewWorkoutData([]); setExerciseWorkoutData([]); navigation.navigate('AddProtocolWorkoutScreen')}}
     >
       Create Workout
     </Button>

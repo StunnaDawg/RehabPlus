@@ -31,7 +31,6 @@ const SaveWorkoutsToPhaseButton = ({ phaseId }) => {
           workout,
           userId: FIREBASE_AUTH?.currentUser?.uid,
         })
-        setCompleteWorkoutData([])
       }
     } catch (err) {
       console.error(err)
