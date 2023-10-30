@@ -1,4 +1,4 @@
-import { View, Text } from "react-native"
+import { View, Text, ScrollView } from "react-native"
 import {
   Button,
   IconButton,
@@ -43,7 +43,7 @@ const StartPage = () => {
   const route = useRoute()
   const protocolId = route.params?.protocolId
   const currentProtocolRef = collection(db, "protocols")
-  const currentProtocol = doc(currentProtocolRef, protocolId)
+  const currentProtocol = doc(currentProtocolRef, protocolId || newProtocolData.id)
   const currentProtocolPhases = collection(currentProtocol, "phases")
 
   const onToggleSwitch = () => setIsPublic(!isPublic)
@@ -146,7 +146,7 @@ const StartPage = () => {
         protocolOutline={outlineText}
         protocolTitle={titleText}
         protocolPublic={isPublic}
-        protocolId={protocolId}
+        protocolId={protocolId || newProtocolData.id}
         // protocolWorkouts={completeWorkoutData}
       />
       <Portal>
@@ -159,7 +159,7 @@ const StartPage = () => {
             setVisible={setVisible}
             protocolOutline={outlineText}
             protocolTitle={titleText}
-            protocolId={protocolId}
+            protocolId={protocolId || newProtocolData.id}
             protocolPublic={isPublic}
           />
         </Modal>
@@ -167,15 +167,20 @@ const StartPage = () => {
       <Button icon="plus" onPress={showModal}>
         Add Phase
       </Button>
+      <ScrollView>
       {phasesData.map((phase) => {
+        console.log('mapped phases', phase)
         return (
+          <View key={phase.id}>
           <PhasesWidget
             key={phase.id}
             phasesTitle={phase.title}
             phaseId={phase.id}
           />
+          </View>
         )
       })}
+      </ScrollView>
     </>
   )
 }

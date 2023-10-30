@@ -6,8 +6,10 @@ import { db, FIREBASE_AUTH } from '../../../firebase'
 import { addDoc, collection, doc, updateDoc } from 'firebase/firestore'
 import 'react-native-get-random-values'
 import { useCurrentPhasesContext } from '../../../context/phasesAddContext'
+import { useCompleteWorkoutContext } from '../../../context/completeWorkoutContext'
 
 const CreateButton = ({protocolTitle, protocolOutline, protocolPublic, protocolId}) => {
+  const [completeWorkoutData, setCompleteWorkoutData] = useCompleteWorkoutContext([])
     const protocolsCollectionRef = doc(db, "protocols", protocolId)
 const navigation = useNavigation()
     const onSubmitProtocol = async () => {
@@ -28,6 +30,7 @@ const navigation = useNavigation()
       //       userId: FIREBASE_AUTH?.currentUser?.uid,
       //     } );
       // }
+      setCompleteWorkoutData([])
         navigation.navigate("Protocol")
     } catch(err) {
         console.error(err)
