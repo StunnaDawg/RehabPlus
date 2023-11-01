@@ -1,34 +1,38 @@
 import { View, Text } from "react-native"
 import React, { useEffect, useState } from "react"
 import { Button } from "react-native-paper"
-import { useNavigation } from "@react-navigation/native"
+import { useNavigation, useRoute } from "@react-navigation/native"
 
 import { useIsFocused } from "@react-navigation/native"
 
 import CompleteWorkoutEditWidget from "./components/CompleteWorkoutEditWIdget"
-import GetProtocolWorkouts from "../../functions/getProtocolWorkouts"
 import { useSingleWorkoutContext } from "../../context/workoutContext"
 import { useSingleProtocolContext } from "../../context/protocolContext"
-import { collection } from "firebase/firestore"
+import { collection, doc } from "firebase/firestore"
 import { db } from "../../firebase"
+import GetProtocolPhases from "../../functions/gteProtocolPhases"
+import { useRefreshContext } from "../../context/refreshKey"
+import { useCurrentPhasesContext } from "../../context/phasesAddContext"
 
-const EditWorkoutsPage = ({ id }) => {
+const EditWorkoutsPage = () => {
   const [exerciseWorkoutData, setExerciseWorkoutData] = useSingleWorkoutContext(
     []
   )
+  const [currentPhasesData, setCurrentPhasesData] = useCurrentPhasesContext('')
   const [protocolEditData] = useSingleProtocolContext()
   const [clientWorkouts, setClientWorkouts] = useState([])
-  const protocolDocRef = collection(db, "protocols")
-  const workoutsSubCollectionRef = collection(
-    protocolDocRef,
-    protocolEditData.id,
-    "workouts"
-  )
+  const [refreshKey, setRefreshKey] = useRefreshContext()
+  const route = useRoute()
+  const phaseId = route.params?.phaseId
+  const currentProtocolRef = collection(db, "protocols")
+  const currentProtocol = doc(currentProtocolRef, protocolEditData.id)
+  const currentProtocolPhase = doc(currentProtocol, "phases", phaseId)
+  const currentPhaseWorkouts = collection(currentProtocolPhase, "workouts")
   const navigation = useNavigation()
   const isFocused = useIsFocused()
   useEffect(() => {
     const fetchClientWorkout = async () => {
-      await GetProtocolWorkouts(setClientWorkouts, workoutsSubCollectionRef)
+      await GetProtocolPhases(setClientWorkouts, setRefreshKey, currentPhaseWorkouts)
     }
 
     fetchClientWorkout()
@@ -39,13 +43,16 @@ const EditWorkoutsPage = ({ id }) => {
   }, [clientWorkouts])
 
   useEffect(() => {
-    console.log("workout userId", protocolEditData.userId)
+    setCurrentPhasesData(phaseId)
   }, [])
   return (
     <>
       <View>
         <Button
-          onPress={async () => {await setExerciseWorkoutData([]); navigation.navigate("AddNewWorkoutScreen")}}
+          onPress={async () => {
+            await setExerciseWorkoutData([])
+            navigation.navigate("AddNewWorkoutScreen")
+          }}
           icon="plus"
         >
           Add Workout

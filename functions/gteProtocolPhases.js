@@ -7,7 +7,7 @@ const GetProtocolPhases = async (setState, setRefresh, collectionRef) => {
       ...doc.data(),
       id: doc.id,
     }))
-    console.log("filtered data", filteredData)
+    console.log("filtered data get protocolPhases", filteredData)
     setState(filteredData)
     setRefresh(1000)
   } catch (err) {

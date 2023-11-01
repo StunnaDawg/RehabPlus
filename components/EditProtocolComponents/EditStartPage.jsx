@@ -3,7 +3,6 @@ import { TextInput, Switch } from "react-native-paper"
 import { useEffect, useState } from "react"
 import UpdateButton from "./components/UpdateProtocolButton"
 import DeleteButton from "./components/DeleteButton"
-import UpdateWorkouts from "./components/UpdateWorkouts"
 import { useSingleProtocolContext } from "../../context/protocolContext"
 import GetProtocolPhases from "../../functions/gteProtocolPhases"
 import { useRefreshContext } from "../../context/refreshKey"
@@ -107,7 +106,7 @@ const EditStartPage = () => {
           console.log(phase.title)
           return (
             <View key={phase.id} >
-            <PhasesWidget phaseId={phase.id} phasesTitle={phase.phases.title}/>
+            <PhasesWidget phaseId={phase.id} phasesTitle={phase.title}/>
             </ View>
           )
         })}

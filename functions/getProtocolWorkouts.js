@@ -9,7 +9,7 @@ const GetProtocolWorkouts = async (setState, collectionRef) => {
       ...doc.data(),
       id: doc.id,
     }))
-    console.log("filtered data", filteredData)
+    console.log("filtered data phases workouts", filteredData)
     setState(filteredData)
   } catch (err) {
     console.error(err)
@@ -17,9 +17,3 @@ const GetProtocolWorkouts = async (setState, collectionRef) => {
 }
 
 export default GetProtocolWorkouts
-
-// for (const workout of protocolWorkouts) {
-//     await addDoc(workoutsSubCollectionRef,{
-//       workout,
-//       userId: FIREBASE_AUTH?.currentUser?.uid,
-//     } );

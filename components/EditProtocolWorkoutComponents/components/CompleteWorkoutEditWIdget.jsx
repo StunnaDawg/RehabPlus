@@ -8,6 +8,7 @@ import GetSingleWorkout from "../../../functions/getSingleWorkout"
 import DeleteWorkoutButton from "./DeleteWorkoutButton"
 import { useRefreshContext } from "../../../context/refreshKey"
 import { useSingleEditWorkoutContext } from "../../../context/editWorkoutContext"
+import { useCurrentPhasesContext } from "../../../context/phasesAddContext"
 
 const CompleteWorkoutEditWidget = ({
   id,
@@ -16,12 +17,13 @@ const CompleteWorkoutEditWidget = ({
   userId,
 }) => {
   const [editWorkoutData, setEditWorkoutData] = useSingleEditWorkoutContext([])
+  const [currentPhasesData, setCurrentPhasesData] = useCurrentPhasesContext('')
   const [refreshKey, setRefreshKey] = useRefreshContext(false)
   const isFocused = useIsFocused()
   const navigation = useNavigation()
 
   const getData = async () => {
-    await GetSingleWorkout(id, protocolId, setEditWorkoutData)
+    await GetSingleWorkout(id, protocolId,  setEditWorkoutData, currentPhasesData) //setEditWorkoutData
   }
 
   useEffect(() => {
@@ -35,7 +37,7 @@ const CompleteWorkoutEditWidget = ({
   useEffect(() => {
     console.log('refresh')
     const getRefreshData = async () => {
-      await GetSingleWorkout(id, protocolId, setEditWorkoutData)
+      await GetSingleWorkout(id, protocolId, setEditWorkoutData, currentPhasesData)
     }
     getRefreshData()
   }, [refreshKey])
