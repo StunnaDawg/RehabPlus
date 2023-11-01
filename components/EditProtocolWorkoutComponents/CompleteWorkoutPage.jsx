@@ -26,7 +26,7 @@ const EditWorkoutsPage = () => {
   const phaseId = route.params?.phaseId
   const currentProtocolRef = collection(db, "protocols")
   const currentProtocol = doc(currentProtocolRef, protocolEditData.id)
-  const currentProtocolPhase = doc(currentProtocol, "phases", phaseId)
+  const currentProtocolPhase = doc(currentProtocol, "phases", phaseId || currentPhasesData)
   const currentPhaseWorkouts = collection(currentProtocolPhase, "workouts")
   const navigation = useNavigation()
   const isFocused = useIsFocused()

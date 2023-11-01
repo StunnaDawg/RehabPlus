@@ -3,31 +3,30 @@ import { Button } from "react-native-paper"
 import React from "react"
 import { useNavigation } from "@react-navigation/native"
 import { db, FIREBASE_AUTH } from "../../../firebase"
-import { addDoc, collection, doc } from "firebase/firestore"
+import { addDoc, collection, doc, updateDoc } from "firebase/firestore"
 import { useNewProtocolContext } from "../../../context/newProtocolContext"
 import { useCompleteWorkoutContext } from "../../../context/completeWorkoutContext"
+import { useCurrentPhasesContext } from "../../../context/phasesAddContext"
 
-const SaveWorkoutsToPhaseButton = ({ phaseId }) => {
+const SaveWorkoutsToPhaseButton = () => {
   const [newProtocolData, setNewProtocol] = useNewProtocolContext()
+  const [currentPhasesData, setCurrentPhasesData] = useCurrentPhasesContext('')
   const [completeWorkoutData, setCompleteWorkoutData] =
     useCompleteWorkoutContext([])
   const navigation = useNavigation()
-  const phaseCollectionRef = collection(
+  const phaseCollectionRef = doc(
     db,
     "protocols",
     newProtocolData.id,
-    "phases"
-  )
-  const workoutsSubCollectionRef = collection(
-    phaseCollectionRef,
-    phaseId,
-    "workouts"
+    "phases",
+    currentPhasesData
   )
 
   const onSubmitProtocol = async () => {
     try {
       for (const workout of completeWorkoutData) {
-        await addDoc(workoutsSubCollectionRef, {
+        await addDoc(phaseCollectionRef, {
+          'workouts':
           workout,
           userId: FIREBASE_AUTH?.currentUser?.uid,
         })

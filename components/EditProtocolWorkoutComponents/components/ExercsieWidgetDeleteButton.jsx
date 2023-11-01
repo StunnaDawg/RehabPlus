@@ -6,11 +6,11 @@ import { collection, deleteDoc, doc, getDoc, updateDoc, deleteField } from 'fire
 import { useNavigation } from '@react-navigation/native'
 import { useRefreshContext } from '../../../context/refreshKey'
 
-const ExerciseWidgetDeleteButton = ({workoutId, protocolId, exerciseId, userId}) => {
+const ExerciseWidgetDeleteButton = ({workoutId, protocolId, exerciseId, userId, phaseId}) => {
     const [refreshKey, setRefreshKey] = useRefreshContext(false)
     const navigation = useNavigation()
     const protocolRef = doc(db, "protocols", protocolId)
-    const currentWorkout = doc(protocolRef, 'workouts', workoutId)
+    const currentWorkout = doc(protocolRef, 'phases', phaseId, 'workouts' , workoutId)
 
     const DeleteExerciseButton = () =>
     Alert.alert('Warning', 'Are you sure you want to delete this exercise?', [

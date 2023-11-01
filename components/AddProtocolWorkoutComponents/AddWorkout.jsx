@@ -17,39 +17,43 @@ import { useCurrentPhasesContext } from "../../context/phasesAddContext"
 const AddWorkout = () => {
   const [completeWorkoutData, setCompleteWorkoutData] =
     useCompleteWorkoutContext([])
-    const [refreshKey, setRefreshKey] = useRefreshContext()
-    const [newProtocolData, setNewProtocol] = useNewProtocolContext()
-  const [currentPhasesData, setCurrentPhasesData] = useCurrentPhasesContext('')
+  const [refreshKey, setRefreshKey] = useRefreshContext()
+  const [newProtocolData, setNewProtocol] = useNewProtocolContext()
+  const [currentPhasesData, setCurrentPhasesData] = useCurrentPhasesContext("")
   const navigation = useNavigation()
   const route = useRoute()
   const phaseId = route.params?.phaseId
-  const phaseWorkoutsRef = collection(db, 'protocols', newProtocolData.id, 'phases', phaseId || currentPhasesData, 'workouts')
+  const phaseWorkoutsRef = collection(
+    db,
+    "protocols",
+    newProtocolData.id,
+    "phases",
+    phaseId || currentPhasesData,
+    "workouts"
+  )
 
   useEffect(() => {
-    if (currentPhasesData === '') {
-      setCurrentPhasesData(phaseId)
-    }
-    
-GetProtocolPhases(setCompleteWorkoutData, setRefreshKey, phaseWorkoutsRef)
-console.log('route params id', phaseId)
-console.log('current phase id', currentPhasesData)
+    GetProtocolPhases(setCompleteWorkoutData, setRefreshKey, phaseWorkoutsRef)
+    console.log("route params id", phaseId)
+    console.log("current phase id", currentPhasesData)
   }, [])
+
   return (
     <>
-      <View className='flex-1 flex-row justify-around'>
+      <View className="flex-1 flex-row justify-around">
         <Button
-          onPress={ () => navigation.navigate("CreateWorkout")}
+          onPress={() => navigation.navigate("CreateWorkout")}
           icon="plus"
         >
           Add Workout
         </Button>
-        <SaveWorkoutsToPhaseButton phaseId={phaseId || currentPhasesData} />
+        {/* <SaveWorkoutsToPhaseButton /> */}
       </View>
 
       <View>
-      {completeWorkoutData.map((workout, index) => (
-    <CompleteWorkoutWidget key={index} workoutTitle={workout.title} />
-  ))}
+        {completeWorkoutData.map((workout, index) => (
+          <CompleteWorkoutWidget key={index} workoutTitle={workout.title} />
+        ))}
       </View>
     </>
   )
