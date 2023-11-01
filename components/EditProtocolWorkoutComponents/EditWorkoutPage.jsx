@@ -4,12 +4,13 @@ import { Button, TextInput } from "react-native-paper"
 import { useNavigation } from "@react-navigation/native"
 import { useSingleWorkoutContext } from "../../context/workoutContext"
 import ExerciseWidget from "./ExerciseWidget"
-import CreateWorkoutButton from "./CreateWorkoutButton"
+
 import { useSingleEditWorkoutContext } from "../../context/editWorkoutContext"
 import { useIsFocused } from "@react-navigation/native"
 import UpdateWorkoutsButton from "./UpdateWorkoutsButton"
 import { useSingleProtocolContext } from "../../context/protocolContext"
 import { useRefreshContext } from "../../context/refreshKey"
+import { useCurrentPhasesContext } from "../../context/phasesAddContext"
 
 const EditWorkout = () => {
   const [editWorkoutData, setEditWorkoutData] = useSingleEditWorkoutContext([])
@@ -17,6 +18,7 @@ const EditWorkout = () => {
   const [exerciseWorkoutData, setExerciseWorkoutData] = useSingleWorkoutContext(
     []
   )
+  const [currentPhasesData, setCurrentPhasesData] = useCurrentPhasesContext('')
   const [refreshKey, setRefreshKey] = useRefreshContext(false)
   const [workoutTitleText, setWorkoutTitleText] = useState(defaultWorkoutTitle)
   const [workoutDescriptionText, setWorkoutDescriptionText] = useState(defaultWorkoutDescription)
@@ -58,9 +60,9 @@ const defaultExercises = useMemo(() => editWorkoutData.workout.exercises, [editW
             workoutTitle={workoutTitleText}
             workoutDescription={workoutDescriptionText}
             workoutExercises={exerciseWorkoutData}
-            setOnAppear={setOnAppear}
             workoutId={editWorkoutData.id}
             protocolId={protocolEditData.id}
+            phaseId={currentPhasesData}
           />
         ) : (
           null

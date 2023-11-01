@@ -8,12 +8,13 @@ import { useSingleWorkoutContext } from "../../context/workoutContext"
 import { collection, doc, updateDoc } from "firebase/firestore"
 import { db } from "../../firebase"
 
-const UpdateWorkoutsButton = ({workoutTitle, workoutDescription, workoutExercises, setOnAppear, workoutId, protocolId}) => {
+const UpdateWorkoutsButton = ({workoutTitle, workoutDescription, workoutExercises, workoutId, protocolId, phaseId}) => {
   const navigation = useNavigation()
-  const workoutDocRef = doc(db, "protocols", protocolId, 'workouts', workoutId)
+  const workoutDocRef = doc(db, "protocols", protocolId, 'phases', phaseId, 'workouts', workoutId)
   const onSubmitUpdateWorkout = async () => {
       try{
 console.log(workoutDocRef)
+console.log(phaseId)
 console.log("exercises to add to document", workoutExercises)
 const updateData = {};
 if (workoutTitle) {
