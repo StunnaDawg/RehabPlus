@@ -1,10 +1,16 @@
-import { View, Text } from "react-native"
+import { View, Text, ScrollView } from "react-native"
 import { TextInput, Switch } from "react-native-paper"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import UpdateButton from "./components/UpdateProtocolButton"
 import DeleteButton from "./components/DeleteButton"
 import UpdateWorkouts from "./components/UpdateWorkouts"
 import { useSingleProtocolContext } from "../../context/protocolContext"
+import GetProtocolPhases from "../../functions/gteProtocolPhases"
+import { useRefreshContext } from "../../context/refreshKey"
+import { collection } from "firebase/firestore"
+import { db } from "../../firebase"
+import PhasesWidget from "./components/PhasesWidget"
+import { useIsFocused } from "@react-navigation/native"
 
 const EditStartPage = () => {
   const [protocolEditData] = useSingleProtocolContext()
@@ -13,8 +19,20 @@ const EditStartPage = () => {
   const [weeksText, setWeeksText] = useState(protocolEditData.weeks)
   const [daysPerWeek, setDaysPerWeek] = useState(protocolEditData.daysPerWeek)
   const [isPublic, setIsPublic] = useState(protocolEditData?.public || false)
+  const [protocolEditPhases, setProtocolEditPhases] = useState([])
+  const [refreshKey, setRefreshKey] = useRefreshContext()
+  const protocolPhasesCollectionRef = collection(db, "protocols", protocolEditData.id, "phases")
+  const isFocused = useIsFocused()
 
   const onToggleSwitch = () => setIsPublic(!isPublic)
+
+  useEffect(() => {
+    const fetchPhases = async () => {
+    GetProtocolPhases(setProtocolEditPhases, setRefreshKey, protocolPhasesCollectionRef)
+    }
+
+    fetchPhases()
+  }, [isFocused])
 
   return (
     <>
@@ -81,8 +99,19 @@ const EditStartPage = () => {
           protocolPublic={isPublic}
         />
         
-        <UpdateWorkouts id={protocolEditData.id} />
+
       </View>
+
+      <ScrollView>
+        {protocolEditPhases.map((phase) => {
+          console.log(phase.title)
+          return (
+            <View key={phase.id} >
+            <PhasesWidget phaseId={phase.id} phasesTitle={phase.phases.title}/>
+            </ View>
+          )
+        })}
+      </ScrollView>
     </>
   )
 }
