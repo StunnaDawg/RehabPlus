@@ -10,18 +10,19 @@ const AddWorkoutButton = ({
   workoutDescription,
   workoutExercises,
   protocolId,
+  phaseId,
 }) => {
   const navigation = useNavigation()
   const workoutCollectionRef = collection(
     db,
     "protocols",
     protocolId,
+    "phases",
+    phaseId,
     "workouts"
   )
   const onSubmitAddWorkout = async () => {
     try {
-      console.log(workoutCollectionRef)
-      console.log("exercises to add to document", workoutExercises, 'in protocol', protocolId)
       const newWorkoutData = {}
       if (workoutTitle) {
         newWorkoutData["title"] = workoutTitle

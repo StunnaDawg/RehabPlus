@@ -9,6 +9,7 @@ import { useSingleProtocolContext } from "../../context/protocolContext"
 import { useRefreshContext } from "../../context/refreshKey"
 import AddWorkoutButton from "./CreateWorkoutButton"
 import AddWorkoutExerciseWidget from "./AddWorkoutExerciseWidget"
+import { useCurrentPhasesContext } from "../../context/phasesAddContext"
 
 const AddWorkoutCurrentProtocol = () => {
   const [editWorkoutData, setEditWorkoutData] = useSingleEditWorkoutContext([])
@@ -16,31 +17,13 @@ const AddWorkoutCurrentProtocol = () => {
   const [exerciseWorkoutData, setExerciseWorkoutData] = useSingleWorkoutContext(
     []
   )
+  const [currentPhasesData, setCurrentPhasesData] = useCurrentPhasesContext('')
   const [refreshKey, setRefreshKey] = useRefreshContext(false)
   const [workoutTitleText, setWorkoutTitleText] = useState('')
   const [workoutDescriptionText, setWorkoutDescriptionText] = useState('')
   const [onAppear, setOnAppear] = useState(true)
   const navigation = useNavigation()
   const isFocused = useIsFocused()
-
-  // useEffect(() => {
-  //   console.log('workout data', editWorkoutData)
-  //   if (onAppear) {
-  //     setExerciseWorkoutData(defaultExercises)
-  //     console.log('if onAppear workoutdata',exerciseWorkoutData)
-  //   } 
-
-  //   console.log("exerciseState update id", editWorkoutData.id)
-  //   console.log("exerciseState protocol id", protocolEditData.userId)
-    
-  // }, [isFocused])
-
-  // useEffect(() => {
-  //   console.log('workout data', editWorkoutData)
-  //     setExerciseWorkoutData(defaultExercises)
-  //     console.log('if onAppear workoutdata',exerciseWorkoutData)
-    
-  // }, [refreshKey, editWorkoutData])
 
   return (
     <>
@@ -52,6 +35,7 @@ const AddWorkoutCurrentProtocol = () => {
             setOnAppear={setOnAppear}
             workoutId={editWorkoutData.id}
             protocolId={protocolEditData.id}
+            phaseId={currentPhasesData}
           />
       </View>
       <View className="mx-4 my-1">

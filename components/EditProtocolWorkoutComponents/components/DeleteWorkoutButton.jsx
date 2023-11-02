@@ -5,10 +5,10 @@ import { FIREBASE_AUTH, db } from '../../../firebase'
 import { collection, deleteDoc, doc } from 'firebase/firestore'
 import { useNavigation } from '@react-navigation/native'
 
-const DeleteWorkoutButton = ({id, userId, protocolId}) => {
+const DeleteWorkoutButton = ({id, userId, protocolId, phaseId}) => {
     const navigation = useNavigation()
     const protocolRef = doc(db, "protocols", protocolId)
-    const currentWorkoutToDelete = doc(protocolRef, 'workouts', id)
+    const currentWorkoutToDelete = doc(protocolRef, 'phases', phaseId, 'workouts', id)
 
     const onSubmitWorkout = async () => {
         if (userId === FIREBASE_AUTH?.currentUser?.uid) {

@@ -13,6 +13,7 @@ import GetSingleExercise from "../../functions/getSingleExercise"
 import { useIsFocused } from "@react-navigation/native"
 import { useSingleWorkoutContext } from "../../context/workoutContext"
 import ExerciseWidgetDeleteButton from "./components/ExercsieWidgetDeleteButton"
+import { useCurrentPhasesContext } from "../../context/phasesAddContext"
 
 // id is the exercise id, change la
 const ExerciseWidget = ({
@@ -29,6 +30,7 @@ const ExerciseWidget = ({
   const [exerciseWorkoutData, setExerciseWorkoutData] = useSingleWorkoutContext(
     []
   )
+  const [currentPhasesData, setCurrentPhasesData] = useCurrentPhasesContext('')
   const [widgetData, setWidgetData] = useState({})
   const [exerciseSets, setExerciseSets] = useState(sets || "0")
   const [exerciseReps, setExerciseReps] = useState(reps || "0")
@@ -80,6 +82,7 @@ const ExerciseWidget = ({
           exerciseId={id}
           userId={userId}
           setExerciseState={setExerciseWorkoutData}
+          phaseId={currentPhasesData}
         />
       </Card.Content>
       <Card.Content className="flex-1 flex-row justify-center items-center ">

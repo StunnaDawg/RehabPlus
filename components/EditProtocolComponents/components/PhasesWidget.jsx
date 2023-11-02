@@ -4,15 +4,15 @@ import { Button, Card, Text } from "react-native-paper"
 import React, { useEffect, useState } from "react"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import { useRefreshContext } from "../../../context/refreshKey"
-import AddWorkout from "../../AddProtocolWorkoutComponents/AddWorkout"
 import { useCurrentPhasesContext } from "../../../context/phasesAddContext"
 
 const PhasesWidget = ({ phasesTitle, phaseId
 }) => {
+  const [currentPhasesData, setCurrentPhasesData] = useCurrentPhasesContext('')
   const [refreshKey, setRefreshKey] = useRefreshContext(false)
   const isFocused = useIsFocused()
   const navigation = useNavigation()
-  const [currentPhasesData, setCurrentPhasesData] = useCurrentPhasesContext('')
+
   useEffect(() => {
     console.log('refresh')
   }, [refreshKey])
@@ -22,7 +22,7 @@ const PhasesWidget = ({ phasesTitle, phaseId
       <Card.Content className="flex-1 flex-row justify-center items-center">
         <Text variant="titleLarge">{phasesTitle}</Text>
       <Card.Actions className="flex-1 flex-row justify-center items-center">
-        <Button onPress={async () => {await setCurrentPhasesData(phaseId); navigation.navigate('AddProtocolWorkoutScreen')}}>Add Workout</Button>
+        <Button onPress={async () => {await setCurrentPhasesData(phaseId); navigation.navigate('EditProtocolWorkoutScreen')}}>Edit Phase</Button>
       </Card.Actions>
       </Card.Content>
     </Card>

@@ -1,9 +1,9 @@
 import { getDoc, doc, collection } from "firebase/firestore"
 import { FIREBASE_AUTH, db } from "../firebase"
 
-const GetSingleWorkout = async (workoutId, protocolId, setState) => {
+const GetSingleWorkout = async (workoutId, protocolId, setState, phaseId) => {
   try {
-    const workoutDocRef = doc(db, 'protocols', protocolId, 'workouts', workoutId) // Get the document reference.
+    const workoutDocRef = doc(db, 'protocols', protocolId ,'phases', phaseId, 'workouts', workoutId, ) // Get the document reference.
     const docSnap = await getDoc(workoutDocRef) // Fetch the document.
     const docId = workoutId
 
