@@ -52,6 +52,7 @@ const CompleteWorkoutEditWidget = ({
           id={id}
           protocolId={protocolId}
           userId={userId}
+          phaseId={currentPhasesData}
           icon="delete"
         />
       </Card.Actions>

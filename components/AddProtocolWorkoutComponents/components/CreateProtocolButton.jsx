@@ -14,19 +14,19 @@ const SaveWorkoutsToPhaseButton = () => {
   const [completeWorkoutData, setCompleteWorkoutData] =
     useCompleteWorkoutContext([])
   const navigation = useNavigation()
-  const phaseCollectionRef = doc(
+  const phaseCollectionRef = collection(
     db,
     "protocols",
     newProtocolData.id,
     "phases",
-    currentPhasesData
+    currentPhasesData, 
+    "workouts"
   )
 
   const onSubmitProtocol = async () => {
     try {
       for (const workout of completeWorkoutData) {
         await addDoc(phaseCollectionRef, {
-          'workouts':
           workout,
           userId: FIREBASE_AUTH?.currentUser?.uid,
         })

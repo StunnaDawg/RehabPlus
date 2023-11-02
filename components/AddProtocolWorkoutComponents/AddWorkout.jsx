@@ -47,7 +47,7 @@ const AddWorkout = () => {
         >
           Add Workout
         </Button>
-        {/* <SaveWorkoutsToPhaseButton /> */}
+        <SaveWorkoutsToPhaseButton />
       </View>
 
       <View>

@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native'
 import { db } from '../../../firebase'
 import { updateDoc, collection, doc } from 'firebase/firestore'
 
-const UpdateButton = ({protocolTitle, protocolOutline, protocolDaysPerWeek, protocolWeeks, id, protocolPublic}) => {
+const UpdateButton = ({protocolTitle, protocolOutline, id, protocolPublic}) => {
     const navigation = useNavigation()
     const protocolsCollectionRef = collection(db, "protocols")
     const currentProtocol = doc(protocolsCollectionRef, id)
@@ -15,8 +15,6 @@ const UpdateButton = ({protocolTitle, protocolOutline, protocolDaysPerWeek, prot
         await updateDoc(currentProtocol, {
             title: protocolTitle,
             description: protocolOutline,
-            daysPerWeek: protocolDaysPerWeek,
-            weeks: protocolWeeks,
             public: protocolPublic
         })
         navigation.navigate("Protocol")
