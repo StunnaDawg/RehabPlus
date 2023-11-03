@@ -5,36 +5,35 @@ import React, { useEffect, useState } from "react"
 import { collection } from "firebase/firestore"
 import { db } from "../../firebase"
 import GetProtocolWorkouts from "../../functions/getProtocolWorkouts"
+import PhasesWidget from "./components/PhasesWidget"
 
 const ProtocolModal = ({ protocolId, protocolTitle, protocolOutline }) => {
-    const [phasesData, setPhasesData] = useState([])
-    const phasesCollectionRef = collection(db, "protocols", protocolId, "phases")
-    
-    useEffect(() => {
-        const setPhases = async () => {
-        await GetProtocolWorkouts(
-            setPhasesData,
-            phasesCollectionRef,
-          )
-        }
-        setPhases()
-        console.log('phases data', phasesData)
-    }, [])
+  const [phasesData, setPhasesData] = useState([])
+  const phasesCollectionRef = collection(db, "protocols", protocolId, "phases")
+
+  useEffect(() => {
+    const setPhases = async () => {
+      await GetProtocolWorkouts(setPhasesData, phasesCollectionRef)
+    }
+    setPhases()
+    console.log("phases data", phasesData)
+  }, [])
   return (
     <View>
-      <Text>ProtocolTitle: {protocolTitle}</Text>
-      <Text>ProtocolModal: id {protocolId}</Text>
-      <Text>ProtocolModal: outline {protocolOutline}</Text>
-    {phasesData.map((phase) => {
-        return (
-            <View key={phase.id}>
-                <Text>Phase Title: {phase.title}</Text>
-                <Text>Phase Description: {phase.description}</Text>
-                <Text>Phase Id: {phase.id}</Text>
+      <Text className="text-3xl">{protocolTitle}</Text>
+      <Text className="text-lg"> {protocolOutline}</Text>
+        {phasesData.map((phase) => {
+            console.log('phase', phase.title)
+          return (
+            <View key={phase.id} className='my-3'>
+            <PhasesWidget
+              phaseTitle={phase.title}
+              phaseId={phase.id}
+            />
             </View>
-        )
-    })
-}
+          )
+        })
+      }
     </View>
   )
 }

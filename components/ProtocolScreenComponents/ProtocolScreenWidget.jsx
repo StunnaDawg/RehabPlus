@@ -23,8 +23,8 @@ const ProtocolScreenWidget = ({
   const hideModal = () => setVisible(false)
   const containerStyle = {
     backgroundColor: "white",
-    padding: 20,
-    marginBottom: 150,
+    padding: 35,
+    marginBottom: 200,
   }
   const protocolsCollectionRef = collection(db, "protocols")
   const navigation = useNavigation()
