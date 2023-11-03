@@ -22,7 +22,7 @@ const ProtocolScreenWidget = ({ protocolTitle, weeks, outline, id, userId }) => 
               <Text variant="titleLarge" className="font-bold text-2xl">
                 {" "}
                 {protocolTitle}{" "}
-                {userId == FIREBASE_AUTH?.currentUser?.uid ? <Button
+                 <Button
                   icon="pencil"
                   onPress={async () => {
                     await GetSingleDoc(
@@ -34,10 +34,13 @@ const ProtocolScreenWidget = ({ protocolTitle, weeks, outline, id, userId }) => 
                   }}
                 >
                   Edit
-                </Button>: <Button>Copy Protocol</Button>}
+                </Button>
+               
               </Text>
-
-              <Button icon="account">Assign to Client</Button>
+                  <View className="flex-row">
+              <Button icon="account">Assign to Client</Button> 
+              <Button icon='eye'> View </Button>
+              </View>
             </View>
             <View className="flex-row">
               <Image source={theImage} style={{ width: 100, height: 100 }} />
