@@ -1,5 +1,5 @@
 import { View, Text, Image } from "react-native"
-import { Card, Button } from "react-native-paper"
+import { Card, Button, Portal, Modal } from "react-native-paper"
 import theImage from "../../assets/ACL-Repair-Surgery.jpg"
 import React, { createContext, useContext, useEffect, useState } from "react"
 import { useNavigation } from "@react-navigation/native"
@@ -8,9 +8,18 @@ import { collection } from "firebase/firestore"
 import { db } from "../../firebase"
 import { useSingleProtocolContext } from "../../context/protocolContext"
 import { FIREBASE_AUTH } from "../../firebase"
+import ProtocolModal from "./ProtocolModal"
 
 const ProtocolScreenWidget = ({ protocolTitle, weeks, outline, id, userId }) => {
   const [protocolEditData, setProtocolEditData] = useSingleProtocolContext()
+  const [visible, setVisible] = useState(false)
+  const showModal = () => setVisible(true)
+  const hideModal = () => setVisible(false)
+  const containerStyle = {
+    backgroundColor: "white",
+    padding: 20,
+    marginBottom: 150,
+  }
   const protocolsCollectionRef = collection(db, "protocols")
   const navigation = useNavigation()
 
@@ -38,8 +47,24 @@ const ProtocolScreenWidget = ({ protocolTitle, weeks, outline, id, userId }) => 
                
               </Text>
                   <View className="flex-row">
-              <Button icon="account">Assign to Client</Button> 
-              <Button icon='eye'> View </Button>
+              <Button icon="account">Assign to Client</Button>
+              <Portal>
+        <Modal
+          visible={visible}
+          onDismiss={hideModal}
+          contentContainerStyle={containerStyle}
+        >
+          <ProtocolModal
+            protocolId={protocolEditData.id}
+          />
+        </Modal>
+      </Portal>
+              <Button icon='eye' onPress={async () => {
+                    {await GetSingleDoc(
+                      setProtocolEditData,
+                      protocolsCollectionRef,
+                      id
+                    ); showModal()}}}> View </Button>
               </View>
             </View>
             <View className="flex-row">
