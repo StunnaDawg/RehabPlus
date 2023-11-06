@@ -19,7 +19,13 @@ const phasesWorkoutsCollectionRef = collection(db, "protocols", protocolEditData
     useEffect(() => {console.log('current phase workouts', currentPhasesWorkouts) }, [currentPhasesWorkouts])
   return (
     <View>
-      <Text>ViewPhaseScreen</Text>
+      {currentPhasesWorkouts.map((workout) => {
+        return (
+          <View key={workout.id}>
+            <Text>{workout.workout.title}</Text>
+          </View>
+        )
+      })}
     </View>
   )
 }
