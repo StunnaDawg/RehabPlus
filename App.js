@@ -18,31 +18,31 @@ export default function App() {
   return (
     <AuthProvider>
       <NewProtocolContextProvider>
-      <RefreshContextProvider>
-        <PhasesContextProvider>
-          <EditWorkoutContextProvider>
-            <CompleteWorkoutContextProvider>
-              <WorkoutContextProvider>
-                <ExerciseContextProvider>
-                  <SingleClientProvider>
-                    <SingleProtocolProvider>
-                      <AddProtocolProvider>
-                        <EditProtocolProvider>
-                          <PaperProvider>
+        <RefreshContextProvider>
+          <PhasesContextProvider>
+            <EditWorkoutContextProvider>
+              <CompleteWorkoutContextProvider>
+                <WorkoutContextProvider>
+                  <ExerciseContextProvider>
+                    <SingleClientProvider>
+                      <SingleProtocolProvider>
+                        <AddProtocolProvider>
+                          <EditProtocolProvider>
                             <NavigationContainer>
-                              <NavStack />
+                              <PaperProvider>
+                                <NavStack />
+                              </PaperProvider>
                             </NavigationContainer>
-                          </PaperProvider>
-                        </EditProtocolProvider>
-                      </AddProtocolProvider>
-                    </SingleProtocolProvider>
-                  </SingleClientProvider>
-                </ExerciseContextProvider>
-              </WorkoutContextProvider>
-            </CompleteWorkoutContextProvider>
-          </EditWorkoutContextProvider>
-        </PhasesContextProvider>
-      </RefreshContextProvider>
+                          </EditProtocolProvider>
+                        </AddProtocolProvider>
+                      </SingleProtocolProvider>
+                    </SingleClientProvider>
+                  </ExerciseContextProvider>
+                </WorkoutContextProvider>
+              </CompleteWorkoutContextProvider>
+            </EditWorkoutContextProvider>
+          </PhasesContextProvider>
+        </RefreshContextProvider>
       </NewProtocolContextProvider>
     </AuthProvider>
   )

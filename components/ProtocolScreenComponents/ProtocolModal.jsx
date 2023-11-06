@@ -6,10 +6,13 @@ import { collection } from "firebase/firestore"
 import { db } from "../../firebase"
 import GetProtocolWorkouts from "../../functions/getProtocolWorkouts"
 import PhasesWidget from "./components/PhasesWidget"
+import { useCurrentPhasesContext } from "../../context/phasesAddContext"
+import { useNavigation } from "@react-navigation/native"
 
 const ProtocolModal = ({ protocolId, protocolTitle, protocolOutline }) => {
   const [phasesData, setPhasesData] = useState([])
   const phasesCollectionRef = collection(db, "protocols", protocolId, "phases")
+  const navigation = useNavigation()
 
   useEffect(() => {
     const setPhases = async () => {
@@ -18,6 +21,7 @@ const ProtocolModal = ({ protocolId, protocolTitle, protocolOutline }) => {
     setPhases()
     console.log("phases data", phasesData)
   }, [])
+
   return (
     <View>
       <Text className="text-3xl">{protocolTitle}</Text>
