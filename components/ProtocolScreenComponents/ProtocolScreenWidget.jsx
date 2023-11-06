@@ -1,8 +1,8 @@
 import { View, Text, Image } from "react-native"
 import { Card, Button, Portal, Modal } from "react-native-paper"
 import theImage from "../../assets/ACL-Repair-Surgery.jpg"
-import React, { useState } from "react"
-import { useNavigation } from "@react-navigation/native"
+import React, { useEffect, useState } from "react"
+import { useIsFocused, useNavigation } from "@react-navigation/native"
 import GetSingleDoc from "../../functions/getSingleDoc"
 import { collection } from "firebase/firestore"
 import { db } from "../../firebase"
@@ -28,6 +28,13 @@ const ProtocolScreenWidget = ({
   }
   const protocolsCollectionRef = collection(db, "protocols")
   const navigation = useNavigation()
+  const isFocused = useIsFocused()
+
+  useEffect(() => {
+    if (!isFocused) {
+      setVisible(false);
+    }
+  }, [isFocused]);
 
   return (
     <View>
