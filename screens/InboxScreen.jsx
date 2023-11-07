@@ -8,7 +8,7 @@ const InboxScreen = () => {
     <ScrollView>
         <InboxHeader />
         <View className='flex-1 items-center flex-row justify-center mt-52'>
-        <Text className='text-3xl font-extrabold'>Coming soon...</Text>
+        <Text className='text-3xl font-extrabold'>Coming soon....</Text>
         </View>
       {/* <MessageCard name={'Jorge'} message={'Hey man...'} />
       <MessageCard name={'Kerry'} message={'Question'} />
