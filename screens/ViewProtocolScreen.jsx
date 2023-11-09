@@ -6,12 +6,14 @@ import { useSingleProtocolContext } from "../context/protocolContext"
 import { collection } from "firebase/firestore"
 import { db } from "../firebase"
 import { Button, Card, IconButton } from "react-native-paper"
+import { useNavigation } from "@react-navigation/native"
 
 const ViewProtocolScreen = () => {
   const [currentPhasesData, setCurrentPhasesData] = useCurrentPhasesContext("")
   const [phasesData, setPhasesData] = useState([])
   const [protocolEditData, setProtocolEditData] = useSingleProtocolContext()
   const [currentPhasesWorkouts, setCurrentPhasesWorkouts] = useState([])
+  const navigation = useNavigation()
   // const phasesWorkoutsCollectionRef = collection(db, "protocols", protocolEditData.id, "phases", currentPhasesData, "workouts")
 
   // useEffect(() => {
@@ -63,15 +65,20 @@ const ViewProtocolScreen = () => {
       </ScrollView>
 
       <View className='flex flex-1'>
-        <View className='mb-2 mx-6'>
-          <Button mode="contained" className='p-1'>
-            <Text className='text-lg'>View Protocol</Text></Button>
+        <View className='mb-1 mx-6'>
+          <Button onPress={(() => navigation.navigate('ViewPhasesScreen'))} mode="contained" className='p-1'>
+            <Text className='text-lg' >View Protocol</Text></Button>
           </View>
-          <View className='mx-10'>
+          <View className='mb-1 mx-10'>
           <Button mode="outlined" className='p-1'>
-            <Text className='text-lg'>Start Protocol</Text>
+            <Text className='text-lg'>Assign Protocol</Text>
             </Button>
           </View>
+          {/* <View className='mx-10'>
+          <Button mode="outlined" className=''>
+            <Text className='text-lg'>Start Protocol</Text>
+            </Button>
+          </View> */}
       </View>
     </>
     //   {currentPhasesWorkouts.map((workout) => {
