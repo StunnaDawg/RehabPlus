@@ -60,19 +60,6 @@ const ProtocolScreenWidget = ({
             </Text>
             <View className="flex-row">
               <Button icon="account">Assign to Client</Button>
-              <Portal>
-                <Modal
-                  visible={visible}
-                  onDismiss={hideModal}
-                  contentContainerStyle={containerStyle}
-                >
-                  <ProtocolModal
-                    protocolTitle={protocolEditData.title}
-                    protocolId={protocolEditData.id}
-                    protocolOutline={protocolEditData.description}
-                  />
-                </Modal>
-              </Portal>
               <Button
                 icon="eye"
                 onPress={async () => {
@@ -83,7 +70,7 @@ const ProtocolScreenWidget = ({
                       id
                     )
 
-                    showModal()
+                    navigation.navigate("ViewProtocolScreen")
                   }
                 }}
               >
