@@ -1,17 +1,14 @@
 import { Button } from "react-native-paper"
-import { usePhasesContext } from "../../../context/phasesAddContext"
-import { useEffect } from "react"
-import { useIsFocused } from "@react-navigation/native"
 import { useNewProtocolContext } from "../../../context/newProtocolContext"
 import { addDoc, collection, doc, updateDoc } from "firebase/firestore"
 import { FIREBASE_AUTH, db } from "../../../firebase"
 import { useRefreshContext } from "../../../context/refreshKey"
 
-const AddPhaseButton = ({phaseTitle, phaseOutline, weeksText, setVisible, protocolOutline, protocolTitle, protocolPublic}) => {
+const AddPhaseButton = ({phaseTitle, phaseOutline, weeksText, setVisible, protocolOutline, protocolTitle, protocolPublic, protocolId}) => {
     const [newProtocolData, setNewProtocol] = useNewProtocolContext()
     const [refreshKey, setRefreshKey] = useRefreshContext()
-    const protocolsDocRef = doc(db, "protocols", newProtocolData.id)
-      const phasesCollectionRef = collection(db, "protocols", newProtocolData.id, 'phases' )
+    const protocolsDocRef = doc(db, "protocols", protocolId)
+      const phasesCollectionRef = collection(db, "protocols", protocolId, 'phases' )
       const onSubmitPhase = async () => {
           try{
            await addDoc(phasesCollectionRef, {
