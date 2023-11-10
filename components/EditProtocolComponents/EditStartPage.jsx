@@ -10,6 +10,7 @@ import { collection } from "firebase/firestore"
 import { db } from "../../firebase"
 import PhasesWidget from "./components/PhasesWidget"
 import { useIsFocused } from "@react-navigation/native"
+import AddPhaseButton from "./components/AddPhases"
 
 const EditStartPage = () => {
   const [protocolEditData] = useSingleProtocolContext()
@@ -64,6 +65,7 @@ const EditStartPage = () => {
       </View>
 
       <View className="flex-1 flex-row justify-center">
+        <AddPhaseButton/>
         <UpdateButton
           id={protocolEditData.id}
           protocolOutline={outlineText}
