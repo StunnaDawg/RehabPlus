@@ -14,13 +14,6 @@ const ProtocolModal = ({ protocolId, protocolTitle, protocolOutline }) => {
   const phasesCollectionRef = collection(db, "protocols", protocolId, "phases")
   const navigation = useNavigation()
 
-  useEffect(() => {
-    const setPhases = async () => {
-      await GetProtocolWorkouts(setPhasesData, phasesCollectionRef)
-    }
-    setPhases()
-    console.log("phases data", phasesData)
-  }, [])
 
   return (
     <View>
