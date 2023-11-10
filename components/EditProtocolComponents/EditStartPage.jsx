@@ -1,5 +1,5 @@
 import { View, Text, ScrollView } from "react-native"
-import { TextInput, Switch } from "react-native-paper"
+import { TextInput, Switch, Portal, Modal, Button } from "react-native-paper"
 import { useEffect, useState } from "react"
 import UpdateButton from "./components/UpdateProtocolButton"
 import DeleteButton from "./components/DeleteButton"
@@ -10,6 +10,7 @@ import { collection } from "firebase/firestore"
 import { db } from "../../firebase"
 import PhasesWidget from "./components/PhasesWidget"
 import { useIsFocused } from "@react-navigation/native"
+import ModalContent from "./ModalContent"
 
 const EditStartPage = () => {
   const [protocolEditData] = useSingleProtocolContext()
@@ -17,11 +18,20 @@ const EditStartPage = () => {
   const [outlineText, setOutlineText] = useState(protocolEditData.description)
   const [isPublic, setIsPublic] = useState(protocolEditData?.public || false)
   const [protocolEditPhases, setProtocolEditPhases] = useState([])
+  const [visible, setVisible] = useState(false)
+  const showModal = () => setVisible(true)
+  const hideModal = () => setVisible(false)
   const [refreshKey, setRefreshKey] = useRefreshContext()
   const protocolPhasesCollectionRef = collection(db, "protocols", protocolEditData.id, "phases")
   const isFocused = useIsFocused()
 
   const onToggleSwitch = () => setIsPublic(!isPublic)
+
+  const containerStyle = {
+    backgroundColor: "white",
+    padding: 20,
+    marginBottom: 150,
+  }
 
   useEffect(() => {
     const fetchPhases = async () => {
@@ -29,7 +39,16 @@ const EditStartPage = () => {
     }
 
     fetchPhases()
-  }, [isFocused])
+  }, [])
+
+  useEffect(() => {
+    const fetchPhases = async () => {
+    GetProtocolPhases(setProtocolEditPhases, setRefreshKey, protocolPhasesCollectionRef)
+    }
+
+    fetchPhases()
+    console.log('protocol edit phases', protocolEditPhases)
+  }, [refreshKey])
 
   return (
     <>
@@ -64,6 +83,24 @@ const EditStartPage = () => {
       </View>
 
       <View className="flex-1 flex-row justify-center">
+      <Portal>
+        <Modal
+          visible={visible}
+          onDismiss={hideModal}
+          contentContainerStyle={containerStyle}
+        >
+          <ModalContent
+            setVisible={setVisible}
+            protocolOutline={outlineText}
+            protocolTitle={titleText}
+            protocolId={protocolEditData.id}
+            protocolPublic={isPublic}
+          />
+        </Modal>
+      </Portal>
+        <Button icon="plus" onPress={showModal}>
+        Add Phase
+      </Button>
         <UpdateButton
           id={protocolEditData.id}
           protocolOutline={outlineText}

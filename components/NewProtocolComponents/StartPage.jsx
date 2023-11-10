@@ -173,7 +173,6 @@ const StartPage = () => {
         return (
           <View key={phase.id}>
           <PhasesWidget
-            key={phase.id}
             phasesTitle={phase.title}
             phaseId={phase.id}
           />
