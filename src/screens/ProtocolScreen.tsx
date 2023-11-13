@@ -7,9 +7,10 @@ import { FIREBASE_AUTH, db } from "../firebase"
 import { collection } from "firebase/firestore"
 import getFireStoreData from "../functions/getFireStoreData"
 import { Switch } from "react-native-paper"
+import { Protocol } from "../@types/firestore"
 
 const ProtocolScreen = () => {
-  const [protocolList, setProtocolList] = useState([])
+  const [protocolList, setProtocolList] = useState<Protocol[] | undefined>([])
   const [listPublic, setListPublic] = useState(false)
   const protocolsCollectionRef = collection(db, "protocols")
   const isFocused = useIsFocused()
@@ -30,7 +31,7 @@ const ProtocolScreen = () => {
         </View>
         {
     listPublic 
-        ? protocolList.map((protocol) => (
+        ? protocolList?.map((protocol) => (
             <ProtocolScreenWidget
                 key={protocol.id}
                 weeks={protocol.weeks}
@@ -40,7 +41,7 @@ const ProtocolScreen = () => {
                 userId={protocol.userId}
             />
           ))
-        : protocolList.map((protocol) => (
+        : protocolList?.map((protocol) => (
           protocol.userId == FIREBASE_AUTH?.currentUser?.uid ? 
             <ProtocolScreenWidget
                 key={protocol.id}

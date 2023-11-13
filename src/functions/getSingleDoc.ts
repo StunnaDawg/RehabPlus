@@ -1,32 +1,34 @@
-import { getDoc, doc } from "firebase/firestore"
-import { FIREBASE_AUTH } from "../firebase"
+import { getDoc, doc, CollectionReference } from "firebase/firestore"
+import { Dispatch, SetStateAction } from "react"
 
-const GetSingleDoc = async (setState, collectionRef, id) => {
+// Find out the type of the data that is being fetched.
+type AddClientProtocol = {
+
+}
+
+const GetSingleDoc = async (setState: Dispatch<SetStateAction<AddClientProtocol>>, collectionRef: CollectionReference, id: string) => {
   try {
-    const docRef = doc(collectionRef, id) // Get the document reference.
-    const docSnap = await getDoc(docRef) // Fetch the document.
+    const docRef = doc(collectionRef, id)
+    const docSnap = await getDoc(docRef)
     let protocolData = null
-    let spreadProtocolData = null
     let protocolId = null
 
     if (docSnap.exists()) {
       const clientData = { ...docSnap.data() }
-      // Check if the document exists.
+   
       const docId = docSnap.id
       const protocolRef = clientData.protocol
 
       if (protocolRef) {
-        // Fetch the document the reference is pointing to
         const protocolDoc = await getDoc(protocolRef)
 
         if (protocolDoc.exists()) {
-          // If the document exists, access the data here
+         
           protocolData = protocolDoc.data()
           protocolId = protocolDoc.id
           console.log("Protocol Data:", protocolData)
         }
       }
-      //   console.log("id", docId)
 
       const docData = {
         ...clientData,

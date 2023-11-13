@@ -1,14 +1,11 @@
 import { getDocs, CollectionReference } from "firebase/firestore"
 import { Dispatch, SetStateAction } from "react"
 
-
-type ProtocolPhaseProps = {
-  setState: Dispatch<SetStateAction<string{}>>,
+const GetProtocolPhases = async (
+  setState: Dispatch<SetStateAction<string>>,
   setRefresh: Dispatch<SetStateAction<boolean>>,
   collectionRef: CollectionReference
-}
-
-const GetProtocolPhases= async ({setState, setRefresh, collectionRef}: ProtocolPhaseProps): Promise<void> => {
+) => {
   try {
     const data = await getDocs(collectionRef)
 

@@ -1,7 +1,8 @@
-import { getDocs, getDoc, collection } from "firebase/firestore"
-import { FIREBASE_AUTH } from "../firebase"
+import { getDocs, collection, CollectionReference } from "firebase/firestore"
+import { Dispatch, SetStateAction } from "react";
+import { ExerciseDataBaseCategory } from "../@types/firestore";
 
-const getExerciseFireStoreData = async (setCategoriesState, categoriesCollection) => {
+const getExerciseFireStoreData = async (setCategoriesState: Dispatch<SetStateAction<ExerciseDataBaseCategory>>, categoriesCollection: CollectionReference) => {
     try {
         const exerciseFireBaseData = await getDocs(categoriesCollection);
         const exerciseData = exerciseFireBaseData.docs;

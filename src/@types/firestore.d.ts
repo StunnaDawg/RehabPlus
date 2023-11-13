@@ -1,4 +1,6 @@
 import { CollectionReference } from "firebase/firestore"
+import { UserCredential } from "firebase/auth"
+
 
 export type ProtocolPhase = {
   id: string
@@ -21,7 +23,7 @@ export type Protocol = {
 
 export type Workout = {
   id: string
-  workout: {
+  workout?: {
     description?: string
     title?: string
     exercises?: WorkoutExercise[]
@@ -55,3 +57,4 @@ export type Client = {
   status: boolean
   userId: string //the userId of phsiotherapist
 }
+

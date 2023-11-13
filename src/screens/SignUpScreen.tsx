@@ -9,7 +9,7 @@ import {
   import { useState } from "react"
   import { FIREBASE_AUTH } from "../firebase"
   import { createUserWithEmailAndPassword } from "firebase/auth"
-import { useNavigation } from "@react-navigation/native"
+import { useNavigation  } from "@react-navigation/native"
   
   const SignUpScreen = () => {
     const [email, setEmail] = useState("")
@@ -19,12 +19,11 @@ import { useNavigation } from "@react-navigation/native"
 
     const handleSignUp = async () => {
       try {
-        const response = await createUserWithEmailAndPassword(
+         await createUserWithEmailAndPassword(
           auth,
           email,
           password
         )
-        console.log(response.email)
       } catch (error) {
         console.log(error)
       }

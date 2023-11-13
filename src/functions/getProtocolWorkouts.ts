@@ -1,8 +1,9 @@
-import { getDoc, doc, getDocs } from "firebase/firestore"
-import { FIREBASE_AUTH } from "../firebase"
+import { CollectionReference, getDocs } from "firebase/firestore"
+import { Dispatch, SetStateAction } from "react"
+import { Workout } from "../@types/firestore"
 
 // Can get Phases too
-const GetProtocolWorkouts = async (setState, collectionRef) => {
+const GetProtocolWorkouts = async (setState: Dispatch<SetStateAction<Workout>>, collectionRef: CollectionReference) => {
   try {
     const data = await getDocs(collectionRef)
     const filteredData = data.docs.map((doc) => ({

@@ -19,12 +19,11 @@ import {
 
     const handleLogin = async () => {
       try {
-        const response = await signInWithEmailAndPassword(
+         await signInWithEmailAndPassword(
           auth,
           email,
           password
         )
-        console.log(`logged in with ${response.email}`)
       } catch (error) {
         console.log(error)
       }

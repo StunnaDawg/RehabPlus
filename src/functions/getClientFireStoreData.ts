@@ -1,7 +1,9 @@
-import { getDocs, getDoc } from "firebase/firestore"
+import { getDocs, getDoc, CollectionReference } from "firebase/firestore"
 import { FIREBASE_AUTH } from "../firebase"
+import { Dispatch, SetStateAction } from "react";
+import { Client } from "../@types/firestore";
 
-const getClientFireStoreData = async (setState, collection) => {
+const getClientFireStoreData = async (setState: Dispatch<SetStateAction<Client>>, collection: CollectionReference) => {
   try {
     const data = await getDocs(collection);
     const clientData = data.docs
