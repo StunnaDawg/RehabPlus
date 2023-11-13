@@ -14,7 +14,7 @@ NewProtocolDataContextType | undefined
 export const NewProtocolDataContextProvider = ({
   children,
 }: NewProtocolDataContextProviderProps) => {
-  const [newProtocolData, setNewProtocolData] = useState<Protocol[]>([])
+  const [newProtocolData, setNewProtocolData] = useState<Protocol>({} as Protocol)
 
   return (
     <>

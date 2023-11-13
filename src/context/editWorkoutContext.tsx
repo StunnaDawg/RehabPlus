@@ -14,7 +14,7 @@ EditWorkoutContextType | undefined
 export const EditWorkoutContextProvider = ({
   children,
 }: EditWorkoutContextProviderProps) => {
-  const [editWorkoutData, setEditWorkoutData] = useState<Workout[]>([])
+  const [editWorkoutData, setEditWorkoutData] = useState<Workout>({} as Workout)
 
   return (
     <>

@@ -17,7 +17,7 @@ EditClientContextType | undefined
 export const EditClientContextProvider = ({
   children,
 }: EditClientContextProviderProps) => {
-  const [clientEditData, setClientEditData] = useState<Client[]>([])
+  const [clientEditData, setClientEditData] = useState<Client>({} as Client)
 
   return (
     <>

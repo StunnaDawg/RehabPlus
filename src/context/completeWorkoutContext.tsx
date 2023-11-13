@@ -20,7 +20,7 @@ const CompleteWorkoutContext = createContext<
 export const CompleteWorkoutContextProvider = ({
   children,
 }: CompleteWorkoutContextProviderProps) => {
-  const [completeWorkoutData, setCompleteWorkoutData] = useState<Workout[]>([])
+  const [completeWorkoutData, setCompleteWorkoutData] = useState<Workout>({} as Workout)
 
   return (
     <>

@@ -1,19 +1,14 @@
 import { View, Text } from "react-native"
 import React, { useEffect, useState } from "react"
-import { useCurrentPhasesContext } from "../context/phasesAddContext"
-import { useSingleProtocolContext } from "../context/protocolContext"
-import { useNavigation } from "@react-navigation/native"
+import { useSingleEditProtocolContext } from "../context/protocolContext"
 import { collection } from "firebase/firestore"
 import { db } from "../firebase"
 import GetProtocolWorkouts from "../functions/getProtocolWorkouts"
-import { Button, List } from "react-native-paper"
+import { ProtocolPhase } from "../@types/firestore"
 
 const ViewPhases = () => {
-  const [currentPhasesData, setCurrentPhasesData] = useCurrentPhasesContext("")
-  const [phasesData, setPhasesData] = useState([])
-  const [protocolEditData, setProtocolEditData] = useSingleProtocolContext()
-  const [currentPhasesWorkouts, setCurrentPhasesWorkouts] = useState([])
-  const navigation = useNavigation()
+  const [phasesData, setPhasesData] = useState<ProtocolPhase[] | undefined>()
+  const {protocolEditData} = useSingleEditProtocolContext()
   const phasesCollectionRef = collection(
     db,
     "protocols",
@@ -35,7 +30,7 @@ const ViewPhases = () => {
         <Text className='text-2xl m-5 font-bold'>Protocol Overview</Text>
         <Text className='text-2xl m-3 font-bold'>Phases:</Text>
  
-      {phasesData.map((phase) => (
+      {phasesData?.map((phase: ProtocolPhase) => (
         <View className='p-2 m-5'>
        <Text onPress={() => console.log('ss')} >{phase.title}</Text>
        </View>

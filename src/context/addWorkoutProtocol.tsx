@@ -15,7 +15,7 @@ const NewWorkoutContext = createContext<NewWorkoutContextType | undefined>(
 export const NewWorkoutContextProvider = ({
   children,
 }: NewWorkoutContextProviderProps) => {
-  const [newWorkoutData, setNewWorkoutData] = useState<Workout[]>([])
+  const [newWorkoutData, setNewWorkoutData] = useState<Workout>({} as Workout)
 
   return (
     <>

@@ -19,7 +19,7 @@ const SingleEditProtocolContext = createContext<
 export const SingleEditProtocolContextProvider = ({
   children,
 }: SingleEditProtocolContextProviderProps) => {
-  const [protocolEditData, setProtocolEditData] = useState<Protocol[]>([])
+  const [protocolEditData, setProtocolEditData] = useState<Protocol>({} as Protocol)
 
   return (
     <>

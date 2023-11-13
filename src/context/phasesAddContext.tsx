@@ -18,7 +18,7 @@ const CurrentPhasesDataContext = createContext<
 export const CurrentPhasesDataContextProvider = ({
   children,
 }: CurrentPhasesDataContextProviderProps) => {
-  const [currentPhasesData, setCurrentPhasesData] = useState<ProtocolPhase[]>([])
+  const [currentPhasesData, setCurrentPhasesData] = useState<ProtocolPhase>({} as ProtocolPhase)
 
   return (
     <>

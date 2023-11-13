@@ -1,22 +1,14 @@
 import { View, Text, ScrollView } from "react-native"
-import React, { useEffect, useState } from "react"
-import GetProtocolWorkouts from "../functions/getProtocolWorkouts"
-import { useCurrentPhasesDataContext } from "../context/phasesAddContext"
+import React, { useState } from "react"
 import { useSingleEditProtocolContext} from "../context/protocolContext"
-import { collection } from "firebase/firestore"
-import { db } from "../firebase"
 import { Button, IconButton } from "react-native-paper"
 import { useNavigation } from "@react-navigation/native"
 
 const ViewProtocolScreen = () => {
   const [phasesData, setPhasesData] = useState([])
-  const {protocolEditData, setProtocolEditData} = useSingleEditProtocolContext()
-  const [currentPhasesWorkouts, setCurrentPhasesWorkouts] = useState([])
+  const {protocolEditData} = useSingleEditProtocolContext()
   const navigation = useNavigation()
 
-  useEffect(() => {
-    console.log("viewing protocol", protocolEditData)
-  }, [currentPhasesWorkouts])
   return (
     <>
       <ScrollView>
