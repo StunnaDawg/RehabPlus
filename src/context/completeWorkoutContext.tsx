@@ -3,6 +3,8 @@ import {
   CompleteWorkoutDataType,
   CompleteWorkoutAction,
 } from "../@types/context"
+import { Workout } from "../@types/firestore"
+
 
 export type CompleteWorkoutContextType = CompleteWorkoutDataType &
   CompleteWorkoutAction
@@ -18,7 +20,7 @@ const CompleteWorkoutContext = createContext<
 export const CompleteWorkoutContextProvider = ({
   children,
 }: CompleteWorkoutContextProviderProps) => {
-  const [completeWorkoutData, setCompleteWorkoutData] = useState<string[]>([])
+  const [completeWorkoutData, setCompleteWorkoutData] = useState<Workout[]>([])
 
   return (
     <>

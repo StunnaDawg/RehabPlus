@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from "react"
 import { NewProtocolDataAction, NewProtocolDataType } from "../@types/context"
-
+import { Protocol } from "../@types/firestore"
 export type NewProtocolDataContextType = NewProtocolDataType & NewProtocolDataAction
 
 type NewProtocolDataContextProviderProps = {
@@ -14,7 +14,7 @@ NewProtocolDataContextType | undefined
 export const NewProtocolDataContextProvider = ({
   children,
 }: NewProtocolDataContextProviderProps) => {
-  const [newProtocolData, setNewProtocolData] = useState<string[]>([])
+  const [newProtocolData, setNewProtocolData] = useState<Protocol[]>([])
 
   return (
     <>

@@ -3,6 +3,7 @@ import {
   SingleEditProtocolAction,
   SingleEditProtocolType,
 } from "../@types/context"
+import { Protocol } from "../@types/firestore"
 
 export type SingleEditProtocolContextType = SingleEditProtocolType &
   SingleEditProtocolAction
@@ -18,7 +19,7 @@ const SingleEditProtocolContext = createContext<
 export const SingleEditProtocolContextProvider = ({
   children,
 }: SingleEditProtocolContextProviderProps) => {
-  const [protocolEditData, setProtocolEditData] = useState<string[]>([])
+  const [protocolEditData, setProtocolEditData] = useState<Protocol[]>([])
 
   return (
     <>

@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState } from "react"
 import {
   EditClientDataType, EditClientAction
 } from "../@types/context"
+import { Client } from "../@types/firestore"
 
 export type EditClientContextType = EditClientDataType & EditClientAction
 
@@ -16,7 +17,7 @@ EditClientContextType | undefined
 export const EditClientContextProvider = ({
   children,
 }: EditClientContextProviderProps) => {
-  const [clientEditData, setClientEditData] = useState<string[]>([])
+  const [clientEditData, setClientEditData] = useState<Client[]>([])
 
   return (
     <>

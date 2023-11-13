@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
+import { Workout, Protocol, ProtocolPhase, Client } from "./firestore";
 
 export type RefreshKey = {
     refreshKey: boolean;
@@ -17,35 +18,35 @@ export type UserAuthAction = {
 }
 
 export type SingleWorkoutType = {
-    exerciseWorkoutData: string[];
+    exerciseWorkoutData: Workout[];
 }
 
 export type SingleWorkoutAction = { 
-    setExerciseWorkoutData: Dispatch<SetStateAction<string[]>>
+    setExerciseWorkoutData: Dispatch<SetStateAction<Workout[]>>
 }
 
 export type SingleEditProtocolType = {
-    protocolEditData: string[];
+    protocolEditData: Protocol[];
 }
 
 export type SingleEditProtocolAction = { 
-    setProtocolEditData: Dispatch<SetStateAction<string[]>>
+    setProtocolEditData: Dispatch<SetStateAction<Protocol[]>>
 }
 
 export type CurrentPhasesDataType = { 
-    currentPhasesData: string[];
+    currentPhasesData: ProtocolPhase[];
 }
 
 export type CurrentPhasesDataAction = { 
-    setCurrentPhasesData: Dispatch<SetStateAction<string[]>>
+    setCurrentPhasesData: Dispatch<SetStateAction<ProtocolPhase[]>>
 }
 
 export type NewProtocolDataType = { 
-    newProtocolData: string[];
+    newProtocolData: Protocol[];
 }
 
 export type NewProtocolDataAction = { 
-    setNewProtocolData: Dispatch<SetStateAction<string[]>>
+    setNewProtocolData: Dispatch<SetStateAction<Protocol[]>>
 }
 
 export type AddClientProtocolDataType = { 
@@ -57,33 +58,33 @@ export type AddClientProtocolDataAction = {
 }
 
 export type EditWorkoutType = { 
-    editWorkoutData: string[];
+    editWorkoutData: Workout[];
 }
 
 export type EditWorkoutAction = { 
-    setEditWorkoutData: Dispatch<SetStateAction<string[]>>
+    setEditWorkoutData: Dispatch<SetStateAction<Workout[]>>
 }
 
 export type CompleteWorkoutDataType = { 
-    completeWorkoutData: string[];
+    completeWorkoutData: Workout[];
 }
 
 export type CompleteWorkoutAction = { 
-    setCompleteWorkoutData: Dispatch<SetStateAction<string[]>>
+    setCompleteWorkoutData: Dispatch<SetStateAction<Workout[]>>
 }
 
 export type EditClientDataType = { 
-    clientEditData: string[];
+    clientEditData: Client[];
 }
 
 export type EditClientAction = { 
-    setClientEditData: Dispatch<SetStateAction<string[]>>
+    setClientEditData: Dispatch<SetStateAction<Client[]>>
 }
 
 export type NewWorkoutDataType = { 
-    newWorkoutData: string[];
+    newWorkoutData: Workout[];
 }
 
 export type NewWorkoutAction = { 
-    setNewWorkoutData: Dispatch<SetStateAction<string[]>>
+    setNewWorkoutData: Dispatch<SetStateAction<Workout[]>>
 }

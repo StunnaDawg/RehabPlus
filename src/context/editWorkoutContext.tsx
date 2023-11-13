@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from "react"
 import { EditWorkoutType, EditWorkoutAction } from "../@types/context"
-
+import { Workout } from "../@types/firestore"
 export type EditWorkoutContextType = EditWorkoutType & EditWorkoutAction
 
 type EditWorkoutContextProviderProps = {
@@ -14,7 +14,7 @@ EditWorkoutContextType | undefined
 export const EditWorkoutContextProvider = ({
   children,
 }: EditWorkoutContextProviderProps) => {
-  const [editWorkoutData, setEditWorkoutData] = useState<string[]>([])
+  const [editWorkoutData, setEditWorkoutData] = useState<Workout[]>([])
 
   return (
     <>

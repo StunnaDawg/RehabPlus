@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState } from "react"
 import { NewWorkoutDataType, NewWorkoutAction } from "../@types/context"
+import { Workout } from "../@types/firestore"
 
 export type NewWorkoutContextType = NewWorkoutDataType & NewWorkoutAction
 
@@ -14,7 +15,7 @@ const NewWorkoutContext = createContext<NewWorkoutContextType | undefined>(
 export const NewWorkoutContextProvider = ({
   children,
 }: NewWorkoutContextProviderProps) => {
-  const [newWorkoutData, setNewWorkoutData] = useState<string[]>([])
+  const [newWorkoutData, setNewWorkoutData] = useState<Workout[]>([])
 
   return (
     <>

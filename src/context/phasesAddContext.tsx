@@ -3,7 +3,7 @@ import {
   CurrentPhasesDataAction,
   CurrentPhasesDataType,
 } from "../@types/context"
-
+import { ProtocolPhase } from "../@types/firestore"
 export type CurrentPhasesDataContextType = CurrentPhasesDataType &
   CurrentPhasesDataAction
 
@@ -18,7 +18,7 @@ const CurrentPhasesDataContext = createContext<
 export const CurrentPhasesDataContextProvider = ({
   children,
 }: CurrentPhasesDataContextProviderProps) => {
-  const [currentPhasesData, setCurrentPhasesData] = useState<string[]>([])
+  const [currentPhasesData, setCurrentPhasesData] = useState<ProtocolPhase[]>([])
 
   return (
     <>
