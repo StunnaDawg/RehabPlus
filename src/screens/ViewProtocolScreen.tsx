@@ -1,32 +1,18 @@
 import { View, Text, ScrollView } from "react-native"
 import React, { useEffect, useState } from "react"
 import GetProtocolWorkouts from "../functions/getProtocolWorkouts"
-import { useCurrentPhasesContext } from "../context/phasesAddContext"
-import { useSingleProtocolContext } from "../context/protocolContext"
+import { useCurrentPhasesDataContext } from "../context/phasesAddContext"
+import { useSingleEditProtocolContext} from "../context/protocolContext"
 import { collection } from "firebase/firestore"
 import { db } from "../firebase"
-import { Button, Card, IconButton } from "react-native-paper"
+import { Button, IconButton } from "react-native-paper"
 import { useNavigation } from "@react-navigation/native"
 
 const ViewProtocolScreen = () => {
-  const [currentPhasesData, setCurrentPhasesData] = useCurrentPhasesContext("")
   const [phasesData, setPhasesData] = useState([])
-  const [protocolEditData, setProtocolEditData] = useSingleProtocolContext()
+  const {protocolEditData, setProtocolEditData} = useSingleEditProtocolContext()
   const [currentPhasesWorkouts, setCurrentPhasesWorkouts] = useState([])
   const navigation = useNavigation()
-  // const phasesWorkoutsCollectionRef = collection(db, "protocols", protocolEditData.id, "phases", currentPhasesData, "workouts")
-
-  // useEffect(() => {
-  //   const setPhases = async () => {
-  //     await GetProtocolWorkouts(setPhasesData, phasesCollectionRef)
-  //   }
-  //   setPhases()
-  //   console.log("phases data", phasesData)r
-  // }, [])
-
-  // useEffect(() => {
-  //     GetProtocolWorkouts(setCurrentPhasesWorkouts, phasesWorkoutsCollectionRef)
-  // }, [])
 
   useEffect(() => {
     console.log("viewing protocol", protocolEditData)
@@ -46,7 +32,7 @@ const ViewProtocolScreen = () => {
           <View className="flex flex-row justify-start">
             <Text className="font-semibold mx-4">Phases:</Text>
             <Text className="font-semibold">
-              Weeks: {protocolEditData.weeks}
+              Weeks: {protocolEditData?.weeks}
             </Text>
           </View>
         </View>
@@ -74,26 +60,8 @@ const ViewProtocolScreen = () => {
             <Text className='text-lg'>Assign Protocol</Text>
             </Button>
           </View>
-          {/* <View className='mx-10'>
-          <Button mode="outlined" className=''>
-            <Text className='text-lg'>Start Protocol</Text>
-            </Button>
-          </View> */}
       </View>
     </>
-    //   {currentPhasesWorkouts.map((workout) => {
-    //     console.log('workout', workout.workout.title)
-    //     return (
-    //         <View key={workout.id}>
-    //         <Card mode="contained" className="mt-3 mx-14 ">
-    //         <Card.Content className='flex flex-col items-center'>
-    //           <Text className='text-4xl'>{workout.workout.title}</Text>
-    //           <Button onPress={() => {}}>View</Button>
-    //         </Card.Content>
-    //       </Card>
-    //       </View>
-    //   )
-    // })}
   )
 }
 

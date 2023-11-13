@@ -20,7 +20,7 @@ import GetSingleDoc from "../../functions/getSingleDoc"
 import { useNewProtocolContext } from "../../context/newProtocolContext"
 import { useCurrentPhasesContext } from "../../context/phasesAddContext"
 import GetProtocolWorkouts from "../../functions/getProtocolWorkouts"
-import GetProtocolPhases from "../../functions/gteProtocolPhases"
+import GetProtocolPhases from "../../functions/getProtocolPhases"
 
 const StartPage = () => {
   const [newProtocolData, setNewProtocol] = useNewProtocolContext()

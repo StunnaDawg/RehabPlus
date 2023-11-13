@@ -10,7 +10,7 @@ import { useRefreshContext } from "../../context/refreshKey"
 import { collection } from "firebase/firestore"
 import { db } from "../../firebase"
 import SaveWorkoutsToPhaseButton from "./components/CreateProtocolButton"
-import GetProtocolPhases from "../../functions/gteProtocolPhases"
+import GetProtocolPhases from "../../functions/getProtocolPhases"
 import { useNewProtocolContext } from "../../context/newProtocolContext"
 import { useCurrentPhasesContext } from "../../context/phasesAddContext"
 

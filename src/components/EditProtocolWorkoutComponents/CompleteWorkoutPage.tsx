@@ -10,7 +10,7 @@ import { useSingleWorkoutContext } from "../../context/workoutContext"
 import { useSingleProtocolContext } from "../../context/protocolContext"
 import { collection, doc } from "firebase/firestore"
 import { db } from "../../firebase"
-import GetProtocolPhases from "../../functions/gteProtocolPhases"
+import GetProtocolPhases from "../../functions/getProtocolPhases"
 import { useRefreshContext } from "../../context/refreshKey"
 import { useCurrentPhasesContext } from "../../context/phasesAddContext"
 
