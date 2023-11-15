@@ -1,3 +1,3 @@
-import { NavBar, NavStack } from "./NavBar"
+import NavBar from "./NavBar"
 
-export { NavBar, NavStack }
+export default NavBar

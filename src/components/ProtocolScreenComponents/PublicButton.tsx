@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Switch } from 'react-native-paper'
 
 const PublicButton = () => {
-    const [listPublic, setListPublic] = useState(false);
+    const [listPublic, setListPublic] = useState<boolean>(false);
 
     const onToggleSwitch = () => setListPublic(!listPublic);
   

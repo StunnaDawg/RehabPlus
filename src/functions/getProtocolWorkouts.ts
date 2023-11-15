@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction } from "react"
 import { Workout } from "../@types/firestore"
 
 // Can get Phases too
-const GetProtocolWorkouts = async (setState: Dispatch<SetStateAction<Workout>>, collectionRef: CollectionReference) => {
+const GetProtocolWorkouts = async (setState: Dispatch<SetStateAction<Workout[]>>, collectionRef: CollectionReference) => {
   try {
     const data = await getDocs(collectionRef)
     const filteredData = data.docs.map((doc) => ({

@@ -1,8 +1,9 @@
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { TabNavigationProp } from "@react-navigation/native";
 
 export type RootStackParamList = {
     Footer: undefined;
-    NewProtocol: undefined;
+    NewProtocol: {protocolId: string | undefined};
     EditProtocol: undefined;
     NewClient: undefined;
     EditClient: undefined;
@@ -30,3 +31,5 @@ export type RootStackParamList = {
     Protocol: undefined;
     Client: undefined;
   };
+
+  export type TabNavigationType = TabNavigationProp<TabParamList>;

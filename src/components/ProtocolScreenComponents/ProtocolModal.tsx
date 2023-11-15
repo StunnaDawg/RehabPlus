@@ -1,16 +1,10 @@
-import { Modal } from "react-native-paper"
-
 import { View, Text } from "react-native"
-import React, { useEffect, useState } from "react"
-import { collection } from "firebase/firestore"
-import { db } from "../../firebase"
-import GetProtocolWorkouts from "../../functions/getProtocolWorkouts"
+import React, { useState } from "react"
 import PhasesWidget from "./components/PhasesWidget"
-import { useCurrentPhasesContext } from "../../context/phasesAddContext"
-import { useNavigation } from "@react-navigation/native"
+import { Protocol, ProtocolPhase } from "../../@types/firestore"
 
-const ProtocolModal = ({ protocolId, protocolTitle, protocolOutline }) => {
-  const [phasesData, setPhasesData] = useState([])
+const ProtocolModal = ({ id: protocolId, title: protocolTitle, description: protocolOutline }: Protocol) => {
+  const [phasesData, setPhasesData] = useState<ProtocolPhase[]>([])
 
 
   return (

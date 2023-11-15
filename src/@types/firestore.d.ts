@@ -4,21 +4,21 @@ import { UserCredential } from "firebase/auth"
 
 export type ProtocolPhase = {
   id: string
-  description: string
-  title: string
+  description?: string
+  title?: string
   userId: string
-  weeks: string
-  workouts: CollectionReference
+  weeks?: string
+  workouts?: CollectionReference
 }
 
 export type Protocol = {
   id: string
-  description: string
+  description?: string
   title: string
   userId: string
-  weeks: string
+  weeks?: string
   public: boolean
-  phases: CollectionReference
+  phases?: CollectionReference
 }
 
 export type Workout = {
@@ -39,13 +39,14 @@ export type WorkoutExercise = {
 
 export type ExerciseDataBaseCategory = {
   title: string
-  exercises: CollectionReference
+  exercises?: CollectionReference
 }
 
 export type ExerciseDataBaseExercise = {
+    id: string
   exercise: {
     title: string
-    description: string
+    description?: string
   }
 }
 

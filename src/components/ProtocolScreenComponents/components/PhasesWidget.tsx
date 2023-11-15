@@ -1,19 +1,20 @@
 import { View } from "react-native"
 import { Button, Card, Divider, Text } from "react-native-paper"
 // import ExerciseImage from "../../../assets/physcial-medicine.jpg"
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { useCurrentPhasesDataContext } from "../../../context/phasesAddContext"
 import { useNavigation } from "@react-navigation/native"
-import { NavigationType } from "../../../@types/navigation"
+import { TabNavigationType } from "../../../@types/navigation"
+import { ProtocolPhase } from "../../../@types/firestore"
 
-const PhasesWidget = ({ phaseTitle, phaseId }) => {
-  const {currentPhasesData, setCurrentPhasesData} = useCurrentPhasesDataContext('')
-  const navigation = useNavigation<NavigationType>()
+const PhasesWidget = ({ title: phaseTitle, id: phaseId }: ProtocolPhase) => {
+  const {currentPhasesData, setCurrentPhasesData} = useCurrentPhasesDataContext()
+  const navigation = useNavigation<TabNavigationType>()
   return (
     <View>
         <Divider />
         <Text className='text-3xl font-bold'>{phaseTitle ? phaseTitle : 'loading'}</Text>
-        <Button onPress={async () => {await setCurrentPhasesData(phaseId); navigation.navigate('ViewProtocolPhase') }}>View Protocol</Button>
+        <Button onPress={() => {setCurrentPhasesData(phaseId); navigation.navigate('ViewProtocolPhase') }}>View Protocol</Button>
         <Divider />
     </View>
   )

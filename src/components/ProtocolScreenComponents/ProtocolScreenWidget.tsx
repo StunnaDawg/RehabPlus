@@ -1,48 +1,32 @@
 import { View, Text, Image } from "react-native"
-import { Card, Button, Portal, Modal } from "react-native-paper"
-import theImage from "../../assets/ACL-Repair-Surgery.jpg"
-import React, { useEffect, useState } from "react"
-import { useIsFocused, useNavigation } from "@react-navigation/native"
+import { Card, Button} from "react-native-paper"
+import React from "react"
+import { useNavigation } from "@react-navigation/native"
 import GetSingleDoc from "../../functions/getSingleDoc"
 import { collection } from "firebase/firestore"
 import { db } from "../../firebase"
-import { useSingleProtocolContext } from "../../context/protocolContext"
+import { useSingleEditProtocolContext } from "../../context/protocolContext"
 import { FIREBASE_AUTH } from "../../firebase"
-import ProtocolModal from "./ProtocolModal"
 import { NavigationType } from "../../@types/navigation"
+import { Protocol } from "../../@types/firestore"
 
 const ProtocolScreenWidget = ({
-  protocolTitle,
+  title: protocolTitle,
   weeks,
-  outline,
+  description: outline,
   id,
   userId,
-}) => {
-  const [protocolEditData, setProtocolEditData] = useSingleProtocolContext()
-  const [visible, setVisible] = useState(false)
-  const showModal = () => setVisible(true)
-  const hideModal = () => setVisible(false)
-  const containerStyle = {
-    backgroundColor: "white",
-    padding: 35,
-    marginBottom: 200,
-  }
+}: Protocol) => {
+  const { setProtocolEditData} = useSingleEditProtocolContext()
   const protocolsCollectionRef = collection(db, "protocols")
   const navigation = useNavigation<NavigationType>()
-  const isFocused = useIsFocused()
-
-  useEffect(() => {
-    if (!isFocused) {
-      setVisible(false);
-    }
-  }, [isFocused]);
 
   return (
     <View>
       <Card className="m-3">
         <Card.Content>
           <View className="justify-center items-center">
-            <Text variant="titleLarge" className="font-bold text-2xl">
+            <Text className="font-bold text-2xl">
               {" "}
               {protocolTitle}{" "}
               <Button
@@ -81,7 +65,7 @@ const ProtocolScreenWidget = ({
             </View>
           </View>
           <View className="flex-row">
-            <Image source={theImage} style={{ width: 100, height: 100 }} />
+            {/* <Image source={theImage} style={{ width: 100, height: 100 }} /> */}
             <View className="flex-1 flex-row justify-between">
               <View className="flex-col">
                 <Text className="m-2 font-bold">Weeks: {weeks}</Text>
@@ -89,7 +73,7 @@ const ProtocolScreenWidget = ({
                 {userId !== FIREBASE_AUTH?.currentUser?.uid ? (
                   <Text className="m-2 font-bold">Created by: {userId}</Text>
                 ) : null}
-                <Card className="m-2"></Card>
+                
               </View>
             </View>
           </View>

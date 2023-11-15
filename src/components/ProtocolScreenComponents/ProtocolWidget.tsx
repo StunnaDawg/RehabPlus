@@ -5,12 +5,13 @@ import { IconButton, Button, Card, Divider } from "react-native-paper"
 import getFireStoreData from "../../functions/getFireStoreData"
 import { collection } from "firebase/firestore"
 import { db } from "../../firebase"
-import { NavigationType } from "../../@types/navigation"
+import { TabNavigationType} from "../../@types/navigation"
+import { Protocol } from "../../@types/firestore"
 
 const ProtocolWidget = () => {
-  const [protocolWidgetList, setProtocolWidgetList] = useState([])
+  const [protocolWidgetList, setProtocolWidgetList] = useState<Protocol[]>()
   const protocolsCollectionRef = collection(db, "protocols")
-  const navigation = useNavigation<NavigationType>()
+  const navigation = useNavigation<TabNavigationType>()
   const isFocused = useIsFocused()
 
   useEffect(() => {
@@ -32,11 +33,11 @@ const ProtocolWidget = () => {
         </View>
 
         <View className="flex-1 flex-row justify-between m-4">
-          {protocolWidgetList.slice(0, 3).map((protocol) => (
+          {protocolWidgetList?.slice(0, 3).map((protocol) => (
             <View key={protocol.id} className="flex-row justify-between">
               <Card>
                 <Card.Content>
-                  <Text variant="titleSmall">{protocol.title}</Text>
+                  <Text>{protocol.title}</Text>
                   <Button onPress={() => navigation.navigate("Protocol")}>
                     Edit
                   </Button>

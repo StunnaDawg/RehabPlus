@@ -1,14 +1,12 @@
 import { View, Text } from "react-native"
 import { useState } from "react"
-import { Searchbar, IconButton, Button } from "react-native-paper"
+import { Searchbar, Button } from "react-native-paper"
 import { useNavigation } from "@react-navigation/native"
-import { DocumentReference, addDoc, collection } from "firebase/firestore"
+import { addDoc, collection } from "firebase/firestore"
 import { FIREBASE_AUTH, db } from "../../firebase"
-import { useNewProtocolContext } from "../../context/newProtocolContext"
 import { NavigationType } from "../../@types/navigation"
 
 const ProtocolScreenHeader = () => {
-  const [newProtocolData, setNewProtocol] = useNewProtocolContext()
   const [searchQuery, setSearchQuery] = useState("")
   const navigation = useNavigation<NavigationType>()
   const protocolsCollectionRef = collection(db, "protocols")
@@ -39,7 +37,7 @@ const ProtocolScreenHeader = () => {
             navigation.navigate("NewProtocol", {protocolId: newProtocolId})
           }}
           icon="plus"
-        ></Button>
+        >s</Button>
       </View>
       <View></View>
       <View className="flex-1">

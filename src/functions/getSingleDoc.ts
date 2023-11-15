@@ -1,12 +1,13 @@
 import { getDoc, doc, CollectionReference } from "firebase/firestore"
 import { Dispatch, SetStateAction } from "react"
+import { Protocol } from "../@types/firestore"
 
 // Find out the type of the data that is being fetched.
 type AddClientProtocol = {
 
 }
 
-const GetSingleDoc = async (setState: Dispatch<SetStateAction<AddClientProtocol>>, collectionRef: CollectionReference, id: string) => {
+const GetSingleDoc = async (setState: Dispatch<SetStateAction<AddClientProtocol | Protocol>>, collectionRef: CollectionReference, id: string) => {
   try {
     const docRef = doc(collectionRef, id)
     const docSnap = await getDoc(docRef)

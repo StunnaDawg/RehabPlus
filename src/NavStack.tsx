@@ -11,7 +11,7 @@ import {
 } from "./screens"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { useUserAuth } from "./context/context"
-import { NavBar } from "./components"
+import NavBar from "./components"
 import CreateNewClient from "./screens/CreateNewClient"
 import EditProtocol from "./screens/EditProtocol"
 import EditClientScreen from "./screens/EditClientScreen"
