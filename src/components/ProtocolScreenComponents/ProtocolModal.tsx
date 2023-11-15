@@ -11,8 +11,6 @@ import { useNavigation } from "@react-navigation/native"
 
 const ProtocolModal = ({ protocolId, protocolTitle, protocolOutline }) => {
   const [phasesData, setPhasesData] = useState([])
-  const phasesCollectionRef = collection(db, "protocols", protocolId, "phases")
-  const navigation = useNavigation()
 
 
   return (

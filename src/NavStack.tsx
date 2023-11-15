@@ -10,7 +10,7 @@ import {
   SignUpScreen
 } from "./screens"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
-import { AuthContext } from "./context/context"
+import { useUserAuth } from "./context/context"
 import { NavBar } from "./components"
 import CreateNewClient from "./screens/CreateNewClient"
 import EditProtocol from "./screens/EditProtocol"
@@ -25,9 +25,10 @@ import EditWorkout from "./components/EditProtocolWorkoutComponents/EditWorkoutP
 import AddWorkoutCurrentProtocol from "./components/EditProtocolWorkoutComponents/AddNewWorkout"
 import ViewProtocolScreen from "./screens/ViewProtocolScreen"
 import ViewPhases from "./screens/ViewPhases"
+import { RootStackParamList, TabParamList } from "./@types/navigation"
 
-const Stack = createNativeStackNavigator()
-const Tab = createBottomTabNavigator()
+const Stack = createNativeStackNavigator<RootStackParamList>()
+const Tab = createBottomTabNavigator<TabParamList>()
 
 const Footer = () => {
     return (
@@ -45,7 +46,7 @@ const Footer = () => {
   }
   
   const NavStack = () => {
-    const { isSignedIn, setIsSignedIn } = useContext(AuthContext);
+    const { isSignedIn } = useUserAuth()
   
     return (
   

@@ -9,6 +9,7 @@ import { db } from "../../firebase"
 import { useSingleProtocolContext } from "../../context/protocolContext"
 import { FIREBASE_AUTH } from "../../firebase"
 import ProtocolModal from "./ProtocolModal"
+import { NavigationType } from "../../@types/navigation"
 
 const ProtocolScreenWidget = ({
   protocolTitle,
@@ -27,7 +28,7 @@ const ProtocolScreenWidget = ({
     marginBottom: 200,
   }
   const protocolsCollectionRef = collection(db, "protocols")
-  const navigation = useNavigation()
+  const navigation = useNavigation<NavigationType>()
   const isFocused = useIsFocused()
 
   useEffect(() => {

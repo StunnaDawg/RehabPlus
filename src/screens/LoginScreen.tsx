@@ -10,12 +10,13 @@ import {
   import { FIREBASE_AUTH } from "../firebase"
   import { signInWithEmailAndPassword } from "firebase/auth"
   import { useNavigation } from "@react-navigation/native"
+import { NavigationType } from "../@types/navigation"
   
   const LoginScreen = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const auth = FIREBASE_AUTH
-    const navigation = useNavigation()
+    const navigation = useNavigation<NavigationType>()
 
     const handleLogin = async () => {
       try {

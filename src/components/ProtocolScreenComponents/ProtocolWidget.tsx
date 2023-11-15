@@ -5,11 +5,12 @@ import { IconButton, Button, Card, Divider } from "react-native-paper"
 import getFireStoreData from "../../functions/getFireStoreData"
 import { collection } from "firebase/firestore"
 import { db } from "../../firebase"
+import { NavigationType } from "../../@types/navigation"
 
 const ProtocolWidget = () => {
   const [protocolWidgetList, setProtocolWidgetList] = useState([])
   const protocolsCollectionRef = collection(db, "protocols")
-  const navigation = useNavigation()
+  const navigation = useNavigation<NavigationType>()
   const isFocused = useIsFocused()
 
   useEffect(() => {

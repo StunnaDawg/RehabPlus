@@ -2,9 +2,10 @@ import { View, Text } from "react-native"
 import React from "react"
 import { useNavigation } from "@react-navigation/native"
 import { Button, Card, Divider } from "react-native-paper"
+import { NavigationType } from "../@types/navigation"
 
 const InboxWidget = () => {
-  const navigation = useNavigation()
+  const navigation = useNavigation<NavigationType>()
   return (
     <>
       <Divider bold />

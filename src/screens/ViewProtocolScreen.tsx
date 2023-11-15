@@ -1,13 +1,12 @@
 import { View, Text, ScrollView } from "react-native"
-import React, { useState } from "react"
 import { useSingleEditProtocolContext} from "../context/protocolContext"
 import { Button, IconButton } from "react-native-paper"
-import { useNavigation } from "@react-navigation/native"
+import { useNavigation} from "@react-navigation/native"
+import { NavigationType } from "../@types/navigation"
 
 const ViewProtocolScreen = () => {
-  const [phasesData, setPhasesData] = useState([])
   const {protocolEditData} = useSingleEditProtocolContext()
-  const navigation = useNavigation()
+  const navigation = useNavigation<NavigationType>()
 
   return (
     <>

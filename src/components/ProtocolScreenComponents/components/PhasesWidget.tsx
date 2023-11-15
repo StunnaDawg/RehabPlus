@@ -2,12 +2,13 @@ import { View } from "react-native"
 import { Button, Card, Divider, Text } from "react-native-paper"
 // import ExerciseImage from "../../../assets/physcial-medicine.jpg"
 import React, { useEffect, useState } from "react"
-import { useCurrentPhasesContext } from "../../../context/phasesAddContext"
+import { useCurrentPhasesDataContext } from "../../../context/phasesAddContext"
 import { useNavigation } from "@react-navigation/native"
+import { NavigationType } from "../../../@types/navigation"
 
 const PhasesWidget = ({ phaseTitle, phaseId }) => {
-  const [currentPhasesData, setCurrentPhasesData] = useCurrentPhasesContext('')
-  const navigation = useNavigation()
+  const {currentPhasesData, setCurrentPhasesData} = useCurrentPhasesDataContext('')
+  const navigation = useNavigation<NavigationType>()
   return (
     <View>
         <Divider />

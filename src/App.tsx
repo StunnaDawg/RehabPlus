@@ -12,6 +12,8 @@ import { SingleEditProtocolContextProvider } from "./context/protocolContext"
 import { AddClientProtocolContextProvider } from "./context/EditProtocolContext"
 import { CurrentPhasesDataContextProvider } from "./context/phasesAddContext"
 import { NewProtocolDataContextProvider } from "./context/newProtocolContext"
+import 'react-native-gesture-handler';
+
 
 export default function App() {
   return (

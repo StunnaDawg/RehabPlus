@@ -3,8 +3,9 @@ import { Button } from "react-native-paper"
 import { FIREBASE_AUTH } from "../firebase"
 
 import { useNavigation } from "@react-navigation/native"
+import { NavigationType } from "../@types/navigation"
 const NavBar = () => {
-  const navigation = useNavigation()
+  const navigation = useNavigation<NavigationType>()
   const handleSignOut = () => {
     try {
       FIREBASE_AUTH.signOut()

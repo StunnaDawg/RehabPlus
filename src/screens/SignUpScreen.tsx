@@ -10,12 +10,13 @@ import {
   import { FIREBASE_AUTH } from "../firebase"
   import { createUserWithEmailAndPassword } from "firebase/auth"
 import { useNavigation  } from "@react-navigation/native"
+import { NavigationType } from "../@types/navigation"
   
   const SignUpScreen = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const auth = FIREBASE_AUTH
-    const navigation = useNavigation()
+    const navigation = useNavigation<NavigationType>()
 
     const handleSignUp = async () => {
       try {

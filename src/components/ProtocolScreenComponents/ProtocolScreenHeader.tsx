@@ -5,11 +5,12 @@ import { useNavigation } from "@react-navigation/native"
 import { DocumentReference, addDoc, collection } from "firebase/firestore"
 import { FIREBASE_AUTH, db } from "../../firebase"
 import { useNewProtocolContext } from "../../context/newProtocolContext"
+import { NavigationType } from "../../@types/navigation"
 
 const ProtocolScreenHeader = () => {
   const [newProtocolData, setNewProtocol] = useNewProtocolContext()
   const [searchQuery, setSearchQuery] = useState("")
-  const navigation = useNavigation()
+  const navigation = useNavigation<NavigationType>()
   const protocolsCollectionRef = collection(db, "protocols")
 
   const onSubmitEmptyProtocol = async () => {
