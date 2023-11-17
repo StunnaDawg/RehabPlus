@@ -22,7 +22,7 @@ export type Protocol = {
 }
 
 export type Workout = {
-    id: string
+    id?: string
     workout?: {
       description?: string
       title?: string

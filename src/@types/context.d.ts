@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { Workout, Protocol, ProtocolPhase, Client } from "./firestore";
+import { Workout, Protocol, ProtocolPhase, Client, WorkoutExercise } from "./firestore";
 
 export type RefreshKey = {
     refreshKey: boolean;
@@ -95,4 +95,12 @@ export type CurrentPhasesIdAction = {
 
 export type CurrentPhasesIdType = {
     currentPhasesId: string;
+}
+
+export type ExercisesContextType = { 
+    exerciseData: WorkoutExercise[];
+}
+
+export type ExercisesContextAction = { 
+    setExerciseData: Dispatch<SetStateAction<WorkoutExercise[]>>
 }

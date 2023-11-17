@@ -1,26 +1,23 @@
-import { View, Text } from "react-native"
 import React, { useEffect } from "react"
 import { Button } from "react-native-paper"
-import { useNewWorkoutContext } from "../../context/addWorkoutProtocol"
 import { useNavigation } from "@react-navigation/native"
 import { useCompleteWorkoutContext } from "../../context/completeWorkoutContext"
-import { useSingleWorkoutContext } from "../../context/workoutContext"
+import { Workout } from "../../@types/firestore"
+import { useExerciseContext } from "../../context/exerciseContext"
+import { NavigationType } from "../../@types/navigation"
 
-const CreateWorkoutButton = ({title, description, exercises}) => {
-    const [workoutData, setNewWorkoutData] = useWorkoutContext([])
-    const [completeWorkoutData, setCompleteWorkoutData] = useCompleteWorkoutContext([])
-    const [exerciseWorkoutData, setExerciseWorkoutData] = useSingleWorkoutContext(
-        []
-      )
-    const navigation = useNavigation()
+const CreateWorkoutButton = ({workout: {title, description, exercises } = {} }: Workout) => {
+    const {setExerciseData} = useExerciseContext()
+    const {setCompleteWorkoutData} = useCompleteWorkoutContext()
+    const navigation = useNavigation<NavigationType>()
 
   return (
     <Button
       icon="plus"
-      onPress={async () => {console.log({title, description, exercises}); await setCompleteWorkoutData(prevData => ([
+      onPress={async () => { setCompleteWorkoutData(prevData => ([
         ...(Array.isArray(prevData) ? prevData : []),
-        { title, description, exercises}
-      ])); setNewWorkoutData([]); setExerciseWorkoutData([]); navigation.navigate('AddProtocolWorkoutScreen')}}
+        { workout : {title, description, exercises}}
+      ])); setExerciseData([]); navigation.navigate('AddProtocolWorkoutScreen')}}
     >
       Create Workout
     </Button>

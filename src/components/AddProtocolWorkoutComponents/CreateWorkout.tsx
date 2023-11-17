@@ -4,17 +4,16 @@ import { Button, TextInput } from "react-native-paper"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import ExerciseWidget from "./ExerciseWidget"
 import CreateWorkoutButton from "./CreateWorkoutButton"
-import { useSingleWorkoutContext } from "../../context/workoutContext"
 import { useRefreshKeyContext } from "../../context/refreshKey"
 import { NavigationType } from "../../@types/navigation"
 import { WorkoutExercise } from "../../@types/firestore"
+import { useExerciseContext } from "../../context/exerciseContext"
 
 const CreateWorkout = () => {
   const [workoutTitleText, setWorkoutTitleText] = useState("")
   const { refreshKey } = useRefreshKeyContext()
   const [workoutDescriptionText, setWorkoutDescriptionText] = useState("")
-  const { exerciseWorkoutData } =
-    useSingleWorkoutContext()
+  const {exerciseData} = useExerciseContext()
   const [exerciseMap, setExerciseMap] = useState<WorkoutExercise[]>([])
   const isFocused = useIsFocused()
   const navigation = useNavigation<NavigationType>()
@@ -22,23 +21,25 @@ const CreateWorkout = () => {
 
   useEffect(() => {
     const awaitLoading = async () => {
-      setExerciseMap(exerciseWorkoutData)
+      setExerciseMap(exerciseData)
       console.log("widget map", exerciseMap)
     }
     awaitLoading()
   }, [isFocused])
 
   useEffect(() => {
-    setExerciseMap(exerciseWorkoutData)
-  }, [exerciseWorkoutData, refreshKey])
+    setExerciseMap(exerciseData)
+  }, [exerciseData, refreshKey])
 
   return (
     <>
       <View className="mx-4 my-1">
         <CreateWorkoutButton
-          title={workoutTitleText}
-          description={workoutDescriptionText}
-          exercises={exerciseWorkoutData}
+        workout= {{
+          title: workoutTitleText, 
+          description: workoutDescriptionText, 
+          exercises: exerciseMap
+        }}
         />
       </View>
       <View className="mx-4 my-1">
