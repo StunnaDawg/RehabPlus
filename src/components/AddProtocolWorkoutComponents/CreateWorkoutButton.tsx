@@ -1,7 +1,7 @@
 import { View, Text } from "react-native"
 import React, { useEffect } from "react"
 import { Button } from "react-native-paper"
-import { useWorkoutContext } from "../../context/addWorkoutProtocol"
+import { useNewWorkoutContext } from "../../context/addWorkoutProtocol"
 import { useNavigation } from "@react-navigation/native"
 import { useCompleteWorkoutContext } from "../../context/completeWorkoutContext"
 import { useSingleWorkoutContext } from "../../context/workoutContext"

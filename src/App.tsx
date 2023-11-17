@@ -12,37 +12,39 @@ import { SingleEditProtocolContextProvider } from "./context/protocolContext"
 import { AddClientProtocolContextProvider } from "./context/EditProtocolContext"
 import { CurrentPhasesDataContextProvider } from "./context/phasesAddContext"
 import { NewProtocolDataContextProvider } from "./context/newProtocolContext"
-import 'react-native-gesture-handler';
-
+import { CurrentPhasesIdContextProvider } from "./context/phasesIdContext"
+import "react-native-gesture-handler"
 
 export default function App() {
   return (
     <UserAuthContextProvider>
-      <NewProtocolDataContextProvider>
-        <RefreshKeyContextProvider>
-          <CurrentPhasesDataContextProvider>
-            <EditWorkoutContextProvider>
-              <CompleteWorkoutContextProvider>
-                <NewWorkoutContextProvider>
-                  <SingleWorkoutContextProvider>
-                    <EditClientContextProvider>
-                      <SingleEditProtocolContextProvider>
-                        <AddClientProtocolContextProvider>
-                          <NavigationContainer>
-                            <PaperProvider>
-                              <NavStack />
-                            </PaperProvider>
-                          </NavigationContainer>
-                        </AddClientProtocolContextProvider>
-                      </SingleEditProtocolContextProvider>
-                    </EditClientContextProvider>
-                  </SingleWorkoutContextProvider>
-                </NewWorkoutContextProvider>
-              </CompleteWorkoutContextProvider>
-            </EditWorkoutContextProvider>
-          </CurrentPhasesDataContextProvider>
-        </RefreshKeyContextProvider>
-      </NewProtocolDataContextProvider>
+      <CurrentPhasesIdContextProvider>
+        <NewProtocolDataContextProvider>
+          <RefreshKeyContextProvider>
+            <CurrentPhasesDataContextProvider>
+              <EditWorkoutContextProvider>
+                <CompleteWorkoutContextProvider>
+                  <NewWorkoutContextProvider>
+                    <SingleWorkoutContextProvider>
+                      <EditClientContextProvider>
+                        <SingleEditProtocolContextProvider>
+                          <AddClientProtocolContextProvider>
+                            <NavigationContainer>
+                              <PaperProvider>
+                                <NavStack />
+                              </PaperProvider>
+                            </NavigationContainer>
+                          </AddClientProtocolContextProvider>
+                        </SingleEditProtocolContextProvider>
+                      </EditClientContextProvider>
+                    </SingleWorkoutContextProvider>
+                  </NewWorkoutContextProvider>
+                </CompleteWorkoutContextProvider>
+              </EditWorkoutContextProvider>
+            </CurrentPhasesDataContextProvider>
+          </RefreshKeyContextProvider>
+        </NewProtocolDataContextProvider>
+      </CurrentPhasesIdContextProvider>
     </UserAuthContextProvider>
   )
 }

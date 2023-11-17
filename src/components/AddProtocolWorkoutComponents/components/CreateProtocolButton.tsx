@@ -1,25 +1,24 @@
-import { View, Text } from "react-native"
+import { View } from "react-native"
 import { Button } from "react-native-paper"
 import React from "react"
-import { useNavigation } from "@react-navigation/native"
 import { db, FIREBASE_AUTH } from "../../../firebase"
-import { addDoc, collection, doc, updateDoc } from "firebase/firestore"
-import { useNewProtocolContext } from "../../../context/newProtocolContext"
+import { addDoc, collection } from "firebase/firestore"
+import { useNewProtocolDataContext } from "../../../context/newProtocolContext"
 import { useCompleteWorkoutContext } from "../../../context/completeWorkoutContext"
-import { useCurrentPhasesContext } from "../../../context/phasesAddContext"
+import { useCurrentPhasesIdContext } from "../../../context/phasesIdContext"
 
 const SaveWorkoutsToPhaseButton = () => {
-  const [newProtocolData, setNewProtocol] = useNewProtocolContext()
-  const [currentPhasesData, setCurrentPhasesData] = useCurrentPhasesContext('')
-  const [completeWorkoutData, setCompleteWorkoutData] =
-    useCompleteWorkoutContext([])
-  const navigation = useNavigation()
+  const { newProtocolData } = useNewProtocolDataContext()
+  const {currentPhasesId} = useCurrentPhasesIdContext()
+  const {completeWorkoutData} =
+    useCompleteWorkoutContext()
+  const newProtocolId = newProtocolData.id
   const phaseCollectionRef = collection(
     db,
     "protocols",
-    newProtocolData.id,
+    newProtocolId,
     "phases",
-    currentPhasesData, 
+    currentPhasesId,
     "workouts"
   )
 

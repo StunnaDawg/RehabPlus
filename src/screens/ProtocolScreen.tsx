@@ -35,8 +35,8 @@ const ProtocolScreen = () => {
             <ProtocolScreenWidget
                 key={protocol.id}
                 weeks={protocol.weeks}
-                protocolTitle={protocol.title}
-                outline={protocol.description}
+                title={protocol.title}
+                description={protocol.description}
                 id={protocol.id}
                 userId={protocol.userId}
             />
@@ -46,8 +46,8 @@ const ProtocolScreen = () => {
             <ProtocolScreenWidget
                 key={protocol.id}
                 weeks={protocol.weeks}
-                protocolTitle={protocol.title}
-                outline={protocol.description}
+                title={protocol.title}
+                description={protocol.description}
                 id={protocol.id}
                 userId={protocol.userId}
             /> : null

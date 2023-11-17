@@ -33,3 +33,7 @@ export type RootStackParamList = {
   };
 
   export type TabNavigationType = TabNavigationProp<TabParamList>;
+
+  export type RouteParamsType = {
+    phaseId?: string;
+  }

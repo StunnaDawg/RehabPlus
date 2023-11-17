@@ -17,18 +17,18 @@ export type Protocol = {
   title: string
   userId: string
   weeks?: string
-  public: boolean
+  public?: boolean
   phases?: CollectionReference
 }
 
 export type Workout = {
-  id: string
-  workout?: {
-    description?: string
-    title?: string
-    exercises?: WorkoutExercise[]
+    id: string
+    workout?: {
+      description?: string
+      title?: string
+      exercises?: WorkoutExercise[]
+    }
   }
-}
 
 export type WorkoutExercise = {
   categoryId: string

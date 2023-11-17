@@ -1,41 +1,39 @@
-import { View, Text } from "react-native"
-import React, { useEffect } from "react"
+import { View } from "react-native"
+import React, { useEffect, useState } from "react"
 import { Button } from "react-native-paper"
-import { useNavigation, useRoute } from "@react-navigation/native"
-
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native"
 import CompleteWorkoutWidget from "./components/CompleteWorkoutWIdget"
-import { useIsFocused } from "@react-navigation/native"
-import { useCompleteWorkoutContext } from "../../context/completeWorkoutContext"
-import { useRefreshContext } from "../../context/refreshKey"
 import { collection } from "firebase/firestore"
 import { db } from "../../firebase"
 import SaveWorkoutsToPhaseButton from "./components/CreateProtocolButton"
-import GetProtocolPhases from "../../functions/getProtocolPhases"
-import { useNewProtocolContext } from "../../context/newProtocolContext"
-import { useCurrentPhasesContext } from "../../context/phasesAddContext"
+import GetProtocolWorkouts from "../../functions/getProtocolWorkouts"
+import { useNewProtocolDataContext } from "../../context/newProtocolContext"
+import { useCurrentPhasesIdContext } from "../../context/phasesIdContext"
+import { RouteParamsType } from "../../@types/navigation"
+import { NavigationType } from "../../@types/navigation"
+import { Workout } from "../../@types/firestore"
 
 const AddWorkout = () => {
-  const [completeWorkoutData, setCompleteWorkoutData] =
-    useCompleteWorkoutContext([])
-  const [refreshKey, setRefreshKey] = useRefreshContext()
-  const [newProtocolData, setNewProtocol] = useNewProtocolContext()
-  const [currentPhasesData, setCurrentPhasesData] = useCurrentPhasesContext("")
-  const navigation = useNavigation()
-  const route = useRoute()
-  const phaseId = route.params?.phaseId
+  const [workoutList, setWorkoutList] = useState<Workout[]>([])
+  const {newProtocolData} = useNewProtocolDataContext()
+  const {currentPhasesId} = useCurrentPhasesIdContext()
+  const navigation = useNavigation<NavigationType>()
+  const route =  useRoute<RouteProp<Record<string, RouteParamsType>, string>>();
+  const phaseId = route.params.phaseId
+  const protocolId = newProtocolData.id
   const phaseWorkoutsRef = collection(
     db,
     "protocols",
-    newProtocolData.id,
+    protocolId,
     "phases",
-    phaseId || currentPhasesData,
+    phaseId || currentPhasesId,
     "workouts"
   )
 
   useEffect(() => {
-    GetProtocolPhases(setCompleteWorkoutData, setRefreshKey, phaseWorkoutsRef)
+    GetProtocolWorkouts(setWorkoutList, phaseWorkoutsRef)
     console.log("route params id", phaseId)
-    console.log("current phase id", currentPhasesData)
+    console.log("current phase id", currentPhasesId)
   }, [])
 
   return (
@@ -51,8 +49,8 @@ const AddWorkout = () => {
       </View>
 
       <View>
-        {completeWorkoutData.map((workout, index) => (
-          <CompleteWorkoutWidget key={index} workoutTitle={workout.title} />
+        {workoutList?.map((workout) => (
+          <CompleteWorkoutWidget key={workout.id} workoutTitle={workout.workout?.title} />
         ))}
       </View>
     </>

@@ -16,8 +16,9 @@ const ProtocolModal = ({ id: protocolId, title: protocolTitle, description: prot
           return (
             <View key={phase.id} className='my-3'>
             <PhasesWidget
-              phaseTitle={phase.title}
-              phaseId={phase.id}
+              title={phase.title}
+              id={phase.id}
+              userId={phase.userId}
             />
             </View>
           )

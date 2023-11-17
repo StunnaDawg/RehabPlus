@@ -18,11 +18,11 @@ export type UserAuthAction = {
 }
 
 export type SingleWorkoutType = {
-    exerciseWorkoutData: Workout;
+    workoutData: Workout;
 }
 
 export type SingleWorkoutAction = { 
-    setExerciseWorkoutData: Dispatch<SetStateAction<Workout>>
+    setWorkoutData: Dispatch<SetStateAction<Workout>>
 }
 
 export type SingleEditProtocolType = {
@@ -65,12 +65,12 @@ export type EditWorkoutAction = {
     setEditWorkoutData: Dispatch<SetStateAction<Workout>>
 }
 
-export type CompleteWorkoutDataType = { 
-    completeWorkoutData: Workout;
+export type CompleteWorkoutsDataType = { 
+    completeWorkoutData: Workout[];
 }
 
-export type CompleteWorkoutAction = { 
-    setCompleteWorkoutData: Dispatch<SetStateAction<Workout>>
+export type CompleteWorkoutsAction = { 
+    setCompleteWorkoutData: Dispatch<SetStateAction<Workout[]>>
 }
 
 export type EditClientDataType = { 
@@ -87,4 +87,12 @@ export type NewWorkoutDataType = {
 
 export type NewWorkoutAction = { 
     setNewWorkoutData: Dispatch<SetStateAction<Workout>>
+}
+
+export type CurrentPhasesIdAction = {
+    setCurrentPhasesId: Dispatch<SetStateAction<string>>;
+}
+
+export type CurrentPhasesIdType = {
+    currentPhasesId: string;
 }

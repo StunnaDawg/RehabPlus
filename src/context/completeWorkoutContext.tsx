@@ -1,13 +1,13 @@
 import React, { createContext, useContext, useState } from "react"
 import {
-  CompleteWorkoutDataType,
-  CompleteWorkoutAction,
+  CompleteWorkoutsDataType,
+  CompleteWorkoutsAction,
 } from "../@types/context"
 import { Workout } from "../@types/firestore"
 
 
-export type CompleteWorkoutContextType = CompleteWorkoutDataType &
-  CompleteWorkoutAction
+export type CompleteWorkoutContextType = CompleteWorkoutsDataType &
+  CompleteWorkoutsAction
 
 type CompleteWorkoutContextProviderProps = {
   children: React.ReactNode
@@ -20,7 +20,7 @@ const CompleteWorkoutContext = createContext<
 export const CompleteWorkoutContextProvider = ({
   children,
 }: CompleteWorkoutContextProviderProps) => {
-  const [completeWorkoutData, setCompleteWorkoutData] = useState<Workout>({} as Workout)
+  const [completeWorkoutData, setCompleteWorkoutData] = useState<Workout[]>([])
 
   return (
     <>
