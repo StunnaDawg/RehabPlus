@@ -1,7 +1,6 @@
 import { View, Text, ScrollView } from "react-native"
 import {
   Button,
-  IconButton,
   Modal,
   Portal,
   Switch,
@@ -9,29 +8,27 @@ import {
 } from "react-native-paper"
 import { useEffect, useState } from "react"
 import CreateButton from "./components/CreateButton"
-import { useNavigation, useRoute } from "@react-navigation/native"
-import { useRefreshContext } from "../../context/refreshKey"
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native"
+import { useRefreshKeyContext } from "../../context/refreshKey"
 import ModalContent from "./components/ModalContent"
 
 import PhasesWidget from "./components/PhasesWidget"
 import { collection, deleteDoc, doc } from "firebase/firestore"
 import { FIREBASE_AUTH, db } from "../../firebase"
 import GetSingleDoc from "../../functions/getSingleDoc"
-import { useNewProtocolContext } from "../../context/newProtocolContext"
-import { useCurrentPhasesContext } from "../../context/phasesAddContext"
-import GetProtocolWorkouts from "../../functions/getProtocolWorkouts"
+import { useNewProtocolDataContext } from "../../context/newProtocolContext"
 import GetProtocolPhases from "../../functions/getProtocolPhases"
+import { RouteParamsType } from "../../@types/navigation"
+import { Protocol, ProtocolPhase } from "../../@types/firestore"
 
 const StartPage = () => {
-  const [newProtocolData, setNewProtocol] = useNewProtocolContext()
-  const [currentPhasesData, setCurrentPhasesData] = useCurrentPhasesContext()
-  const [refreshKey, setRefreshKey] = useRefreshContext()
-  const [phasesData, setPhasesData] = useState([])
+  const {newProtocolData, setNewProtocolData} = useNewProtocolDataContext()
+  const {refreshKey} = useRefreshKeyContext()
+  const [phasesData, setPhasesData] = useState<ProtocolPhase[] | undefined>([])
   const [titleText, setTitleText] = useState("")
   const [outlineText, setOutlineText] = useState("")
   const [isPublic, setIsPublic] = useState(false)
   const [visible, setVisible] = useState(false)
-  const [phases, setPhases] = useState([])
   const showModal = () => setVisible(true)
   const hideModal = () => setVisible(false)
   const containerStyle = {
@@ -40,8 +37,9 @@ const StartPage = () => {
     marginBottom: 150,
   }
   const navigation = useNavigation()
-  const route = useRoute()
+  const route =  useRoute<RouteProp<Record<string, RouteParamsType>, string>>();
   const protocolId = route.params?.protocolId
+  const currentProtocolId = protocolId || newProtocolData.id
   const currentProtocolRef = collection(db, "protocols")
   const currentProtocol = doc(currentProtocolRef, protocolId || newProtocolData.id)
   const currentProtocolPhases = collection(currentProtocol, "phases")
@@ -54,7 +52,7 @@ const StartPage = () => {
       console.log(currentProtocol)
       if (userId === FIREBASE_AUTH?.currentUser?.uid) {
         await deleteDoc(currentProtocol)
-        setNewProtocol()
+        setNewProtocolData({} as Protocol)
         setPhasesData([])
       }
     } catch (err) {
@@ -64,7 +62,7 @@ const StartPage = () => {
 
   useEffect(() => {
     const awaitProtocolGet = async () => {
-      await GetSingleDoc(setNewProtocol, currentProtocolRef, protocolId)
+      await GetSingleDoc(setNewProtocolData, currentProtocolRef, currentProtocolId)
     }
     awaitProtocolGet()
   }, [])
@@ -73,7 +71,6 @@ const StartPage = () => {
     const awaitPhasesGet = async () => {
       await GetProtocolPhases(
         setPhasesData,
-        setRefreshKey,
         currentProtocolPhases
       )
     }
@@ -85,7 +82,6 @@ const StartPage = () => {
     const awaitPhasesGet = async () => {
       await GetProtocolPhases(
         setPhasesData,
-        setRefreshKey,
         currentProtocolPhases
       )
     }
@@ -168,12 +164,12 @@ const StartPage = () => {
         Add Phase
       </Button>
       <ScrollView>
-      {phasesData.map((phase) => {
+      {phasesData?.map((phase) => {
         console.log('mapped phases', phase)
         return (
           <View key={phase.id}>
           <PhasesWidget
-            phasesTitle={phase.title}
+            phaseTitle={phase.title}
             phaseId={phase.id}
           />
           </View>

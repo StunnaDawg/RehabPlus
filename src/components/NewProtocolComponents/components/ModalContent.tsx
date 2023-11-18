@@ -4,18 +4,24 @@ import { useCompleteWorkoutContext } from "../../../context/completeWorkoutConte
 import { Button, TextInput } from "react-native-paper"
 import AddPhaseButton from "./AddPhases"
 
+type ModalContentProps = { 
+  setVisible: React.Dispatch<React.SetStateAction<boolean>>
+  protocolOutline: string
+  protocolTitle: string
+  protocolId: string
+  protocolPublic: boolean
+}
+
 const ModalContent = ({
   setVisible,
   protocolOutline,
   protocolTitle,
   protocolId,
   protocolPublic
-}) => {
-  const [completeWorkoutData, setCompleteWorkoutData] =
-    useCompleteWorkoutContext([])
-  const [phaseTitleText, setPhaseTitle] = useState("")
-  const [outlineText, setOutlineText] = useState("")
-  const [weeksText, setWeeksText] = useState("")
+}: ModalContentProps) => {
+  const [phaseTitleText, setPhaseTitle] = useState<string>('')
+  const [outlineText, setOutlineText] = useState<string>('')
+  const [weeksText, setWeeksText] = useState<string>('')
   return (
     <>
       <View className="mx-4 my-1">
@@ -49,7 +55,6 @@ const ModalContent = ({
         setVisible={setVisible}
         protocolOutline={protocolOutline}
         protocolTitle={protocolTitle}
-        protocolId={protocolId}
         protocolPublic={protocolPublic}
       />
     </>

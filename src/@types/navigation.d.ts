@@ -36,4 +36,5 @@ export type RootStackParamList = {
 
   export type RouteParamsType = {
     phaseId?: string;
+    protocolId?: string;
   }
