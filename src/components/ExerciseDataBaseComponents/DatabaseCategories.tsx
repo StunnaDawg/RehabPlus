@@ -1,16 +1,17 @@
-import { View, Text, FlatList, ScrollView } from "react-native"
+import { View, FlatList } from "react-native"
 import React, { useEffect, useState } from "react"
-import { Button, Searchbar, Title, ButtonProps } from "react-native-paper"
+import { Button} from "react-native-paper"
 import DatabaseExercise from "./DatabaseExercise"
 import getExerciseFireStoreData from "../../functions/getExerciseData"
 import { db } from "../../firebase"
 import { useIsFocused } from "@react-navigation/native"
 import { collection } from "firebase/firestore"
-import { useSingleWorkoutContext } from "../../context/workoutContext"
+import { ExerciseDataBaseExercise } from "../../@types/firestore"
+import { useDatabaseExercisesContext } from "../../context/exerciseDataBaseContext"
 
 const DatabaseCategories = () => {
-  const [exerciseCategories, setExerciseCategories] = useState([])
-  const [exerciseWorkoutData, setExerciseWorkoutData] = useSingleWorkoutContext([])
+  const [exerciseCategories, setExerciseCategories] = useState<ExerciseDataBaseExercise[]>([])
+  const {exerciseDataBase, setExerciseDataBase} = useDatabaseExercisesContext()
   const [pressedButtonId, setPressedButtonId] = useState('85ZJ5LvyxECGoN0GMjHZ')
   const exercisesCollectionRef = collection(db, "exerciseCategories")
   const isFocused = useIsFocused()
@@ -46,7 +47,7 @@ const DatabaseCategories = () => {
     </Button>
   )
 
-  const getExercisesForCategory = (categoryId) => {
+  const getExercisesForCategory = (categoryId: string) => {
     const category = exerciseCategories.find(cat => cat.id === categoryId);
     
     if (category) {

@@ -1,14 +1,20 @@
-import { View, Text, Alert } from 'react-native'
+import { Alert } from 'react-native'
 import React from 'react'
-import { Button, IconButton } from 'react-native-paper'
+import {Button } from 'react-native-paper'
 import { FIREBASE_AUTH, db } from '../../../firebase'
-import { collection, deleteDoc, doc, getDoc, updateDoc, deleteField } from 'firebase/firestore'
-import { useNavigation } from '@react-navigation/native'
-import { useRefreshContext } from '../../../context/refreshKey'
+import { doc, getDoc, updateDoc } from 'firebase/firestore'
+import { useRefreshKeyContext } from '../../../context/refreshKey'
+import { WorkoutExercise } from '../../../@types/firestore'
 
-const ExerciseWidgetDeleteButton = ({workoutId, protocolId, exerciseId, userId, phaseId}) => {
-    const [refreshKey, setRefreshKey] = useRefreshContext(false)
-    const navigation = useNavigation()
+type ExerciseWidgetDeleteButtonProps = { 
+    workoutId: string,
+    protocolId: string,
+    exerciseId: string,
+    userId: string,
+    phaseId: string
+}
+const ExerciseWidgetDeleteButton = ({workoutId, protocolId, exerciseId, userId, phaseId}: ExerciseWidgetDeleteButtonProps) => {
+    const {refreshKey, setRefreshKey} = useRefreshKeyContext()
     const protocolRef = doc(db, "protocols", protocolId)
     const currentWorkout = doc(protocolRef, 'phases', phaseId, 'workouts' , workoutId)
 
@@ -32,7 +38,7 @@ const ExerciseWidgetDeleteButton = ({workoutId, protocolId, exerciseId, userId, 
                     const exercises = workoutDoc.data().workout.exercises || [];
     
                     // Find the index of the exercise to be deleted using its exerciseId
-                    const exerciseIndex = exercises.findIndex(ex => ex.exerciseId === exerciseId);
+                    const exerciseIndex = exercises.findIndex((ex: WorkoutExercise) => ex.exerciseId === exerciseId);
     
                     // If the exercise is found, remove it from the array
                     if (exerciseIndex !== -1) {
@@ -53,9 +59,9 @@ const ExerciseWidgetDeleteButton = ({workoutId, protocolId, exerciseId, userId, 
     ]);
 
  return (
-    <IconButton icon="delete" size={18} onPress={DeleteExerciseButton}>
+    <Button onPress={DeleteExerciseButton}>
         Delete
-        </IconButton>
+        </Button>
   )
 } 
 

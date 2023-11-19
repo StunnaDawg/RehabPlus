@@ -1,9 +1,18 @@
-import { View, Text } from "react-native"
-import React, { useEffect } from "react"
+import { View } from "react-native"
 import { Button } from "react-native-paper"
 import { useNavigation } from "@react-navigation/native"
-import { addDoc, collection, doc, setLogLevel, LogLevel } from "firebase/firestore"
+import { addDoc, collection } from "firebase/firestore"
 import { FIREBASE_AUTH, db } from "../../firebase"
+import { Workout, WorkoutExercise } from "../../@types/firestore"
+import { NavigationType } from "../../@types/navigation"
+
+type AddWorkoutButtonProps = { 
+  workoutTitle?: string
+  workoutDescription?: string
+  workoutExercises?: WorkoutExercise[]
+  protocolId: string
+  phaseId: string
+}
 
 const AddWorkoutButton = ({
   workoutTitle,
@@ -11,8 +20,8 @@ const AddWorkoutButton = ({
   workoutExercises,
   protocolId,
   phaseId,
-}) => {
-  const navigation = useNavigation()
+}: AddWorkoutButtonProps) => {
+  const navigation = useNavigation<NavigationType>()
   const workoutCollectionRef = collection(
     db,
     "protocols",
@@ -23,17 +32,25 @@ const AddWorkoutButton = ({
   )
   const onSubmitAddWorkout = async () => {
     try {
-      const newWorkoutData = {}
+      const newWorkoutData: Workout = {
+        workout: {
+          title: workoutTitle,
+          description: workoutDescription,
+          exercises: workoutExercises,
+        },
+      }
+      if (newWorkoutData.workout) {
       if (workoutTitle) {
-        newWorkoutData["title"] = workoutTitle
+        newWorkoutData.workout.title = workoutTitle
       }
       if (workoutDescription) {
-        newWorkoutData["description"] = workoutDescription
+        newWorkoutData.workout.description = workoutDescription
       }
 
       if (workoutExercises) {
-        newWorkoutData["exercises"] = workoutExercises
+        newWorkoutData.workout.exercises = workoutExercises
       }
+    }
 
       if (Object.keys(newWorkoutData).length > 0) {
         console.log(newWorkoutData)

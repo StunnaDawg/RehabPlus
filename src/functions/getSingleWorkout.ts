@@ -3,7 +3,7 @@ import { db } from "../firebase"
 import { Dispatch, SetStateAction } from "react"
 import { Workout } from "../@types/firestore"
 
-const GetSingleWorkout = async (workoutId: string, protocolId: string, setState: Dispatch<SetStateAction<Workout | undefined>>, phaseId: string) => {
+const GetSingleWorkout = async (workoutId: string, protocolId: string, setState: Dispatch<SetStateAction<Workout>>, phaseId: string) => {
   try {
     const workoutDocRef = doc(db, 'protocols', protocolId ,'phases', phaseId, 'workouts', workoutId, ) // Get the document reference.
     const docSnap = await getDoc(workoutDocRef) // Fetch the document.

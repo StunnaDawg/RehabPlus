@@ -1,29 +1,26 @@
 import { View, Text, ScrollView } from "react-native"
-import React, { useEffect, useMemo, useState } from "react"
+import React, { useState } from "react"
 import { Button, TextInput } from "react-native-paper"
 import { useNavigation } from "@react-navigation/native"
 import { useSingleWorkoutContext } from "../../context/workoutContext"
-import { useSingleEditWorkoutContext } from "../../context/editWorkoutContext"
-import { useIsFocused } from "@react-navigation/native"
-import { useSingleProtocolContext } from "../../context/protocolContext"
-import { useRefreshContext } from "../../context/refreshKey"
+import { useEditWorkoutContext } from "../../context/editWorkoutContext"
+import { useSingleEditProtocolContext } from "../../context/protocolContext"
 import AddWorkoutButton from "./CreateWorkoutButton"
 import AddWorkoutExerciseWidget from "./AddWorkoutExerciseWidget"
-import { useCurrentPhasesContext } from "../../context/phasesAddContext"
+import { NavigationType } from "../../@types/navigation"
+import { useExerciseContext } from "../../context/exerciseContext"
+import { useCurrentPhasesIdContext } from "../../context/phasesIdContext"
 
 const AddWorkoutCurrentProtocol = () => {
-  const [editWorkoutData, setEditWorkoutData] = useSingleEditWorkoutContext([])
-  const [protocolEditData] = useSingleProtocolContext()
-  const [exerciseWorkoutData, setExerciseWorkoutData] = useSingleWorkoutContext(
-    []
-  )
-  const [currentPhasesData, setCurrentPhasesData] = useCurrentPhasesContext('')
-  const [refreshKey, setRefreshKey] = useRefreshContext(false)
-  const [workoutTitleText, setWorkoutTitleText] = useState('')
-  const [workoutDescriptionText, setWorkoutDescriptionText] = useState('')
-  const [onAppear, setOnAppear] = useState(true)
-  const navigation = useNavigation()
-  const isFocused = useIsFocused()
+  const {workoutData} = useSingleWorkoutContext()
+  const {editWorkoutData} = useEditWorkoutContext()
+  const {exerciseData} = useExerciseContext()
+  const {currentPhasesId} = useCurrentPhasesIdContext()
+  const {protocolEditData} = useSingleEditProtocolContext()
+  const [workoutTitleText, setWorkoutTitleText] = useState<string>()
+  const [workoutDescriptionText, setWorkoutDescriptionText] = useState<string>()
+  const [onAppear, setOnAppear] = useState<boolean>(true)
+  const navigation = useNavigation<NavigationType>()
 
   return (
     <>
@@ -31,11 +28,9 @@ const AddWorkoutCurrentProtocol = () => {
           <AddWorkoutButton
             workoutTitle={workoutTitleText}
             workoutDescription={workoutDescriptionText}
-            workoutExercises={exerciseWorkoutData}
-            setOnAppear={setOnAppear}
-            workoutId={editWorkoutData.id}
+            workoutExercises={exerciseData}
             protocolId={protocolEditData.id}
-            phaseId={currentPhasesData}
+            phaseId={currentPhasesId}
           />
       </View>
       <View className="mx-4 my-1">
@@ -62,7 +57,7 @@ const AddWorkoutCurrentProtocol = () => {
         </Button>
       </View>
       <ScrollView className="pb-96">
-        {exerciseWorkoutData.map((exercise, index) => {
+        {exerciseData.map((exercise, index) => {
           const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
           const letterData = letters[index % letters.length]
@@ -75,11 +70,6 @@ const AddWorkoutCurrentProtocol = () => {
               categoryId={exercise.categoryId}
               letter={letterData}
               index={index + 1}
-              sets={exercise.sets}
-              reps={exercise.reps}
-              protocolId={protocolEditData.id}
-              workoutId={editWorkoutData.id}
-              userId={protocolEditData.userId}
             />
           )
         })}

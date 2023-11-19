@@ -5,7 +5,14 @@ import { FIREBASE_AUTH, db } from '../../../firebase'
 import { collection, deleteDoc, doc } from 'firebase/firestore'
 import { useNavigation } from '@react-navigation/native'
 
-const DeleteWorkoutButton = ({id, userId, protocolId, phaseId}) => {
+type DeleteWorkoutButtonProps = { 
+    id: string,
+    userId: string,
+    protocolId: string,
+    phaseId: string
+}
+
+const DeleteWorkoutButton = ({id, userId, protocolId, phaseId}: DeleteWorkoutButtonProps) => {
     const navigation = useNavigation()
     const protocolRef = doc(db, "protocols", protocolId)
     const currentWorkoutToDelete = doc(protocolRef, 'phases', phaseId, 'workouts', id)

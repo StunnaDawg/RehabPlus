@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native"
+import { StyleSheet } from "react-native"
 import {
   Button,
   Card,
@@ -7,15 +7,25 @@ import {
   Text,
   TextInput,
 } from "react-native-paper"
-import ExerciseImage from "../../assets/physcial-medicine.jpg"
 import React, { useEffect, useState } from "react"
-import GetSingleExercise from "../../functions/getSingleExercise"
+import GetMultipleExercise from "../../functions/getMultipleExercises"
 import { useIsFocused } from "@react-navigation/native"
-import { useSingleWorkoutContext } from "../../context/workoutContext"
+import { useExerciseContext } from "../../context/exerciseContext"
 import ExerciseWidgetDeleteButton from "./components/ExercsieWidgetDeleteButton"
-import { useCurrentPhasesContext } from "../../context/phasesAddContext"
+import { useCurrentPhasesIdContext } from "../../context/phasesIdContext"
+import { WorkoutExercise } from "../../@types/firestore"
 
-// id is the exercise id, change la
+type ExerciseWidgetProps = {
+  id: string
+  categoryId: string
+  letter: string
+  index: number
+  reps?: string
+  sets?: string
+  protocolId: string
+  workoutId: string
+  userId: string
+}
 const ExerciseWidget = ({
   id,
   categoryId,
@@ -26,12 +36,10 @@ const ExerciseWidget = ({
   protocolId,
   workoutId,
   userId,
-}) => {
-  const [exerciseWorkoutData, setExerciseWorkoutData] = useSingleWorkoutContext(
-    []
-  )
-  const [currentPhasesData, setCurrentPhasesData] = useCurrentPhasesContext('')
-  const [widgetData, setWidgetData] = useState({})
+}: ExerciseWidgetProps) => {
+  const {exerciseData, setExerciseData} = useExerciseContext()
+  const {currentPhasesId} = useCurrentPhasesIdContext()
+  const [widgetData, setWidgetData] = useState<WorkoutExercise[]>()
   const [exerciseSets, setExerciseSets] = useState(sets || "0")
   const [exerciseReps, setExerciseReps] = useState(reps || "0")
   const isFocused = useIsFocused()
@@ -39,7 +47,7 @@ const ExerciseWidget = ({
   useEffect(() => {
     const getData = async () => {
       try {
-        GetSingleExercise(id, categoryId, setWidgetData)
+        GetMultipleExercise(id, categoryId, setWidgetData)
       } catch (err) {
         console.error("exercise widget error:", err)
       }
@@ -48,12 +56,24 @@ const ExerciseWidget = ({
   }, [isFocused])
 
   useEffect(() => {
-    setWidgetData({ ...widgetData, reps: exerciseReps })
-  }, [exerciseReps])
+  
+    setWidgetData((prevData) => 
+      prevData?.map((exercise) => ({
+        ...exercise,
+        reps: exerciseReps
+      }))
+    );
 
-  useEffect(() => {
-    setWidgetData({ ...widgetData, sets: exerciseSets })
-  }, [exerciseSets])
+}, [exerciseReps])
+
+useEffect(() => {
+  setWidgetData((prevData) => 
+      prevData?.map((exercise) => ({
+        ...exercise,
+        sets: exerciseSets
+      }))
+    );
+}, [exerciseSets])
 
   useEffect(() => {
     console.log("exercise widget data", { ...widgetData })
@@ -65,24 +85,23 @@ const ExerciseWidget = ({
           {letter}
           {index}.
         </Text>
-        <Text variant="titleMedium">
+        {/* <Text variant="titleMedium">
           {" "}
           {widgetData &&
           Object.values(widgetData)[0] &&
           Object.values(widgetData)[0].title
             ? Object.values(widgetData)[0].title
             : "Loading..."}
-        </Text>
-        <IconButton icon="eye" size={18}>
+        </Text> */}
+        <Button>
           View
-        </IconButton>
+        </Button>
         <ExerciseWidgetDeleteButton
           workoutId={workoutId}
           protocolId={protocolId}
           exerciseId={id}
           userId={userId}
-          setExerciseState={setExerciseWorkoutData}
-          phaseId={currentPhasesData}
+          phaseId={currentPhasesId}
         />
       </Card.Content>
       <Card.Content className="flex-1 flex-row justify-center items-center ">
@@ -117,8 +136,8 @@ const ExerciseWidget = ({
       <Card.Content className="flex-1 flex-row justify-center">
         <Card.Actions>
           <Button
-            onPress={async () => {
-              await setExerciseWorkoutData((prevData) => {
+            onPress={ () => {
+              setExerciseData((prevData) => {
                 const updatedData = [...prevData]
                 const existingExerciseData = updatedData.find(
                   (exercise) => exercise.exerciseId === id
@@ -129,7 +148,8 @@ const ExerciseWidget = ({
                   existingExerciseData.sets = exerciseSets
                 } else {
                   updatedData.push({
-                    exerciseId,
+                    categoryId,
+                    exerciseId: id,
                     reps: exerciseReps,
                     sets: exerciseSets,
                   })

@@ -14,11 +14,13 @@ import { CurrentPhasesDataContextProvider } from "./context/phasesAddContext"
 import { NewProtocolDataContextProvider } from "./context/newProtocolContext"
 import { CurrentPhasesIdContextProvider } from "./context/phasesIdContext"
 import { ExerciseContextProvider } from "./context/exerciseContext"
+import { DatabaseExercisesContextProvider } from "./context/exerciseDataBaseContext"
 import "react-native-gesture-handler"
 
 export default function App() {
   return (
     <UserAuthContextProvider>
+      <DatabaseExercisesContextProvider>
       <ExerciseContextProvider>
       <CurrentPhasesIdContextProvider>
         <NewProtocolDataContextProvider>
@@ -48,6 +50,7 @@ export default function App() {
         </NewProtocolDataContextProvider>
       </CurrentPhasesIdContextProvider>
       </ExerciseContextProvider>
+      </DatabaseExercisesContextProvider>
     </UserAuthContextProvider>
   )
 }

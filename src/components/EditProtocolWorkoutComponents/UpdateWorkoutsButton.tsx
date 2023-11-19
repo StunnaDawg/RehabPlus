@@ -1,31 +1,47 @@
-import { View, Text } from "react-native"
-import React, { useEffect } from "react"
+import { View } from "react-native"
 import { Button } from "react-native-paper"
-import { useWorkoutContext } from "../../context/addWorkoutProtocol"
 import { useNavigation } from "@react-navigation/native"
-import { useCompleteWorkoutContext } from "../../context/completeWorkoutContext"
-import { useSingleWorkoutContext } from "../../context/workoutContext"
-import { collection, doc, updateDoc } from "firebase/firestore"
+import { doc, updateDoc } from "firebase/firestore"
 import { db } from "../../firebase"
+import { Workout, WorkoutExercise } from "../../@types/firestore"
+import { NavigationType } from "../../@types/navigation"
 
-const UpdateWorkoutsButton = ({workoutTitle, workoutDescription, workoutExercises, workoutId, protocolId, phaseId}) => {
-  const navigation = useNavigation()
+type UpdateWorkoutsButtonProps = { 
+  workoutTitle?: string
+  workoutDescription?: string
+  workoutExercises?: WorkoutExercise[]
+  workoutId: string
+  protocolId: string
+  phaseId: string
+}
+
+const UpdateWorkoutsButton = ({workoutTitle, workoutDescription, workoutExercises, workoutId, protocolId, phaseId}: UpdateWorkoutsButtonProps) => {
+  const navigation = useNavigation<NavigationType>()
   const workoutDocRef = doc(db, "protocols", protocolId, 'phases', phaseId, 'workouts', workoutId)
   const onSubmitUpdateWorkout = async () => {
       try{
 console.log(workoutDocRef)
 console.log(phaseId)
 console.log("exercises to add to document", workoutExercises)
-const updateData = {};
+const updateData: Workout = {
+  id: workoutId,
+  workout: {
+    title: workoutTitle,
+    description: workoutDescription,
+    exercises: workoutExercises
+  }
+};
+if (updateData.workout) {
 if (workoutTitle) {
-    updateData["workout.title"] = workoutTitle;
+    updateData.workout.title = workoutTitle
 }
 if (workoutDescription) {
-    updateData["workout.description"] = workoutDescription;
+    updateData.workout.description = workoutDescription;
 }
 
 if (workoutExercises) {
-  updateData["workout.exercises"] = workoutExercises;
+  updateData.workout.exercises = workoutExercises;
+}
 }
 
 

@@ -4,9 +4,18 @@ import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { db, FIREBASE_AUTH } from '../../../firebase'
 import { addDoc, collection } from 'firebase/firestore'
+import { TabNavigationType } from '../../../@types/navigation'
 
-const CreateProtocolButton = ({protocolTitle, protocolOutline, protocolDaysPerWeek, protocolWeeks, protocolPublic}) => {
-    const navigation = useNavigation()
+type CreateProtocolButtonProps = { 
+    protocolTitle: string,
+    protocolOutline: string,
+    protocolWeeks: number,
+    protocolPublic: boolean
+
+}
+
+const CreateProtocolButton = ({protocolTitle, protocolOutline, protocolWeeks, protocolPublic}: CreateProtocolButtonProps) => {
+    const navigation = useNavigation<TabNavigationType>()
     const protocolsCollectionRef = collection(db, "protocols")
 
     const onSubmitProtocol = async () => {
@@ -14,7 +23,6 @@ const CreateProtocolButton = ({protocolTitle, protocolOutline, protocolDaysPerWe
         await addDoc(protocolsCollectionRef, {
             title: protocolTitle,
             description: protocolOutline,
-            daysPerWeek: protocolDaysPerWeek,
             weeks: protocolWeeks,
             userId: FIREBASE_AUTH?.currentUser?.uid,
             public: protocolPublic

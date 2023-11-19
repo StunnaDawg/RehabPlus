@@ -1,23 +1,27 @@
-import { StyleSheet, View } from "react-native"
+import { StyleSheet } from "react-native"
 import {
   Button,
   Card,
   Divider,
-  IconButton,
   Text,
   TextInput,
 } from "react-native-paper"
-import ExerciseImage from "../../assets/physcial-medicine.jpg"
 import React, { useEffect, useState } from "react"
-import GetSingleExercise from "../../functions/getSingleExercise"
+import GetMultipleExercise from "../../functions/getMultipleExercises"
 import { useIsFocused } from "@react-navigation/native"
-import { useSingleWorkoutContext } from "../../context/workoutContext"
+import { WorkoutExercise } from "../../@types/firestore"
+import { useExerciseContext } from "../../context/exerciseContext"
 
-const AddWorkoutExerciseWidget = ({ id, categoryId, letter, index }) => {
-  const [exerciseWorkoutData, setExerciseWorkoutData] = useSingleWorkoutContext(
-    []
-  )
-  const [widgetData, setWidgetData] = useState({})
+type AddWorkoutExerciseWidgetProps = { 
+  id: string
+  categoryId: string
+  letter: string
+  index: number
+}
+
+const AddWorkoutExerciseWidget = ({ id, categoryId, letter, index }: AddWorkoutExerciseWidgetProps) => {
+  const {setExerciseData} = useExerciseContext()
+  const [widgetData, setWidgetData] = useState<WorkoutExercise[]>()
   const [exerciseSets, setExerciseSets] = useState("0")
   const [exerciseReps, setExerciseReps] = useState("0")
   const isFocused = useIsFocused()
@@ -25,7 +29,7 @@ const AddWorkoutExerciseWidget = ({ id, categoryId, letter, index }) => {
   useEffect(() => {
     const getData = async () => {
       try {
-        GetSingleExercise(id, categoryId, setWidgetData)
+        GetMultipleExercise(id, categoryId, setWidgetData)
       } catch (err) {
         console.error("exercise widget error:", err)
       }
@@ -34,19 +38,24 @@ const AddWorkoutExerciseWidget = ({ id, categoryId, letter, index }) => {
   }, [isFocused])
 
   useEffect(() => {
-    setWidgetData({ ...widgetData, reps: exerciseReps })
+  
+      setWidgetData((prevData) => 
+        prevData?.map((exercise) => ({
+          ...exercise,
+          reps: exerciseReps
+        }))
+      );
+  
   }, [exerciseReps])
 
   useEffect(() => {
-    setWidgetData({ ...widgetData, sets: exerciseSets })
+    setWidgetData((prevData) => 
+        prevData?.map((exercise) => ({
+          ...exercise,
+          sets: exerciseSets
+        }))
+      );
   }, [exerciseSets])
-
-  // useEffect(() => {
-  //   setExerciseWorkoutData((prevData) => [
-  //     ...prevData,
-  //     { sets: exerciseSets, reps: exerciseReps },
-  //   ]);
-  // }, [exerciseSets, exerciseReps]);
 
   useEffect(() => {
     console.log("exercise widget data", { ...widgetData })
@@ -58,20 +67,20 @@ const AddWorkoutExerciseWidget = ({ id, categoryId, letter, index }) => {
           {letter}
           {index}.
         </Text>
-        <Text variant="titleMedium">
+        {/* <Text variant="titleMedium">
           {" "}
           {widgetData &&
           Object.values(widgetData)[0] &&
           Object.values(widgetData)[0].title
             ? Object.values(widgetData)[0].title
             : "Loading..."}
-        </Text>
-        <IconButton icon="eye" size={18}>
+        </Text> */}
+        <Button>
           View
-        </IconButton>
-        <IconButton icon="delete" size={18}>
+        </Button>
+        <Button>
           Delete
-        </IconButton>
+        </Button>
       </Card.Content>
       <Card.Content className="flex-1 flex-row justify-center items-center ">
         <Card.Actions>
@@ -103,8 +112,8 @@ const AddWorkoutExerciseWidget = ({ id, categoryId, letter, index }) => {
       <Card.Content className="flex-1 flex-row justify-center">
         <Card.Actions>
           <Button
-            onPress={async () => {
-              await setExerciseWorkoutData((prevData) => {
+            onPress={ () => {
+              setExerciseData((prevData) => {
                 const updatedData = [...prevData]
                 // Find the existing exercise data object in the array
                 const existingExerciseData = updatedData.find(
@@ -118,7 +127,8 @@ const AddWorkoutExerciseWidget = ({ id, categoryId, letter, index }) => {
                 } else {
                   // If the exercise data doesn't exist, add it as a new object
                   updatedData.push({
-                    exerciseId,
+                    categoryId,
+                    exerciseId: id,
                     reps: exerciseReps,
                     sets: exerciseSets,
                   })

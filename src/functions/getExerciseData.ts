@@ -1,8 +1,8 @@
 import { getDocs, collection, CollectionReference } from "firebase/firestore"
 import { Dispatch, SetStateAction } from "react";
-import { ExerciseDataBaseCategory } from "../@types/firestore";
+import { ExerciseDataBaseExercise } from "../@types/firestore";
 
-const getExerciseFireStoreData = async (setCategoriesState: Dispatch<SetStateAction<ExerciseDataBaseCategory>>, categoriesCollection: CollectionReference) => {
+const getExerciseFireStoreData = async (setCategoriesState: Dispatch<SetStateAction<ExerciseDataBaseExercise[]>>, categoriesCollection: CollectionReference) => {
     try {
         const exerciseFireBaseData = await getDocs(categoriesCollection);
         const exerciseData = exerciseFireBaseData.docs;

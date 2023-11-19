@@ -7,38 +7,35 @@ import { useIsFocused } from "@react-navigation/native"
 
 import CompleteWorkoutEditWidget from "./components/CompleteWorkoutEditWIdget"
 import { useSingleWorkoutContext } from "../../context/workoutContext"
-import { useSingleProtocolContext } from "../../context/protocolContext"
+import { useSingleEditProtocolContext } from "../../context/protocolContext"
 import { collection, doc } from "firebase/firestore"
 import { db } from "../../firebase"
-import GetProtocolPhases from "../../functions/getProtocolPhases"
-import { useRefreshContext } from "../../context/refreshKey"
-import { useCurrentPhasesContext } from "../../context/phasesAddContext"
+import { useCurrentPhasesIdContext } from "../../context/phasesIdContext"
+import { Workout } from "../../@types/firestore"
+import { NavigationType } from "../../@types/navigation"
+import GetWorkouts from "../../functions/getWorkouts"
 
 const EditWorkoutsPage = () => {
-  const [exerciseWorkoutData, setExerciseWorkoutData] = useSingleWorkoutContext(
-    []
-  )
-  const [currentPhasesData, setCurrentPhasesData] = useCurrentPhasesContext('')
-  const [protocolEditData] = useSingleProtocolContext()
-  const [clientWorkouts, setClientWorkouts] = useState([])
-  const [refreshKey, setRefreshKey] = useRefreshContext()
-  const route = useRoute()
+  const { setWorkoutData} = useSingleWorkoutContext()
+  const {currentPhasesId} = useCurrentPhasesIdContext()
+  const {protocolEditData} = useSingleEditProtocolContext()
+  const [clientWorkouts, setClientWorkouts] = useState<Workout[] | undefined>([])
   const currentProtocolRef = collection(db, "protocols")
   const currentProtocol = doc(currentProtocolRef, protocolEditData.id)
-  const currentProtocolPhase = doc(currentProtocol, "phases", currentPhasesData)
+  const currentProtocolPhase = doc(currentProtocol, "phases", currentPhasesId)
   const currentPhaseWorkouts = collection(currentProtocolPhase, "workouts")
-  const navigation = useNavigation()
+  const navigation = useNavigation<NavigationType>()
   const isFocused = useIsFocused()
   useEffect(() => {
     const fetchClientWorkout = async () => {
-      await GetProtocolPhases(setClientWorkouts, setRefreshKey, currentPhaseWorkouts)
+      await GetWorkouts(setClientWorkouts, currentPhaseWorkouts)
     }
 
     fetchClientWorkout()
   }, [isFocused])
 
   useEffect(() => { 
-    console.log('phase id', currentPhasesData)
+    console.log('phase id', currentPhasesId)
   }, [])
   useEffect(() => {
     console.log("client edit workouts page", clientWorkouts)
@@ -48,7 +45,7 @@ const EditWorkoutsPage = () => {
       <View>
         <Button
           onPress={async () => {
-            await setExerciseWorkoutData([])
+             setWorkoutData({})
             navigation.navigate("AddNewWorkoutScreen")
           }}
           icon="plus"
@@ -58,12 +55,13 @@ const EditWorkoutsPage = () => {
       </View>
 
       <View>
-        {clientWorkouts.map((widget) => {
+        {clientWorkouts?.map((widget) => {
           console.log(widget.id)
+          if(widget.id === undefined) return (<div>No Workouts Saved</div>)
           return (
             <CompleteWorkoutEditWidget
               key={widget.id}
-              workoutTitle={widget.workout.title}
+              workoutTitle={widget.workout?.title}
               id={widget.id}
               protocolId={protocolEditData.id}
               userId={protocolEditData.userId}
