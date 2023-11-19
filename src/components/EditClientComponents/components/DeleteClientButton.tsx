@@ -4,9 +4,15 @@ import { Button } from 'react-native-paper'
 import { FIREBASE_AUTH, db } from '../../../firebase'
 import { collection, deleteDoc, doc } from 'firebase/firestore'
 import { useNavigation } from '@react-navigation/native'
+import { TabNavigationType } from '../../../@types/navigation'
 
-const DeleteButton = ({id, userId}) => {
-    const navigation = useNavigation()
+type DeleteButtonProps = { 
+    id: string
+    userId: string
+}
+
+const DeleteButton = ({id, userId}: DeleteButtonProps) => {
+    const navigation = useNavigation<TabNavigationType>()
     const clientsCollectionRef = collection(db, "clients")
     const currentProtocol = doc(clientsCollectionRef, id)
 

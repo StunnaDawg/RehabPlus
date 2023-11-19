@@ -3,7 +3,17 @@ import { Button } from "react-native-paper"
 import React from "react"
 import { useNavigation } from "@react-navigation/native"
 import { FIREBASE_AUTH, db } from "../../../firebase"
-import { updateDoc, collection, doc } from "firebase/firestore"
+import { updateDoc, collection, doc, DocumentReference, CollectionReference } from "firebase/firestore"
+import { TabNavigationType } from "../../../@types/navigation"
+
+type UpdateClientButtonProps = { 
+  clientName: string
+  clientInjuryDescription: string
+  clientEmail: string
+  id: string
+  userId: string
+  protocolId: string
+}
 
 const UpdateClientButton = ({
   clientName,
@@ -12,11 +22,11 @@ const UpdateClientButton = ({
   id,
   userId,
   protocolId
-}) => {
-  const navigation = useNavigation()
+}: UpdateClientButtonProps) => {
+  const navigation = useNavigation<TabNavigationType>()
   const clientsCollectionRef = collection(db, "clients")
   const currentClient = doc(clientsCollectionRef, id)
-  let protocolRef = null
+  let protocolRef: DocumentReference | null
   if (protocolId) {
     protocolRef = doc(db, "protocols", protocolId);
   }

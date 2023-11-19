@@ -5,9 +5,10 @@ import { db } from "../../firebase"
 import {collection } from "firebase/firestore"
 import getFireStoreData from "../../functions/getFireStoreData"
 import ProtocolEditScreenWidget from "./components/ProtocolScreenWidget"
+import { Protocol } from "../../@types/firestore"
 
 const ChangeClientProtocolScreen = () => {
-  const [protocolList, setProtocolList] = useState([])
+  const [protocolList, setProtocolList] = useState<Protocol[]>()
   const protocolsCollectionRef = collection(db, "protocols")
   const isFocused = useIsFocused()
 
@@ -18,7 +19,7 @@ const ChangeClientProtocolScreen = () => {
   return (
     <>
       <ScrollView>
-        {protocolList.map((protocol) => (
+        {protocolList?.map((protocol) => (
           <ProtocolEditScreenWidget
           key={protocol.id}
             weeks={protocol.weeks}

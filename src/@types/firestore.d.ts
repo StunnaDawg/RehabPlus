@@ -51,10 +51,11 @@ export type ExerciseDataBaseExercise = {
 }
 
 export type Client = {
+    id: string
   email: string
   injuryDescription: string
   name: string
-  protocol: CollectionReference
+  protocol: string
   status: boolean
   userId: string //the userId of phsiotherapist
 }

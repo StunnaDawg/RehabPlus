@@ -3,23 +3,24 @@ import React, { useEffect, useState } from "react"
 import { Button, TextInput } from "react-native-paper"
 import DeleteButton from "./components/DeleteClientButton"
 import UpdateClientButton from "./components/EditButton"
-import { useSingleClientContext } from "../../context/clientContext"
+import { useEditClientContext } from "../../context/clientContext"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
-import { useChangeClientProtocol } from "../../context/EditProtocolContext"
+import { useAddClientProtocolContext } from "../../context/EditProtocolContext"
+import { NavigationType } from "../../@types/navigation"
 
 const EditClient = () => {
-  const [clientEditData] = useSingleClientContext()
-  const [newClientProtocol, setClientProtocol] = useChangeClientProtocol()
+  const {clientEditData} = useEditClientContext()
+  const {newClientProtocol} = useAddClientProtocolContext()
   const [clientName, setClientName] = useState(clientEditData.name)
   const [injuryOutline, setInjuryOutline] = useState(
     clientEditData.injuryDescription
   )
   const [email, setEmail] = useState(clientEditData.email)
   const [protocol, setCurrentProtocol] = useState(
-    clientEditData.clientProtocolId
+    clientEditData?.protocol
   )
   const isFocused = useIsFocused()
-  const navigation = useNavigation()
+  const navigation = useNavigation<NavigationType>()
 
   useEffect(() => {
     let isMounted = true
