@@ -1,12 +1,22 @@
 import { Button } from "react-native-paper"
-import { useNewProtocolContext } from "../../../context/newProtocolContext"
+import { useNewProtocolDataContext } from "../../../context/newProtocolContext"
 import { addDoc, collection, doc, updateDoc } from "firebase/firestore"
 import { FIREBASE_AUTH, db } from "../../../firebase"
-import { useRefreshContext } from "../../../context/refreshKey"
+import { useRefreshKeyContext } from "../../../context/refreshKey"
 
-const AddPhaseButton = ({phaseTitle, phaseOutline, weeksText, setVisible, protocolOutline, protocolTitle, protocolPublic, protocolId}) => {
-    const [newProtocolData, setNewProtocol] = useNewProtocolContext()
-    const [refreshKey, setRefreshKey] = useRefreshContext()
+
+type AddPhaseButtonProps = {
+  phaseTitle: string
+  phaseOutline?: string
+  weeksText?: string
+  setVisible: React.Dispatch<React.SetStateAction<boolean>>
+  protocolOutline?: string
+  protocolTitle?: string
+  protocolPublic: boolean
+  protocolId: string
+}
+
+const AddPhaseButton = ({phaseTitle, phaseOutline, weeksText, setVisible, protocolPublic, protocolOutline, protocolTitle, protocolId}: AddPhaseButtonProps) => {
     const protocolsDocRef = doc(db, "protocols", protocolId)
       const phasesCollectionRef = collection(db, "protocols", protocolId, 'phases' )
       const onSubmitPhase = async () => {
@@ -34,7 +44,7 @@ const AddPhaseButton = ({phaseTitle, phaseOutline, weeksText, setVisible, protoc
 
   return (
     <>
-      <Button onPress={async () => {await onSubmitPhase(); setRefreshKey(+1); setVisible(false)}}>Add Phase</Button>
+      <Button onPress={async () => {await onSubmitPhase(); setVisible(false)}}>Add Phase</Button>
     </>
   )
 }

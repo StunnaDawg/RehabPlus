@@ -3,27 +3,26 @@ import { TextInput, Switch, Portal, Modal, Button } from "react-native-paper"
 import { useEffect, useState } from "react"
 import UpdateButton from "./components/UpdateProtocolButton"
 import DeleteButton from "./components/DeleteButton"
-import { useSingleProtocolContext } from "../../context/protocolContext"
+import { useSingleEditProtocolContext } from "../../context/protocolContext"
 import GetProtocolPhases from "../../functions/getProtocolPhases"
-import { useRefreshContext } from "../../context/refreshKey"
+import { useRefreshKeyContext } from "../../context/refreshKey"
 import { collection } from "firebase/firestore"
 import { db } from "../../firebase"
 import PhasesWidget from "./components/PhasesWidget"
-import { useIsFocused } from "@react-navigation/native"
 import ModalContent from "./ModalContent"
+import { ProtocolPhase } from "../../@types/firestore"
 
 const EditStartPage = () => {
-  const [protocolEditData] = useSingleProtocolContext()
+  const {protocolEditData} = useSingleEditProtocolContext()
   const [titleText, setTitleText] = useState(protocolEditData.title)
   const [outlineText, setOutlineText] = useState(protocolEditData.description)
   const [isPublic, setIsPublic] = useState(protocolEditData?.public || false)
-  const [protocolEditPhases, setProtocolEditPhases] = useState([])
+  const [protocolEditPhases, setProtocolEditPhases] = useState<ProtocolPhase[]>()
   const [visible, setVisible] = useState(false)
   const showModal = () => setVisible(true)
   const hideModal = () => setVisible(false)
-  const [refreshKey, setRefreshKey] = useRefreshContext()
+  const {refreshKey} = useRefreshKeyContext()
   const protocolPhasesCollectionRef = collection(db, "protocols", protocolEditData.id, "phases")
-  const isFocused = useIsFocused()
 
   const onToggleSwitch = () => setIsPublic(!isPublic)
 
@@ -35,7 +34,7 @@ const EditStartPage = () => {
 
   useEffect(() => {
     const fetchPhases = async () => {
-    GetProtocolPhases(setProtocolEditPhases, setRefreshKey, protocolPhasesCollectionRef)
+    GetProtocolPhases(setProtocolEditPhases, protocolPhasesCollectionRef)
     }
 
     fetchPhases()
@@ -43,7 +42,7 @@ const EditStartPage = () => {
 
   useEffect(() => {
     const fetchPhases = async () => {
-    GetProtocolPhases(setProtocolEditPhases, setRefreshKey, protocolPhasesCollectionRef)
+    GetProtocolPhases(setProtocolEditPhases, protocolPhasesCollectionRef)
     }
 
     fetchPhases()
@@ -112,8 +111,9 @@ const EditStartPage = () => {
       </View>
 
       <ScrollView>
-        {protocolEditPhases.map((phase) => {
+        {protocolEditPhases?.map((phase) => {
           console.log(phase.title)
+          if(phase.title == undefined) return null 
           return (
             <View key={phase.id} >
             <PhasesWidget phaseId={phase.id} phasesTitle={phase.title}/>
