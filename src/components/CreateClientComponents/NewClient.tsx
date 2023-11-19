@@ -3,25 +3,26 @@ import React, { useEffect, useState } from "react"
 import { Checkbox, TextInput, Button } from "react-native-paper"
 import CreateButton from "./components/CreateButton"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
-import { useAddClientProtocol } from "../../context/AddProtocolContext"
+import { useEditClientContext } from "../../context/clientContext"
+import { NavigationType } from "../../@types/navigation"
 
 const NewClient = () => {
   const [clientName, setClientName] = useState("")
-  const [newClientProtocol, setClientProtocol] = useAddClientProtocol()
+  const {clientEditData} = useEditClientContext()
   const [injuryOutline, setInjuryOutline] = useState("")
   const [email, setEmail] = useState("")
   const [active, setActive] = useState(true)
   const [protocol, setProtocol] = useState("")
-  const navigation = useNavigation()
+  const navigation = useNavigation<NavigationType>()
   const isFocused = useIsFocused()
 
   useEffect(() => {
     let isMounted = true
     const updateStatePLEASE = async () => {
       try {
-        if (newClientProtocol !== null && isMounted) {
-          console.log("New CLient context state:", newClientProtocol)
-          setProtocol(newClientProtocol)
+        if (clientEditData !== null && isMounted) {
+          console.log("New CLient context state:", clientEditData)
+          setProtocol(clientEditData.protocol)
           console.log("New Client protocol state:", protocol)
         }
       } catch (err) {
@@ -33,7 +34,7 @@ const NewClient = () => {
     return () => {
       isMounted = false
     }
-  }, [isFocused, newClientProtocol])
+  }, [isFocused, clientEditData])
 
   return (
     <>
