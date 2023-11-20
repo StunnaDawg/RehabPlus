@@ -22,6 +22,11 @@ const getClientFireStoreData = async (setState: Dispatch<SetStateAction<Client[]
     const filteredData = clientData.map((doc, index) => ({
       ...doc.data(),
       id: doc.id,
+      email: doc.email,
+      injury: doc.data().injury,
+      name: doc.data().name,
+      status: doc.data().status,
+      userId: doc.data().userId,
       protocol: protocolsData[index] ? { ...protocolsData[index] } : null
     }));
 

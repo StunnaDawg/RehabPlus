@@ -26,13 +26,26 @@ const DatabaseExercise = ({ exerciseName, id, idOfCategory }: DatabaseExercisePr
         <Card.Actions className="flex-1 flex-col">
           <Button className="my-1">View</Button>
           <Button
-            onPress={ () => {
-            setWorkoutData((prevData) => [
-                ...prevData,
-                { exerciseId: id, categoryId: idOfCategory },
-            ]);
-              navigation.goBack()
-            }}
+           onPress={() => {
+            setWorkoutData((prevData) => {
+              if (prevData.workout && prevData.workout.exercises) {
+                return {
+                  ...prevData,
+                  workout: {
+                    ...prevData.workout,
+                    exercises: prevData.workout.exercises.map((exercise) => ({
+                      ...exercise,
+                      exerciseId: id,
+                      categoryId: idOfCategory
+                    }))
+                  }
+                };
+              } else {
+                return prevData;
+              }
+            });
+            navigation.goBack()
+          }}
           >
             Add Workout
           </Button>

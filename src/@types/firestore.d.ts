@@ -38,6 +38,7 @@ export type WorkoutExercise = {
 }
 
 export type ExerciseDataBaseCategory = {
+    id?: string
   title: string
   exercises?: CollectionReference
 }

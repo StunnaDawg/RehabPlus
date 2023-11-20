@@ -1,4 +1,4 @@
-import { View, FlatList } from "react-native"
+import { View, FlatList, ListRenderItem } from "react-native"
 import React, { useEffect, useState } from "react"
 import { Button} from "react-native-paper"
 import DatabaseExercise from "./DatabaseExercise"
@@ -6,12 +6,11 @@ import getExerciseFireStoreData from "../../functions/getExerciseData"
 import { db } from "../../firebase"
 import { useIsFocused } from "@react-navigation/native"
 import { collection } from "firebase/firestore"
-import { ExerciseDataBaseExercise } from "../../@types/firestore"
-import { useDatabaseExercisesContext } from "../../context/exerciseDataBaseContext"
+import { ExerciseDataBaseCategory, ExerciseDataBaseExercise } from "../../@types/firestore"
+import ExerciseDataBase from "../../screens/ExerciseDataBase"
 
 const DatabaseCategories = () => {
   const [exerciseCategories, setExerciseCategories] = useState<ExerciseDataBaseExercise[]>([])
-  const {exerciseDataBase, setExerciseDataBase} = useDatabaseExercisesContext()
   const [pressedButtonId, setPressedButtonId] = useState('85ZJ5LvyxECGoN0GMjHZ')
   const exercisesCollectionRef = collection(db, "exerciseCategories")
   const isFocused = useIsFocused()
@@ -32,18 +31,18 @@ const DatabaseCategories = () => {
     console.log("database data", ...exerciseCategories)
   }, [exerciseCategories])
 
-  const renderItem = ({ item: category }) => (
+  const renderItem: ListRenderItem<ExerciseDataBaseExercise> = ({item}) => (
     <Button
-      key={category.id}
+      key={item.id}
       className="mx-1 py-0"
-      mode={pressedButtonId === category.id ? "contained" : "outlined"}
+      mode={pressedButtonId === item.id ? "contained" : "outlined"}
       onPress={() => {
-        pressedButtonId === category.id
-          ? setPressedButtonId(null)
-          : setPressedButtonId(category.id)
+        pressedButtonId === item.id
+          ? setPressedButtonId('')
+          : setPressedButtonId(item.id)
       }}
     >
-      {category.title}
+      {item.exercise.title}
     </Button>
   )
 
@@ -51,10 +50,10 @@ const DatabaseCategories = () => {
     const category = exerciseCategories.find(cat => cat.id === categoryId);
     
     if (category) {
-      return category.exercises;
+      return category
+    } else {
+      return ['']
     }
-  
-    return [];
   };
 
   return (
@@ -66,12 +65,15 @@ const DatabaseCategories = () => {
         keyExtractor={(item) => item.id.toString()}
         showsHorizontalScrollIndicator={false}
       />
-     <FlatList className='pb-96'
+     {/* <FlatList className='pb-96'
   data={getExercisesForCategory(pressedButtonId)}
-  keyExtractor={(item) => item.id}
+  keyExtractor={(item: ExerciseDataBaseExercise) => item.id.toString()}
   renderItem={({ item }) => {
     const exerciseNameKey = Object.keys(item).find(key => key !== "id");
-    const exerciseTitle = item[exerciseNameKey].title;
+
+    if(exerciseNameKey) {
+    const exerciseTitle = item[exerciseNameKey]?.title;
+
 
     return (
       <View>
@@ -82,8 +84,10 @@ const DatabaseCategories = () => {
         />
       </View>
     );
+  }else {
+    return null} 
   }}
-/>
+/> */}
 
     </>
   )
