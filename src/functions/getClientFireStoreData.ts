@@ -15,20 +15,20 @@ const getClientFireStoreData = async (setState: Dispatch<SetStateAction<Client[]
       .filter(ref => ref && typeof ref === 'object');
     const protocolDocs = await Promise.all(validProtocolRefs.map(ref => getDoc(ref)));
 
-    // Convert protocolDocs to an array of data.
-    const protocolsData = protocolDocs.map(doc => ({ id: doc.id, ...doc.data() }));
+    // // Convert protocolDocs to an array of data.
+    // const protocolsData = protocolDocs.map(doc => ({ id: doc.id, ...doc.data() }));
 
     // Now map this back to your client data.
-    const filteredData = clientData.map((doc, index) => ({
+    const filteredData = clientData.map((doc) => ({
       ...doc.data(),
       id: doc.id,
-      email: doc.email,
-      injury: doc.data().injury,
+      email: doc.data().email,
+      injuryDescription: doc.data().injury,
       name: doc.data().name,
       status: doc.data().status,
       userId: doc.data().userId,
-      protocol: protocolsData[index] ? { ...protocolsData[index] } : null
-    }));
+      protocol: doc.data().protocol,
+    })) as Client[];
 
     setState(filteredData);
   } catch (err) {

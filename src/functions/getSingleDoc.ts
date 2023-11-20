@@ -31,9 +31,8 @@ const GetSingleDoc = async (setState: Dispatch<SetStateAction<Protocol>>, collec
       const docData = {
         ...clientData,
         id: docId,
-        clientProtocol: protocolData,
-        clientProtocolId: protocolId,
-      }
+        title: clientData.title,
+      } as Protocol
       console.log("Document data:", docData)
       setState(docData)
     } else {

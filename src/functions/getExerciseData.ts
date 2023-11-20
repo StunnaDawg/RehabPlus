@@ -17,15 +17,16 @@ const getExerciseFireStoreData = async (setCategoriesState: Dispatch<SetStateAct
                 }));
                 console.log('Exercises for category:', categoryDoc.data().title, exercisesData);
                 return {
-                    ...categoryDoc.data(),
+                    ...categoryDoc.data() as Omit<ExerciseDataBaseExercise, 'exercises'>,
                     id: categoryDoc.id,
-                    exercises: exercisesData
+                    exercises: exerciseData
+                    
                 };
             })
         );
 
         console.log('filtered exercise data:', categoriesWithExercises);
-        setCategoriesState(categoriesWithExercises);
+        setCategoriesState(categoriesWithExercises as ExerciseDataBaseExercise[]);
 
     } catch (err) {
         console.error("The error is", err);

@@ -4,18 +4,18 @@ import { useIsFocused, useNavigation } from "@react-navigation/native"
 import { DataTable, Button, IconButton } from "react-native-paper"
 import { db } from "../../firebase"
 import { collection } from "firebase/firestore"
-import getFireStoreData from "../../functions/getFireStoreData"
 import { TabNavigationType } from "../../@types/navigation"
 import { Client } from "../../@types/firestore"
+import getClientFireStoreData from "../../functions/getClientFireStoreData"
 
 const ClientWidget = () => {
-  const [clientWidgetList, setClientWidgetList] = useState<Client[]>()
+  const [clientWidgetList, setClientWidgetList] = useState<Client[]>([])
   const clientsCollectionRef = collection(db, "clients")
   const navigation = useNavigation<TabNavigationType>()
   const isFocused = useIsFocused()
 
   useEffect(() => {
-    getFireStoreData(setClientWidgetList, clientsCollectionRef)
+    getClientFireStoreData(setClientWidgetList, clientsCollectionRef)
     console.log("dashboard client")
   }, [isFocused])
   return (
