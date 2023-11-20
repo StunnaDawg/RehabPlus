@@ -5,11 +5,13 @@ import { DataTable, Button, IconButton } from "react-native-paper"
 import { db } from "../../firebase"
 import { collection } from "firebase/firestore"
 import getFireStoreData from "../../functions/getFireStoreData"
+import { TabNavigationType } from "../../@types/navigation"
+import { Client } from "../../@types/firestore"
 
 const ClientWidget = () => {
-  const [clientWidgetList, setClientWidgetList] = useState([])
+  const [clientWidgetList, setClientWidgetList] = useState<Client[]>()
   const clientsCollectionRef = collection(db, "clients")
-  const navigation = useNavigation()
+  const navigation = useNavigation<TabNavigationType>()
   const isFocused = useIsFocused()
 
   useEffect(() => {
@@ -31,13 +33,13 @@ const ClientWidget = () => {
       <ScrollView>
         <DataTable>
           <DataTable.Header>
-            <DataTable.Title></DataTable.Title>
+            <DataTable.Title> </DataTable.Title>
             <DataTable.Title>Name</DataTable.Title>
             <DataTable.Title>Protocol</DataTable.Title>
-            <DataTable.Title></DataTable.Title>
+            <DataTable.Title> </DataTable.Title>
           </DataTable.Header>
 
-          {clientWidgetList.map((client) =>
+          {clientWidgetList?.map((client) =>
             client.status ? (
               <DataTable.Row key={client.id}>
                 <DataTable.Cell>

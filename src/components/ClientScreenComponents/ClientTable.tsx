@@ -4,16 +4,17 @@ import { useEffect, useState } from "react"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import { db } from "../../firebase"
 import { collection } from "firebase/firestore"
+import GetSingleClient from "../../functions/getSingleClient"
 import getClientFireStoreData from "../../functions/getClientFireStoreData"
-import GetSingleDoc from "../../functions/getSingleDoc"
-import { useSingleClientContext } from "../../context/clientContext"
+import { useEditClientContext } from "../../context/clientContext"
+import { Client } from "../../@types/firestore"
+import { NavigationType, TabNavigationType } from "../../@types/navigation"
 
 const ClientTable = () => {
-  const [clientEditData, setClientEditData] = useSingleClientContext()
-  const [clientList, setClientList] = useState([])
-  const [clientProtocol, setClientProtocol] = useState([])
+  const {clientEditData, setClientEditData} = useEditClientContext()
+  const [clientList, setClientList] = useState<Client[]>([])
   const clientsCollectionRef = collection(db, "clients")
-  const navigation = useNavigation()
+  const navigation = useNavigation<NavigationType | TabNavigationType>()
   const isFocused = useIsFocused()
 
   useEffect(() => {
@@ -32,10 +33,6 @@ const ClientTable = () => {
       console.log(clientList)
   }, [clientList])
 
-  // useEffect(() => {
-  //   console.log('selected client', {selectedClient}, 'client protocol', {clientProtocol})
-  // }, [selectedClient, clientProtocol])
-
   useEffect(() => {
     console.log('client edit data in client table:', clientEditData)
   }, [clientEditData])
@@ -44,17 +41,17 @@ const ClientTable = () => {
     <View>
       <DataTable>
         <DataTable.Header>
-          <DataTable.Title></DataTable.Title>
+          <DataTable.Title> </DataTable.Title>
           <DataTable.Title>Name</DataTable.Title>
           <DataTable.Title>Protocol</DataTable.Title>
           <DataTable.Title>Status</DataTable.Title>
         </DataTable.Header>
-        {clientList.map((client) => (
+        {clientList?.map((client) => (
           <DataTable.Row key={client.id}>
             <DataTable.Cell
              onPress={async () => {
               try {
-                 await GetSingleDoc(
+                 await GetSingleClient(
                   setClientEditData,
                   clientsCollectionRef,
                   client.id
@@ -66,12 +63,12 @@ const ClientTable = () => {
               }
             }}
             >
-              <Button icon="account-circle" size={20}></Button>
+              <Button> Account</Button>
             </DataTable.Cell>
             <DataTable.Cell
               onPress={async () => {
                 try {
-                   await GetSingleDoc(
+                   await GetSingleClient(
                     setClientEditData,
                     clientsCollectionRef,
                     client.id
@@ -86,7 +83,7 @@ const ClientTable = () => {
               {client.name}
             </DataTable.Cell>
             <DataTable.Cell onPress={() => navigation.navigate("Protocol")}>
-              {client?.protocol?.title || "No Protocol"}
+              {client?.protocol || "No Protocol"}
             </DataTable.Cell>
             <DataTable.Cell>
               <IconButton

@@ -2,10 +2,11 @@ import { View, Text } from "react-native"
 import { useState } from "react"
 import { Searchbar, IconButton } from "react-native-paper"
 import { useNavigation } from "@react-navigation/native"
+import { NavigationType } from "../../@types/navigation"
 
 const ClientHeader = () => {
   const [searchQuery, setSearchQuery] = useState("")
-  const navigation = useNavigation()
+  const navigation = useNavigation<NavigationType>()
 
   return (
     <>
