@@ -37,7 +37,7 @@ const ProtocolScreenHeader = () => {
             navigation.navigate("NewProtocol", {protocolId: newProtocolId})
           }}
           icon="plus"
-        >s</Button>
+        >New Protocol</Button>
       </View>
       <View></View>
       <View className="flex-1">
