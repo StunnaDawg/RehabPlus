@@ -1,6 +1,6 @@
 import { getDoc, doc, CollectionReference } from "firebase/firestore"
 import { Dispatch, SetStateAction } from "react"
-import { Client, Protocol } from "../@types/firestore"
+import { Protocol } from "../@types/firestore"
 
 
 

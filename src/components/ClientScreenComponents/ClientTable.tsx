@@ -1,32 +1,48 @@
-import { View, Text, Pressable } from "react-native"
+import { View } from "react-native"
 import { DataTable, Button, IconButton } from "react-native-paper"
 import { useEffect, useState } from "react"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import { db } from "../../firebase"
-import { collection } from "firebase/firestore"
+import { DocumentData, DocumentReference, collection } from "firebase/firestore"
 import GetSingleClient from "../../functions/getSingleClient"
 import getClientFireStoreData from "../../functions/getClientFireStoreData"
 import { useEditClientContext } from "../../context/clientContext"
 import { Client } from "../../@types/firestore"
 import { NavigationType, TabNavigationType } from "../../@types/navigation"
+import getDocumentRefData from "../../functions/getDocumentRefData"
+
+type ClientPlusProtocolType = {
+  id: string;
+    email: string;
+    injuryDescription: string;
+    name: string;
+    protocol: DocumentData | undefined;
+    status: boolean;
+    userId: string;
+}
 
 const ClientTable = () => {
   const {clientEditData, setClientEditData} = useEditClientContext()
   const [clientList, setClientList] = useState<Client[]>([])
+  const [clientPlusProtocol ,setClientsPlusProtocol] = useState<ClientPlusProtocolType[]>([])
   const clientsCollectionRef = collection(db, "clients")
   const navigation = useNavigation<NavigationType | TabNavigationType>()
   const isFocused = useIsFocused()
 
   useEffect(() => {
-
-    const fetchFireStoredata = async () => {
-      try {
-        getClientFireStoreData(setClientList, clientsCollectionRef)
-      }catch(err) {
-        console.error(err)
-       }
+    const fetchClientData = async () => {
+      await getClientFireStoreData(setClientList, clientsCollectionRef)
+      const clientData = await Promise.all(
+        clientList.map(async(client) => {
+          const protocol = getDocumentRefData(client.protocol)
+          return {...client, protocol}
+        })
+      )
+      setClientsPlusProtocol(clientData)
     }
-   fetchFireStoredata()
+
+    fetchClientData()
+        
   }, [isFocused])
 
   useEffect(() => {
@@ -46,7 +62,8 @@ const ClientTable = () => {
           <DataTable.Title>Protocol</DataTable.Title>
           <DataTable.Title>Status</DataTable.Title>
         </DataTable.Header>
-        {clientList?.map((client) => (
+        {clientPlusProtocol?.map( (client) => {
+        return (
           <DataTable.Row key={client.id}>
             <DataTable.Cell
              onPress={async () => {
@@ -83,7 +100,7 @@ const ClientTable = () => {
               {client.name}
             </DataTable.Cell>
             <DataTable.Cell onPress={() => navigation.navigate("Protocol")}>
-              {client?.protocol || "No Protocol"}
+            {client.protocol?.title ? client.protocol?.title : 'No protocol'}
             </DataTable.Cell>
             <DataTable.Cell>
               <IconButton
@@ -93,7 +110,7 @@ const ClientTable = () => {
             </DataTable.Cell>
             {/* <DataTable.Cell><Button icon='account-eye'>View</Button></DataTable.Cell> */}
           </DataTable.Row>
-        ))}
+        )})}
       </DataTable>
     </View>
   )

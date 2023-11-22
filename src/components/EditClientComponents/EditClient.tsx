@@ -21,6 +21,7 @@ const EditClient = () => {
   )
   const isFocused = useIsFocused()
   const navigation = useNavigation<NavigationType>()
+  const protocolDummy = 'dummy'
 
   useEffect(() => {
     let isMounted = true
@@ -28,7 +29,7 @@ const EditClient = () => {
       try {
         if (newClientProtocol !== null && isMounted) {
           console.log("context state:", newClientProtocol)
-          setCurrentProtocol(newClientProtocol)
+          // setCurrentProtocol(newClientProtocol)
           console.log("protocol state:", protocol)
         }
       } catch (err) {
@@ -92,7 +93,7 @@ const EditClient = () => {
         clientInjuryDescription={injuryOutline}
         id={clientEditData.id}
         userId={clientEditData.userId}
-        protocolId={protocol}
+        protocolId={protocolDummy}
       />
 
       <DeleteButton id={clientEditData.id} userId={clientEditData.userId}/>

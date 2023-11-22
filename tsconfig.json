@@ -8,6 +8,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
   },
-  "include": ["src"],
+  "include": ["src", "App.tsx"],
   "extends": "expo/tsconfig.base"
 }

@@ -9,17 +9,9 @@ const getClientFireStoreData = async (setState: Dispatch<SetStateAction<Client[]
     const clientData = data.docs
       .filter(doc => doc.data().userId === FIREBASE_AUTH?.currentUser?.uid);
 
-    // Fetch all the valid protocol references in one go.
-    const validProtocolRefs = clientData
-      .map(doc => doc.data().protocol)
-      .filter(ref => ref && typeof ref === 'object');
-    const protocolDocs = await Promise.all(validProtocolRefs.map(ref => getDoc(ref)));
-
-    // // Convert protocolDocs to an array of data.
-    // const protocolsData = protocolDocs.map(doc => ({ id: doc.id, ...doc.data() }));
-
     // Now map this back to your client data.
-    const filteredData = clientData.map((doc) => ({
+    const filteredData = clientData.map((doc) => 
+      ({
       ...doc.data(),
       id: doc.id,
       email: doc.data().email,
@@ -27,9 +19,10 @@ const getClientFireStoreData = async (setState: Dispatch<SetStateAction<Client[]
       name: doc.data().name,
       status: doc.data().status,
       userId: doc.data().userId,
-      protocol: doc.data().protocol,
+      protocol: doc.data().protocol
     })) as Client[];
 
+    console.log('protocol data', filteredData)
     setState(filteredData);
   } catch (err) {
     console.error(err);

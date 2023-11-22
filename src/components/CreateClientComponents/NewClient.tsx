@@ -22,7 +22,7 @@ const NewClient = () => {
       try {
         if (clientEditData !== null && isMounted) {
           console.log("New CLient context state:", clientEditData)
-          setProtocol(clientEditData.protocol)
+          // setProtocol(clientEditData.protocol)
           console.log("New Client protocol state:", protocol)
         }
       } catch (err) {

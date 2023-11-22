@@ -1,4 +1,4 @@
-import { CollectionReference } from "firebase/firestore"
+import { CollectionReference, DocumentReference } from "firebase/firestore"
 import { UserCredential } from "firebase/auth"
 
 
@@ -56,7 +56,7 @@ export type Client = {
   email: string
   injuryDescription: string
   name: string
-  protocol: string
+  protocol: DocumentReference
   status: boolean
   userId: string //the userId of phsiotherapist
 }
