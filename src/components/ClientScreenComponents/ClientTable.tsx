@@ -16,7 +16,7 @@ type ClientPlusProtocolType = {
     email: string;
     injuryDescription: string;
     name: string;
-    protocol: DocumentData;
+    protocol: DocumentData | undefined;
     status: boolean;
     userId: string;
 }
@@ -100,7 +100,7 @@ const ClientTable = () => {
               {client.name}
             </DataTable.Cell>
             <DataTable.Cell onPress={() => navigation.navigate("Protocol")}>
-            {client.protocol.title ? client.protocol.title : 'No protocol'}
+            {client.protocol?.title ? client.protocol?.title : 'No protocol'}
             </DataTable.Cell>
             <DataTable.Cell>
               <IconButton

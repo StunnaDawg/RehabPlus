@@ -21,7 +21,7 @@ const EditClient = () => {
   )
   const isFocused = useIsFocused()
   const navigation = useNavigation<NavigationType>()
-  const protocolIdDummy = 'hello'
+  const protocolDummy = 'dummy'
 
   useEffect(() => {
     let isMounted = true
@@ -93,7 +93,7 @@ const EditClient = () => {
         clientInjuryDescription={injuryOutline}
         id={clientEditData.id}
         userId={clientEditData.userId}
-        protocolId={protocolIdDummy}
+        protocolId={protocolDummy}
       />
 
       <DeleteButton id={clientEditData.id} userId={clientEditData.userId}/>
