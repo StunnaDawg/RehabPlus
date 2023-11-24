@@ -20,11 +20,9 @@ import { useNewProtocolDataContext } from "../../context/newProtocolContext"
 import GetProtocolPhases from "../../functions/getProtocolPhases"
 import { RouteParamsType } from "../../@types/navigation"
 import { Protocol, ProtocolPhase } from "../../@types/firestore"
-import { useCompleteWorkoutContext } from "../../context/completeWorkoutContext"
 
 const StartPage = () => {
   const {newProtocolData, setNewProtocolData} = useNewProtocolDataContext()
-  const {completeWorkoutData} = useCompleteWorkoutContext()
   const {refreshKey} = useRefreshKeyContext()
   const [phasesData, setPhasesData] = useState<ProtocolPhase[] | undefined>([])
   const [titleText, setTitleText] = useState("")

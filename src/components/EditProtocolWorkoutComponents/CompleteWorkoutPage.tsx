@@ -14,12 +14,13 @@ import { useCurrentPhasesIdContext } from "../../context/phasesIdContext"
 import { Workout } from "../../@types/firestore"
 import { NavigationType } from "../../@types/navigation"
 import GetWorkouts from "../../functions/getWorkouts"
+import GetProtocolWorkouts from "../../functions/getProtocolWorkouts"
 
 const EditWorkoutsPage = () => {
   const { setWorkoutData} = useSingleWorkoutContext()
   const {currentPhasesId} = useCurrentPhasesIdContext()
   const {protocolEditData} = useSingleEditProtocolContext()
-  const [clientWorkouts, setClientWorkouts] = useState<Workout[] | undefined>([])
+  const [clientWorkouts, setClientWorkouts] = useState<Workout[]>([])
   const currentProtocolRef = collection(db, "protocols")
   const currentProtocol = doc(currentProtocolRef, protocolEditData.id)
   const currentProtocolPhase = doc(currentProtocol, "phases", currentPhasesId)
@@ -28,7 +29,7 @@ const EditWorkoutsPage = () => {
   const isFocused = useIsFocused()
   useEffect(() => {
     const fetchClientWorkout = async () => {
-      await GetWorkouts(setClientWorkouts, currentPhaseWorkouts)
+      await GetProtocolWorkouts(setClientWorkouts, currentPhaseWorkouts)
     }
 
     fetchClientWorkout()
@@ -56,8 +57,8 @@ const EditWorkoutsPage = () => {
 
       <View>
         {clientWorkouts?.map((widget) => {
-          console.log(widget.id)
-          if(widget.id === undefined) return (<div>No Workouts Saved</div>)
+          console.log(widget.workout)
+          if(widget.id === undefined) return (<Text>No Workouts Saved</Text>)
           return (
             <CompleteWorkoutEditWidget
               key={widget.id}

@@ -34,6 +34,7 @@ const CompleteWorkoutEditWidget = ({
 
   useEffect(() => {
     console.log(
+      'Primeaweeb',
       id,
       protocolId,
       workoutTitle,
@@ -62,7 +63,7 @@ const CompleteWorkoutEditWidget = ({
         />
       </Card.Actions>
       <Card.Content className="flex-1 flex-row justify-center items-center">
-        <Text variant="titleLarge">{workoutTitle}</Text>
+       {workoutTitle ? <Text className="">{workoutTitle}</Text>: <Text className="">No title</Text> }
       </Card.Content>
       <Card.Content className="flex-1 flex-row">
         {/* <Card.Cover className="w-20 h-20" source={ExerciseImage} /> */}
