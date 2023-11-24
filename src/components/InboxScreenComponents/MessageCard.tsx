@@ -2,9 +2,10 @@ import { View, Text } from "react-native"
 import { Card, Avatar } from "react-native-paper"
 import { useNavigation } from "@react-navigation/native"
 import React from "react"
+import { TabNavigationType } from "../../@types/navigation"
 
-const MessageCard = ({name, message}) => {
-    const navigation = useNavigation()
+const MessageCard = (name: string, message: string) => {
+    const navigation = useNavigation<TabNavigationType>()
   return (
     <>
       <Card onPress={() => navigation.navigate("Dashboard")} className='mx-4 my-2'>

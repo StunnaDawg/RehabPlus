@@ -19,7 +19,7 @@ const AddWorkout = () => {
   const {currentPhasesId} = useCurrentPhasesIdContext()
   const navigation = useNavigation<NavigationType>()
   const route =  useRoute<RouteProp<Record<string, RouteParamsType>, string>>();
-  const phaseId = route.params.phaseId
+  const phaseId = route.params?.phaseId
   const protocolId = newProtocolData.id
   const phaseWorkoutsRef = collection(
     db,
