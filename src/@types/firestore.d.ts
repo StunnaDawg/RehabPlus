@@ -40,7 +40,7 @@ export type WorkoutExercise = {
 export type ExerciseDataBaseCategory = {
     id: string
   title: string
-  exercises?: ExerciseDataBaseCategory[]
+  exercises?: ExerciseDataBaseExercise[]
 }
 
 export type ExerciseDataBaseExercise = {
