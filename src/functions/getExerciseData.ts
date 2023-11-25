@@ -1,35 +1,21 @@
-import { getDocs, collection, CollectionReference } from "firebase/firestore"
+import { getDocs, CollectionReference } from "firebase/firestore"
 import { Dispatch, SetStateAction } from "react";
-import { ExerciseDataBaseExercise } from "../@types/firestore";
+import { ExerciseDataBaseCategory } from "../@types/firestore";
 
-const getExerciseFireStoreData = async (setCategoriesState: Dispatch<SetStateAction<ExerciseDataBaseExercise[]>>, categoriesCollection: CollectionReference) => {
+const getExerciseFireStoreData = async (setCategoriesState: Dispatch<SetStateAction<ExerciseDataBaseCategory[]>>, categoriesCollection: CollectionReference) => {
     try {
-        const exerciseFireBaseData = await getDocs(categoriesCollection);
-        const exerciseData = exerciseFireBaseData.docs;
-
-        const categoriesWithExercises = await Promise.all(
-            exerciseData.map(async (categoryDoc) => {
-                const exercisesCollection = collection(categoriesCollection, categoryDoc.id, "exercises");
-                const exercisesSnap = await getDocs(exercisesCollection);
-                const exercisesData = exercisesSnap.docs.map(exerciseDoc => ({
-                    ...exerciseDoc.data(),
-                    id: exerciseDoc.id
-                }));
-                console.log('Exercises for category:', categoryDoc.data().title, exercisesData);
-                return {
-                    ...categoryDoc.data() as Omit<ExerciseDataBaseExercise, 'exercises'>,
-                    id: categoryDoc.id,
-                    exercises: exerciseData
-                    
-                };
-            })
-        );
-
-        console.log('filtered exercise data:', categoriesWithExercises);
-        setCategoriesState(categoriesWithExercises as ExerciseDataBaseExercise[]);
-
-    } catch (err) {
-        console.error("The error is", err);
-    }
+        const data = await getDocs(categoriesCollection)
+    
+        const filteredData = data.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+          title: doc.data().title,
+          exercises: doc.data().exercises,
+        }))
+        console.log("filtered data get Workouts", filteredData)
+        setCategoriesState(filteredData)
+      } catch (err) {
+        console.error(err)
+      }
 };
 export default getExerciseFireStoreData

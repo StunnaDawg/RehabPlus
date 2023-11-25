@@ -38,9 +38,9 @@ export type WorkoutExercise = {
 }
 
 export type ExerciseDataBaseCategory = {
-    id?: string
+    id: string
   title: string
-  exercises?: CollectionReference
+  exercises?: ExerciseDataBaseCategory[]
 }
 
 export type ExerciseDataBaseExercise = {

@@ -10,7 +10,7 @@ import { ExerciseDataBaseCategory, ExerciseDataBaseExercise } from "../../@types
 import ExerciseDataBase from "../../screens/ExerciseDataBase"
 
 const DatabaseCategories = () => {
-  const [exerciseCategories, setExerciseCategories] = useState<ExerciseDataBaseExercise[]>([])
+  const [exerciseCategories, setExerciseCategories] = useState<ExerciseDataBaseCategory[]>([])
   const [pressedButtonId, setPressedButtonId] = useState('85ZJ5LvyxECGoN0GMjHZ')
   const exercisesCollectionRef = collection(db, "exerciseCategories")
   const isFocused = useIsFocused()
@@ -31,7 +31,7 @@ const DatabaseCategories = () => {
     console.log("database data", ...exerciseCategories)
   }, [exerciseCategories])
 
-  const renderItem: ListRenderItem<ExerciseDataBaseExercise> = ({item}) => (
+  const renderItem: ListRenderItem<ExerciseDataBaseCategory> = ({item}) => (
     <Button
       key={item.id}
       className="mx-1 py-0"
@@ -42,7 +42,7 @@ const DatabaseCategories = () => {
           : setPressedButtonId(item.id)
       }}
     >
-      {item.exercise.title}
+      {item.title}
     </Button>
   )
 
