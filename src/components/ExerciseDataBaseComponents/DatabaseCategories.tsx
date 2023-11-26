@@ -23,7 +23,7 @@ const DatabaseCategories = () => {
   useEffect(() => {
     const fetchFireStoredata = async () => {
       try {
-        console.log("trying")
+        // console.log("trying")
         getExerciseFireStoreData(setExerciseCategories, exercisesCollectionRef)
       } catch (err) {
         console.error(err)
@@ -32,9 +32,9 @@ const DatabaseCategories = () => {
     fetchFireStoredata()
   }, [isFocused])
 
-  useEffect(() => {
-    console.log("database data", ...exerciseCategories)
-  }, [exerciseCategories])
+  // useEffect(() => {
+  //   console.log("database data", ...exerciseCategories)
+  // }, [exerciseCategories])
 
   useEffect(() => {
     console.log("display data", exercisesDisplayed)
@@ -62,12 +62,9 @@ const DatabaseCategories = () => {
       className="mx-1 py-0"
       mode={pressedButtonId === item.id ? "contained" : "outlined"}
       onPress={() => {
-        {pressedButtonId === item.id
-          ? setPressedButtonId('')
-          : setPressedButtonId(item.id)};
-          console.log('current button id', item.id)
-          getExerciseCategoryData(setExercisesDisplayed, collection(db, 'exercsiseCategories', item.id, 'exercises'))
-          getExercisesForCategory(pressedButtonId)
+        setPressedButtonId(item.id)
+          getExerciseCategoryData(setExercisesDisplayed, item.id )
+          getExercisesForCategory(item.id)
           setButtonToggle(prevData => !prevData)
       }}
     >
@@ -81,7 +78,6 @@ const DatabaseCategories = () => {
         horizontal={true}
         data={exerciseCategories}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id.toString()}
         showsHorizontalScrollIndicator={false}
       />
      <FlatList className='pb-96'
