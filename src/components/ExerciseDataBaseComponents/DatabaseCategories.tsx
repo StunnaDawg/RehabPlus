@@ -15,6 +15,7 @@ const DatabaseCategories = () => {
   const [exerciseCategories, setExerciseCategories] = useState<ExerciseDataBaseCategory[]>([])
   const [exercisesDisplayed, setExercisesDisplayed] = useState<ExerciseDataBaseExercise[]>([])
   const [currentExercises, setCurrentExercises] = useState<ArrayLike<ExerciseDataBaseExercise>>([])
+  const [toggleButton, setButtonToggle] = useState(false)
   const [pressedButtonId, setPressedButtonId] = useState('85ZJ5LvyxECGoN0GMjHZ')
   const exercisesCollectionRef = collection(db, "exerciseCategories")
   const isFocused = useIsFocused()
@@ -40,18 +41,14 @@ const DatabaseCategories = () => {
   }, [exercisesDisplayed])
 
   useEffect(() => {
-    console.log("display data", currentExercises)
-  }, [currentExercises])
-
-  useEffect(() => {
-
-  }, [currentExercises])
+      
+  }, [toggleButton])
 
   const getExercisesForCategory = (categoryId: string) => {
     const category = exerciseCategories.find(cat => cat.id === categoryId);
     
     if (category) {
-      console.log('category:',category)
+      console.log('category:' ,category)
 
       return category
     } else {
@@ -68,9 +65,10 @@ const DatabaseCategories = () => {
         {pressedButtonId === item.id
           ? setPressedButtonId('')
           : setPressedButtonId(item.id)};
-          console.log(item.id)
+          console.log('current button id', item.id)
           getExerciseCategoryData(setExercisesDisplayed, collection(db, 'exercsiseCategories', item.id, 'exercises'))
           getExercisesForCategory(pressedButtonId)
+          setButtonToggle(prevData => !prevData)
       }}
     >
       {item.title}
@@ -87,7 +85,7 @@ const DatabaseCategories = () => {
         showsHorizontalScrollIndicator={false}
       />
      <FlatList className='pb-96'
-  data={currentExercises}
+  data={exercisesDisplayed}
   keyExtractor={(item: ExerciseDataBaseExercise) => item.id}
   renderItem={({ item }) => {
     const exerciseNameKey = Object.keys(item).find(key => key !== "id");
