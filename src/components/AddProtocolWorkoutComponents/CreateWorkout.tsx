@@ -14,22 +14,26 @@ const CreateWorkout = () => {
   const { refreshKey } = useRefreshKeyContext()
   const [workoutDescriptionText, setWorkoutDescriptionText] = useState("")
   const {exerciseData} = useExerciseContext()
-  const [exerciseMap, setExerciseMap] = useState<WorkoutExercise[]>([])
+  const [exercises, setExercises] = useState<WorkoutExercise[]>([])
   const isFocused = useIsFocused()
   const navigation = useNavigation<NavigationType>()
 
 
   useEffect(() => {
     const awaitLoading = async () => {
-      setExerciseMap(exerciseData)
-      console.log("widget map", exerciseMap)
+      setExercises(exerciseData)
+      console.log("widget map", exercises)
     }
     awaitLoading()
-  }, [isFocused])
+  }, [])
 
   useEffect(() => {
-    setExerciseMap(exerciseData)
+    setExercises(exerciseData)
   }, [exerciseData, refreshKey])
+
+  useEffect(() => {
+    console.log(exerciseData)
+  }, [])
 
   return (
     <>
@@ -38,7 +42,7 @@ const CreateWorkout = () => {
         workout= {{
           title: workoutTitleText, 
           description: workoutDescriptionText, 
-          exercises: exerciseMap
+          exercises: exercises
         }}
         />
       </View>
@@ -66,7 +70,7 @@ const CreateWorkout = () => {
         </Button>
       </View>
       <ScrollView className="pb-96">
-        {exerciseMap?.map((exercise, index) => {
+        {Array.isArray(exercises) && exercises?.map((exercise, index) => {
           const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
           const letterData = letters[index % letters.length]
