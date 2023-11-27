@@ -23,14 +23,14 @@ const DatabaseExercise = ({ exerciseName, exerciseId, idOfCategory }: DatabaseEx
 
 
   const AddExerciseToWorkoutHandler = () => {
-    setExerciseData(prevData => ({
+     setExerciseData(prevData => ([{
       ...prevData,
       exercise: {
         id: exerciseId,
         title: exerciseName
       },
       categoryId: idOfCategory
-    }));
+  }]));
   };
 
   return (
@@ -43,9 +43,10 @@ const DatabaseExercise = ({ exerciseName, exerciseId, idOfCategory }: DatabaseEx
         <Card.Actions className="flex-1 flex-col">
           <Button className="my-1">View</Button>
           <Button
-           onPress={() => {
-           AddExerciseToWorkoutHandler()
+           onPress={ () => {
+          AddExerciseToWorkoutHandler()
            console.log('widget pressed')
+           console.log(exerciseData)
             navigation.goBack()
           }}
           >
