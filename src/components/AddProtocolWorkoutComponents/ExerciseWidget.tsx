@@ -22,8 +22,8 @@ type ExerciseWidgetProps = {
 }
 
 const ExerciseWidget = ({ id, categoryId, letter, index }: ExerciseWidgetProps) => {
-  const {workoutData, setWorkoutData} = useSingleWorkoutContext()
-  const {refreshKey, setRefreshKey} = useRefreshKeyContext()
+  // const {workoutData, setWorkoutData} = useSingleWorkoutContext()
+  // const {refreshKey, setRefreshKey} = useRefreshKeyContext()
   const [widgetData, setWidgetData] = useState<WorkoutExercise>()
   const [exerciseSets, setExerciseSets] = useState("0")
   const [exerciseReps, setExerciseReps] = useState("0")
@@ -74,7 +74,7 @@ const ExerciseWidget = ({ id, categoryId, letter, index }: ExerciseWidgetProps) 
   }, [widgetData])
   return (
     <View>
-      <Text>Exercise: {widgetData?.title} </Text>
+      <Text>Exercise: {widgetData?.exercise.title} </Text>
     </View>
     // <Card mode="outlined" className=" flex-1 mt-3 mx-8 bg-blue-400">
     //   <Card.Content className="flex-1 flex-row justify-center items-center">

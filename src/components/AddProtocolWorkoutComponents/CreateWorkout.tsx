@@ -66,16 +66,16 @@ const CreateWorkout = () => {
         </Button>
       </View>
       <ScrollView className="pb-96">
-        {exerciseMap.map((exercise, index) => {
+        {exerciseMap?.map((exercise, index) => {
           const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
           const letterData = letters[index % letters.length]
 
-          console.log(index, exercise.exerciseId)
+          console.log(index, exercise.exercise.id)
           return (
             <ExerciseWidget
-              key={exercise.exerciseId}
-              id={exercise.exerciseId}
+              key={exercise.exercise.id}
+              id={exercise.exercise.id}
               categoryId={exercise.categoryId}
               letter={letterData}
               index={index + 1}

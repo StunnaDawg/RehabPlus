@@ -1,21 +1,38 @@
 import { Button, Card, Text } from "react-native-paper"
 import React, { useEffect } from "react"
-import { useSingleWorkoutContext } from "../../context/workoutContext"
+import { useExerciseContext } from "../../context/exerciseContext"
 import { useNavigation } from "@react-navigation/native"
 
 type DatabaseExerciseProps = { 
   exerciseName: string
-  id: string
+  exerciseId: string
   idOfCategory: string
 }
 
-const DatabaseExercise = ({ exerciseName, id, idOfCategory }: DatabaseExerciseProps) => {
-  const {workoutData ,setWorkoutData} = useSingleWorkoutContext()
+// export type WorkoutExercise = {
+//   title: string
+//   description?: string
+//   categoryId: string
+//   exercise: ExerciseDataBaseExercise
+//   reps?: string
+//   sets?: string
+// }
+const DatabaseExercise = ({ exerciseName, exerciseId, idOfCategory }: DatabaseExerciseProps) => {
+  const {exerciseData, setExerciseData} = useExerciseContext()
   const navigation = useNavigation()
 
-  useEffect(() => {
-    console.log('edit workout data',workoutData)
-  }, [workoutData])
+
+  const AddExerciseToWorkoutHandler = () => {
+    setExerciseData(prevData => ({
+      ...prevData,
+      exercise: {
+        id: exerciseId,
+        title: exerciseName
+      },
+      categoryId: idOfCategory
+    }));
+  };
+
   return (
     <Card mode="contained" className="mt-3 mx-8 ">
       <Card.Content className="flex-1 flex-row justify-center">
@@ -27,25 +44,8 @@ const DatabaseExercise = ({ exerciseName, id, idOfCategory }: DatabaseExercisePr
           <Button className="my-1">View</Button>
           <Button
            onPress={() => {
-            setWorkoutData((prevData) => {
-              if (prevData.workout && prevData.workout.exercises) {
-                return {
-                  ...prevData,
-                  workout: {
-                    ...prevData.workout,
-                    exercises: prevData.workout.exercises.map((exercise) => ({
-                      ...exercise,
-                      title: exerciseName,
-                      exerciseId: id,
-                      categoryId: idOfCategory
-                    }))
-                  }
-                };
-              } else {
-                return prevData;
-              }
-           });
-           console.log('widget pressed',workoutData)
+           AddExerciseToWorkoutHandler()
+           console.log('widget pressed')
             navigation.goBack()
           }}
           >

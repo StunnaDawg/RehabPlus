@@ -31,10 +31,9 @@ export type Workout = {
   }
 
 export type WorkoutExercise = {
-  title: string
-  description?: string
+  exercise: ExerciseDataBaseExercise
+  description?: string 
   categoryId: string
-  exerciseId: string
   reps?: string
   sets?: string
 }

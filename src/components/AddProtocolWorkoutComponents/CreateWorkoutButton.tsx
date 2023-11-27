@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+
 import { Button } from "react-native-paper"
 import { useNavigation } from "@react-navigation/native"
 import { useCompleteWorkoutContext } from "../../context/completeWorkoutContext"
