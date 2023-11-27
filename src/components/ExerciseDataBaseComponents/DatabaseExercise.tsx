@@ -43,7 +43,8 @@ const DatabaseExercise = ({ exerciseName, id, idOfCategory }: DatabaseExercisePr
               } else {
                 return prevData;
               }
-            });
+           });
+           console.log('widget pressed',workoutData)
             navigation.goBack()
           }}
           >

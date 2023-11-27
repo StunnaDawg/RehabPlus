@@ -7,19 +7,24 @@ import {
   Text,
   TextInput,
 } from "react-native-paper"
-import ExerciseImage from "../../assets/physcial-medicine.jpg"
 import React, { useEffect, useState } from "react"
 import GetSingleExercise from "../../functions/getSingleExercise"
 import { useIsFocused } from "@react-navigation/native"
 import { useSingleWorkoutContext } from "../../context/workoutContext"
-import { useRefreshContext } from "../../context/refreshKey"
+import { useRefreshKeyContext } from "../../context/refreshKey"
+import { WorkoutExercise } from "../../@types/firestore"
 
-const ExerciseWidget = ({ id, categoryId, letter, index }) => {
-  const [exerciseWorkoutData, setExerciseWorkoutData] = useSingleWorkoutContext(
-    []
-  )
-  const [refreshKey, setRefreshKey] = useRefreshContext()
-  const [widgetData, setWidgetData] = useState({})
+type ExerciseWidgetProps = {
+  id: string, 
+  categoryId: string, 
+  letter: string,
+  index: number
+}
+
+const ExerciseWidget = ({ id, categoryId, letter, index }: ExerciseWidgetProps) => {
+  const {workoutData, setWorkoutData} = useSingleWorkoutContext()
+  const {refreshKey, setRefreshKey} = useRefreshKeyContext()
+  const [widgetData, setWidgetData] = useState<WorkoutExercise>()
   const [exerciseSets, setExerciseSets] = useState("0")
   const [exerciseReps, setExerciseReps] = useState("0")
   const isFocused = useIsFocused()
@@ -31,7 +36,7 @@ const ExerciseWidget = ({ id, categoryId, letter, index }) => {
     //   onPress: () => console.log('Cancel Pressed'),
     //   style: 'cancel',
     // },  {text: 'Delete', onPress: async () => {
-       await setExerciseWorkoutData(exercsies => exercsies.filter(exercise=> exercise.exerciseId !== exerciseToRemove))
+      setWorkoutData(exercsies => exercsies.filter(exercise=> exercise.exerciseId !== exerciseToRemove))
     }
     
   // }])
@@ -82,13 +87,9 @@ const ExerciseWidget = ({ id, categoryId, letter, index }) => {
             ? Object.values(widgetData)[0].title
             : "Loading..."}
         </Text>
-        <IconButton icon="eye" size={18}>
-          View
-        </IconButton>
+        <IconButton icon="eye" size={18}/>
         {/* Delete Button */}
-        <IconButton icon="delete" size={18} onPress={async () => {await deleteWidget(id); setRefreshKey(+1)}}>
-          Delete
-        </IconButton>
+        <IconButton icon="delete" size={18} onPress={async () => {await deleteWidget(id); setRefreshKey(+1)}}/>
       </Card.Content>
       <Card.Content className="flex-1 flex-row justify-center items-center ">
         <Card.Actions>

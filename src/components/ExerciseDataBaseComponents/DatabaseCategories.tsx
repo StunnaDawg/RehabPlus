@@ -25,6 +25,8 @@ const DatabaseCategories = () => {
       try {
         // console.log("trying")
         getExerciseFireStoreData(setExerciseCategories, exercisesCollectionRef)
+        getExerciseCategoryData(setExercisesDisplayed, pressedButtonId )
+        getExercisesForCategory(pressedButtonId)
       } catch (err) {
         console.error(err)
       }
