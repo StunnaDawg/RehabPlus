@@ -13,10 +13,8 @@ const getExerciseCategoryData = async (setCategoriesState: Dispatch<SetStateActi
         const filteredData = data.docs.map((doc) => ({
           ...doc.data(),
           id: doc.id,
-          exercise: {
-            title: doc.data().title,
-            description: doc.data().description
-          }
+          title: doc.data().title,
+          description: doc.data().description
         }))
         console.log("filtered data get Category Exercises", filteredData)
         setCategoriesState(filteredData)

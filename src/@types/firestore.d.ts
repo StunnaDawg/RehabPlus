@@ -45,10 +45,8 @@ export type ExerciseDataBaseCategory = {
 
 export type ExerciseDataBaseExercise = {
     id: string
-  exercise: {
     title: string
     description?: string
-  }
 }
 
 export type Client = {

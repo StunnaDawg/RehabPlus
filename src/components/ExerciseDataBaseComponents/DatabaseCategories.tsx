@@ -87,7 +87,7 @@ const DatabaseCategories = () => {
     const exerciseNameKey = Object.keys(item).find(key => key !== "id");
 
     if(exerciseNameKey) {
-    const exerciseTitle = item.exercise?.title;
+    const exerciseTitle = item.title;
 
 
     return (
