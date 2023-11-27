@@ -35,6 +35,7 @@ const DatabaseExercise = ({ exerciseName, id, idOfCategory }: DatabaseExercisePr
                     ...prevData.workout,
                     exercises: prevData.workout.exercises.map((exercise) => ({
                       ...exercise,
+                      title: exerciseName,
                       exerciseId: id,
                       categoryId: idOfCategory
                     }))
