@@ -15,13 +15,20 @@ import { useRefreshKeyContext } from "../../context/refreshKey"
 import { WorkoutExercise } from "../../@types/firestore"
 
 type ExerciseWidgetProps = {
-  id: string, 
-  categoryId: string, 
-  letter: string,
+  id: string
+  categoryId: string
+  exerciseTitle: string
+  letter: string
   index: number
 }
 
-const ExerciseWidget = ({ id, categoryId, letter, index }: ExerciseWidgetProps) => {
+const ExerciseWidget = ({
+  id,
+  categoryId,
+  exerciseTitle,
+  letter,
+  index,
+}: ExerciseWidgetProps) => {
   // const {workoutData, setWorkoutData} = useSingleWorkoutContext()
   // const {refreshKey, setRefreshKey} = useRefreshKeyContext()
   const [widgetData, setWidgetData] = useState<WorkoutExercise>()
@@ -38,21 +45,22 @@ const ExerciseWidget = ({ id, categoryId, letter, index }: ExerciseWidgetProps) 
   //   // },  {text: 'Delete', onPress: async () => {
   //     setWorkoutData(exercsies => exercsies.filter(exercise=> exercise.exerciseId !== exerciseToRemove))
   //   }
-    
+
   // }])
-
-  
-
   useEffect(() => {
-    const getData = async () => {
-      try {
-        GetSingleExercise(id, categoryId, setWidgetData)
-      } catch (err) {
-        console.error("exercise widget error:", err)
-      }
-    }
-    getData()
-  }, [isFocused])
+    console.log(id)
+  }, [])
+
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     try {
+  //       GetSingleExercise(setWidgetData, id, categoryId)
+  //     } catch (err) {
+  //       console.error("exercise widget error:", err)
+  //     }
+  //   }
+  //   getData()
+  // }, [isFocused])
 
   // useEffect(() => {
   //   setWidgetData({ ...widgetData, reps: exerciseReps })
@@ -69,12 +77,12 @@ const ExerciseWidget = ({ id, categoryId, letter, index }: ExerciseWidgetProps) 
   //   ]);
   // }, [exerciseSets, exerciseReps]);
 
-  useEffect(() => {
-    console.log("exercise widget data", { ...widgetData })
-  }, [widgetData])
+  // useEffect(() => {
+  //   console.log("exercise widget data", { ...widgetData })
+  // }, [widgetData])
   return (
     <View>
-      <Text>Exercise: {widgetData?.exercise.title} </Text>
+      <Text>Exercise: {exerciseTitle} </Text>
     </View>
     // <Card mode="outlined" className=" flex-1 mt-3 mx-8 bg-blue-400">
     //   <Card.Content className="flex-1 flex-row justify-center items-center">

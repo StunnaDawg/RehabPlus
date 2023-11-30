@@ -26,13 +26,13 @@ const CreateWorkout = () => {
   //   awaitLoading()
   // }, [])
 
-  useEffect(() => {
-    setExercises((prevExercises) => [...prevExercises, exerciseData])
-  }, [exerciseData, refreshKey])
+  // useEffect(() => {
+  //   setExercises((prevExercises) => [...prevExercises, exerciseData])
+  // }, [exerciseData, refreshKey])
 
   useEffect(() => {
-    console.log("exercises create workout page", exercises)
-  }, [exercises])
+    console.log("exercises create workout page", exerciseData)
+  }, [exerciseData])
 
   return (
     <>
@@ -68,8 +68,8 @@ const CreateWorkout = () => {
           Add Exercise
         </Button>
       </View>
-      {/* <ScrollView className="pb-96">
-        {exercises?.map((exercise, index) => {
+      <ScrollView className="pb-96">
+        {exerciseData?.map((exercise, index) => {
           const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
           const letterData = letters[index % letters.length]
@@ -79,13 +79,14 @@ const CreateWorkout = () => {
             <ExerciseWidget
               key={exercise.exercise.id}
               id={exercise.exercise.id}
+              exerciseTitle={exercise.exercise.title}
               categoryId={exercise.categoryId}
               letter={letterData}
               index={index + 1}
             />
           )
         })}
-      </ScrollView> */}
+      </ScrollView>
     </>
   )
 }

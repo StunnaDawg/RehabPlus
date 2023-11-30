@@ -24,19 +24,21 @@ const DatabaseExercise = ({
 }: DatabaseExerciseProps) => {
   const { exerciseData, setExerciseData } = useExerciseContext()
   const navigation = useNavigation()
-  const exerciseValues = {
-    exercise: {
-      id: exerciseId,
-      title: exerciseName,
+  const exerciseValues = [
+    {
+      exercise: {
+        id: exerciseId,
+        title: exerciseName,
+      },
+      categoryId: idOfCategory,
     },
-    categoryId: idOfCategory,
-  }
+  ]
 
   const AddExerciseToWorkoutHandler = () => {
     if (exerciseData) {
-      setExerciseData((prevExercises) => [...prevExercises, exerciseValues])
+      setExerciseData((prevExercises) => [...prevExercises, ...exerciseValues])
     } else {
-      setExerciseData([exerciseValues])
+      setExerciseData([...exerciseValues])
     }
   }
 
