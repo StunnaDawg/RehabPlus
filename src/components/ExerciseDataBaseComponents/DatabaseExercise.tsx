@@ -3,7 +3,7 @@ import React, { useEffect } from "react"
 import { useExerciseContext } from "../../context/exerciseContext"
 import { useNavigation } from "@react-navigation/native"
 
-type DatabaseExerciseProps = { 
+type DatabaseExerciseProps = {
   exerciseName: string
   exerciseId: string
   idOfCategory: string
@@ -17,21 +17,28 @@ type DatabaseExerciseProps = {
 //   reps?: string
 //   sets?: string
 // }
-const DatabaseExercise = ({ exerciseName, exerciseId, idOfCategory }: DatabaseExerciseProps) => {
-  const {exerciseData, setExerciseData} = useExerciseContext()
+const DatabaseExercise = ({
+  exerciseName,
+  exerciseId,
+  idOfCategory,
+}: DatabaseExerciseProps) => {
+  const { exerciseData, setExerciseData } = useExerciseContext()
   const navigation = useNavigation()
-
+  const exerciseValues = {
+    exercise: {
+      id: exerciseId,
+      title: exerciseName,
+    },
+    categoryId: idOfCategory,
+  }
 
   const AddExerciseToWorkoutHandler = () => {
-     setExerciseData(prevData => ([{
-      ...prevData,
-      exercise: {
-        id: exerciseId,
-        title: exerciseName
-      },
-      categoryId: idOfCategory
-  }]));
-  };
+    if (exerciseData) {
+      setExerciseData((prevExercises) => [...prevExercises, exerciseValues])
+    } else {
+      setExerciseData([exerciseValues])
+    }
+  }
 
   return (
     <Card mode="contained" className="mt-3 mx-8 ">
@@ -43,12 +50,11 @@ const DatabaseExercise = ({ exerciseName, exerciseId, idOfCategory }: DatabaseEx
         <Card.Actions className="flex-1 flex-col">
           <Button className="my-1">View</Button>
           <Button
-           onPress={ () => {
-          AddExerciseToWorkoutHandler()
-           console.log('widget pressed')
-           console.log(exerciseData)
-            navigation.goBack()
-          }}
+            onPress={() => {
+              AddExerciseToWorkoutHandler()
+              console.log("widget pressed")
+              navigation.goBack()
+            }}
           >
             Add Workout
           </Button>

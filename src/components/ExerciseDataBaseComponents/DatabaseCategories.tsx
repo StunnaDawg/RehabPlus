@@ -90,12 +90,12 @@ const DatabaseCategories = () => {
 
     if(exerciseNameKey) {
     const exerciseTitle = item.title;
-
+      console.log(item.id)
 
     return (
       <View key={item.id}>
         <DatabaseExercise
-          id={item.id}
+          exerciseId={item.id}
           idOfCategory={pressedButtonId}
           exerciseName={exerciseTitle}
         />

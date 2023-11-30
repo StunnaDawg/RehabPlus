@@ -13,37 +13,36 @@ const CreateWorkout = () => {
   const [workoutTitleText, setWorkoutTitleText] = useState("")
   const { refreshKey } = useRefreshKeyContext()
   const [workoutDescriptionText, setWorkoutDescriptionText] = useState("")
-  const {exerciseData} = useExerciseContext()
+  const { exerciseData } = useExerciseContext()
   const [exercises, setExercises] = useState<WorkoutExercise[]>([])
   const isFocused = useIsFocused()
   const navigation = useNavigation<NavigationType>()
 
+  // useEffect(() => {
+  //   const awaitLoading = async () => {
+  //     setExercises((prevData) => [...prevData, ...exerciseData])
+  //     console.log("widget map", exercises)
+  //   }
+  //   awaitLoading()
+  // }, [])
 
   useEffect(() => {
-    const awaitLoading = async () => {
-      setExercises(exerciseData)
-      console.log("widget map", exercises)
-    }
-    awaitLoading()
-  }, [])
-
-  useEffect(() => {
-    setExercises(exerciseData)
+    setExercises((prevExercises) => [...prevExercises, exerciseData])
   }, [exerciseData, refreshKey])
 
   useEffect(() => {
-    console.log(exerciseData)
-  }, [])
+    console.log("exercises create workout page", exercises)
+  }, [exercises])
 
   return (
     <>
       <View className="mx-4 my-1">
         <CreateWorkoutButton
-        workout= {{
-          title: workoutTitleText, 
-          description: workoutDescriptionText, 
-          exercises: exercises
-        }}
+          workout={{
+            title: workoutTitleText,
+            description: workoutDescriptionText,
+            exercises: exerciseData,
+          }}
         />
       </View>
       <View className="mx-4 my-1">
@@ -69,8 +68,8 @@ const CreateWorkout = () => {
           Add Exercise
         </Button>
       </View>
-      <ScrollView className="pb-96">
-        {Array.isArray(exercises) && exercises?.map((exercise, index) => {
+      {/* <ScrollView className="pb-96">
+        {exercises?.map((exercise, index) => {
           const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
           const letterData = letters[index % letters.length]
@@ -86,7 +85,7 @@ const CreateWorkout = () => {
             />
           )
         })}
-      </ScrollView>
+      </ScrollView> */}
     </>
   )
 }
