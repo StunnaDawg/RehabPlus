@@ -1,16 +1,10 @@
-import { View } from "react-native"
+import { ScrollView, Text, View, RefreshControl } from "react-native"
 import React, { useEffect, useState } from "react"
-import { Button } from "react-native-paper"
-import {
-  RouteProp,
-  useIsFocused,
-  useNavigation,
-  useRoute,
-} from "@react-navigation/native"
+import { ActivityIndicator, Button } from "react-native-paper"
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native"
 import CompleteWorkoutWidget from "./components/CompleteWorkoutWIdget"
 import { collection } from "firebase/firestore"
 import { db } from "../../firebase"
-import SaveWorkoutsToPhaseButton from "./components/SaveWorkouts"
 import GetProtocolWorkouts from "../../functions/getProtocolWorkouts"
 import { useNewProtocolDataContext } from "../../context/newProtocolContext"
 import { useCurrentPhasesIdContext } from "../../context/phasesIdContext"
@@ -21,6 +15,7 @@ import { useCompleteWorkoutContext } from "../../context/completeWorkoutContext"
 
 const AddWorkout = () => {
   const [workoutList, setWorkoutList] = useState<Workout[]>([])
+  const [refreshing, setRefreshing] = useState<boolean>(true)
   const { newProtocolData } = useNewProtocolDataContext()
   const { currentPhasesId } = useCurrentPhasesIdContext()
   const { completeWorkoutData } = useCompleteWorkoutContext()
@@ -36,22 +31,19 @@ const AddWorkout = () => {
     phaseId || currentPhasesId,
     "workouts"
   )
-  const isFocused = useIsFocused()
+
+  const refreshWorkouts = async () => {
+    setRefreshing(true)
+    console.log("refreshing")
+    setWorkoutList([])
+    await GetProtocolWorkouts(setWorkoutList, phaseWorkoutsRef)
+    setRefreshing(false)
+    console.log("workout list widget data", completeWorkoutData)
+  }
 
   useEffect(() => {
-    setWorkoutList([])
-    const setWorkouts = async () => {
-      try {
-        GetProtocolWorkouts(setWorkoutList, phaseWorkoutsRef)
-        console.log("route params id", phaseId)
-        console.log("current phase id", currentPhasesId)
-        console.log("workout list widget data", completeWorkoutData)
-      } catch (err) {
-        console.error(err)
-      }
-    }
-    setWorkouts()
-  }, [isFocused])
+    refreshWorkouts()
+  }, [])
 
   return (
     <>
@@ -62,18 +54,26 @@ const AddWorkout = () => {
         >
           Add Workout
         </Button>
-        <SaveWorkoutsToPhaseButton />
       </View>
+      {refreshing ? <ActivityIndicator /> : null}
 
-      <View>
-        {workoutList?.map((workout, index) => (
-          <CompleteWorkoutWidget
-            key={index}
-            workoutTitle={workout.workout?.title}
-            workoutId={workout.id}
-          />
-        ))}
-      </View>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={refreshWorkouts} />
+        }
+      >
+        {/* <SaveWorkoutsToPhaseButton /> */}
+
+        <View>
+          {workoutList?.map((workout, index) => (
+            <CompleteWorkoutWidget
+              key={index}
+              workoutTitle={workout.workout?.title}
+              workoutId={workout.id}
+            />
+          ))}
+        </View>
+      </ScrollView>
     </>
   )
 }
