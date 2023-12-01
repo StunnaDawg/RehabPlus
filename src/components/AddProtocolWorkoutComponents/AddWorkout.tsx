@@ -1,6 +1,6 @@
-import { ScrollView, Text, View, RefreshControl } from "react-native"
+import { ScrollView, View, RefreshControl, SafeAreaView } from "react-native"
 import React, { useEffect, useState } from "react"
-import { ActivityIndicator, Button } from "react-native-paper"
+import { ActivityIndicator, Button, Text } from "react-native-paper"
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native"
 import CompleteWorkoutWidget from "./components/CompleteWorkoutWIdget"
 import { collection } from "firebase/firestore"
@@ -13,9 +13,9 @@ import { NavigationType } from "../../@types/navigation"
 import { Workout } from "../../@types/firestore"
 import { useCompleteWorkoutContext } from "../../context/completeWorkoutContext"
 
-const AddWorkout = () => {
+const AddProtocolWorkout = () => {
   const [workoutList, setWorkoutList] = useState<Workout[]>([])
-  const [refreshing, setRefreshing] = useState<boolean>(true)
+  const [refreshing, setRefreshing] = useState<boolean>(false)
   const { newProtocolData } = useNewProtocolDataContext()
   const { currentPhasesId } = useCurrentPhasesIdContext()
   const { completeWorkoutData } = useCompleteWorkoutContext()
@@ -33,12 +33,11 @@ const AddWorkout = () => {
   )
 
   const refreshWorkouts = async () => {
-    setRefreshing(true)
-    console.log("refreshing")
     setWorkoutList([])
+    setRefreshing(true)
     await GetProtocolWorkouts(setWorkoutList, phaseWorkoutsRef)
-    setRefreshing(false)
     console.log("workout list widget data", completeWorkoutData)
+    setRefreshing(false)
   }
 
   useEffect(() => {
@@ -47,35 +46,39 @@ const AddWorkout = () => {
 
   return (
     <>
-      <View className="flex-1 flex-row justify-around">
-        <Button
-          onPress={() => navigation.navigate("CreateWorkout")}
-          icon="plus"
-        >
-          Add Workout
-        </Button>
-      </View>
-      {refreshing ? <ActivityIndicator /> : null}
-
       <ScrollView
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={refreshWorkouts} />
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={() => refreshWorkouts()}
+          />
         }
       >
+        <View className="flex-1 flex-row justify-around">
+          <Button
+            onPress={() => navigation.navigate("CreateWorkout")}
+            icon="plus"
+          >
+            Add Workout
+          </Button>
+        </View>
+
         {/* <SaveWorkoutsToPhaseButton /> */}
 
-        <View>
-          {workoutList?.map((workout, index) => (
+        {workoutList?.length > 0 ? (
+          workoutList?.map((workout) => (
             <CompleteWorkoutWidget
-              key={index}
+              key={workout.id}
               workoutTitle={workout.workout?.title}
               workoutId={workout.id}
             />
-          ))}
-        </View>
+          ))
+        ) : (
+          <Text>Pull to Refresh</Text>
+        )}
       </ScrollView>
     </>
   )
 }
 
-export default AddWorkout
+export default AddProtocolWorkout
