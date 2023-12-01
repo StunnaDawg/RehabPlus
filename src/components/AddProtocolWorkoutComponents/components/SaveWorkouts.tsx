@@ -9,9 +9,8 @@ import { useCurrentPhasesIdContext } from "../../../context/phasesIdContext"
 
 const SaveWorkoutsToPhaseButton = () => {
   const { newProtocolData } = useNewProtocolDataContext()
-  const {currentPhasesId} = useCurrentPhasesIdContext()
-  const {completeWorkoutData} =
-    useCompleteWorkoutContext()
+  const { currentPhasesId } = useCurrentPhasesIdContext()
+  const { completeWorkoutData } = useCompleteWorkoutContext()
   const newProtocolId = newProtocolData.id
   const phaseCollectionRef = collection(
     db,

@@ -36,50 +36,10 @@ const ExerciseWidget = ({
   const [exerciseReps, setExerciseReps] = useState("0")
   const isFocused = useIsFocused()
 
-  // const deleteWidget = async (exerciseToRemove: string)  => {
-  //   // Alert.alert('Warning', 'Are you sure you want to delete this exercise?', [
-  //   // {
-  //   //   text: 'Cancel',
-  //   //   onPress: () => console.log('Cancel Pressed'),
-  //   //   style: 'cancel',
-  //   // },  {text: 'Delete', onPress: async () => {
-  //     setWorkoutData(exercsies => exercsies.filter(exercise=> exercise.exerciseId !== exerciseToRemove))
-  //   }
-
-  // }])
   useEffect(() => {
     console.log(id)
   }, [])
 
-  // useEffect(() => {
-  //   const getData = async () => {
-  //     try {
-  //       GetSingleExercise(setWidgetData, id, categoryId)
-  //     } catch (err) {
-  //       console.error("exercise widget error:", err)
-  //     }
-  //   }
-  //   getData()
-  // }, [isFocused])
-
-  // useEffect(() => {
-  //   setWidgetData({ ...widgetData, reps: exerciseReps })
-  // }, [exerciseReps])
-
-  // useEffect(() => {
-  //   setWidgetData({ ...widgetData, sets: exerciseSets })
-  // }, [exerciseSets])
-
-  // useEffect(() => {
-  //   setExerciseWorkoutData((prevData) => [
-  //     ...prevData,
-  //     { sets: exerciseSets, reps: exerciseReps },
-  //   ]);
-  // }, [exerciseSets, exerciseReps]);
-
-  // useEffect(() => {
-  //   console.log("exercise widget data", { ...widgetData })
-  // }, [widgetData])
   return (
     <>
       <Card mode="outlined" className=" flex-1 mt-3 mx-8 bg-blue-400">

@@ -1,7 +1,12 @@
 import { View } from "react-native"
 import React, { useEffect, useState } from "react"
 import { Button } from "react-native-paper"
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native"
+import {
+  RouteProp,
+  useIsFocused,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native"
 import CompleteWorkoutWidget from "./components/CompleteWorkoutWIdget"
 import { collection } from "firebase/firestore"
 import { db } from "../../firebase"
@@ -16,11 +21,11 @@ import { useCompleteWorkoutContext } from "../../context/completeWorkoutContext"
 
 const AddWorkout = () => {
   const [workoutList, setWorkoutList] = useState<Workout[]>([])
-  const {newProtocolData} = useNewProtocolDataContext()
-  const {currentPhasesId} = useCurrentPhasesIdContext()
-  const {completeWorkoutData} = useCompleteWorkoutContext()
+  const { newProtocolData } = useNewProtocolDataContext()
+  const { currentPhasesId } = useCurrentPhasesIdContext()
+  const { completeWorkoutData } = useCompleteWorkoutContext()
   const navigation = useNavigation<NavigationType>()
-  const route =  useRoute<RouteProp<Record<string, RouteParamsType>, string>>();
+  const route = useRoute<RouteProp<Record<string, RouteParamsType>, string>>()
   const phaseId = route.params?.phaseId
   const protocolId = newProtocolData.id
   const phaseWorkoutsRef = collection(
@@ -31,12 +36,22 @@ const AddWorkout = () => {
     phaseId || currentPhasesId,
     "workouts"
   )
+  const isFocused = useIsFocused()
 
   useEffect(() => {
-    GetProtocolWorkouts(setWorkoutList, phaseWorkoutsRef)
-    console.log("route params id", phaseId)
-    console.log("current phase id", currentPhasesId)
-  }, [])
+    setWorkoutList([])
+    const setWorkouts = async () => {
+      try {
+        GetProtocolWorkouts(setWorkoutList, phaseWorkoutsRef)
+        console.log("route params id", phaseId)
+        console.log("current phase id", currentPhasesId)
+        console.log("workout list widget data", completeWorkoutData)
+      } catch (err) {
+        console.error(err)
+      }
+    }
+    setWorkouts()
+  }, [isFocused])
 
   return (
     <>
@@ -51,8 +66,12 @@ const AddWorkout = () => {
       </View>
 
       <View>
-        {completeWorkoutData?.map((workout, index) => (
-          <CompleteWorkoutWidget key={index} workoutTitle={workout.workout?.title} />
+        {workoutList?.map((workout, index) => (
+          <CompleteWorkoutWidget
+            key={index}
+            workoutTitle={workout.workout?.title}
+            workoutId={workout.id}
+          />
         ))}
       </View>
     </>

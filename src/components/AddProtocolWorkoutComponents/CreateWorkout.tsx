@@ -8,9 +8,11 @@ import { useRefreshKeyContext } from "../../context/refreshKey"
 import { NavigationType } from "../../@types/navigation"
 import { WorkoutExercise } from "../../@types/firestore"
 import { useExerciseContext } from "../../context/exerciseContext"
+import { useCurrentWorkoutIdContext } from "../../context/workoutIdContext"
 
 const CreateWorkout = () => {
   const [workoutTitleText, setWorkoutTitleText] = useState("")
+  const { currentWorkoutId } = useCurrentWorkoutIdContext()
   const { refreshKey } = useRefreshKeyContext()
   const [workoutDescriptionText, setWorkoutDescriptionText] = useState("")
   const { exerciseData } = useExerciseContext()
@@ -26,9 +28,9 @@ const CreateWorkout = () => {
   //   awaitLoading()
   // }, [])
 
-  // useEffect(() => {
-  //   setExercises((prevExercises) => [...prevExercises, exerciseData])
-  // }, [exerciseData, refreshKey])
+  useEffect(() => {
+    console.log("current workout id", currentWorkoutId)
+  }, [])
 
   useEffect(() => {
     console.log("exercises create workout page", exerciseData)
