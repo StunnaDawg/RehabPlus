@@ -6,7 +6,7 @@ import { Workout } from "../@types/firestore"
 const GetSingleWorkout = async (
   workoutId: string,
   protocolId: string,
-  setState: Dispatch<SetStateAction<Workout | undefined>>,
+  setState: Dispatch<SetStateAction<Workout>>,
   phaseId: string
 ) => {
   try {

@@ -18,12 +18,14 @@ import { NavigationType } from "../../@types/navigation"
 import { Workout } from "../../@types/firestore"
 import { useCompleteWorkoutContext } from "../../context/completeWorkoutContext"
 import { useCurrentWorkoutIdContext } from "../../context/workoutIdContext"
+import { useExerciseContext } from "../../context/exerciseContext"
 
 const AddProtocolWorkout = () => {
   const [workoutList, setWorkoutList] = useState<Workout[]>([])
   const [refreshing, setRefreshing] = useState<boolean>(false)
   const { newProtocolData } = useNewProtocolDataContext()
   const { currentPhasesId } = useCurrentPhasesIdContext()
+  const { setExerciseData } = useExerciseContext()
   const { completeWorkoutData } = useCompleteWorkoutContext()
   const { setCurrentWorkoutId } = useCurrentWorkoutIdContext()
   const navigation = useNavigation<NavigationType>()
@@ -60,6 +62,7 @@ const AddProtocolWorkout = () => {
   useEffect(() => {
     refreshWorkouts()
     setCurrentWorkoutId("")
+    setExerciseData([])
   }, [isFocused])
 
   return (

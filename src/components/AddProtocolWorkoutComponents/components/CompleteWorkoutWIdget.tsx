@@ -3,6 +3,10 @@ import { Button, Card, Text } from "react-native-paper"
 import { NavigationType } from "../../../@types/navigation"
 import { useCurrentWorkoutIdContext } from "../../../context/workoutIdContext"
 import { useEffect } from "react"
+import { useEditWorkoutContext } from "../../../context/editWorkoutContext"
+import { useCurrentPhasesIdContext } from "../../../context/phasesIdContext"
+import { useNewProtocolDataContext } from "../../../context/newProtocolContext"
+import GetSingleWorkout from "../../../functions/getSingleWorkout"
 
 type CompleteWorkoutWidgetProps = {
   workoutTitle?: string
@@ -13,8 +17,11 @@ const CompleteWorkoutWidget = ({
   workoutTitle,
   workoutId,
 }: CompleteWorkoutWidgetProps) => {
-  const { setCurrentWorkoutId } = useCurrentWorkoutIdContext()
+  const { currentPhasesId } = useCurrentPhasesIdContext()
+  const { newProtocolData } = useNewProtocolDataContext()
+  const { setEditWorkoutData } = useEditWorkoutContext()
   const navigation = useNavigation<NavigationType>()
+  const protocolId = newProtocolData.id
 
   useEffect(() => {
     console.log(workoutTitle, workoutId)
@@ -24,10 +31,13 @@ const CompleteWorkoutWidget = ({
     console.log("pressed")
     if (workoutId != undefined) {
       try {
-        console.log("we made it")
-        setCurrentWorkoutId(workoutId)
-        console.log(workoutId)
-        navigation.navigate("CreateWorkout")
+        GetSingleWorkout(
+          workoutId,
+          protocolId,
+          setEditWorkoutData,
+          currentPhasesId
+        )
+        navigation.navigate("EditProtocolWorkoutScreen")
       } catch (err) {
         console.error(err)
       }

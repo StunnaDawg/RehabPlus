@@ -26,6 +26,7 @@ import AddWorkoutCurrentProtocol from "./components/EditProtocolWorkoutComponent
 import ViewProtocolScreen from "./screens/ViewProtocolScreen"
 import ViewPhases from "./screens/ViewPhases"
 import { RootStackParamList, TabParamList } from "./@types/navigation"
+import EditCreatedWorkout from "./components/AddProtocolWorkoutComponents/EditMadeWorkout"
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 const Tab = createBottomTabNavigator<TabParamList>()
@@ -77,7 +78,7 @@ const NavStack = () => {
           <Stack.Screen name="ExerciseDataBase" component={ExerciseDataBase} />
           <Stack.Screen
             name="EditProtocolWorkoutScreen"
-            component={EditProtocolWorkout}
+            component={EditCreatedWorkout}
           />
           <Stack.Screen name="EditWorkoutScreen" component={EditWorkout} />
           <Stack.Screen

@@ -9,34 +9,33 @@ import { NavigationType } from "../../@types/navigation"
 import { Workout, WorkoutExercise } from "../../@types/firestore"
 import { useExerciseContext } from "../../context/exerciseContext"
 import { useCurrentWorkoutIdContext } from "../../context/workoutIdContext"
+import GetSingleWorkout from "../../functions/getSingleWorkout"
 import { useNewProtocolDataContext } from "../../context/newProtocolContext"
 import { useCurrentPhasesIdContext } from "../../context/phasesIdContext"
+import { useEditWorkoutContext } from "../../context/editWorkoutContext"
 
-const CreateWorkout = () => {
-  const [workoutTitleText, setWorkoutTitleText] = useState<string | undefined>(
-    ""
+const EditCreatedWorkout = () => {
+  const { editWorkoutData } = useEditWorkoutContext()
+  const [currentWorkout, setCurrentWorkout] = useState<Workout | undefined>()
+  const [workoutTitleText, setWorkoutTitleText] = useState<string>(
+    editWorkoutData.workout?.title || "No Title Saved"
   )
+
   const { currentWorkoutId } = useCurrentWorkoutIdContext()
   const { currentPhasesId } = useCurrentPhasesIdContext()
   const { refreshKey } = useRefreshKeyContext()
-  const [workoutDescriptionText, setWorkoutDescriptionText] = useState("")
-  const { newProtocolData } = useNewProtocolDataContext()
-  const { exerciseData } = useExerciseContext()
-  const [exercises, setExercises] = useState<WorkoutExercise[]>([])
+  const [workoutDescriptionText, setWorkoutDescriptionText] = useState<string>(
+    editWorkoutData.workout?.description || "No Description Saved"
+  )
+  const { setExerciseData, exerciseData } = useExerciseContext()
   const navigation = useNavigation<NavigationType>()
-  const protocolId = newProtocolData.id
-
-  // useEffect(() => {
-  //   const awaitLoading = async () => {
-  //     setExercises((prevData) => [...prevData, ...exerciseData])
-  //     console.log("widget map", exercises)
-  //   }
-  //   awaitLoading()
-  // }, [])
 
   useEffect(() => {
-    console.log("current workout id", currentWorkoutId)
-  }, [])
+    console.log("current workout recieved!!!!!!!!!!!!", editWorkoutData)
+    if (editWorkoutData.workout?.exercises != undefined) {
+      setExerciseData(editWorkoutData?.workout?.exercises)
+    }
+  }, [editWorkoutData])
 
   return (
     <>
@@ -54,7 +53,9 @@ const CreateWorkout = () => {
         <TextInput
           mode="outlined"
           onChangeText={(text) => setWorkoutTitleText(text)}
-        ></TextInput>
+        >
+          {workoutTitleText}
+        </TextInput>
       </View>
 
       <View className="mx-4 my-1">
@@ -62,7 +63,9 @@ const CreateWorkout = () => {
         <TextInput
           mode="outlined"
           onChangeText={(text) => setWorkoutDescriptionText(text)}
-        ></TextInput>
+        >
+          {workoutDescriptionText}
+        </TextInput>
       </View>
       <View className="mx-4 my-1">
         <Button
@@ -95,4 +98,4 @@ const CreateWorkout = () => {
   )
 }
 
-export default CreateWorkout
+export default EditCreatedWorkout
