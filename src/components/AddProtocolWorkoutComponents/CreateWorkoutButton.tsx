@@ -13,8 +13,6 @@ const CreateWorkoutButton = ({
   workout: { title, description, exercises } = {},
 }: Workout) => {
   const { setExerciseData } = useExerciseContext()
-  const { completeWorkoutData, setCompleteWorkoutData } =
-    useCompleteWorkoutContext()
   const { newProtocolData } = useNewProtocolDataContext()
   const { currentPhasesId } = useCurrentPhasesIdContext()
   const newProtocolId = newProtocolData.id
@@ -29,19 +27,17 @@ const CreateWorkoutButton = ({
   const navigation = useNavigation<NavigationType>()
 
   const CreateWorkout = async () => {
-    setCompleteWorkoutData((prevData) => [
-      ...(Array.isArray(prevData) ? prevData : []),
-      { workout: { title, description, exercises } },
-    ])
     setExerciseData([])
 
     try {
-      for (const workout of completeWorkoutData) {
-        await addDoc(phaseCollectionRef, {
-          workout,
-          userId: FIREBASE_AUTH?.currentUser?.uid,
-        })
-      }
+      await addDoc(phaseCollectionRef, {
+        userId: FIREBASE_AUTH?.currentUser?.uid,
+        workout: {
+          title: title,
+          description: description,
+          exercises: exercises,
+        },
+      })
     } catch (err) {
       console.error(err)
     }

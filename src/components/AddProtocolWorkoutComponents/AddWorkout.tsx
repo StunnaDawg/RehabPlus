@@ -20,24 +20,28 @@ const AddProtocolWorkout = () => {
   const { currentPhasesId } = useCurrentPhasesIdContext()
   const { completeWorkoutData } = useCompleteWorkoutContext()
   const navigation = useNavigation<NavigationType>()
-  const route = useRoute<RouteProp<Record<string, RouteParamsType>, string>>()
-  const phaseId = route.params?.phaseId
   const protocolId = newProtocolData.id
   const phaseWorkoutsRef = collection(
     db,
     "protocols",
     protocolId,
     "phases",
-    phaseId || currentPhasesId,
+    currentPhasesId,
     "workouts"
   )
 
   const refreshWorkouts = async () => {
     setWorkoutList([])
     setRefreshing(true)
-    await GetProtocolWorkouts(setWorkoutList, phaseWorkoutsRef)
-    console.log("workout list widget data", completeWorkoutData)
+    console.log("before refresh", workoutList)
+    try {
+      await GetProtocolWorkouts(setWorkoutList, phaseWorkoutsRef)
+      setRefreshing(false)
+      console.log("after refresh", workoutList)
+    } catch (err) {}
     setRefreshing(false)
+
+    console.log("workout list widget data", completeWorkoutData)
   }
 
   useEffect(() => {
