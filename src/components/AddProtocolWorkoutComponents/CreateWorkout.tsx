@@ -6,19 +6,29 @@ import ExerciseWidget from "./ExerciseWidget"
 import CreateWorkoutButton from "./CreateWorkoutButton"
 import { useRefreshKeyContext } from "../../context/refreshKey"
 import { NavigationType } from "../../@types/navigation"
-import { WorkoutExercise } from "../../@types/firestore"
+import { Workout, WorkoutExercise } from "../../@types/firestore"
 import { useExerciseContext } from "../../context/exerciseContext"
 import { useCurrentWorkoutIdContext } from "../../context/workoutIdContext"
+import GetSingleWorkout from "../../functions/getSingleWorkout"
+import { useNewProtocolDataContext } from "../../context/newProtocolContext"
+import { useCurrentPhasesIdContext } from "../../context/phasesIdContext"
 
 const CreateWorkout = () => {
-  const [workoutTitleText, setWorkoutTitleText] = useState("")
+  const [currentWorkout, setCurrentWorkout] = useState<Workout | undefined>()
+  const [workoutTitleText, setWorkoutTitleText] = useState<string | undefined>(
+    currentWorkout?.workout?.title
+  )
   const { currentWorkoutId } = useCurrentWorkoutIdContext()
+  const { currentPhasesId } = useCurrentPhasesIdContext()
   const { refreshKey } = useRefreshKeyContext()
   const [workoutDescriptionText, setWorkoutDescriptionText] = useState("")
+  const { newProtocolData } = useNewProtocolDataContext()
   const { exerciseData } = useExerciseContext()
   const [exercises, setExercises] = useState<WorkoutExercise[]>([])
+
   const isFocused = useIsFocused()
   const navigation = useNavigation<NavigationType>()
+  const protocolId = newProtocolData.id
 
   // useEffect(() => {
   //   const awaitLoading = async () => {
@@ -33,8 +43,21 @@ const CreateWorkout = () => {
   }, [])
 
   useEffect(() => {
-    console.log("exercises create workout page", exerciseData)
-  }, [exerciseData])
+    console.log("trying")
+    if (currentWorkoutId != "") {
+      console.log("current workout")
+      GetSingleWorkout(
+        currentWorkoutId,
+        protocolId,
+        setCurrentWorkout,
+        currentPhasesId
+      )
+    }
+  }, [])
+
+  useEffect(() => {
+    console.log("current workout recieved!!!!!!!!!!!!", currentWorkout)
+  }, [currentWorkout])
 
   return (
     <>

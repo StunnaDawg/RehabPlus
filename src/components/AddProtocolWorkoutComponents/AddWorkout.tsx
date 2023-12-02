@@ -1,7 +1,12 @@
 import { ScrollView, View, RefreshControl, SafeAreaView } from "react-native"
 import React, { useEffect, useState } from "react"
 import { ActivityIndicator, Button, Text } from "react-native-paper"
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native"
+import {
+  RouteProp,
+  useIsFocused,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native"
 import CompleteWorkoutWidget from "./components/CompleteWorkoutWIdget"
 import { collection } from "firebase/firestore"
 import { db } from "../../firebase"
@@ -12,6 +17,7 @@ import { RouteParamsType } from "../../@types/navigation"
 import { NavigationType } from "../../@types/navigation"
 import { Workout } from "../../@types/firestore"
 import { useCompleteWorkoutContext } from "../../context/completeWorkoutContext"
+import { useCurrentWorkoutIdContext } from "../../context/workoutIdContext"
 
 const AddProtocolWorkout = () => {
   const [workoutList, setWorkoutList] = useState<Workout[]>([])
@@ -19,6 +25,7 @@ const AddProtocolWorkout = () => {
   const { newProtocolData } = useNewProtocolDataContext()
   const { currentPhasesId } = useCurrentPhasesIdContext()
   const { completeWorkoutData } = useCompleteWorkoutContext()
+  const { setCurrentWorkoutId } = useCurrentWorkoutIdContext()
   const navigation = useNavigation<NavigationType>()
   const protocolId = newProtocolData.id
   const phaseWorkoutsRef = collection(
@@ -29,6 +36,7 @@ const AddProtocolWorkout = () => {
     currentPhasesId,
     "workouts"
   )
+  const isFocused = useIsFocused()
 
   const refreshWorkouts = async () => {
     setWorkoutList([])
@@ -46,7 +54,13 @@ const AddProtocolWorkout = () => {
 
   useEffect(() => {
     refreshWorkouts()
+    setCurrentWorkoutId("")
   }, [])
+
+  useEffect(() => {
+    refreshWorkouts()
+    setCurrentWorkoutId("")
+  }, [isFocused])
 
   return (
     <>
