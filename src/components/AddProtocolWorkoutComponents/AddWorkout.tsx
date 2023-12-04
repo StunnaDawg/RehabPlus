@@ -58,12 +58,10 @@ const AddProtocolWorkout = () => {
 
   useEffect(() => {
     refreshWorkouts()
-    setCurrentWorkoutId("")
   }, [])
 
   useEffect(() => {
     refreshWorkouts()
-    setCurrentWorkoutId("")
     setExerciseData([])
     setEditWorkoutData({})
   }, [isFocused])

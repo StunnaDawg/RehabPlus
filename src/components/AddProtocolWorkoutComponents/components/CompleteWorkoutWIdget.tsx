@@ -19,7 +19,7 @@ const CompleteWorkoutWidget = ({
 }: CompleteWorkoutWidgetProps) => {
   const { currentPhasesId } = useCurrentPhasesIdContext()
   const { newProtocolData } = useNewProtocolDataContext()
-  const { setCurrentWorkoutId } = useCurrentWorkoutIdContext()
+  const { currentWorkoutId, setCurrentWorkoutId } = useCurrentWorkoutIdContext()
   const { setEditWorkoutData } = useEditWorkoutContext()
   const navigation = useNavigation<NavigationType>()
   const protocolId = newProtocolData.id
@@ -46,6 +46,10 @@ const CompleteWorkoutWidget = ({
       }
     }
   }
+
+  useEffect(() => {
+    console.log("current workoutId on press", currentWorkoutId)
+  }, [currentWorkoutId])
 
   return (
     <Card mode="contained" className="mt-3 mx-8 ">

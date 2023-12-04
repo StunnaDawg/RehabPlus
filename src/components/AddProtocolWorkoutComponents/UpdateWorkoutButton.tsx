@@ -11,7 +11,6 @@ import { useCurrentPhasesIdContext } from "../../context/phasesIdContext"
 import { useCurrentWorkoutIdContext } from "../../context/workoutIdContext"
 
 const UpdateWorkoutButton = ({
-  id,
   workout: { title, description, exercises } = {},
 }: Workout) => {
   const { setExerciseData } = useExerciseContext()
@@ -19,16 +18,16 @@ const UpdateWorkoutButton = ({
   const { currentPhasesId } = useCurrentPhasesIdContext()
   const { currentWorkoutId } = useCurrentWorkoutIdContext()
   const newProtocolId = newProtocolData.id
-  const workoutId = currentWorkoutId
-  console.log(workoutId)
+  console.log(currentWorkoutId)
 
   const navigation = useNavigation<NavigationType>()
 
-  const CreateWorkout = async () => {
+  const UpdateWorkout = async () => {
     setExerciseData([])
+    console.log("id is right here", currentWorkoutId)
     console.log("trying to update")
     try {
-      if (id) {
+      if (currentWorkoutId) {
         console.log("there is an id")
         const workoutDocRef = doc(
           db,
@@ -37,7 +36,7 @@ const UpdateWorkoutButton = ({
           "phases",
           currentPhasesId,
           "workouts",
-          id
+          currentWorkoutId
         )
         await updateDoc(workoutDocRef, {
           workout: {
@@ -56,7 +55,7 @@ const UpdateWorkoutButton = ({
     <Button
       icon="plus"
       onPress={async () => {
-        await CreateWorkout()
+        await UpdateWorkout()
         navigation.navigate("AddProtocolWorkoutScreen")
       }}
     >

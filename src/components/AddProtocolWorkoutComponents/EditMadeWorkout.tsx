@@ -23,7 +23,7 @@ const EditCreatedWorkout = () => {
     ""
   )
 
-  const { currentWorkoutId, setCurrentWorkoutId } = useCurrentWorkoutIdContext()
+  const { currentWorkoutId } = useCurrentWorkoutIdContext()
   const { currentPhasesId } = useCurrentPhasesIdContext()
   const { refreshKey } = useRefreshKeyContext()
   const [workoutDescriptionText, setWorkoutDescriptionText] = useState<
@@ -36,10 +36,6 @@ const EditCreatedWorkout = () => {
   const refreshPage = async () => {
     setRefreshing(true)
     try {
-      if (editWorkoutData.id) {
-        console.log("made it")
-        setCurrentWorkoutId(editWorkoutData?.id)
-      }
       console.log("current workout recieved!!!!!!!!!!!!", editWorkoutData)
       if (editWorkoutData.workout?.exercises != undefined) {
         setExerciseData(editWorkoutData?.workout?.exercises)
@@ -86,7 +82,6 @@ const EditCreatedWorkout = () => {
       >
         <View className="mx-4 my-1">
           <UpdateWorkoutButton
-            id={currentWorkoutId}
             workout={{
               title: workoutTitleText,
               description: workoutDescriptionText,
