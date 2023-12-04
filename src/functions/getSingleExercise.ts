@@ -1,27 +1,46 @@
-import { getDoc, doc} from "firebase/firestore"
+import {
+  getDoc,
+  doc,
+  CollectionReference,
+  DocumentReference,
+} from "firebase/firestore"
 import { db } from "../firebase"
 import { Dispatch, SetStateAction } from "react"
-import { WorkoutExercise } from "../@types/firestore"
+import { WorkoutExercise, ExerciseDataBaseExercise } from "../@types/firestore"
 
-const GetSingleExercise = async (id: string, categoryId: string, setState: Dispatch<SetStateAction<WorkoutExercise | undefined>>) => {
+const GetSingleExercise = async (
+  setCategoriesState: Dispatch<SetStateAction<WorkoutExercise | undefined>>,
+  id: string,
+  categoryid: string
+) => {
   try {
-    const exerciseDocRef = doc(db, 'exerciseCategories', categoryId, 'exercises', id) // Get the document reference.
-    const docSnap = await getDoc(exerciseDocRef) // Fetch the document.
+    const exerciseDoc = doc(
+      db,
+      "exerciseCategories",
+      categoryid,
+      "exercises",
+      id
+    )
+    const docSnap = await getDoc(exerciseDoc)
 
-      if (docSnap.exists()) {
-        const exerciseData: WorkoutExercise = {
-          ...(docSnap.data() as WorkoutExercise), // Cast the data to WorkoutExercise
-        };
-        console.log("Document data for exercises:", exerciseData)
-      setState(exerciseData)
-      } else {
-        console.log("No such document!")
-        setState(undefined)
-      }
-      
+    if (docSnap.data()) {
+      const WorkoutExerciseData = {
+        ...docSnap.data(),
+        exercise: {
+          id: docSnap.data()?.exercise.id,
+          title: docSnap.data()?.exercise.title,
+          description: docSnap.data()?.exercise.description,
+        },
+        categoryId: categoryid,
+      } as WorkoutExercise
+      console.log("getSinglExerciseData", WorkoutExerciseData)
+      setCategoriesState(WorkoutExerciseData)
+      console.log("filtered data get Workouts", WorkoutExerciseData)
+    }
+
+    setCategoriesState(undefined)
   } catch (err) {
     console.error(err)
-    setState(undefined)
   }
 }
 

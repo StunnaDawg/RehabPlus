@@ -15,42 +15,45 @@ import { NewProtocolDataContextProvider } from "./src/context/newProtocolContext
 import { CurrentPhasesIdContextProvider } from "./src/context/phasesIdContext"
 import { ExerciseContextProvider } from "./src/context/exerciseContext"
 import { DatabaseExercisesContextProvider } from "./src/context/exerciseDataBaseContext"
+import { CurrentWorkoutIdContextProvider } from "./src/context/workoutIdContext"
 import "react-native-gesture-handler"
 
 export default function App() {
   return (
     <UserAuthContextProvider>
-      <DatabaseExercisesContextProvider>
-      <ExerciseContextProvider>
-      <CurrentPhasesIdContextProvider>
-        <NewProtocolDataContextProvider>
-          <RefreshKeyContextProvider>
-            <CurrentPhasesDataContextProvider>
-              <EditWorkoutContextProvider>
-                <CompleteWorkoutContextProvider>
-                  <NewWorkoutContextProvider>
-                    <SingleWorkoutContextProvider>
-                      <EditClientContextProvider>
-                        <SingleEditProtocolContextProvider>
-                          <AddClientProtocolContextProvider>
-                            <NavigationContainer>
-                              <PaperProvider>
-                                <NavStack />
-                              </PaperProvider>
-                            </NavigationContainer>
-                          </AddClientProtocolContextProvider>
-                        </SingleEditProtocolContextProvider>
-                      </EditClientContextProvider>
-                    </SingleWorkoutContextProvider>
-                  </NewWorkoutContextProvider>
-                </CompleteWorkoutContextProvider>
-              </EditWorkoutContextProvider>
-            </CurrentPhasesDataContextProvider>
-          </RefreshKeyContextProvider>
-        </NewProtocolDataContextProvider>
-      </CurrentPhasesIdContextProvider>
-      </ExerciseContextProvider>
-      </DatabaseExercisesContextProvider>
+      <CurrentWorkoutIdContextProvider>
+        <DatabaseExercisesContextProvider>
+          <ExerciseContextProvider>
+            <CurrentPhasesIdContextProvider>
+              <NewProtocolDataContextProvider>
+                <RefreshKeyContextProvider>
+                  <CurrentPhasesDataContextProvider>
+                    <EditWorkoutContextProvider>
+                      <CompleteWorkoutContextProvider>
+                        <NewWorkoutContextProvider>
+                          <SingleWorkoutContextProvider>
+                            <EditClientContextProvider>
+                              <SingleEditProtocolContextProvider>
+                                <AddClientProtocolContextProvider>
+                                  <NavigationContainer>
+                                    <PaperProvider>
+                                      <NavStack />
+                                    </PaperProvider>
+                                  </NavigationContainer>
+                                </AddClientProtocolContextProvider>
+                              </SingleEditProtocolContextProvider>
+                            </EditClientContextProvider>
+                          </SingleWorkoutContextProvider>
+                        </NewWorkoutContextProvider>
+                      </CompleteWorkoutContextProvider>
+                    </EditWorkoutContextProvider>
+                  </CurrentPhasesDataContextProvider>
+                </RefreshKeyContextProvider>
+              </NewProtocolDataContextProvider>
+            </CurrentPhasesIdContextProvider>
+          </ExerciseContextProvider>
+        </DatabaseExercisesContextProvider>
+      </CurrentWorkoutIdContextProvider>
     </UserAuthContextProvider>
   )
 }

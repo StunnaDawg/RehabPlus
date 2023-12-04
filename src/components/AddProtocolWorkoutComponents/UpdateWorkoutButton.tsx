@@ -5,39 +5,47 @@ import { Workout } from "../../@types/firestore"
 import { useExerciseContext } from "../../context/exerciseContext"
 import { NavigationType } from "../../@types/navigation"
 import { FIREBASE_AUTH, db } from "../../firebase"
-import { addDoc, collection } from "firebase/firestore"
+import { addDoc, collection, doc, updateDoc } from "firebase/firestore"
 import { useNewProtocolDataContext } from "../../context/newProtocolContext"
 import { useCurrentPhasesIdContext } from "../../context/phasesIdContext"
+import { useCurrentWorkoutIdContext } from "../../context/workoutIdContext"
 
-const CreateWorkoutButton = ({
+const UpdateWorkoutButton = ({
   workout: { title, description, exercises } = {},
 }: Workout) => {
   const { setExerciseData } = useExerciseContext()
   const { newProtocolData } = useNewProtocolDataContext()
   const { currentPhasesId } = useCurrentPhasesIdContext()
+  const { currentWorkoutId } = useCurrentWorkoutIdContext()
   const newProtocolId = newProtocolData.id
-  const phaseCollectionRef = collection(
-    db,
-    "protocols",
-    newProtocolId,
-    "phases",
-    currentPhasesId,
-    "workouts"
-  )
+  console.log(currentWorkoutId)
+
   const navigation = useNavigation<NavigationType>()
 
-  const CreateWorkout = async () => {
+  const UpdateWorkout = async () => {
     setExerciseData([])
-
+    console.log("id is right here", currentWorkoutId)
+    console.log("trying to update")
     try {
-      await addDoc(phaseCollectionRef, {
-        userId: FIREBASE_AUTH?.currentUser?.uid,
-        workout: {
-          title: title,
-          description: description,
-          exercises: exercises,
-        },
-      })
+      if (currentWorkoutId) {
+        console.log("there is an id")
+        const workoutDocRef = doc(
+          db,
+          "protocols",
+          newProtocolId,
+          "phases",
+          currentPhasesId,
+          "workouts",
+          currentWorkoutId
+        )
+        await updateDoc(workoutDocRef, {
+          workout: {
+            title: title,
+            description: description,
+            exercises: exercises,
+          },
+        })
+      }
     } catch (err) {
       console.error(err)
     }
@@ -47,12 +55,12 @@ const CreateWorkoutButton = ({
     <Button
       icon="plus"
       onPress={async () => {
-        await CreateWorkout()
+        await UpdateWorkout()
         navigation.navigate("AddProtocolWorkoutScreen")
       }}
     >
-      Create Workout
+      Update Workout
     </Button>
   )
 }
-export default CreateWorkoutButton
+export default UpdateWorkoutButton

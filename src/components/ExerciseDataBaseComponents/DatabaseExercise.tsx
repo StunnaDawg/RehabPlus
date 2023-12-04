@@ -1,21 +1,47 @@
 import { Button, Card, Text } from "react-native-paper"
 import React, { useEffect } from "react"
-import { useSingleWorkoutContext } from "../../context/workoutContext"
+import { useExerciseContext } from "../../context/exerciseContext"
 import { useNavigation } from "@react-navigation/native"
 
-type DatabaseExerciseProps = { 
+type DatabaseExerciseProps = {
   exerciseName: string
-  id: string
+  exerciseId: string
   idOfCategory: string
 }
 
-const DatabaseExercise = ({ exerciseName, id, idOfCategory }: DatabaseExerciseProps) => {
-  const {workoutData ,setWorkoutData} = useSingleWorkoutContext()
+// export type WorkoutExercise = {
+//   title: string
+//   description?: string
+//   categoryId: string
+//   exercise: ExerciseDataBaseExercise
+//   reps?: string
+//   sets?: string
+// }
+const DatabaseExercise = ({
+  exerciseName,
+  exerciseId,
+  idOfCategory,
+}: DatabaseExerciseProps) => {
+  const { exerciseData, setExerciseData } = useExerciseContext()
   const navigation = useNavigation()
+  const exerciseValues = [
+    {
+      exercise: {
+        id: exerciseId,
+        title: exerciseName,
+      },
+      categoryId: idOfCategory,
+    },
+  ]
 
-  useEffect(() => {
-    console.log('edit workout data',workoutData)
-  }, [workoutData])
+  const AddExerciseToWorkoutHandler = () => {
+    if (exerciseData) {
+      setExerciseData((prevExercises) => [...prevExercises, ...exerciseValues])
+    } else {
+      setExerciseData([...exerciseValues])
+    }
+  }
+
   return (
     <Card mode="contained" className="mt-3 mx-8 ">
       <Card.Content className="flex-1 flex-row justify-center">
@@ -26,26 +52,11 @@ const DatabaseExercise = ({ exerciseName, id, idOfCategory }: DatabaseExercisePr
         <Card.Actions className="flex-1 flex-col">
           <Button className="my-1">View</Button>
           <Button
-           onPress={() => {
-            setWorkoutData((prevData) => {
-              if (prevData.workout && prevData.workout.exercises) {
-                return {
-                  ...prevData,
-                  workout: {
-                    ...prevData.workout,
-                    exercises: prevData.workout.exercises.map((exercise) => ({
-                      ...exercise,
-                      exerciseId: id,
-                      categoryId: idOfCategory
-                    }))
-                  }
-                };
-              } else {
-                return prevData;
-              }
-            });
-            navigation.goBack()
-          }}
+            onPress={() => {
+              AddExerciseToWorkoutHandler()
+              console.log("widget pressed")
+              navigation.goBack()
+            }}
           >
             Add Workout
           </Button>

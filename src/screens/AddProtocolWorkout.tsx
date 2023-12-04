@@ -1,6 +1,6 @@
-import { ScrollView } from 'react-native'
-import React from 'react'
-import AddWorkout from '../components/AddProtocolWorkoutComponents/AddWorkout'
+import { ScrollView, View } from "react-native"
+import React from "react"
+import AddWorkout from "../components/AddProtocolWorkoutComponents/AddWorkout"
 
 const AddProtocolWorkout = () => {
   return (

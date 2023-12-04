@@ -1,114 +1,129 @@
-import { Dispatch, SetStateAction } from "react";
-import { Workout, Protocol, ProtocolPhase, Client, WorkoutExercise, ExerciseDataBaseExercise } from "./firestore";
+import { Dispatch, SetStateAction } from "react"
+import {
+  Workout,
+  Protocol,
+  ProtocolPhase,
+  Client,
+  WorkoutExercise,
+  ExerciseDataBaseExercise,
+} from "./firestore"
 
 export type RefreshKey = {
-    refreshKey: boolean;
+  refreshKey: boolean
 }
 
 export type RefreshKeyActions = {
-   setRefreshKey: Dispatch<SetStateAction<boolean>>;
-};
-
-export type UserAuth = {
-    isSignedIn: boolean;
+  setRefreshKey: Dispatch<SetStateAction<boolean>>
 }
 
-export type UserAuthAction = { 
-    setIsSignedIn: Dispatch<SetStateAction<boolean>>
+export type UserAuth = {
+  isSignedIn: boolean
+}
+
+export type UserAuthAction = {
+  setIsSignedIn: Dispatch<SetStateAction<boolean>>
 }
 
 export type SingleWorkoutType = {
-    workoutData: Workout;
+  workoutData: Workout
 }
 
-export type SingleWorkoutAction = { 
-    setWorkoutData: Dispatch<SetStateAction<Workout>>
+export type SingleWorkoutAction = {
+  setWorkoutData: Dispatch<SetStateAction<Workout>>
 }
 
 export type SingleEditProtocolType = {
-    protocolEditData: Protocol;
+  protocolEditData: Protocol
 }
 
-export type SingleEditProtocolAction = { 
-    setProtocolEditData: Dispatch<SetStateAction<Protocol>>
+export type SingleEditProtocolAction = {
+  setProtocolEditData: Dispatch<SetStateAction<Protocol>>
 }
 
-export type CurrentPhasesDataType = { 
-    currentPhasesData: ProtocolPhase;
+export type CurrentPhasesDataType = {
+  currentPhasesData: ProtocolPhase
 }
 
-export type CurrentPhasesDataAction = { 
-    setCurrentPhasesData: Dispatch<SetStateAction<ProtocolPhase>>
+export type CurrentPhasesDataAction = {
+  setCurrentPhasesData: Dispatch<SetStateAction<ProtocolPhase>>
 }
 
-export type NewProtocolDataType = { 
-    newProtocolData: Protocol;
+export type NewProtocolDataType = {
+  newProtocolData: Protocol
 }
 
-export type NewProtocolDataAction = { 
-    setNewProtocolData: Dispatch<SetStateAction<Protocol>>
+export type NewProtocolDataAction = {
+  setNewProtocolData: Dispatch<SetStateAction<Protocol>>
 }
 
-export type AddClientProtocolDataType = { 
-    newClientProtocol: string;
+export type AddClientProtocolDataType = {
+  newClientProtocol: string
 }
 
-export type AddClientProtocolDataAction = { 
-    setClientProtocol: Dispatch<SetStateAction<string>>
+export type AddClientProtocolDataAction = {
+  setClientProtocol: Dispatch<SetStateAction<string>>
 }
 
-export type EditWorkoutType = { 
-    editWorkoutData: Workout;
+export type EditWorkoutType = {
+  editWorkoutData: Workout
 }
 
-export type EditWorkoutAction = { 
-    setEditWorkoutData: Dispatch<SetStateAction<Workout>>
+export type EditWorkoutAction = {
+  setEditWorkoutData: Dispatch<SetStateAction<Workout>>
 }
 
-export type CompleteWorkoutsDataType = { 
-    completeWorkoutData: Workout[];
+export type CompleteWorkoutsDataType = {
+  completeWorkoutData: Workout[]
 }
 
-export type CompleteWorkoutsAction = { 
-    setCompleteWorkoutData: Dispatch<SetStateAction<Workout[]>>
+export type CompleteWorkoutsAction = {
+  setCompleteWorkoutData: Dispatch<SetStateAction<Workout[]>>
 }
 
-export type EditClientDataType = { 
-    clientEditData: Client;
+export type EditClientDataType = {
+  clientEditData: Client
 }
 
-export type EditClientAction = { 
-    setClientEditData: Dispatch<SetStateAction<Client>>
+export type EditClientAction = {
+  setClientEditData: Dispatch<SetStateAction<Client>>
 }
 
-export type NewWorkoutDataType = { 
-    newWorkoutData: Workout;
+export type NewWorkoutDataType = {
+  newWorkoutData: Workout
 }
 
-export type NewWorkoutAction = { 
-    setNewWorkoutData: Dispatch<SetStateAction<Workout>>
+export type NewWorkoutAction = {
+  setNewWorkoutData: Dispatch<SetStateAction<Workout>>
 }
 
 export type CurrentPhasesIdAction = {
-    setCurrentPhasesId: Dispatch<SetStateAction<string>>;
+  setCurrentPhasesId: Dispatch<SetStateAction<string>>
 }
 
 export type CurrentPhasesIdType = {
-    currentPhasesId: string;
+  currentPhasesId: string
 }
 
-export type ExercisesContextType = { 
-    exerciseData: WorkoutExercise[];
+export type CurrentWorkoutIdAction = {
+  setCurrentWorkoutId: Dispatch<SetStateAction<string>>
 }
 
-export type ExercisesContextAction = { 
-    setExerciseData: Dispatch<SetStateAction<WorkoutExercise[]>>
+export type CurrentWorkoutIdType = {
+  currentWorkoutId: string
 }
 
-export type DatabaseExercisesContextType = { 
-    exerciseDataBase: ExerciseDataBaseExercise[];
+export type ExercisesContextType = {
+  exerciseData: WorkoutExercise[]
 }
 
-export type DatabaseExercisesContextAction = { 
-    setExerciseDataBase: Dispatch<SetStateAction<ExerciseDataBaseExercise[]>>
+export type ExercisesContextAction = {
+  setExerciseData: Dispatch<SetStateAction<WorkoutExercise[]>>
+}
+
+export type DatabaseExercisesContextType = {
+  exerciseDataBase: ExerciseDataBaseExercise[]
+}
+
+export type DatabaseExercisesContextAction = {
+  setExerciseDataBase: Dispatch<SetStateAction<ExerciseDataBaseExercise[]>>
 }
