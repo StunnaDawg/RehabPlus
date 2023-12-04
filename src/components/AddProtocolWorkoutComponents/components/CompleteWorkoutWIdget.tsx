@@ -19,6 +19,7 @@ const CompleteWorkoutWidget = ({
 }: CompleteWorkoutWidgetProps) => {
   const { currentPhasesId } = useCurrentPhasesIdContext()
   const { newProtocolData } = useNewProtocolDataContext()
+  const { setCurrentWorkoutId } = useCurrentWorkoutIdContext()
   const { setEditWorkoutData } = useEditWorkoutContext()
   const navigation = useNavigation<NavigationType>()
   const protocolId = newProtocolData.id
@@ -37,6 +38,7 @@ const CompleteWorkoutWidget = ({
           setEditWorkoutData,
           currentPhasesId
         )
+        console.log("gotWorkout for", workoutId)
         navigation.navigate("EditProtocolWorkoutScreen")
       } catch (err) {
         console.error(err)
@@ -54,8 +56,9 @@ const CompleteWorkoutWidget = ({
         <Card.Actions className="flex-1 flex-col">
           <Button
             className="my-1"
-            onPress={() => {
-              setId()
+            onPress={async () => {
+              await setId()
+              navigation.navigate("EditProtocolWorkoutScreen")
             }}
           >
             View
