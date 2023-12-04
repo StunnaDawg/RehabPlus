@@ -38,6 +38,7 @@ const CompleteWorkoutWidget = ({
           setEditWorkoutData,
           currentPhasesId
         )
+        setCurrentWorkoutId(workoutId)
         console.log("gotWorkout for", workoutId)
         navigation.navigate("EditProtocolWorkoutScreen")
       } catch (err) {

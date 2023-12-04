@@ -20,7 +20,7 @@ const EditCreatedWorkout = () => {
   const { editWorkoutData } = useEditWorkoutContext()
   const [currentWorkout, setCurrentWorkout] = useState<Workout | undefined>()
   const [workoutTitleText, setWorkoutTitleText] = useState<string | undefined>(
-    editWorkoutData.workout?.title
+    ""
   )
 
   const { currentWorkoutId, setCurrentWorkoutId } = useCurrentWorkoutIdContext()
@@ -28,7 +28,7 @@ const EditCreatedWorkout = () => {
   const { refreshKey } = useRefreshKeyContext()
   const [workoutDescriptionText, setWorkoutDescriptionText] = useState<
     string | undefined
-  >(editWorkoutData.workout?.description)
+  >("")
   const { setExerciseData, exerciseData } = useExerciseContext()
   const navigation = useNavigation<NavigationType>()
   const isFocused = useIsFocused()
@@ -44,22 +44,26 @@ const EditCreatedWorkout = () => {
       if (editWorkoutData.workout?.exercises != undefined) {
         setExerciseData(editWorkoutData?.workout?.exercises)
       }
-
-      if (editWorkoutData.workout?.title) {
-        setWorkoutTitleText(editWorkoutData.workout.title)
-      }
-
-      if (editWorkoutData.workout?.description) {
-        setWorkoutDescriptionText(editWorkoutData.workout.description)
-      }
+      setRefreshing(false)
     } catch (err) {
       console.error(err)
     }
-    setRefreshing(false)
   }
 
   useEffect(() => {
     refreshPage()
+  }, [editWorkoutData])
+
+  useEffect(() => {
+    console.log("help")
+    if (editWorkoutData.workout?.title) {
+      setWorkoutTitleText(editWorkoutData.workout.title)
+    }
+
+    if (editWorkoutData.workout?.description) {
+      setWorkoutDescriptionText(editWorkoutData.workout.description)
+      console.log("updated")
+    }
   }, [editWorkoutData])
 
   useEffect(() => {
@@ -81,26 +85,22 @@ const EditCreatedWorkout = () => {
         }
       >
         <View className="mx-4 my-1">
-          {editWorkoutData?.id ? (
-            <UpdateWorkoutButton
-              workout={{
-                title: workoutTitleText,
-                description: workoutDescriptionText,
-                exercises: exerciseData,
-              }}
-            />
-          ) : (
-            <Text>No Id Associated</Text>
-          )}
+          <UpdateWorkoutButton
+            id={currentWorkoutId}
+            workout={{
+              title: workoutTitleText,
+              description: workoutDescriptionText,
+              exercises: exerciseData,
+            }}
+          />
         </View>
         <View className="mx-4 my-1">
           <Text>Workout Title</Text>
           <TextInput
             mode="outlined"
             onChangeText={(text) => setWorkoutTitleText(text)}
-          >
-            {workoutTitleText}
-          </TextInput>
+            placeholder={workoutTitleText}
+          ></TextInput>
         </View>
 
         <View className="mx-4 my-1">
@@ -108,9 +108,8 @@ const EditCreatedWorkout = () => {
           <TextInput
             mode="outlined"
             onChangeText={(text) => setWorkoutDescriptionText(text)}
-          >
-            {workoutDescriptionText}
-          </TextInput>
+            placeholder={workoutDescriptionText}
+          ></TextInput>
         </View>
         <View className="mx-4 my-1">
           <Button

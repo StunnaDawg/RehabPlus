@@ -11,6 +11,7 @@ import { useCurrentPhasesIdContext } from "../../context/phasesIdContext"
 import { useCurrentWorkoutIdContext } from "../../context/workoutIdContext"
 
 const UpdateWorkoutButton = ({
+  id,
   workout: { title, description, exercises } = {},
 }: Workout) => {
   const { setExerciseData } = useExerciseContext()
@@ -19,28 +20,33 @@ const UpdateWorkoutButton = ({
   const { currentWorkoutId } = useCurrentWorkoutIdContext()
   const newProtocolId = newProtocolData.id
   const workoutId = currentWorkoutId
-  const workoutDocRef = doc(
-    db,
-    "protocols",
-    newProtocolId,
-    "phases",
-    currentPhasesId,
-    "workouts",
-    workoutId
-  )
+  console.log(workoutId)
+
   const navigation = useNavigation<NavigationType>()
 
   const CreateWorkout = async () => {
     setExerciseData([])
-
+    console.log("trying to update")
     try {
-      await updateDoc(workoutDocRef, {
-        workout: {
-          title: title,
-          description: description,
-          exercises: exercises,
-        },
-      })
+      if (id) {
+        console.log("there is an id")
+        const workoutDocRef = doc(
+          db,
+          "protocols",
+          newProtocolId,
+          "phases",
+          currentPhasesId,
+          "workouts",
+          id
+        )
+        await updateDoc(workoutDocRef, {
+          workout: {
+            title: title,
+            description: description,
+            exercises: exercises,
+          },
+        })
+      }
     } catch (err) {
       console.error(err)
     }
