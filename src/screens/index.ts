@@ -1,9 +1,17 @@
-import DashboardScreen from "./DashboardScreen";
-import InboxScreen from "./InboxScreen";
-import ClientScreen from "./ClientScreen";
-import ProtocolScreen from "./ProtocolScreen";
-import CreateNewProtocol from "./CreateNewProtocol";
-import LoginScreen from "./LoginScreen";
-import SignUpScreen from "./SignUpScreen";
+import DashboardScreen from "./DashboardScreen/DashboardScreen"
+import InboxScreen from "./InboxScreenTab/InboxScreen"
+import ClientScreen from "./ClientTabScreen/ClientScreen"
+import ProtocolScreen from "./ProtocolTabScreen/ProtocolScreen"
+import CreateNewProtocol from "./ProtocolCreationScreens/NewProtocolScreens/CreateNewProtocol"
+import LoginScreen from "./LoginScreen"
+import SignUpScreen from "./SignUpScreen"
 
-export {DashboardScreen,InboxScreen, ClientScreen, ProtocolScreen, CreateNewProtocol, LoginScreen, SignUpScreen}
+export {
+  DashboardScreen,
+  InboxScreen,
+  ClientScreen,
+  ProtocolScreen,
+  CreateNewProtocol,
+  LoginScreen,
+  SignUpScreen,
+}
