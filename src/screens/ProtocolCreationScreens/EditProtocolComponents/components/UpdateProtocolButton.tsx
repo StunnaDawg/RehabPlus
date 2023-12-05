@@ -4,14 +4,22 @@ import React from "react"
 import { useNavigation } from "@react-navigation/native"
 import { db } from "../../../../firebase"
 import { updateDoc, collection, doc } from "firebase/firestore"
+import { TabNavigationType } from "../../../../@types/navigation"
+
+type UpdateButtonProps = {
+  protocolTitle: string
+  protocolOutline?: string
+  id: string
+  protocolPublic: boolean
+}
 
 const UpdateButton = ({
   protocolTitle,
   protocolOutline,
   id,
   protocolPublic,
-}) => {
-  const navigation = useNavigation()
+}: UpdateButtonProps) => {
+  const navigation = useNavigation<TabNavigationType>()
   const protocolsCollectionRef = collection(db, "protocols")
   const currentProtocol = doc(protocolsCollectionRef, id)
 

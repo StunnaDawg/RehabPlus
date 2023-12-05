@@ -17,16 +17,13 @@ import EditProtocol from "./screens/ProtocolCreationScreens/EditProtocolComponen
 import EditClientScreen from "./screens/ClientCreationScreens/EditClientComponents/EditClientScreen"
 import ChangeClientProtocolScreen from "./screens/ClientCreationScreens/EditClientComponents/ChangeProtocol"
 import AddClientProtocolScreen from "./screens/ClientCreationScreens/NewClientScreen/AddProtocolScreen"
-import AddProtocolWorkout from "./screens/ProtocolCreationScreens/NewProtocolScreens/AddProtocolWorkoutComponents/AddWorkout"
-import CreateWorkout from "./screens/ProtocolCreationScreens/NewProtocolScreens/AddProtocolWorkoutComponents/CreateWorkout"
+import AddProtocolWorkout from "./screens/ProtocolCreationScreens/WorkoutCreationScreens/AddWorkout"
+import CreateWorkout from "./screens/ProtocolCreationScreens/WorkoutCreationScreens/CreateWorkout"
 import ExerciseDataBase from "./screens/ExerciseDatabase/ExerciseDataBase"
-import EditProtocolWorkout from "./screens/ProtocolCreationScreens/EditProtocolComponents/EditProtocolWorkout"
-import EditWorkout from "./screens/ProtocolCreationScreens/EditProtocolComponents/EditProtocolWorkoutComponents/EditWorkoutPage"
-import AddWorkoutCurrentProtocol from "./screens/ProtocolCreationScreens/EditProtocolComponents/EditProtocolWorkoutComponents/AddNewWorkout"
 import ViewProtocolScreen from "./screens/ViewProtocolScreen/ViewProtocolScreen"
 import ViewPhases from "./screens/ViewProtocolScreen/ViewPhases"
 import { RootStackParamList, TabParamList } from "./@types/navigation"
-import EditCreatedWorkout from "./screens/ProtocolCreationScreens/NewProtocolScreens/AddProtocolWorkoutComponents/EditMadeWorkout"
+import EditCreatedWorkout from "./screens/ProtocolCreationScreens/WorkoutCreationScreens/EditMadeWorkout"
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 const Tab = createBottomTabNavigator<TabParamList>()
@@ -79,11 +76,6 @@ const NavStack = () => {
           <Stack.Screen
             name="EditProtocolWorkoutScreen"
             component={EditCreatedWorkout}
-          />
-          <Stack.Screen name="EditWorkoutScreen" component={EditWorkout} />
-          <Stack.Screen
-            name="AddNewWorkoutScreen"
-            component={AddWorkoutCurrentProtocol}
           />
           <Stack.Screen
             name="ViewProtocolScreen"

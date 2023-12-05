@@ -1,11 +1,11 @@
 import { View } from "react-native"
 import { Button } from "react-native-paper"
 import React from "react"
-import { db, FIREBASE_AUTH } from "../../../../../firebase"
+import { db, FIREBASE_AUTH } from "../../../../firebase"
 import { addDoc, collection } from "firebase/firestore"
-import { useNewProtocolDataContext } from "../../../../../context/newProtocolContext"
-import { useCompleteWorkoutContext } from "../../../../../context/completeWorkoutContext"
-import { useCurrentPhasesIdContext } from "../../../../../context/phasesIdContext"
+import { useNewProtocolDataContext } from "../../../../context/newProtocolContext"
+import { useCompleteWorkoutContext } from "../../../../context/completeWorkoutContext"
+import { useCurrentPhasesIdContext } from "../../../../context/phasesIdContext"
 
 const SaveWorkoutsToPhaseButton = () => {
   const { newProtocolData } = useNewProtocolDataContext()

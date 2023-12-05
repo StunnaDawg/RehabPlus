@@ -1,12 +1,12 @@
 import { useNavigation } from "@react-navigation/native"
 import { Button, Card, Text } from "react-native-paper"
-import { NavigationType } from "../../../../../@types/navigation"
-import { useCurrentWorkoutIdContext } from "../../../../../context/workoutIdContext"
+import { NavigationType } from "../../../../@types/navigation"
+import { useCurrentWorkoutIdContext } from "../../../../context/workoutIdContext"
 import { useEffect } from "react"
-import { useEditWorkoutContext } from "../../../../../context/editWorkoutContext"
-import { useCurrentPhasesIdContext } from "../../../../../context/phasesIdContext"
-import { useNewProtocolDataContext } from "../../../../../context/newProtocolContext"
-import GetSingleWorkout from "../../../../../functions/getSingleWorkout"
+import { useEditWorkoutContext } from "../../../../context/editWorkoutContext"
+import { useCurrentPhasesIdContext } from "../../../../context/phasesIdContext"
+import { useNewProtocolDataContext } from "../../../../context/newProtocolContext"
+import GetSingleWorkout from "../../../../functions/getSingleWorkout"
 
 type CompleteWorkoutWidgetProps = {
   workoutTitle?: string

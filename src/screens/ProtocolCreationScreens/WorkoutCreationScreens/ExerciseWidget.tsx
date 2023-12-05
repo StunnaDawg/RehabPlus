@@ -8,11 +8,11 @@ import {
   TextInput,
 } from "react-native-paper"
 import React, { useEffect, useState } from "react"
-import GetSingleExercise from "../../../../functions/getSingleExercise"
+import GetSingleExercise from "../../../functions/getSingleExercise"
 import { useIsFocused } from "@react-navigation/native"
-import { useSingleWorkoutContext } from "../../../../context/workoutContext"
-import { useRefreshKeyContext } from "../../../../context/refreshKey"
-import { WorkoutExercise } from "../../../../@types/firestore"
+import { useSingleWorkoutContext } from "../../../context/workoutContext"
+import { useRefreshKeyContext } from "../../../context/refreshKey"
+import { WorkoutExercise } from "../../../@types/firestore"
 
 type ExerciseWidgetProps = {
   id: string
