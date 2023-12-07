@@ -1,7 +1,7 @@
 import { View, Text } from "react-native"
 import React, { Dispatch, SetStateAction, useState } from "react"
 import { TextInput } from "react-native-paper"
-import CreateCategoryButton from "../ExerciseDataBaseComponents/CreateCategoryButton"
+import CreateCategoryButton from "./components/CreateCategoryButton"
 import ExerciseDataBase from "../ExerciseDataBase"
 import { ExerciseDataBaseCategory } from "../../../@types/firestore"
 

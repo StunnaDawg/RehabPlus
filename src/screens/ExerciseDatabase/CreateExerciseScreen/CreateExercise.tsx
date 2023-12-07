@@ -5,11 +5,13 @@ import AddCategory from "./ChooseCategory"
 import CreateCategory from "./CreateCategoryModal"
 import { ExerciseDataBaseCategory } from "../../../@types/firestore"
 import ChooseCategory from "./ChooseCategory"
+import CreateExerciseButton from "./components/CreateExerciseButton"
 
 const CreateExercise = () => {
-  const [exerciseName, setExerciseName] = useState<string>()
+  const [exerciseName, setExerciseName] = useState<string>("")
   const [exerciseDescription, setExerciseDescription] = useState<string>()
   const [categoryName, setCategoryName] = useState<string>("All Categories")
+  const [categoryId, setCategoryId] = useState<string>("")
   const [chooseExerciseCategories, setChooseExerciseCategories] = useState<
     ExerciseDataBaseCategory[]
   >([])
@@ -42,6 +44,7 @@ const CreateExercise = () => {
         chooseExerciseCategories={chooseExerciseCategories}
         setChooseExerciseCategories={setChooseExerciseCategories}
         setChosenCategory={setCategoryName}
+        setCategoryId={setCategoryId}
         chosenCategory={categoryName}
       />
 
@@ -73,6 +76,11 @@ const CreateExercise = () => {
         >
           Next
         </Button>
+        <CreateExerciseButton
+          exerciseTitle={exerciseName}
+          exerciseDescription={exerciseDescription}
+          categoryId={categoryId}
+        />
       </View>
     </>
   )

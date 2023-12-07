@@ -13,12 +13,14 @@ type chooseCategoryProp = {
   >
   setChosenCategory: Dispatch<SetStateAction<string>>
   chosenCategory: string
+  setCategoryId: Dispatch<SetStateAction<string>>
 }
 
 const ChooseCategory = ({
   setChooseExerciseCategories,
   chooseExerciseCategories,
   setChosenCategory,
+  setCategoryId,
   chosenCategory,
 }: chooseCategoryProp) => {
   const [expanded, setExpanded] = useState<boolean>(false)
@@ -47,6 +49,7 @@ const ChooseCategory = ({
                     title={category.title}
                     onPress={() => {
                       setChosenCategory(category.title)
+                      setCategoryId(category.id)
                       handlePress()
                     }}
                   />
