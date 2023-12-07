@@ -9,6 +9,7 @@ import ChooseCategory from "./ChooseCategory"
 const CreateExercise = () => {
   const [exerciseName, setExerciseName] = useState<string>()
   const [exerciseDescription, setExerciseDescription] = useState<string>()
+  const [categoryName, setCategoryName] = useState<string>("All Categories")
   const [chooseExerciseCategories, setChooseExerciseCategories] = useState<
     ExerciseDataBaseCategory[]
   >([])
@@ -37,16 +38,12 @@ const CreateExercise = () => {
         ></TextInput>
       </View>
 
-      <View>
-        <Text>Choose Your Category</Text>
-      </View>
-
-      <ScrollView>
-        <ChooseCategory
-          chooseExerciseCategories={chooseExerciseCategories}
-          setChooseExerciseCategories={setChooseExerciseCategories}
-        />
-      </ScrollView>
+      <ChooseCategory
+        chooseExerciseCategories={chooseExerciseCategories}
+        setChooseExerciseCategories={setChooseExerciseCategories}
+        setChosenCategory={setCategoryName}
+        chosenCategory={categoryName}
+      />
 
       <Portal>
         <Modal
