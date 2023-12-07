@@ -25,6 +25,9 @@ const CreateExercise = () => {
         ></TextInput>
       </View>
 
+      <View>
+        <Text>Choose Your Category</Text>
+      </View>
       <ScrollView>
         <AddCategory />
       </ScrollView>

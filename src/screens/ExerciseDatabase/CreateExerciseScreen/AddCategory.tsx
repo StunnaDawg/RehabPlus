@@ -1,21 +1,35 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { ScrollView, View } from "react-native"
-import { Text, List, Checkbox } from "react-native-paper"
+import { Text, Card, Button } from "react-native-paper"
+import getExerciseFireStoreData from "../../../functions/getExerciseData"
+import { ExerciseDataBaseCategory } from "../../../@types/firestore"
+import { db } from "../../../firebase"
+import { collection } from "firebase/firestore"
 
 const AddCategory = () => {
-  const [checked, setChecked] = useState(false)
+  const [name, setName] = useState("")
+  const [chooseExerciseCategories, setChooseExerciseCategories] = useState<
+    ExerciseDataBaseCategory[]
+  >([])
+  const categoriesCollection = collection(db, "exerciseCategories")
 
-  const handlePress = () => setChecked(!checked)
+  useEffect(() => {
+    getExerciseFireStoreData(setChooseExerciseCategories, categoriesCollection)
+  }, [])
 
   return (
     <>
       <View>
-        <Text>Choose Your Category</Text>
-      </View>
-
-      <View>
-        <Checkbox.IOS status="checked" />
-        <Text>Bicep</Text>
+        {chooseExerciseCategories.map((category) => (
+          <Card key={category.id} className="flex flex-1 mx-16">
+            <Card.Content>
+              <Text>{category.title}</Text>
+            </Card.Content>
+            <Card.Actions>
+              <Button onPress={() => setName(category.title)}>Choose me</Button>
+            </Card.Actions>
+          </Card>
+        ))}
       </View>
     </>
   )
