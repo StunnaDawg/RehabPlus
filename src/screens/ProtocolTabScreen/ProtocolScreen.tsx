@@ -1,19 +1,21 @@
 import { ScrollView, Text, View } from "react-native"
-import { useIsFocused } from "@react-navigation/native"
+import { useIsFocused, useNavigation } from "@react-navigation/native"
 import React, { useEffect, useState } from "react"
 import ProtocolScreenWidget from "./ProtocolScreenComponents/ProtocolScreenWidget"
 import ProtocolScreenHeader from "./ProtocolScreenComponents/ProtocolScreenHeader"
 import { FIREBASE_AUTH, db } from "../../firebase"
 import { collection } from "firebase/firestore"
 import getFireStoreData from "../../functions/getFireStoreData"
-import { Switch } from "react-native-paper"
+import { Button, Switch } from "react-native-paper"
 import { Protocol } from "../../@types/firestore"
+import { NavigationType } from "../../@types/navigation"
 
 const ProtocolScreen = () => {
   const [protocolList, setProtocolList] = useState<Protocol[] | undefined>([])
   const [listPublic, setListPublic] = useState(false)
   const protocolsCollectionRef = collection(db, "protocols")
   const isFocused = useIsFocused()
+  const navigation = useNavigation<NavigationType>()
 
   const onToggleSwitch = () => setListPublic(!listPublic)
 
@@ -27,6 +29,9 @@ const ProtocolScreen = () => {
         <View className="flex-1 flex-row-reverse items-center justify-center">
           <Text>Show Public Protocols</Text>
           <Switch value={listPublic} onValueChange={onToggleSwitch} />
+          <Button onPress={() => navigation.navigate("CreateExercise")}>
+            Create New Exercise
+          </Button>
         </View>
         {listPublic
           ? protocolList?.map((protocol) => (
