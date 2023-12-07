@@ -17,18 +17,17 @@ const CreateExerciseButton = ({
   exerciseDescription,
   categoryId,
 }: CreateExerciseButtonProps) => {
-  const categoryExercises = collection(
-    db,
-    "exerciseCategories",
-    categoryId,
-    "exercises"
-  )
-
   const navigation = useNavigation<TabNavigationType>()
 
   const handleExerciseCreation = async () => {
     try {
       if (categoryId) {
+        const categoryExercises = collection(
+          db,
+          "exerciseCategories",
+          categoryId,
+          "exercises"
+        )
         await addDoc(categoryExercises, {
           title: exerciseTitle,
           description: exerciseDescription,
