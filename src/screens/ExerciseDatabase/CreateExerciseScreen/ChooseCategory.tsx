@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { ScrollView, View } from "react-native"
 import { Text, Card, Button } from "react-native-paper"
 import getExerciseFireStoreData from "../../../functions/getExerciseData"
@@ -6,16 +6,27 @@ import { ExerciseDataBaseCategory } from "../../../@types/firestore"
 import { db } from "../../../firebase"
 import { collection } from "firebase/firestore"
 
-const AddCategory = () => {
+type chooseCategoryProp = {
+  chooseExerciseCategories: ExerciseDataBaseCategory[]
+  setChooseExerciseCategories: Dispatch<
+    SetStateAction<ExerciseDataBaseCategory[]>
+  >
+}
+
+const ChooseCategory = ({
+  setChooseExerciseCategories,
+  chooseExerciseCategories,
+}: chooseCategoryProp) => {
   const [name, setName] = useState("")
-  const [chooseExerciseCategories, setChooseExerciseCategories] = useState<
-    ExerciseDataBaseCategory[]
-  >([])
   const categoriesCollection = collection(db, "exerciseCategories")
 
   useEffect(() => {
     getExerciseFireStoreData(setChooseExerciseCategories, categoriesCollection)
   }, [])
+
+  useEffect(() => {
+    console.log(name)
+  }, [name])
 
   return (
     <>
@@ -35,4 +46,4 @@ const AddCategory = () => {
   )
 }
 
-export default AddCategory
+export default ChooseCategory
