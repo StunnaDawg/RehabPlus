@@ -54,7 +54,7 @@ export type Client = {
   email: string
   injuryDescription: string
   name: string
-  protocol: DocumentReference
+  protocol: string
   status: boolean
   userId: string //the userId of phsiotherapist
 }

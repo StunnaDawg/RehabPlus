@@ -5,8 +5,11 @@ import CreateButton from "./components/CreateButton"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import { useEditClientContext } from "../../../context/clientContext"
 import { NavigationType } from "../../../@types/navigation"
+import { useAddClientProtocolContext } from "../../../context/EditProtocolContext"
+import { DocumentData } from "firebase/firestore"
 
 const NewClient = () => {
+  const { newClientProtocol } = useAddClientProtocolContext()
   const [clientName, setClientName] = useState("")
   const { clientEditData } = useEditClientContext()
   const [injuryOutline, setInjuryOutline] = useState("")
@@ -22,7 +25,7 @@ const NewClient = () => {
       try {
         if (clientEditData !== null && isMounted) {
           console.log("New CLient context state:", clientEditData)
-          // setProtocol(clientEditData.protocol)
+          setProtocol(newClientProtocol)
           console.log("New Client protocol state:", protocol)
         }
       } catch (err) {
