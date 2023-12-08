@@ -3,18 +3,21 @@ import React, { useEffect, useState } from "react"
 import ClientTable from "./components/ClientTable"
 import ClientHeader from "./components/ClientHeader"
 import getClientFireStoreData from "../../functions/getClientFireStoreData"
-import { Client } from "../../@types/firestore"
-import { DocumentData, collection } from "firebase/firestore"
+import { Client, Protocol } from "../../@types/firestore"
+import { DocumentData, collection, doc } from "firebase/firestore"
 import getDocumentRefData from "../../functions/getDocumentRefData"
 import { db } from "../../firebase"
 import { useIsFocused } from "@react-navigation/native"
+import getFireStoreData from "../../functions/getFireStoreData"
+import GetSingleDoc from "../../functions/getSingleDoc"
 
 export type ClientPlusProtocolType = {
   id: string
   email: string
   injuryDescription: string
   name: string
-  protocol: DocumentData | undefined
+  protocol: string
+  protocolTitle: string
   status: boolean
   userId: string
 }
@@ -24,6 +27,7 @@ const ClientScreen = () => {
   const [clientPlusProtocol, setClientsPlusProtocol] = useState<
     ClientPlusProtocolType[]
   >([])
+  const [protocolTitle, setProtocolTitle] = useState<Protocol>({} as Protocol)
   const [refreshPlease, setRefreshPlease] = useState(false)
   const clientsCollectionRef = collection(db, "clients")
   const isFocused = useIsFocused()
@@ -40,10 +44,6 @@ const ClientScreen = () => {
 
     fetchClientData()
   }, [isFocused])
-
-  useEffect(() => {
-    setRefreshPlease(true)
-  }, [clientPlusProtocol])
 
   return (
     <ScrollView>

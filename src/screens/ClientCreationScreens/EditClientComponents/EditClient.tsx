@@ -11,35 +11,35 @@ import { NavigationType } from "../../../@types/navigation"
 const EditClient = () => {
   const { clientEditData } = useEditClientContext()
   const { newClientProtocol } = useAddClientProtocolContext()
-  const [clientName, setClientName] = useState(clientEditData.name)
+  const [clientName, setClientName] = useState("")
   const [injuryOutline, setInjuryOutline] = useState(
     clientEditData.injuryDescription
   )
-  const [email, setEmail] = useState(clientEditData.email)
-  const [protocol, setCurrentProtocol] = useState(clientEditData?.protocol)
+  const [email, setEmail] = useState("")
+  const [protocol, setCurrentProtocol] = useState("")
   const isFocused = useIsFocused()
   const navigation = useNavigation<NavigationType>()
   const protocolDummy = "dummy"
 
-  useEffect(() => {
-    let isMounted = true
-    const updateStatePLEASE = async () => {
-      try {
-        if (newClientProtocol !== null && isMounted) {
-          console.log("context state:", newClientProtocol)
-          // setCurrentProtocol(newClientProtocol)
-          console.log("protocol state:", protocol)
-        }
-      } catch (err) {
-        console.error(err)
-      }
-    }
+  // useEffect(() => {
+  //   let isMounted = true
+  //   const updateStatePLEASE = async () => {
+  //     try {
+  //       if (newClientProtocol !== null && isMounted) {
+  //         console.log("context state:", newClientProtocol)
+  //         // setCurrentProtocol(newClientProtocol)
+  //         console.log("protocol state:", protocol)
+  //       }
+  //     } catch (err) {
+  //       console.error(err)
+  //     }
+  //   }
 
-    updateStatePLEASE()
-    return () => {
-      isMounted = false
-    }
-  }, [isFocused, newClientProtocol])
+  //   updateStatePLEASE()
+  //   return () => {
+  //     isMounted = false
+  //   }
+  // }, [isFocused, newClientProtocol])
 
   useEffect(() => {
     console.log("edit client page data:", clientEditData)
@@ -79,7 +79,7 @@ const EditClient = () => {
 
       <View>
         <Text>Current Protocol</Text>
-        <Text>{`${protocol}`}</Text>
+        {/* <Text>{`${protocol}`}</Text> */}
         <Button onPress={() => navigation.navigate("ChangeProtocolScreen")}>
           Change Protocol?
         </Button>
@@ -91,10 +91,10 @@ const EditClient = () => {
         clientInjuryDescription={injuryOutline}
         id={clientEditData.id}
         userId={clientEditData.userId}
-        protocolId={protocolDummy}
+        protocolId={clientEditData.id}
       />
 
-      <DeleteButton id={clientEditData.id} userId={clientEditData.userId} />
+      {/* <DeleteButton id={clientEditData.id} userId={clientEditData.userId} /> */}
     </>
   )
 }

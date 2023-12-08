@@ -5,6 +5,7 @@ import { useNavigation } from "@react-navigation/native"
 import { addDoc, collection } from "firebase/firestore"
 import { FIREBASE_AUTH, db } from "../../../../firebase"
 import { TabNavigationType } from "../../../../@types/navigation"
+import { Client } from "../../../../@types/firestore"
 
 type CreateButtonProps = {
   clientName: string

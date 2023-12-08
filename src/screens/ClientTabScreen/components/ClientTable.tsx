@@ -43,6 +43,7 @@ const ClientTable = ({
               <DataTable.Cell
                 onPress={async () => {
                   try {
+                    console.log("client id", client.id)
                     await GetSingleClient(
                       setClientEditData,
                       clientsCollectionRef,
@@ -60,12 +61,12 @@ const ClientTable = ({
               <DataTable.Cell
                 onPress={async () => {
                   try {
+                    console.log("client id", client.id)
                     await GetSingleClient(
                       setClientEditData,
                       clientsCollectionRef,
                       client.id
                     )
-
                     navigation.navigate("EditClient")
                   } catch (err) {
                     console.error(err)

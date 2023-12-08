@@ -10,32 +10,21 @@ const GetSingleClient = async (
   try {
     const docRef = doc(collectionRef, id)
     const docSnap = await getDoc(docRef)
-    let protocolData = null
-    let protocolId = null
+    console.log("i got here")
 
     if (docSnap.exists()) {
+      console.log("we got this far")
       const clientData = { ...docSnap.data() }
 
       const docId = docSnap.id
-      const protocolRef = clientData.protocol
-
-      if (protocolRef) {
-        const protocolDoc = await getDoc(protocolRef)
-
-        if (protocolDoc.exists()) {
-          protocolData = protocolDoc.data()
-          protocolId = protocolDoc.id
-          console.log("Protocol Data:", protocolData)
-        }
-      }
 
       const docData = {
         ...clientData,
         id: docId,
-        email: clientData.email,
-        injuryDescription: clientData.injuryDescription,
+        email: clientData?.email,
+        injuryDescription: clientData?.injuryDescription,
         name: clientData.name,
-        protocol: clientData.protocol,
+        protocol: clientData?.protocol,
         status: clientData.status,
         userId: clientData.userId,
       }
@@ -45,6 +34,7 @@ const GetSingleClient = async (
       console.log("No such document!")
     }
   } catch (err) {
+    console.log("error getting client data")
     console.error(err)
   }
 }
