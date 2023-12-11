@@ -10,6 +10,7 @@ import { db } from "../../firebase"
 import { useIsFocused } from "@react-navigation/native"
 import getFireStoreData from "../../functions/getFireStoreData"
 import GetSingleDoc from "../../functions/getSingleDoc"
+import { useAddClientProtocolContext } from "../../context/EditProtocolContext"
 
 export type ClientPlusProtocolType = {
   id: string
@@ -27,6 +28,7 @@ const ClientScreen = () => {
   const [clientPlusProtocol, setClientsPlusProtocol] = useState<
     ClientPlusProtocolType[]
   >([])
+  const { setClientProtocol } = useAddClientProtocolContext()
   const [protocolTitle, setProtocolTitle] = useState<Protocol>({} as Protocol)
   const [refreshPlease, setRefreshPlease] = useState(false)
   const clientsCollectionRef = collection(db, "clients")
@@ -44,6 +46,24 @@ const ClientScreen = () => {
 
     fetchClientData()
   }, [isFocused])
+
+  useEffect(() => {
+    const addProtocolTitle = async () => {
+      try {
+        const protocolCollectionRef = collection(db, "protocols")
+        clientList.map((client) => {
+          GetSingleDoc(setProtocolTitle, protocolCollectionRef, client.id)
+        })
+      } catch (err) {
+        console.error(err)
+      }
+    }
+    addProtocolTitle()
+  }, [clientList])
+
+  useEffect(() => {
+    setClientProtocol("")
+  }, [])
 
   return (
     <ScrollView>
