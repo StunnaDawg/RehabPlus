@@ -2,9 +2,11 @@ import { getDoc, doc, CollectionReference } from "firebase/firestore"
 import { Dispatch, SetStateAction } from "react"
 import { Protocol } from "../@types/firestore"
 
-
-
-const GetSingleDoc = async (setState: Dispatch<SetStateAction<Protocol>>, collectionRef: CollectionReference, id: string) => {
+const GetSingleDoc = async (
+  setState: Dispatch<SetStateAction<Protocol>>,
+  collectionRef: CollectionReference,
+  id: string
+) => {
   try {
     const docRef = doc(collectionRef, id)
     const docSnap = await getDoc(docRef)
@@ -13,7 +15,7 @@ const GetSingleDoc = async (setState: Dispatch<SetStateAction<Protocol>>, collec
 
     if (docSnap.exists()) {
       const clientData = { ...docSnap.data() }
-   
+
       const docId = docSnap.id
       const protocolRef = clientData.protocol
 
@@ -21,7 +23,6 @@ const GetSingleDoc = async (setState: Dispatch<SetStateAction<Protocol>>, collec
         const protocolDoc = await getDoc(protocolRef)
 
         if (protocolDoc.exists()) {
-         
           protocolData = protocolDoc.data()
           protocolId = protocolDoc.id
           console.log("Protocol Data:", protocolData)

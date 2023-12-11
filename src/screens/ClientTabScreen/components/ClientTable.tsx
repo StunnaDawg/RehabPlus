@@ -3,56 +3,30 @@ import { DataTable, Button, IconButton } from "react-native-paper"
 import { useEffect, useState } from "react"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import { db } from "../../../firebase"
-import { DocumentData, DocumentReference, collection } from "firebase/firestore"
+import { CollectionReference } from "firebase/firestore"
 import GetSingleClient from "../../../functions/getSingleClient"
-import getClientFireStoreData from "../../../functions/getClientFireStoreData"
 import { useEditClientContext } from "../../../context/clientContext"
-import { Client } from "../../../@types/firestore"
 import { NavigationType, TabNavigationType } from "../../../@types/navigation"
-import getDocumentRefData from "../../../functions/getDocumentRefData"
+import { ClientPlusProtocolType } from "../ClientScreen"
+import { Client } from "../../../@types/firestore"
 
-type ClientPlusProtocolType = {
-  id: string
-  email: string
-  injuryDescription: string
-  name: string
-  protocol: DocumentData | undefined
-  status: boolean
-  userId: string
+type ClientTableProps = {
+  otherClientList: Client[]
+  clientList: ClientPlusProtocolType[]
+  clientsCollectionRef: CollectionReference
 }
 
-const ClientTable = () => {
-  const { clientEditData, setClientEditData } = useEditClientContext()
-  const [clientList, setClientList] = useState<Client[]>([])
-  const [clientPlusProtocol, setClientsPlusProtocol] = useState<
-    ClientPlusProtocolType[]
-  >([])
-  const clientsCollectionRef = collection(db, "clients")
+const ClientTable = ({
+  clientList,
+  clientsCollectionRef,
+  otherClientList,
+}: ClientTableProps) => {
+  const { setClientEditData } = useEditClientContext()
   const navigation = useNavigation<NavigationType | TabNavigationType>()
-  const isFocused = useIsFocused()
 
   useEffect(() => {
-    const fetchClientData = async () => {
-      await getClientFireStoreData(setClientList, clientsCollectionRef)
-      const clientData = await Promise.all(
-        clientList.map(async (client) => {
-          const protocol = getDocumentRefData(client.protocol)
-          return { ...client, protocol }
-        })
-      )
-      setClientsPlusProtocol(clientData)
-    }
-
-    fetchClientData()
-  }, [isFocused])
-
-  useEffect(() => {
-    console.log(clientList)
+    console.log("client edit data in client table:", clientList)
   }, [clientList])
-
-  useEffect(() => {
-    console.log("client edit data in client table:", clientEditData)
-  }, [clientEditData])
 
   return (
     <View>
@@ -63,12 +37,13 @@ const ClientTable = () => {
           <DataTable.Title>Protocol</DataTable.Title>
           <DataTable.Title>Status</DataTable.Title>
         </DataTable.Header>
-        {clientPlusProtocol?.map((client) => {
+        {otherClientList?.map((client) => {
           return (
             <DataTable.Row key={client.id}>
               <DataTable.Cell
                 onPress={async () => {
                   try {
+                    console.log("client id", client.id)
                     await GetSingleClient(
                       setClientEditData,
                       clientsCollectionRef,
@@ -86,12 +61,12 @@ const ClientTable = () => {
               <DataTable.Cell
                 onPress={async () => {
                   try {
+                    console.log("client id", client.id)
                     await GetSingleClient(
                       setClientEditData,
                       clientsCollectionRef,
                       client.id
                     )
-
                     navigation.navigate("EditClient")
                   } catch (err) {
                     console.error(err)
@@ -101,9 +76,7 @@ const ClientTable = () => {
                 {client.name}
               </DataTable.Cell>
               <DataTable.Cell onPress={() => navigation.navigate("Protocol")}>
-                {client.protocol?.title
-                  ? client.protocol?.title
-                  : "No protocol"}
+                Protocol
               </DataTable.Cell>
               <DataTable.Cell>
                 <IconButton

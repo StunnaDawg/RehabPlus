@@ -27,7 +27,7 @@ const ProtocolEditScreenWidget = ({
             <Text className="font-bold text-2xl"> {protocolTitle} </Text>
             <Button
               onPress={async () => {
-                await setClientProtocol(id)
+                setClientProtocol(id)
                 navigation.goBack()
               }}
               icon="account"
@@ -41,7 +41,6 @@ const ProtocolEditScreenWidget = ({
               <View className="flex-col">
                 <Text className="m-2 font-bold">Weeks: {weeks}</Text>
                 <Text className="m-2 font-bold">Description: {outline}</Text>
-                <Card className="m-2"></Card>
               </View>
             </View>
           </View>

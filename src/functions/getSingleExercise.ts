@@ -10,28 +10,27 @@ import { WorkoutExercise, ExerciseDataBaseExercise } from "../@types/firestore"
 
 const GetSingleExercise = async (
   setCategoriesState: Dispatch<SetStateAction<WorkoutExercise | undefined>>,
-  id: string,
-  categoryid: string
+  exerciseId: string,
+  categoryId: string
 ) => {
   try {
     const exerciseDoc = doc(
       db,
       "exerciseCategories",
-      categoryid,
+      categoryId,
       "exercises",
-      id
+      exerciseId
     )
     const docSnap = await getDoc(exerciseDoc)
 
     if (docSnap.data()) {
       const WorkoutExerciseData = {
         ...docSnap.data(),
-        exercise: {
-          id: docSnap.data()?.exercise.id,
-          title: docSnap.data()?.exercise.title,
-          description: docSnap.data()?.exercise.description,
-        },
-        categoryId: categoryid,
+        // exercise: {
+        //   title: docSnap.data()?.exercise.title,
+        //   description: docSnap.data()?.exercise.description,
+        // },
+        // categoryId: categoryId,
       } as WorkoutExercise
       console.log("getSinglExerciseData", WorkoutExerciseData)
       setCategoriesState(WorkoutExerciseData)

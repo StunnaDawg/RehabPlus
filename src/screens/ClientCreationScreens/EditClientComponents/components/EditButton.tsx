@@ -31,11 +31,7 @@ const UpdateClientButton = ({
 }: UpdateClientButtonProps) => {
   const navigation = useNavigation<TabNavigationType>()
   const clientsCollectionRef = collection(db, "clients")
-  const currentClient = doc(clientsCollectionRef, id)
-  let protocolRef: DocumentReference | null
-  if (protocolId) {
-    protocolRef = doc(db, "protocols", protocolId)
-  }
+
   const onSubmitProtocol = async () => {
     console.log(
       " client userId:",
@@ -43,13 +39,14 @@ const UpdateClientButton = ({
       "current userId:",
       FIREBASE_AUTH?.currentUser?.uid
     )
-    if (userId == FIREBASE_AUTH?.currentUser?.uid) {
+    if ((userId == FIREBASE_AUTH?.currentUser?.uid && id !== null) || "") {
+      const currentClient = doc(clientsCollectionRef, id)
       try {
         await updateDoc(currentClient, {
           name: clientName,
           injuryDescription: clientInjuryDescription,
           email: clientEmail,
-          protocol: protocolRef,
+          protocol: protocolId,
         })
         navigation.navigate("Client")
       } catch (err) {
