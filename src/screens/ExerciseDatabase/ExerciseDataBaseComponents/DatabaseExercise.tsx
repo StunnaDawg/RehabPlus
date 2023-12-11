@@ -7,6 +7,7 @@ import ViewModal from "./ViewModal"
 type DatabaseExerciseProps = {
   exerciseName: string
   exerciseId: string
+  exerciseDescription?: string
   idOfCategory: string
 }
 
@@ -21,6 +22,7 @@ type DatabaseExerciseProps = {
 const DatabaseExercise = ({
   exerciseName,
   exerciseId,
+  exerciseDescription,
   idOfCategory,
 }: DatabaseExerciseProps) => {
   const [visible, setVisible] = useState(false)
@@ -33,6 +35,8 @@ const DatabaseExercise = ({
     backgroundColor: "white",
     padding: 20,
     marginBottom: 150,
+    marginRight: 40,
+    marginLeft: 40,
   }
   const exerciseValues = [
     {
@@ -84,7 +88,13 @@ const DatabaseExercise = ({
           onDismiss={hideModal}
           contentContainerStyle={containerStyle}
         >
-          <ViewModal setVisible={setVisible} exerciseId={exerciseId} />
+          <ViewModal
+            setVisible={setVisible}
+            exerciseTitle={exerciseName}
+            exerciseDescription={exerciseDescription}
+            exerciseId={exerciseId}
+            categoryId={idOfCategory}
+          />
         </Modal>
       </Portal>
     </>
