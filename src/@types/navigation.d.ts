@@ -23,6 +23,7 @@ export type RootStackParamList = {
   EditExercise: {
     title: string | undefined
     id: string
+    categoryId: string
   }
   // Add any other screens here
 }
@@ -43,4 +44,5 @@ export type RouteParamsType = {
   protocolId?: string
   title?: string
   id?: string
+  categoryId?: string
 }

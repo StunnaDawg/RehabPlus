@@ -77,6 +77,7 @@ const DatabaseExercise = ({
                 navigation.navigate("EditExercise", {
                   title: exerciseName,
                   id: exerciseId,
+                  categoryId: idOfCategory,
                 })
               }}
             >
