@@ -74,7 +74,10 @@ const DatabaseExercise = ({
             <Button
               onPress={() => {
                 SetEditExerciseValueHandler()
-                navigation.navigate("EditExercise")
+                navigation.navigate("EditExercise", {
+                  title: exerciseName,
+                  id: exerciseId,
+                })
               }}
             >
               Edit Exercise

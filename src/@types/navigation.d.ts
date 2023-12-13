@@ -20,7 +20,10 @@ export type RootStackParamList = {
   Login: undefined
   SignUp: undefined
   CreateExercise: undefined
-  EditExercise: undefined
+  EditExercise: {
+    title: string | undefined
+    id: string
+  }
   // Add any other screens here
 }
 
@@ -38,4 +41,6 @@ export type TabNavigationType = TabNavigationProp<TabParamList>
 export type RouteParamsType = {
   phaseId?: string
   protocolId?: string
+  title?: string
+  id?: string
 }
