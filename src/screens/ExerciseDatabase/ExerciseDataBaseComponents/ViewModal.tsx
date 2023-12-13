@@ -1,10 +1,4 @@
 import { View, Text, ScrollView } from "react-native"
-import React, { useEffect, useState } from "react"
-import GetSingleExercise from "../../../functions/getSingleExercise"
-import {
-  ExerciseDataBaseExercise,
-  WorkoutExercise,
-} from "../../../@types/firestore"
 import { Button, IconButton } from "react-native-paper"
 import { useExerciseContext } from "../../../context/exerciseContext"
 import { useNavigation } from "@react-navigation/native"

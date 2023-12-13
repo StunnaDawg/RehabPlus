@@ -20,6 +20,7 @@ export type RootStackParamList = {
   Login: undefined
   SignUp: undefined
   CreateExercise: undefined
+  EditExercise: undefined
   // Add any other screens here
 }
 

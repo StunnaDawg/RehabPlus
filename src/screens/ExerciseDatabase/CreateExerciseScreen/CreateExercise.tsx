@@ -6,6 +6,8 @@ import CreateCategory from "./CreateCategoryModal"
 import { ExerciseDataBaseCategory } from "../../../@types/firestore"
 import ChooseCategory from "./ChooseCategory"
 import CreateExerciseButton from "./components/CreateExerciseButton"
+import { useNavigation } from "@react-navigation/native"
+import { NavigationType } from "../../../@types/navigation"
 
 const CreateExercise = () => {
   const [exerciseName, setExerciseName] = useState<string>("")
@@ -17,6 +19,7 @@ const CreateExercise = () => {
   >([])
 
   const [visible, setVisible] = useState<boolean>(false)
+  const navigation = useNavigation<NavigationType>()
 
   const showModal = () => setVisible(true)
   const hideModal = () => setVisible(false)
@@ -26,6 +29,9 @@ const CreateExercise = () => {
     <>
       <View>
         <Text className="text-xl">Create a new Exercise</Text>
+        <Button onPress={() => navigation.navigate("ExerciseDataBase")}>
+          Edit Exercise Database
+        </Button>
       </View>
       <View>
         <TextInput
