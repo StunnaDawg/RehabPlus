@@ -76,6 +76,7 @@ const DatabaseExercise = ({
                 SetEditExerciseValueHandler()
                 navigation.navigate("EditExercise", {
                   title: exerciseName,
+                  exerciseDescription: exerciseDescription,
                   id: exerciseId,
                   categoryId: idOfCategory,
                 })

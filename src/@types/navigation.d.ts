@@ -22,6 +22,7 @@ export type RootStackParamList = {
   CreateExercise: undefined
   EditExercise: {
     title: string | undefined
+    exerciseDescription: string | undefined
     id: string
     categoryId: string
   }
@@ -45,4 +46,5 @@ export type RouteParamsType = {
   title?: string
   id?: string
   categoryId?: string
+  exerciseDescription?: string
 }
