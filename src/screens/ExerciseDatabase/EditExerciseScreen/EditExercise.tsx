@@ -1,48 +1,72 @@
-import { useEffect, useState } from "react"
-import { Text, View, ScrollView } from "react-native"
+import { View, Text, ScrollView } from "react-native"
+import { useRoute, useNavigation, RouteProp } from "@react-navigation/native"
+import React, { useEffect, useState } from "react"
+import { RouteParamsType } from "../../../@types/navigation"
+import {
+  ExerciseDataBaseCategory,
+  ExerciseDataBaseExercise,
+} from "../../../@types/firestore"
+import getSingleDbExercise from "../../../functions/getSingleDbExercise"
 import { Button, Modal, Portal, TextInput } from "react-native-paper"
-import AddCategory from "./ChooseCategory"
-import CreateCategory from "./CreateCategoryModal"
-import { ExerciseDataBaseCategory } from "../../../@types/firestore"
-import ChooseCategory from "./ChooseCategory"
-import CreateExerciseButton from "./components/CreateExerciseButton"
-import { useNavigation } from "@react-navigation/native"
-import { NavigationType } from "../../../@types/navigation"
+import ChooseCategory from "../CreateExerciseScreen/ChooseCategory"
+import CreateCategory from "../CreateExerciseScreen/CreateCategoryModal"
+import UpdateExerciseButton from "./components/UpdateExercise"
 
-const CreateExercise = () => {
+const EditExercise = () => {
   const [exerciseName, setExerciseName] = useState<string>("")
-  const [exerciseDescription, setExerciseDescription] = useState<string>()
+  const [exerciseDescriptionState, setExerciseDescriptionState] =
+    useState<string>()
   const [categoryName, setCategoryName] = useState<string>("All Categories")
-  const [categoryId, setCategoryId] = useState<string>("")
+  const [exercise, setExercise] = useState<ExerciseDataBaseExercise>(
+    {} as ExerciseDataBaseExercise
+  )
+  const [categoryIdState, setCategoryIdState] = useState<string>("")
   const [chooseExerciseCategories, setChooseExerciseCategories] = useState<
     ExerciseDataBaseCategory[]
   >([])
-
   const [visible, setVisible] = useState<boolean>(false)
-  const navigation = useNavigation<NavigationType>()
 
   const showModal = () => setVisible(true)
   const hideModal = () => setVisible(false)
   const containerStyle = { backgroundColor: "white", padding: 20 }
+  const route = useRoute<RouteProp<Record<string, RouteParamsType>, string>>()
+
+  const { title, exerciseDescription, id, categoryId } = route.params
+
+  useEffect(() => {
+    console.log("loading")
+
+    const loadExercise = async () => {
+      try {
+        if (id && categoryId) {
+          console.log("loading edit exercise Page")
+          getSingleDbExercise(setExercise, id, categoryId)
+        } else {
+          console.log("Yo where are the IDs?")
+        }
+      } catch (err) {
+        console.error(err)
+      }
+    }
+
+    loadExercise()
+  }, [])
 
   return (
-    <>
+    <ScrollView>
       <View>
         <Text className="text-xl">Create a new Exercise</Text>
-        <Button onPress={() => navigation.navigate("ExerciseDataBase")}>
-          Edit Exercise Database
-        </Button>
       </View>
       <View>
         <TextInput
-          placeholder="Name"
+          placeholder={title}
           onChangeText={(text) => setExerciseName(text)}
         ></TextInput>
       </View>
       <View>
         <TextInput
-          placeholder="Description"
-          onChangeText={(text) => setExerciseDescription(text)}
+          placeholder={exerciseDescription}
+          onChangeText={(text) => setExerciseDescriptionState(text)}
         ></TextInput>
       </View>
 
@@ -50,7 +74,7 @@ const CreateExercise = () => {
         chooseExerciseCategories={chooseExerciseCategories}
         setChooseExerciseCategories={setChooseExerciseCategories}
         setChosenCategory={setCategoryName}
-        setCategoryId={setCategoryId}
+        setCategoryId={setCategoryIdState}
         chosenCategory={categoryName}
       />
 
@@ -82,14 +106,15 @@ const CreateExercise = () => {
         >
           Next
         </Button>
-        <CreateExerciseButton
+        <UpdateExerciseButton
           exerciseTitle={exerciseName}
           exerciseDescription={exerciseDescription}
           categoryId={categoryId}
+          exerciseId={id}
         />
       </View>
-    </>
+    </ScrollView>
   )
 }
 
-export default CreateExercise
+export default EditExercise
