@@ -11,6 +11,9 @@ import { Button, Modal, Portal, TextInput } from "react-native-paper"
 import ChooseCategory from "../CreateExerciseScreen/ChooseCategory"
 import CreateCategory from "../CreateExerciseScreen/CreateCategoryModal"
 import UpdateExerciseButton from "./components/UpdateExercise"
+import DeleteButton from "../../../components/DeleteButton"
+import { FIREBASE_AUTH, db } from "../../../firebase"
+import { DocumentReference, doc } from "firebase/firestore"
 
 const EditExercise = () => {
   const [exerciseName, setExerciseName] = useState<string>("")
@@ -33,6 +36,12 @@ const EditExercise = () => {
 
   const { title, exerciseDescription, id, categoryId } = route.params
 
+  let exerciseDocRef = undefined
+
+  if (id && categoryId) {
+    exerciseDocRef = doc(db, "exerciseCategories", categoryId, "exercises", id)
+  }
+
   useEffect(() => {
     console.log("loading")
 
@@ -54,8 +63,13 @@ const EditExercise = () => {
 
   return (
     <ScrollView>
-      <View>
-        <Text className="text-xl">Create a new Exercise</Text>
+      <View className="flex flex-1 flex-row justify-between">
+        <Text className="text-xl">Edit Exercise</Text>
+        <DeleteButton
+          userId={FIREBASE_AUTH?.currentUser?.uid}
+          docRef={exerciseDocRef}
+          navigationLocation="ExerciseDataBase"
+        />
       </View>
       <View>
         <TextInput
