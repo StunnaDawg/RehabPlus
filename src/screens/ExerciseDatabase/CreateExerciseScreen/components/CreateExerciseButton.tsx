@@ -36,7 +36,7 @@ const CreateExerciseButton = ({
           title: exerciseTitle,
           description: exerciseDescription,
           userId: FIREBASE_AUTH?.currentUser?.uid,
-          imageUri: imageUri,
+          imageUri: imageUri || "No image",
         })
       }
     } catch (err) {
