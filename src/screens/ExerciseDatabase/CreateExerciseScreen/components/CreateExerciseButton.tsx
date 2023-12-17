@@ -6,6 +6,7 @@ import { FIREBASE_AUTH, db } from "../../../../firebase"
 import { useNavigation } from "@react-navigation/native"
 import { TabNavigationType } from "../../../../@types/navigation"
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"
+import uploadImage from "../../../../functions/uploadImage"
 
 type CreateExerciseButtonProps = {
   exerciseTitle: string
@@ -21,8 +22,6 @@ const CreateExerciseButton = ({
   imageUri,
 }: CreateExerciseButtonProps) => {
   const navigation = useNavigation<TabNavigationType>()
-  const storage = getStorage()
-  const exerciseImageRef = ref(storage, imageUri)
 
   const handleExerciseCreation = async () => {
     try {
@@ -44,34 +43,22 @@ const CreateExerciseButton = ({
       console.error(err)
     }
   }
+  const getBlobForUri = async (uri: string) => {
+    if (uri) {
+      const blob: Blob = await new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest()
+        xhr.onload = function () {
+          resolve(xhr.response)
+        }
+        xhr.onerror = function (e) {
+          reject(new TypeError("Network request failed"))
+        }
+        xhr.responseType = "blob"
+        xhr.open("GET", uri, true)
+        xhr.send(null)
+      })
 
-  const handleImageUpload = async () => {
-    if (imageUri) {
-      try {
-        const blob: Blob = await new Promise((resolve, reject) => {
-          const xhr = new XMLHttpRequest()
-          xhr.onload = function () {
-            resolve(xhr.response)
-          }
-          xhr.onerror = function (e) {
-            console.log(e)
-            reject(new TypeError("Network request failed"))
-          }
-          xhr.responseType = "blob"
-          xhr.open("GET", imageUri, true)
-          xhr.send(null)
-        })
-
-        const fileRef = ref(getStorage(), imageUri)
-        const result = await uploadBytes(fileRef, blob)
-
-        // We're done with the blob, close and release it
-
-        return await getDownloadURL(fileRef)
-      } catch (err) {
-        console.log("we Errored")
-        console.error(err)
-      }
+      uploadImage(blob)
     }
   }
 
@@ -80,7 +67,7 @@ const CreateExerciseButton = ({
       <Button
         onPress={() => {
           handleExerciseCreation()
-          handleImageUpload()
+          if (imageUri) getBlobForUri(imageUri)
           navigation.navigate("Protocol")
         }}
       >
