@@ -11,6 +11,7 @@ type DeleteButtonProps = {
   userId: string
 }
 
+// We can probably make one delete button component
 const DeleteButton = ({ id, userId }: DeleteButtonProps) => {
   const navigation = useNavigation<TabNavigationType>()
   const protocolsCollectionRef = collection(db, "protocols")
