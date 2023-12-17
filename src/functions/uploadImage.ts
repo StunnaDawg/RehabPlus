@@ -1,11 +1,4 @@
-import { View, Text } from "react-native"
-import React from "react"
-import {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-} from "firebase/storage"
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage"
 import { storage } from "../firebase"
 
 const uploadImage = async (blob: Blob) => {

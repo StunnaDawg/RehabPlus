@@ -4,10 +4,10 @@ import { UserCredential } from "firebase/auth"
 export type ProtocolPhase = {
   id: string
   description?: string
-  title?: string
+  title: string
   userId: string
   weeks?: string
-  workouts?: CollectionReference
+  workouts?: Workout[]
 }
 
 export type Protocol = {
