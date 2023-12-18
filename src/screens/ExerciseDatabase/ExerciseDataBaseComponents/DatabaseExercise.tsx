@@ -116,7 +116,9 @@ const DatabaseExercise = ({
           <AddWorkoutModal
             setExerciseReps={setExerciseReps}
             setExerciseSets={setExerciseSets}
-            setExerciseIsCreated={setExerciseCreated}
+            exerciseId={exerciseId}
+            exerciseName={exerciseName}
+            categoryId={idOfCategory}
           />
         </Modal>
       </Portal>

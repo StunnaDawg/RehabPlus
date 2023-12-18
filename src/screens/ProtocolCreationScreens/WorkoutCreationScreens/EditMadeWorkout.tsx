@@ -121,6 +121,13 @@ const EditCreatedWorkout = () => {
             const letterData = letters[index % letters.length]
 
             console.log(index, exercise.exercise.id)
+            console.log(
+              "reps and sets of exercise",
+              exercise.exercise.title,
+              exercise.reps,
+              "and",
+              exercise.sets
+            )
             return (
               <ExerciseWidget
                 key={exercise.exercise.id}
@@ -129,6 +136,8 @@ const EditCreatedWorkout = () => {
                 categoryId={exercise.categoryId}
                 letter={letterData}
                 index={index + 1}
+                reps={exercise.reps}
+                sets={exercise.sets}
               />
             )
           })}

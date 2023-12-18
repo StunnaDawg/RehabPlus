@@ -52,8 +52,8 @@ const ExerciseWidget = ({
             {" "}
             {exerciseTitle ? exerciseTitle : "Loading..."}
           </Text>
-          <Text>reps: {reps}</Text>
-          <Text>sets: {sets}</Text>
+          <Text>reps: {reps !== undefined ? reps?.toString() : "0"}</Text>
+          <Text>sets: {reps !== undefined ? sets?.toString() : "0"}</Text>
         </Card.Content>
       </Card>
     </>
