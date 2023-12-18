@@ -33,8 +33,8 @@ export type WorkoutExercise = {
   exercise: ExerciseDataBaseExercise
   description?: string
   categoryId: string
-  reps?: number
-  sets?: number
+  reps?: string | number
+  sets?: string | number
 }
 
 export type ExerciseDataBaseCategory = {

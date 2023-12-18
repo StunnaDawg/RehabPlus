@@ -3,6 +3,7 @@ import React, { Dispatch, SetStateAction, useState } from "react"
 import { Button, TextInput } from "react-native-paper"
 import { useNavigation } from "@react-navigation/native"
 import { useExerciseContext } from "../../../context/exerciseContext"
+import { WorkoutExercise } from "../../../@types/firestore"
 
 type AddWorkoutModalProps = {
   setExerciseReps: Dispatch<SetStateAction<number>>
@@ -21,17 +22,17 @@ const AddWorkoutModal = ({
 }: AddWorkoutModalProps) => {
   const navigation = useNavigation()
   const { exerciseData, setExerciseData } = useExerciseContext()
-  const [reps, setReps] = useState<number>(0)
-  const [sets, setSets] = useState<number>(0)
+  const [reps, setReps] = useState<string>("0")
+  const [sets, setSets] = useState<string>("0")
 
   const exerciseValues = [
     {
       exercise: {
         id: exerciseId,
         title: exerciseName,
-        reps: reps,
-        sets: sets,
       },
+      reps: reps,
+      sets: sets,
       categoryId: categoryId,
     },
   ]
@@ -49,11 +50,11 @@ const AddWorkoutModal = ({
         <Text>Add Exercise Sets, Reps</Text>
         <TextInput
           label="sets"
-          onChange={(sets) => setSets(Number(sets))}
+          onChangeText={(sets) => setSets(sets)}
         ></TextInput>
         <TextInput
           label="reps"
-          onChange={(reps) => setReps(Number(reps))}
+          onChangeText={(reps) => setReps(reps)}
         ></TextInput>
       </View>
       <Button

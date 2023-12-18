@@ -124,9 +124,9 @@ const EditCreatedWorkout = () => {
             console.log(
               "reps and sets of exercise",
               exercise.exercise.title,
-              exercise.reps,
+              exercise.reps?.toString(),
               "and",
-              exercise.sets
+              exercise.sets?.toString()
             )
             return (
               <ExerciseWidget
@@ -136,8 +136,8 @@ const EditCreatedWorkout = () => {
                 categoryId={exercise.categoryId}
                 letter={letterData}
                 index={index + 1}
-                reps={exercise.reps}
-                sets={exercise.sets}
+                reps={exercise.reps?.toString()}
+                sets={exercise.sets?.toString()}
               />
             )
           })}

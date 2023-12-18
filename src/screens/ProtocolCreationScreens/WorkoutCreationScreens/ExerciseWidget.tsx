@@ -17,8 +17,8 @@ type ExerciseWidgetProps = {
   exerciseTitle: string
   letter: string
   index: number
-  reps?: number
-  sets?: number
+  reps?: string
+  sets?: string
 }
 
 const ExerciseWidget = ({
@@ -52,8 +52,8 @@ const ExerciseWidget = ({
             {" "}
             {exerciseTitle ? exerciseTitle : "Loading..."}
           </Text>
-          <Text>reps: {reps !== undefined ? reps?.toString() : "0"}</Text>
-          <Text>sets: {reps !== undefined ? sets?.toString() : "0"}</Text>
+          <Text>reps: {reps !== undefined ? reps : "0"}</Text>
+          <Text>sets: {reps !== undefined ? sets : "0"}</Text>
         </Card.Content>
       </Card>
     </>
