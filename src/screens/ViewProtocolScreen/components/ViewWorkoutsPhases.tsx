@@ -6,6 +6,7 @@ import {
   ExerciseDataBaseExercise,
 } from "../../../@types/firestore"
 import GetSingleWorkout from "../../../functions/getSingleWorkout"
+import { Button } from "react-native-paper"
 
 type ViewWorkoutsPhasesProps = {
   workoutId?: string
@@ -26,11 +27,12 @@ const ViewWorkoutsPhases = ({
   }, [])
   return (
     <View>
-      <Text>Workouts...</Text>
       {workout.workout?.exercises?.map((exerciseInWorkout) => (
-        <Text key={exerciseInWorkout.exercise.id}>
-          {exerciseInWorkout.exercise.title}
-        </Text>
+        <View key={exerciseInWorkout.exercise.id}>
+          <Text>{exerciseInWorkout.exercise.title}</Text>
+          <Button>Test Workout</Button>
+          <Button>Edit Workout</Button>
+        </View>
       ))}
     </View>
   )

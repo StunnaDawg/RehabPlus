@@ -4,7 +4,7 @@ import GetProtocolWorkouts from "../../../functions/getProtocolWorkouts"
 import { Workout } from "../../../@types/firestore"
 import { collection } from "firebase/firestore"
 import { db } from "../../../firebase"
-import { Button } from "react-native-paper"
+import { Button, Divider } from "react-native-paper"
 import ViewWorkoutsPhases from "./ViewWorkoutsPhases"
 
 type ViewPhaseCardProps = {
@@ -23,6 +23,7 @@ const ViewPhaseCard = ({
   buttonChange,
 }: ViewPhaseCardProps) => {
   const [phaseWorkouts, setPhaseWorkouts] = useState<Workout[]>([])
+  const [showWorkout, setShowWorkout] = useState<string | undefined>("")
   const workoutCollectionRef = collection(
     db,
     "protocols",
@@ -48,12 +49,23 @@ const ViewPhaseCard = ({
       {phaseWorkouts && buttonChange === phaseId
         ? phaseWorkouts.map((workouts) => (
             <>
-              <Text key={workouts.id}>{workouts.workout?.title}</Text>
-              <ViewWorkoutsPhases
-                workoutId={workouts.id}
-                protocolId={protocolId}
-                phaseId={phaseId}
-              />
+              <View className="my-10">
+                <Button
+                  onPress={() => setShowWorkout(workouts.id)}
+                  className="text-xl"
+                  key={workouts.id}
+                >
+                  {workouts.workout?.title}
+                </Button>
+                {showWorkout === workouts.id ? (
+                  <ViewWorkoutsPhases
+                    workoutId={workouts.id}
+                    protocolId={protocolId}
+                    phaseId={phaseId}
+                  />
+                ) : null}
+              </View>
+              <Divider />
             </>
           ))
         : null}
