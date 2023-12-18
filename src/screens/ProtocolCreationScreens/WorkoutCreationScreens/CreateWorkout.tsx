@@ -87,6 +87,8 @@ const CreateWorkout = () => {
               categoryId={exercise.categoryId}
               letter={letterData}
               index={index + 1}
+              reps={exercise.reps}
+              sets={exercise.sets}
             />
           )
         })}
