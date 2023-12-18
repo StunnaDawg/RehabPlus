@@ -52,9 +52,9 @@ const ViewPhases = () => {
             key={phase.id}
             buttonChange={buttonId}
             title={phase.title}
-            id={phase.id}
+            phaseId={phase.id}
             description={phase.description}
-            protoclId={protocolEditData.id}
+            protocolId={protocolEditData.id}
           />
         ))}
       </View>

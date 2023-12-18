@@ -5,18 +5,19 @@ import { Workout } from "../../../@types/firestore"
 import { collection } from "firebase/firestore"
 import { db } from "../../../firebase"
 import { Button } from "react-native-paper"
+import ViewWorkoutsPhases from "./ViewWorkoutsPhases"
 
 type ViewPhaseCardProps = {
-  protoclId: string
-  id: string
+  protocolId: string
+  phaseId: string
   title: string
   description?: string
   buttonChange: string
 }
 
 const ViewPhaseCard = ({
-  protoclId,
-  id,
+  protocolId,
+  phaseId,
   title,
   description,
   buttonChange,
@@ -25,15 +26,15 @@ const ViewPhaseCard = ({
   const workoutCollectionRef = collection(
     db,
     "protocols",
-    protoclId,
+    protocolId,
     "phases",
-    id,
+    phaseId,
     "workouts"
   )
   useEffect(() => {
     const getPhaseWorkouts = async () => {
       try {
-        console.log(`getting ${id} phase workouts`)
+        console.log(`getting ${phaseId} phase workouts`)
         GetProtocolWorkouts(setPhaseWorkouts, workoutCollectionRef)
       } catch (err) {
         console.error(err)
@@ -44,9 +45,16 @@ const ViewPhaseCard = ({
 
   return (
     <View>
-      {phaseWorkouts && buttonChange === id
+      {phaseWorkouts && buttonChange === phaseId
         ? phaseWorkouts.map((workouts) => (
-            <Text key={workouts.id}>{workouts.workout?.title}</Text>
+            <>
+              <Text key={workouts.id}>{workouts.workout?.title}</Text>
+              <ViewWorkoutsPhases
+                workoutId={workouts.id}
+                protocolId={protocolId}
+                phaseId={phaseId}
+              />
+            </>
           ))
         : null}
     </View>
