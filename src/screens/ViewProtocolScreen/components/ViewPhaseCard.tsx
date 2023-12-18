@@ -4,12 +4,14 @@ import GetProtocolWorkouts from "../../../functions/getProtocolWorkouts"
 import { Workout } from "../../../@types/firestore"
 import { collection } from "firebase/firestore"
 import { db } from "../../../firebase"
+import { Button } from "react-native-paper"
 
 type ViewPhaseCardProps = {
   protoclId: string
   id: string
   title: string
   description?: string
+  buttonChange: string
 }
 
 const ViewPhaseCard = ({
@@ -17,6 +19,7 @@ const ViewPhaseCard = ({
   id,
   title,
   description,
+  buttonChange,
 }: ViewPhaseCardProps) => {
   const [phaseWorkouts, setPhaseWorkouts] = useState<Workout[]>([])
   const workoutCollectionRef = collection(
@@ -38,16 +41,14 @@ const ViewPhaseCard = ({
     }
     getPhaseWorkouts()
   }, [])
+
   return (
     <View>
-      <Text>{title}</Text>
-      {phaseWorkouts ? (
-        phaseWorkouts.map((workouts) => (
-          <Text key={workouts.id}>{workouts.workout?.title}</Text>
-        ))
-      ) : (
-        <Text>No workouts</Text>
-      )}
+      {phaseWorkouts && buttonChange === id
+        ? phaseWorkouts.map((workouts) => (
+            <Text key={workouts.id}>{workouts.workout?.title}</Text>
+          ))
+        : null}
     </View>
   )
 }
