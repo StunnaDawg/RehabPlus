@@ -58,20 +58,21 @@ const ViewPhaseCard = ({
                   className="text-xl"
                 >
                   {workouts.workout?.title}
-                  {workouts.id ? (
-                    <Button
-                      onPress={() =>
-                        navigation.navigate("TestWorkout", {
-                          id: workouts.id,
-                          protocolId: protocolId,
-                          phaseId: phaseId,
-                        })
-                      }
-                    >
-                      Test Workout
-                    </Button>
-                  ) : null}
                 </Button>
+                {workouts.id ? (
+                  <Button
+                    onPress={() =>
+                      navigation.navigate("TestWorkout", {
+                        id: workouts.id,
+                        protocolId: protocolId,
+                        phaseId: phaseId,
+                      })
+                    }
+                  >
+                    Test Workout
+                  </Button>
+                ) : null}
+
                 {showWorkout === workouts.id ? (
                   <ViewWorkoutsPhases
                     workoutId={workouts.id}
