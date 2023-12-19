@@ -26,6 +26,11 @@ export type RootStackParamList = {
     id: string
     categoryId: string
   }
+  TestWorkout: {
+    protocolId: string
+    id?: string
+    phaseId: string
+  }
   // Add any other screens here
 }
 

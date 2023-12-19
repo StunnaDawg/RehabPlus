@@ -6,6 +6,8 @@ import { collection } from "firebase/firestore"
 import { db } from "../../../firebase"
 import { Button, Divider } from "react-native-paper"
 import ViewWorkoutsPhases from "./ViewWorkoutsPhases"
+import { NavigationType } from "../../../@types/navigation"
+import { useNavigation } from "@react-navigation/native"
 
 type ViewPhaseCardProps = {
   protocolId: string
@@ -24,6 +26,7 @@ const ViewPhaseCard = ({
 }: ViewPhaseCardProps) => {
   const [phaseWorkouts, setPhaseWorkouts] = useState<Workout[]>([])
   const [showWorkout, setShowWorkout] = useState<string | undefined>("")
+  const navigation = useNavigation<NavigationType>()
   const workoutCollectionRef = collection(
     db,
     "protocols",
@@ -49,13 +52,25 @@ const ViewPhaseCard = ({
       {phaseWorkouts && buttonChange === phaseId
         ? phaseWorkouts.map((workouts) => (
             <>
-              <View className="my-10">
+              <View key={workouts.id} className="my-10">
                 <Button
                   onPress={() => setShowWorkout(workouts.id)}
                   className="text-xl"
-                  key={workouts.id}
                 >
                   {workouts.workout?.title}
+                  {workouts.id ? (
+                    <Button
+                      onPress={() =>
+                        navigation.navigate("TestWorkout", {
+                          id: workouts.id,
+                          protocolId: protocolId,
+                          phaseId: phaseId,
+                        })
+                      }
+                    >
+                      Test Workout
+                    </Button>
+                  ) : null}
                 </Button>
                 {showWorkout === workouts.id ? (
                   <ViewWorkoutsPhases
@@ -64,8 +79,8 @@ const ViewPhaseCard = ({
                     phaseId={phaseId}
                   />
                 ) : null}
+                <Divider />
               </View>
-              <Divider />
             </>
           ))
         : null}

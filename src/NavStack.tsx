@@ -26,6 +26,7 @@ import { RootStackParamList, TabParamList } from "./@types/navigation"
 import EditCreatedWorkout from "./screens/ProtocolCreationScreens/WorkoutCreationScreens/EditMadeWorkout"
 import CreateExercise from "./screens/ExerciseDatabase/CreateExerciseScreen/CreateExercise"
 import EditExercise from "./screens/ExerciseDatabase/EditExerciseScreen/EditExercise"
+import TestWorkout from "./screens/TestWorkout/TestWorkout"
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 const Tab = createBottomTabNavigator<TabParamList>()
@@ -86,6 +87,7 @@ const NavStack = () => {
           <Stack.Screen name="ViewPhasesScreen" component={ViewPhases} />
           <Stack.Screen name="CreateExercise" component={CreateExercise} />
           <Stack.Screen name="EditExercise" component={EditExercise} />
+          <Stack.Screen name="TestWorkout" component={TestWorkout} />
         </>
       ) : (
         <>

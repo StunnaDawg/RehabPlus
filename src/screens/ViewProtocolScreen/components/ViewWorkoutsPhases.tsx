@@ -7,6 +7,8 @@ import {
 } from "../../../@types/firestore"
 import GetSingleWorkout from "../../../functions/getSingleWorkout"
 import { Button } from "react-native-paper"
+import { useNavigation } from "@react-navigation/native"
+import { NavigationType } from "../../../@types/navigation"
 
 type ViewWorkoutsPhasesProps = {
   workoutId?: string
@@ -30,8 +32,6 @@ const ViewWorkoutsPhases = ({
       {workout.workout?.exercises?.map((exerciseInWorkout) => (
         <View key={exerciseInWorkout.exercise.id}>
           <Text>{exerciseInWorkout.exercise.title}</Text>
-          <Button>Test Workout</Button>
-          <Button>Edit Workout</Button>
         </View>
       ))}
     </View>
