@@ -31,6 +31,7 @@ export type RootStackParamList = {
     id?: string
     phaseId: string
   }
+  FinishWorkout: undefined
   // Add any other screens here
 }
 

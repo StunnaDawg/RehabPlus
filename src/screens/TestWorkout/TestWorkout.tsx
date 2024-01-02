@@ -1,7 +1,7 @@
 import { View, Text } from "react-native"
 import React, { useEffect, useState } from "react"
-import { RouteParamsType } from "../../@types/navigation"
-import { RouteProp, useRoute } from "@react-navigation/native"
+import { NavigationType, RouteParamsType } from "../../@types/navigation"
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native"
 import GetSingleWorkout from "../../functions/getSingleWorkout"
 import { doc } from "firebase/firestore"
 import { Workout } from "../../@types/firestore"
@@ -15,6 +15,7 @@ const TestWorkout = () => {
   const protocolId = route.params?.protocolId
   const workoutId = route.params.id
   const phaseId = route.params.phaseId
+  const navigation = useNavigation<NavigationType>()
 
   const handleExerciseChange = () => {
     setExerciseNumberState((prevExercise) => prevExercise + 1)
@@ -25,6 +26,14 @@ const TestWorkout = () => {
       GetSingleWorkout(workoutId, protocolId, setWorkout, phaseId)
     }
   }, [])
+
+  useEffect(() => {
+    if (workout.workout?.exercises) {
+      if (exerciseNumberState >= workout.workout?.exercises?.length) {
+        navigation.navigate("FinishWorkout")
+      }
+    }
+  }, [exerciseNumberState])
 
   return (
     <View>
@@ -37,6 +46,7 @@ const TestWorkout = () => {
                 exerciseNumberState={exerciseNumberState}
                 exerciseDescription={exercise.exercise.description}
                 exerciseTitle={exercise.exercise.title}
+                exerciseSets={exercise.sets}
               />
             </View>
           ))
