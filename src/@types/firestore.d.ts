@@ -4,10 +4,10 @@ import { UserCredential } from "firebase/auth"
 export type ProtocolPhase = {
   id: string
   description?: string
-  title?: string
+  title: string
   userId: string
   weeks?: string
-  workouts?: CollectionReference
+  workouts?: Workout[]
 }
 
 export type Protocol = {
@@ -33,8 +33,8 @@ export type WorkoutExercise = {
   exercise: ExerciseDataBaseExercise
   description?: string
   categoryId: string
-  reps?: string
-  sets?: string
+  reps?: string | number
+  sets?: string | number
 }
 
 export type ExerciseDataBaseCategory = {

@@ -4,6 +4,8 @@ import { useExerciseContext } from "../../../context/exerciseContext"
 import { useNavigation } from "@react-navigation/native"
 import ViewModal from "./ViewModal"
 import { NavigationType } from "../../../@types/navigation"
+import { WorkoutExercise } from "../../../@types/firestore"
+import AddWorkoutModal from "./AddWorkoutModal"
 
 type DatabaseExerciseProps = {
   exerciseName: string
@@ -27,8 +29,14 @@ const DatabaseExercise = ({
   idOfCategory,
 }: DatabaseExerciseProps) => {
   const [visible, setVisible] = useState(false)
+  const [visibleAddWorkout, setVisibleAddWorkout] = useState(false)
+  const [exerciseReps, setExerciseReps] = useState<number>(0)
+  const [exerciseSets, setExerciseSets] = useState<number>(0)
+  const [exerciseCreated, setExerciseCreated] = useState<boolean>(false)
   const showModal = () => setVisible(true)
   const hideModal = () => setVisible(false)
+  const showAddWorkoutModal = () => setVisibleAddWorkout(true)
+  const hideAddWorkoutModal = () => setVisibleAddWorkout(false)
   const { exerciseData, setExerciseData } = useExerciseContext()
   const navigation = useNavigation<NavigationType>()
 
@@ -44,6 +52,8 @@ const DatabaseExercise = ({
       exercise: {
         id: exerciseId,
         title: exerciseName,
+        reps: exerciseReps,
+        sets: exerciseSets,
       },
       categoryId: idOfCategory,
     },
@@ -57,14 +67,6 @@ const DatabaseExercise = ({
     }
   }
 
-  const SetEditExerciseValueHandler = async () => {
-    try {
-      console.log("Edit Data Set")
-    } catch (err) {
-      console.error(err)
-    }
-  }
-
   return (
     <>
       <Card mode="contained" className="mt-3 mx-8 ">
@@ -73,7 +75,6 @@ const DatabaseExercise = ({
           <Card.Actions>
             <Button
               onPress={() => {
-                SetEditExerciseValueHandler()
                 navigation.navigate("EditExercise", {
                   title: exerciseName,
                   exerciseDescription: exerciseDescription,
@@ -95,9 +96,9 @@ const DatabaseExercise = ({
 
             <Button
               onPress={() => {
-                AddExerciseToWorkoutHandler()
-                console.log("widget pressed")
-                navigation.goBack()
+                showAddWorkoutModal()
+                // console.log("widget pressed")
+                // navigation.goBack()
               }}
             >
               Add Workout
@@ -105,6 +106,22 @@ const DatabaseExercise = ({
           </Card.Actions>
         </Card.Content>
       </Card>
+
+      <Portal>
+        <Modal
+          visible={visibleAddWorkout}
+          onDismiss={hideAddWorkoutModal}
+          contentContainerStyle={containerStyle}
+        >
+          <AddWorkoutModal
+            setExerciseReps={setExerciseReps}
+            setExerciseSets={setExerciseSets}
+            exerciseId={exerciseId}
+            exerciseName={exerciseName}
+            categoryId={idOfCategory}
+          />
+        </Modal>
+      </Portal>
 
       <Portal>
         <Modal
