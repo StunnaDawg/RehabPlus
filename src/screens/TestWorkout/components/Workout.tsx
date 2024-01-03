@@ -1,6 +1,7 @@
 import { View, Text } from "react-native"
 import React, { useEffect, useState } from "react"
-import { Button, IconButton, TextInput } from "react-native-paper"
+import { Button, Divider, IconButton, TextInput } from "react-native-paper"
+import {} from "react-native-paper"
 
 type CurrentExerciseProps = {
   exerciseTitle: string
@@ -49,10 +50,10 @@ const CurrentExercise = ({
           <View className="border-b">
             <View className=" flex flex-row justify-between">
               <View className="flex flex-col mx-2">
-                <Text className="mb-2">Sets</Text>
+                <Text className="mb-3">Sets</Text>
                 {Array?.from({ length: exerciseInput }).map((_item, index) => (
                   <View key={index} className="my-4">
-                    <Text className="font-bold text-lg">{`${index}`}</Text>
+                    <Text className="font-bold text-lg">{`${index + 1}`}</Text>
                   </View>
                 ))}
               </View>
