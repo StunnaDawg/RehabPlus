@@ -1,6 +1,6 @@
 import { View, Text } from "react-native"
-import React, { useEffect } from "react"
-import { IconButton, TextInput } from "react-native-paper"
+import React, { useEffect, useState } from "react"
+import { Button, IconButton, TextInput } from "react-native-paper"
 
 type CurrentExerciseProps = {
   exerciseTitle: string
@@ -21,29 +21,36 @@ const CurrentExercise = ({
   exerciseNumberState,
   exerciseSets,
 }: CurrentExerciseProps) => {
+  const [exerciseInput, setExerciseInput] = useState<number>(exerciseSets)
+
+  const addSetHandler = () => {
+    setExerciseInput((prevNumber) => prevNumber + 1)
+  }
+
   useEffect(() => {
     console.log(exerciseSets)
   }, [])
+
   return (
     <>
       {exerciseNumber === exerciseNumberState ? (
         <>
-          <View className="flex-row justify-between p-5 items-center">
+          <View className="flex-row justify-between p-1 items-center">
             <Text className="text-3xl font-bold">{exerciseTitle}</Text>
             <IconButton icon="video" />
           </View>
 
-          <View className="border-b">
-            <View className="mx-5">
-              <Text>
-                {exerciseDescription ? exerciseDescription : "No Description"}
-              </Text>
-            </View>
+          <View className="mx-5 mb-4">
+            <Text>
+              {exerciseDescription ? exerciseDescription : "No Description"}
+            </Text>
+          </View>
 
+          <View className="border-b">
             <View className=" flex flex-row justify-between">
               <View className="flex flex-col mx-2">
                 <Text className="mb-2">Sets</Text>
-                {Array?.from({ length: exerciseSets }).map((_item, index) => (
+                {Array?.from({ length: exerciseInput }).map((_item, index) => (
                   <View key={index} className="my-4">
                     <Text className="font-bold text-lg">{`${index}`}</Text>
                   </View>
@@ -52,7 +59,7 @@ const CurrentExercise = ({
 
               <View className="flex flex-col">
                 <Text className="ml-4 mb-2">Reps</Text>
-                {Array?.from({ length: exerciseSets }).map((_item, index) => (
+                {Array?.from({ length: exerciseInput }).map((_item, index) => (
                   <View key={index} className="flex-col">
                     <TextInput
                       mode="outlined"
@@ -65,7 +72,7 @@ const CurrentExercise = ({
 
               <View className="flex flex-col ml-5">
                 <Text className="mb-2">Weight</Text>
-                {Array?.from({ length: exerciseSets }).map((_item, index) => (
+                {Array?.from({ length: exerciseInput }).map((_item, index) => (
                   <View key={index} className="">
                     <TextInput
                       mode="outlined"
@@ -75,6 +82,9 @@ const CurrentExercise = ({
                   </View>
                 ))}
               </View>
+            </View>
+            <View>
+              <Button onPress={() => addSetHandler()}>Add Set</Button>
             </View>
           </View>
         </>
