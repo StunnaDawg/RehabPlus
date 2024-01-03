@@ -6,7 +6,7 @@ import GetSingleWorkout from "../../functions/getSingleWorkout"
 import { doc } from "firebase/firestore"
 import { Workout } from "../../@types/firestore"
 import CurrentExercise from "./components/Workout"
-import { Button } from "react-native-paper"
+import { Button, IconButton } from "react-native-paper"
 
 const TestWorkout = () => {
   const [exerciseNumberState, setExerciseNumberState] = useState<number>(0)
@@ -37,6 +37,11 @@ const TestWorkout = () => {
 
   return (
     <View>
+      <View className="flex flex-row justify-between items-center border-b">
+        <IconButton icon="arrow-left" size={30} />
+        <Text className="font-bold text-3xl">{workout.workout?.title}</Text>
+        <IconButton icon="arrow-left" size={30} />
+      </View>
       <View>
         {workout.workout?.exercises ? (
           workout.workout?.exercises?.map((exercise, index) => (
@@ -46,7 +51,9 @@ const TestWorkout = () => {
                 exerciseNumberState={exerciseNumberState}
                 exerciseDescription={exercise.exercise.description}
                 exerciseTitle={exercise.exercise.title}
-                exerciseSets={exercise.sets}
+                exerciseSets={
+                  exercise.sets != undefined ? Number(exercise.sets) : 3
+                }
               />
             </View>
           ))
