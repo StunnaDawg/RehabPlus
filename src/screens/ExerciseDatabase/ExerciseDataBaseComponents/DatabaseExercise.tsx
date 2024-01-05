@@ -6,12 +6,14 @@ import ViewModal from "./ViewModal"
 import { NavigationType } from "../../../@types/navigation"
 import { WorkoutExercise } from "../../../@types/firestore"
 import AddWorkoutModal from "./AddWorkoutModal"
+import { Image } from "react-native"
 
 type DatabaseExerciseProps = {
   exerciseName: string
   exerciseId: string
   exerciseDescription?: string
   idOfCategory: string
+  imageUrl?: string
 }
 
 // export type WorkoutExercise = {
@@ -27,6 +29,7 @@ const DatabaseExercise = ({
   exerciseId,
   exerciseDescription,
   idOfCategory,
+  imageUrl,
 }: DatabaseExerciseProps) => {
   const [visible, setVisible] = useState(false)
   const [visibleAddWorkout, setVisibleAddWorkout] = useState(false)
@@ -67,6 +70,10 @@ const DatabaseExercise = ({
     }
   }
 
+  useEffect(() => {
+    console.log(imageUrl)
+  }, [])
+
   return (
     <>
       <Card mode="contained" className="mt-3 mx-8 ">
@@ -90,6 +97,12 @@ const DatabaseExercise = ({
         <Card.Content className="flex-1 flex-row">
           {/* <Card.Cover className="w-20 h-20" /> */}
           <Card.Actions className="flex-1 flex-col">
+            {imageUrl ? (
+              <Image
+                source={{ uri: imageUrl }}
+                style={{ width: 200, height: 200 }}
+              />
+            ) : null}
             <Button className="my-1" onPress={showModal}>
               View
             </Button>
