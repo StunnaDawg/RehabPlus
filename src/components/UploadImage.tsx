@@ -30,30 +30,30 @@ const UploadImage = ({ setUri }: UrploadImageType) => {
     }
   }
 
-  const uploadMedia = async (uri: string, fileType: string) => {
-    const response = await fetch(uri)
-    const blob = await response.blob()
+  // const uploadMedia = async (uri: string, fileType: string) => {
+  //   const response = await fetch(uri)
+  //   const blob = await response.blob()
 
-    const storageRef = ref(storage, "/Stuff" + new Date().getTime())
-    const uploadTask = uploadBytesResumable(storageRef, blob)
+  //   const storageRef = ref(storage, "/Stuff" + new Date().getTime())
+  //   const uploadTask = uploadBytesResumable(storageRef, blob)
 
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        console.log("Progress", progress, "% done")
-      },
-      (err) => {
-        console.error(err)
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadUrl) => {
-          console.log("file avalible at", downloadUrl)
-          setImage("")
-        })
-      }
-    )
-  }
+  //   uploadTask.on(
+  //     "state_changed",
+  //     (snapshot) => {
+  //       const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+  //       console.log("Progress", progress, "% done")
+  //     },
+  //     (err) => {
+  //       console.error(err)
+  //     },
+  //     () => {
+  //       getDownloadURL(uploadTask.snapshot.ref).then(async (downloadUrl) => {
+  //         console.log("file avalible at", downloadUrl)
+  //         setImage("")
+  //       })
+  //     }
+  //   )
+  // }
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -61,7 +61,6 @@ const UploadImage = ({ setUri }: UrploadImageType) => {
         <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
       )}
       <Button onPress={pickImage}>Pick an image from camera roll</Button>
-      <Button onPress={() => uploadMedia(image, "image")}>Upload Image</Button>
     </View>
   )
 }

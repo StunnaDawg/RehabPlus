@@ -1,11 +1,17 @@
 import { View, Text } from "react-native"
-import React from "react"
+import React, { useState } from "react"
 import { Button } from "react-native-paper"
 import { addDoc, collection } from "firebase/firestore"
-import { FIREBASE_AUTH, db } from "../../../../firebase"
+import { FIREBASE_AUTH, db, storage } from "../../../../firebase"
 import { useNavigation } from "@react-navigation/native"
 import { TabNavigationType } from "../../../../@types/navigation"
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  uploadBytesResumable,
+} from "firebase/storage"
 import uploadImage from "../../../../functions/uploadImage"
 
 type CreateExerciseButtonProps = {
@@ -22,8 +28,9 @@ const CreateExerciseButton = ({
   imageUri,
 }: CreateExerciseButtonProps) => {
   const navigation = useNavigation<TabNavigationType>()
+  const [imageUrl, setImageUrl] = useState<string>("")
 
-  const handleExerciseCreation = async () => {
+  const handleExerciseCreation = async (imageDownload: string) => {
     try {
       if (categoryId) {
         const categoryExercises = collection(
@@ -36,38 +43,49 @@ const CreateExerciseButton = ({
           title: exerciseTitle,
           description: exerciseDescription,
           userId: FIREBASE_AUTH?.currentUser?.uid,
-          imageUri: imageUri || "No image",
+          imageUri: imageDownload,
         })
       }
     } catch (err) {
       console.error(err)
     }
   }
-  const getBlobForUri = async (uri: string) => {
-    if (uri) {
-      const blob: Blob = await new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest()
-        xhr.onload = function () {
-          resolve(xhr.response)
-        }
-        xhr.onerror = function (e) {
-          reject(new TypeError("Network request failed"))
-        }
-        xhr.responseType = "blob"
-        xhr.open("GET", uri, true)
-        xhr.send(null)
-      })
+  const uploadImage = async (uri: string, fileType: string) => {
+    const response = await fetch(uri)
+    const blob = await response.blob()
 
-      uploadImage(blob)
-    }
+    const storageRef = ref(storage, exerciseTitle)
+    const uploadTask = uploadBytesResumable(storageRef, blob)
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        console.log("Progress", progress, "% done")
+      },
+      (err) => {
+        console.error(err)
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadUrl) => {
+          console.log("file avalible at", downloadUrl)
+          setImageUrl(downloadUrl)
+          console.log(imageUrl)
+          handleExerciseCreation(downloadUrl)
+        })
+      }
+    )
   }
 
   return (
     <View>
       <Button
-        onPress={() => {
-          handleExerciseCreation()
-          if (imageUri) getBlobForUri(imageUri)
+        onPress={async () => {
+          if (imageUri) {
+            await uploadImage(imageUri, "image")
+          } else {
+            handleExerciseCreation("no image")
+          }
           navigation.navigate("Protocol")
         }}
       >
