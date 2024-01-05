@@ -47,6 +47,7 @@ export type ExerciseDataBaseExercise = {
   id: string
   title: string
   description?: string
+  imageUrl?: string
 }
 
 export type Client = {

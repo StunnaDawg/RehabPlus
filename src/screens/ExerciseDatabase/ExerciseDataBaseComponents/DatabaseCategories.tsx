@@ -99,7 +99,8 @@ const DatabaseCategories = () => {
           if (exerciseNameKey) {
             const exerciseTitle = item.title
             const exerciseDescritpion = item.description
-            console.log(item.id)
+            const imageUrl = item.imageUrl
+            console.log("image url", imageUrl)
 
             return (
               <View key={item.id}>
@@ -108,6 +109,7 @@ const DatabaseCategories = () => {
                   idOfCategory={pressedButtonId}
                   exerciseName={exerciseTitle}
                   exerciseDescription={exerciseDescritpion}
+                  imageUrl={imageUrl}
                 />
               </View>
             )

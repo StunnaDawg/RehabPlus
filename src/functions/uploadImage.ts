@@ -1,7 +1,7 @@
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage"
 import { storage } from "../firebase"
 
-const uploadImage = async (blob: Blob) => {
+const uploadImage = async (blob: Blob | Uint8Array) => {
   const metadata = {
     contentType: "image/png",
   }

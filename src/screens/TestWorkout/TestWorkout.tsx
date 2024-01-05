@@ -36,7 +36,7 @@ const TestWorkout = () => {
   }, [exerciseNumberState])
 
   return (
-    <ScrollView>
+    <ScrollView className="flex-1">
       <View className="flex flex-row justify-between items-center ">
         <IconButton
           onPress={() => navigation.goBack()}
@@ -83,7 +83,9 @@ const TestWorkout = () => {
         ) : (
           <Text>L</Text>
         )}
-        <Button onPress={handleExerciseChange}>Next</Button>
+        <View className="flex-1 flex-row justify-center items-end p-2">
+          <Button onPress={handleExerciseChange}>Next</Button>
+        </View>
       </View>
     </ScrollView>
   )
