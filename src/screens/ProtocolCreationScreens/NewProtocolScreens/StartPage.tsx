@@ -117,7 +117,7 @@ const StartPage = () => {
         <Switch value={isPublic} onValueChange={onToggleSwitch} />
       </View>
 
-      <UploadImage setUri={setImageUri} />
+      <UploadImage setUri={setImageUri} showImage={true} />
 
       <CreateButton
         protocolOutline={outlineText}

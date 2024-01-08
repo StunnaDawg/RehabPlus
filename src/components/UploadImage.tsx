@@ -7,11 +7,12 @@ import { storage } from "../firebase"
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage"
 import { addDoc, collection, onSnapshot } from "firebase/firestore"
 
-type UrploadImageType = {
+type UploadImageType = {
   setUri: Dispatch<SetStateAction<string>>
+  showImage: boolean
 }
 
-const UploadImage = ({ setUri }: UrploadImageType) => {
+const UploadImage = ({ setUri, showImage }: UploadImageType) => {
   const [image, setImage] = useState<string>("")
   const [uploading, setUploading] = useState<boolean>(false)
 
@@ -30,34 +31,9 @@ const UploadImage = ({ setUri }: UrploadImageType) => {
     }
   }
 
-  // const uploadMedia = async (uri: string, fileType: string) => {
-  //   const response = await fetch(uri)
-  //   const blob = await response.blob()
-
-  //   const storageRef = ref(storage, "/Stuff" + new Date().getTime())
-  //   const uploadTask = uploadBytesResumable(storageRef, blob)
-
-  //   uploadTask.on(
-  //     "state_changed",
-  //     (snapshot) => {
-  //       const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-  //       console.log("Progress", progress, "% done")
-  //     },
-  //     (err) => {
-  //       console.error(err)
-  //     },
-  //     () => {
-  //       getDownloadURL(uploadTask.snapshot.ref).then(async (downloadUrl) => {
-  //         console.log("file avalible at", downloadUrl)
-  //         setImage("")
-  //       })
-  //     }
-  //   )
-  // }
-
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      {image && (
+      {image && showImage && (
         <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
       )}
       <Button onPress={pickImage}>Pick an image from camera roll</Button>

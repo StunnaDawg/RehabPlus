@@ -22,6 +22,7 @@ const getSingleDbExercise = async (
         id: data.id,
         title: docData.title,
         description: docData.description,
+        imageUrl: docData.imageUri,
       } as ExerciseDataBaseExercise
 
       console.log("filtered data get Category Exercises", data)

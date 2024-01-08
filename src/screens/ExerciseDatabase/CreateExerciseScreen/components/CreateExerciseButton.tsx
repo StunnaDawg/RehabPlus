@@ -1,17 +1,10 @@
-import { View, Text } from "react-native"
+import { View } from "react-native"
 import React, { useState } from "react"
 import { Button } from "react-native-paper"
 import { addDoc, collection } from "firebase/firestore"
-import { FIREBASE_AUTH, db, storage } from "../../../../firebase"
+import { FIREBASE_AUTH, db } from "../../../../firebase"
 import { useNavigation } from "@react-navigation/native"
 import { TabNavigationType } from "../../../../@types/navigation"
-import {
-  getStorage,
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  uploadBytesResumable,
-} from "firebase/storage"
 import uploadImage from "../../../../functions/uploadImage"
 
 type CreateExerciseButtonProps = {

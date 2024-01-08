@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from "react-native"
+import { View, Text, ScrollView, Image } from "react-native"
 import { useRoute, useNavigation, RouteProp } from "@react-navigation/native"
 import React, { useEffect, useState } from "react"
 import { RouteParamsType } from "../../../@types/navigation"
@@ -13,7 +13,9 @@ import CreateCategory from "../CreateExerciseScreen/CreateCategoryModal"
 import UpdateExerciseButton from "./components/UpdateExercise"
 import DeleteButton from "../../../components/DeleteButton"
 import { FIREBASE_AUTH, db } from "../../../firebase"
-import { DocumentReference, doc } from "firebase/firestore"
+import { doc } from "firebase/firestore"
+import UploadImage from "../../../components/UploadImage"
+import DeleteImageButton from "../../../components/DeleteImageButton"
 
 const EditExercise = () => {
   const [exerciseName, setExerciseName] = useState<string>("")
@@ -28,6 +30,8 @@ const EditExercise = () => {
     ExerciseDataBaseCategory[]
   >([])
   const [visible, setVisible] = useState<boolean>(false)
+  const [imageUrl, setImageUrl] = useState<string>("")
+  const [newImageUrl, setNewImageUrl] = useState<string>("")
 
   const showModal = () => setVisible(true)
   const hideModal = () => setVisible(false)
@@ -61,6 +65,18 @@ const EditExercise = () => {
     loadExercise()
   }, [])
 
+  useEffect(() => {
+    if (exercise.imageUrl) {
+      setImageUrl(exercise.imageUrl)
+    }
+  }, [exercise])
+
+  useEffect(() => {
+    if (imageUrl !== exercise.imageUrl) {
+      setNewImageUrl(imageUrl)
+    }
+  }, [imageUrl])
+
   return (
     <ScrollView>
       <View className="flex flex-1 flex-row justify-between">
@@ -91,6 +107,22 @@ const EditExercise = () => {
         setCategoryId={setCategoryIdState}
         chosenCategory={categoryName}
       />
+      <View className="flex flex-row justify-center">
+        {imageUrl ? (
+          <View className="flex flex-col">
+            <Image
+              source={{ uri: imageUrl }}
+              style={{ width: 200, height: 200 }}
+            />
+            <DeleteImageButton
+              fileLocation={imageUrl}
+              setImageUrl={setImageUrl}
+            />
+          </View>
+        ) : (
+          <UploadImage setUri={setImageUrl} showImage={false} />
+        )}
+      </View>
 
       <Portal>
         <Modal
@@ -125,6 +157,7 @@ const EditExercise = () => {
           exerciseDescription={exerciseDescription}
           categoryId={categoryId}
           exerciseId={id}
+          imageUrl={newImageUrl}
         />
       </View>
     </ScrollView>

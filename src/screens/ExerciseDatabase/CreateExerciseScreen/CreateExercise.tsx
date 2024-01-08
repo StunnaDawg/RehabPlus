@@ -70,7 +70,7 @@ const CreateExercise = () => {
           </Modal>
         </Portal>
         <View>
-          <UploadImage setUri={setImageUri} />
+          <UploadImage setUri={setImageUri} showImage={true} />
         </View>
         <Button onPress={showModal}>Create Category</Button>
         <View className="flex flex-1 flex-row justify-center">
