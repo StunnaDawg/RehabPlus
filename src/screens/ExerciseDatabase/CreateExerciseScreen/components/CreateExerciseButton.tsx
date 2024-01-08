@@ -50,39 +50,19 @@ const CreateExerciseButton = ({
       console.error(err)
     }
   }
-  const uploadImage = async (uri: string, fileType: string) => {
-    const response = await fetch(uri)
-    const blob = await response.blob()
-
-    const storageRef = ref(storage, exerciseTitle)
-    const uploadTask = uploadBytesResumable(storageRef, blob)
-
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        console.log("Progress", progress, "% done")
-      },
-      (err) => {
-        console.error(err)
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadUrl) => {
-          console.log("file avalible at", downloadUrl)
-          setImageUrl(downloadUrl)
-          console.log(imageUrl)
-          handleExerciseCreation(downloadUrl)
-        })
-      }
-    )
-  }
 
   return (
     <View>
       <Button
         onPress={async () => {
           if (imageUri) {
-            await uploadImage(imageUri, "image")
+            await uploadImage(
+              imageUri,
+              "image",
+              exerciseTitle,
+              setImageUrl,
+              handleExerciseCreation
+            )
           } else {
             handleExerciseCreation("no image")
           }
