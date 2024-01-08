@@ -18,6 +18,7 @@ export type Protocol = {
   weeks?: string
   public?: boolean
   phases?: CollectionReference
+  imageUri?: string
 }
 
 export type Workout = {

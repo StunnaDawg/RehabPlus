@@ -53,6 +53,7 @@ const ProtocolScreen = () => {
                   description={protocol.description}
                   id={protocol.id}
                   userId={protocol.userId}
+                  imageUri={protocol.imageUri}
                 />
               ) : null
             )}
