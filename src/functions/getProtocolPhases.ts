@@ -9,11 +9,14 @@ const GetProtocolPhases = async (
   try {
     const data = await getDocs(collectionRef)
 
-    const filteredData = data.docs.map((doc) => ({
-      ...doc.data(),
-      id: doc.id,
-      userId: doc.data().userId,
-    }))
+    const filteredData = data.docs.map(
+      (doc) =>
+        ({
+          ...doc.data(),
+          id: doc.id,
+          userId: doc.data().userId,
+        } as ProtocolPhase)
+    )
     console.log("filtered data get protocolPhases", filteredData)
     setState(filteredData)
   } catch (err) {

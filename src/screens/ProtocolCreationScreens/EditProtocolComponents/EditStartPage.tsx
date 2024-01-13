@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from "react-native"
+import { View, Text, ScrollView, Image } from "react-native"
 import { TextInput, Switch, Portal, Modal, Button } from "react-native-paper"
 import { useEffect, useState } from "react"
 import UpdateButton from "./components/UpdateProtocolButton"
@@ -11,6 +11,8 @@ import { db } from "../../../firebase"
 import PhasesWidget from "./components/PhasesWidget"
 import ModalContent from "./ModalContent"
 import { ProtocolPhase } from "../../../@types/firestore"
+import DeleteImageButton from "../../../components/DeleteImageButton"
+import UploadImage from "../../../components/UploadImage"
 
 const EditStartPage = () => {
   const { protocolEditData } = useSingleEditProtocolContext()
@@ -20,6 +22,8 @@ const EditStartPage = () => {
   const [protocolEditPhases, setProtocolEditPhases] = useState<
     ProtocolPhase[] | undefined
   >()
+  const [imageUrl, setImageUrl] = useState<string>("")
+  const [newImageUrl, setNewImageUrl] = useState<string>("")
   const [visible, setVisible] = useState(false)
   const showModal = () => setVisible(true)
   const hideModal = () => setVisible(false)
@@ -62,6 +66,17 @@ const EditStartPage = () => {
     console.log("protocol edit phases", protocolEditPhases)
   }, [refreshKey])
 
+  useEffect(() => {
+    setImageUrl(newImageUrl)
+  }, [newImageUrl])
+
+  useEffect(() => {
+    if (protocolEditData.imageUri) {
+      console.log(protocolEditData.imageUri)
+      setImageUrl(protocolEditData.imageUri)
+    }
+  }, [])
+
   return (
     <>
       <DeleteButton id={protocolEditData.id} userId={protocolEditData.userId} />
@@ -90,6 +105,24 @@ const EditStartPage = () => {
         <Switch value={isPublic} onValueChange={onToggleSwitch} />
       </View>
 
+      <View className="flex flex-row justify-center">
+        {imageUrl !== "" ? (
+          <View className="flex flex-col">
+            <Image
+              source={{ uri: imageUrl }}
+              style={{ width: 200, height: 200 }}
+            />
+            <DeleteImageButton
+              fileLocation={imageUrl}
+              setImageUrl={setImageUrl}
+              setNewImageUrl={setNewImageUrl}
+            />
+          </View>
+        ) : (
+          <UploadImage setUri={setNewImageUrl} showImage={false} />
+        )}
+      </View>
+
       <View className="flex-1 flex-row justify-center">
         <Portal>
           <Modal
@@ -114,6 +147,7 @@ const EditStartPage = () => {
           protocolOutline={outlineText}
           protocolTitle={titleText}
           protocolPublic={isPublic}
+          imageUrl={newImageUrl}
         />
       </View>
 

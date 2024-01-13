@@ -33,6 +33,7 @@ const GetSingleDoc = async (
         ...clientData,
         id: docId,
         title: clientData.title,
+        imageUri: clientData.imageUri,
       } as Protocol
       console.log("Document data:", docData)
       setState(docData)
