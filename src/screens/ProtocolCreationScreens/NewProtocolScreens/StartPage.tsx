@@ -14,6 +14,7 @@ import { useNewProtocolDataContext } from "../../../context/newProtocolContext"
 import GetProtocolPhases from "../../../functions/getProtocolPhases"
 import { RouteParamsType } from "../../../@types/navigation"
 import { Protocol, ProtocolPhase } from "../../../@types/firestore"
+import UploadImage from "../../../components/UploadImage"
 
 const StartPage = () => {
   const { newProtocolData, setNewProtocolData } = useNewProtocolDataContext()
@@ -23,6 +24,7 @@ const StartPage = () => {
   const [outlineText, setOutlineText] = useState("")
   const [isPublic, setIsPublic] = useState(false)
   const [visible, setVisible] = useState(false)
+  const [imageUri, setImageUri] = useState<string>("")
   const showModal = () => setVisible(true)
   const hideModal = () => setVisible(false)
   const containerStyle = {
@@ -110,34 +112,19 @@ const StartPage = () => {
         ></TextInput>
       </View>
 
-      {/* <View className="mx-4 my-1">
-        <Text>Weeks</Text>
-        <TextInput
-          mode="outlined"
-          onChangeText={(text) => setWeeksText(text)}
-          keyboardType="numeric"
-        ></TextInput>
-      </View> */}
-
-      {/* <View className="mx-4 my-1">
-        <Text>Days per Week</Text>
-        <TextInput
-          mode="outlined"
-          onChangeText={(text) => setDaysPerWeek(text)}
-          placeholderTextColor="black"
-          keyboardType="numeric"
-        ></TextInput>
-      </View> */}
       <View className="flex-1 flex-row items-center justify-between mx-5">
         <Text className="text">Public Protocol</Text>
         <Switch value={isPublic} onValueChange={onToggleSwitch} />
       </View>
-      <View></View>
+
+      <UploadImage setUri={setImageUri} showImage={true} />
+
       <CreateButton
         protocolOutline={outlineText}
         protocolTitle={titleText}
         protocolPublic={isPublic}
         protocolId={protocolId || newProtocolData.id}
+        imageUri={imageUri}
         // protocolWorkouts={completeWorkoutData}
       />
       <Portal>

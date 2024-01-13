@@ -42,6 +42,7 @@ const ProtocolScreen = () => {
                 description={protocol.description}
                 id={protocol.id}
                 userId={protocol.userId}
+                imageUri={protocol.imageUri}
               />
             ))
           : protocolList?.map((protocol) =>
@@ -53,6 +54,7 @@ const ProtocolScreen = () => {
                   description={protocol.description}
                   id={protocol.id}
                   userId={protocol.userId}
+                  imageUri={protocol.imageUri}
                 />
               ) : null
             )}

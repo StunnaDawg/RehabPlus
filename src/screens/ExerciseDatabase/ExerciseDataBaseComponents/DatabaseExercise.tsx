@@ -71,7 +71,7 @@ const DatabaseExercise = ({
   }
 
   useEffect(() => {
-    console.log(imageUrl)
+    console.log("image url for widget", imageUrl)
   }, [])
 
   return (

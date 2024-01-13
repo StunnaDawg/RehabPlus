@@ -16,6 +16,7 @@ const ProtocolScreenWidget = ({
   description: outline,
   id,
   userId,
+  imageUri,
 }: Protocol) => {
   const { setProtocolEditData } = useSingleEditProtocolContext()
   const protocolsCollectionRef = collection(db, "protocols")
@@ -64,6 +65,12 @@ const ProtocolScreenWidget = ({
               </Button>
             </View>
           </View>
+          {imageUri ? (
+            <Image
+              source={{ uri: imageUri }}
+              style={{ width: 200, height: 200 }}
+            />
+          ) : null}
           <View className="flex-row">
             {/* <Image source={theImage} style={{ width: 100, height: 100 }} /> */}
             <View className="flex-1 flex-row justify-between">
