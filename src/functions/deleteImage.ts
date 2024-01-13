@@ -16,7 +16,7 @@ const deleteImage = async (
       .catch((error) => {
         console.log("Error", error)
       })
-    setImageUrl("no image")
+    setImageUrl("")
   } catch (err) {
     console.error(err)
   }

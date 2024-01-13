@@ -77,6 +77,10 @@ const EditExercise = () => {
     }
   }, [imageUrl])
 
+  useEffect(() => {
+    setImageUrl(newImageUrl)
+  }, [newImageUrl])
+
   return (
     <ScrollView>
       <View className="flex flex-1 flex-row justify-between">
@@ -108,7 +112,7 @@ const EditExercise = () => {
         chosenCategory={categoryName}
       />
       <View className="flex flex-row justify-center">
-        {imageUrl ? (
+        {imageUrl !== "" ? (
           <View className="flex flex-col">
             <Image
               source={{ uri: imageUrl }}
@@ -120,7 +124,7 @@ const EditExercise = () => {
             />
           </View>
         ) : (
-          <UploadImage setUri={setImageUrl} showImage={false} />
+          <UploadImage setUri={setNewImageUrl} showImage={false} />
         )}
       </View>
 

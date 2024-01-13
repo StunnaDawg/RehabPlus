@@ -36,21 +36,13 @@ const UpdateExerciseButton = ({
             "exercises",
             exerciseId
           )
-          if (imageDownload !== "") {
+          if (imageDownload) {
             console.log("image download initiated")
             await updateDoc(exerciseRef, {
               title: exerciseTitle,
               description: exerciseDescription,
               userId: FIREBASE_AUTH?.currentUser?.uid,
               imageUri: imageDownload,
-            })
-          } else if (imageDownload === "") {
-            console.log("image download initiated")
-            await updateDoc(exerciseRef, {
-              title: exerciseTitle,
-              description: exerciseDescription,
-              userId: FIREBASE_AUTH?.currentUser?.uid,
-              imageUri: undefined,
             })
           } else {
             await updateDoc(exerciseRef, {
