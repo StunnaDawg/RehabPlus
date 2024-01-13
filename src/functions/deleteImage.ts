@@ -1,16 +1,22 @@
 import { Dispatch, SetStateAction } from "react"
-import { storage } from "../firebase"
-import { ref, deleteObject } from "firebase/storage"
+import { ref, deleteObject, getStorage } from "firebase/storage"
 
 const deleteImage = async (
   fileLocation: string,
   setImageUrl: Dispatch<SetStateAction<string>>
 ) => {
+  const storage = getStorage()
   const imageRef = ref(storage, fileLocation)
 
   try {
     deleteObject(imageRef)
-    setImageUrl("")
+      .then(() => {
+        console.log("Deleted Image", imageRef)
+      })
+      .catch((error) => {
+        console.log("Error", error)
+      })
+    setImageUrl("no image")
   } catch (err) {
     console.error(err)
   }

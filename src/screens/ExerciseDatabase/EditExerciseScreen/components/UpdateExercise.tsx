@@ -36,12 +36,21 @@ const UpdateExerciseButton = ({
             "exercises",
             exerciseId
           )
-          if (imageDownload !== "no image") {
+          if (imageDownload !== "") {
+            console.log("image download initiated")
             await updateDoc(exerciseRef, {
               title: exerciseTitle,
               description: exerciseDescription,
               userId: FIREBASE_AUTH?.currentUser?.uid,
               imageUri: imageDownload,
+            })
+          } else if (imageDownload === "") {
+            console.log("image download initiated")
+            await updateDoc(exerciseRef, {
+              title: exerciseTitle,
+              description: exerciseDescription,
+              userId: FIREBASE_AUTH?.currentUser?.uid,
+              imageUri: undefined,
             })
           } else {
             await updateDoc(exerciseRef, {
@@ -74,7 +83,7 @@ const UpdateExerciseButton = ({
               handleExerciseUpdate
             )
           } else {
-            handleExerciseUpdate("no image")
+            handleExerciseUpdate("")
           }
           navigation.navigate("ExerciseDataBase")
         }}
