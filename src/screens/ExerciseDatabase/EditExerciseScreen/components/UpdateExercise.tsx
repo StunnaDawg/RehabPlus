@@ -26,39 +26,37 @@ const UpdateExerciseButton = ({
   const [newImageUrl, setImageUrl] = useState<string>("")
 
   const handleExerciseUpdate = async (imageDownload: string) => {
-    if (exerciseTitle !== "" && exerciseDescription != "") {
-      try {
-        if (categoryId && exerciseId) {
-          const exerciseRef = doc(
-            db,
-            "exerciseCategories",
-            categoryId,
-            "exercises",
-            exerciseId
-          )
-          if (imageDownload) {
-            console.log("image download initiated")
-            await updateDoc(exerciseRef, {
-              title: exerciseTitle,
-              description: exerciseDescription,
-              userId: FIREBASE_AUTH?.currentUser?.uid,
-              imageUri: imageDownload,
-            })
-          } else {
-            await updateDoc(exerciseRef, {
-              title: exerciseTitle,
-              description: exerciseDescription,
-              userId: FIREBASE_AUTH?.currentUser?.uid,
-            })
-          }
-        } else {
-          console.log("exercise id's don't exist for updating")
+    try {
+      if (categoryId && exerciseId) {
+        const exerciseRef = doc(
+          db,
+          "exerciseCategories",
+          categoryId,
+          "exercises",
+          exerciseId
+        )
+        if (imageDownload) {
+          console.log("image download initiated")
+          await updateDoc(exerciseRef, {
+            title: exerciseTitle,
+            description: exerciseDescription,
+            userId: FIREBASE_AUTH?.currentUser?.uid,
+            imageUri: imageDownload,
+          })
         }
-      } catch (err) {
-        console.error(err)
+        if (imageDownload === "") {
+          await updateDoc(exerciseRef, {
+            title: exerciseTitle,
+            description: exerciseDescription,
+            userId: FIREBASE_AUTH?.currentUser?.uid,
+            imageUri: null,
+          })
+        }
+      } else {
+        console.log("exercise id's don't exist for updating")
       }
-    } else {
-      console.log("don't leave nothing empty")
+    } catch (err) {
+      console.error(err)
     }
   }
 

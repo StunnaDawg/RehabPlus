@@ -6,15 +6,25 @@ import deleteImage from "../functions/deleteImage"
 type DeleteImageProp = {
   fileLocation: string
   setImageUrl: Dispatch<SetStateAction<string>>
+  setNewImageUrl: Dispatch<SetStateAction<string>>
 }
 
-const DeleteImageButton = ({ fileLocation, setImageUrl }: DeleteImageProp) => {
+const DeleteImageButton = ({
+  fileLocation,
+  setImageUrl,
+  setNewImageUrl,
+}: DeleteImageProp) => {
   useEffect(() => {
     console.log("location of file to delete", fileLocation)
   }, [])
   return (
     <View>
-      <Button onPress={() => deleteImage(fileLocation, setImageUrl)}>
+      <Button
+        onPress={() => {
+          deleteImage(fileLocation, setImageUrl)
+          setNewImageUrl("")
+        }}
+      >
         Delete Image
       </Button>
     </View>

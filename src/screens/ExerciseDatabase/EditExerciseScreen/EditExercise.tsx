@@ -69,6 +69,12 @@ const EditExercise = () => {
     if (exercise.imageUrl) {
       setImageUrl(exercise.imageUrl)
     }
+
+    setExerciseName(exercise.title)
+    setExerciseDescriptionState(exercise.description)
+    if (categoryId) {
+      setCategoryIdState(categoryId)
+    }
   }, [exercise])
 
   useEffect(() => {
@@ -121,6 +127,7 @@ const EditExercise = () => {
             <DeleteImageButton
               fileLocation={imageUrl}
               setImageUrl={setImageUrl}
+              setNewImageUrl={setNewImageUrl}
             />
           </View>
         ) : (
