@@ -1,5 +1,5 @@
 import { View, FlatList, ListRenderItem } from "react-native"
-import React, { useEffect, useState } from "react"
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { Button } from "react-native-paper"
 import DatabaseExercise from "./DatabaseExercise"
 import getExerciseFireStoreData from "../../../functions/getExerciseData"
@@ -10,11 +10,17 @@ import {
   ExerciseDataBaseCategory,
   ExerciseDataBaseExercise,
 } from "../../../@types/firestore"
-import ExerciseDataBase from "../ExerciseDataBase"
-import GetMultipleExercise from "../../../functions/getMultipleExercises"
 import getExerciseCategoryData from "../../../functions/getExerciseCategoriesData"
 
-const DatabaseCategories = () => {
+type DatabaseCategoriesProps = {
+  setSearchTriggerProp: Dispatch<SetStateAction<boolean>>
+  allCategories: boolean
+}
+
+const DatabaseCategories = ({
+  setSearchTriggerProp,
+  allCategories,
+}: DatabaseCategoriesProps) => {
   const [exerciseCategories, setExerciseCategories] = useState<
     ExerciseDataBaseCategory[]
   >([])
@@ -24,6 +30,7 @@ const DatabaseCategories = () => {
   const [currentExercises, setCurrentExercises] = useState<
     ArrayLike<ExerciseDataBaseExercise>
   >([])
+  const [searchTriggered, setSearchTrigger] = useState<boolean>(false)
   const [toggleButton, setButtonToggle] = useState(false)
   const [pressedButtonId, setPressedButtonId] = useState("85ZJ5LvyxECGoN0GMjHZ")
   const exercisesCollectionRef = collection(db, "exerciseCategories")
@@ -89,35 +96,71 @@ const DatabaseCategories = () => {
         renderItem={renderItem}
         showsHorizontalScrollIndicator={false}
       />
-      <FlatList
-        className="pb-96"
-        data={exercisesDisplayed}
-        keyExtractor={(item: ExerciseDataBaseExercise) => item.id}
-        renderItem={({ item }) => {
-          const exerciseNameKey = Object.keys(item).find((key) => key !== "id")
-
-          if (exerciseNameKey) {
-            const exerciseTitle = item.title
-            const exerciseDescritpion = item.description
-            const imageUrl = item.imageUrl
-            console.log("image url", imageUrl)
-
-            return (
-              <View key={item.id}>
-                <DatabaseExercise
-                  exerciseId={item.id}
-                  idOfCategory={pressedButtonId}
-                  exerciseName={exerciseTitle}
-                  exerciseDescription={exerciseDescritpion}
-                  imageUrl={imageUrl}
-                />
-              </View>
+      {allCategories ? (
+        <FlatList
+          className="pb-96"
+          data={exercisesDisplayed}
+          keyExtractor={(item: ExerciseDataBaseExercise) => item.id}
+          renderItem={({ item }) => {
+            const exerciseNameKey = Object.keys(item).find(
+              (key) => key !== "id"
             )
-          } else {
-            return null
-          }
-        }}
-      />
+
+            if (exerciseNameKey) {
+              const exerciseTitle = item.title
+              const exerciseDescritpion = item.description
+              const imageUrl = item.imageUrl
+              console.log("image url", imageUrl)
+
+              return (
+                <View key={item.id}>
+                  <DatabaseExercise
+                    exerciseId={item.id}
+                    idOfCategory={pressedButtonId}
+                    exerciseName={exerciseTitle}
+                    exerciseDescription={exerciseDescritpion}
+                    imageUrl={imageUrl}
+                  />
+                </View>
+              )
+            } else {
+              return null
+            }
+          }}
+        />
+      ) : (
+        <FlatList
+          className="pb-96"
+          data={exercisesDisplayed}
+          keyExtractor={(item: ExerciseDataBaseExercise) => item.id}
+          renderItem={({ item }) => {
+            const exerciseNameKey = Object.keys(item).find(
+              (key) => key !== "id"
+            )
+
+            if (exerciseNameKey) {
+              const exerciseTitle = item.title
+              const exerciseDescritpion = item.description
+              const imageUrl = item.imageUrl
+              console.log("image url", imageUrl)
+
+              return (
+                <View key={item.id}>
+                  <DatabaseExercise
+                    exerciseId={item.id}
+                    idOfCategory={pressedButtonId}
+                    exerciseName={exerciseTitle}
+                    exerciseDescription={exerciseDescritpion}
+                    imageUrl={imageUrl}
+                  />
+                </View>
+              )
+            } else {
+              return null
+            }
+          }}
+        />
+      )}
     </>
   )
 }

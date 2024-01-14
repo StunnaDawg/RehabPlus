@@ -1,9 +1,4 @@
-import {
-  getDocs,
-  CollectionReference,
-  collection,
-  doc,
-} from "firebase/firestore"
+import { getDocs, collection, doc } from "firebase/firestore"
 import { Dispatch, SetStateAction } from "react"
 import { ExerciseDataBaseExercise } from "../@types/firestore"
 import { db } from "../firebase"

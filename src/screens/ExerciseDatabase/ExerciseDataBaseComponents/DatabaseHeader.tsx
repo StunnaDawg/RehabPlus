@@ -1,14 +1,16 @@
 import { View, Text, FlatList } from "react-native"
-import React, { useState } from "react"
+import React, { Dispatch, SetStateAction, useState } from "react"
 import { Button, Searchbar, Title, ButtonProps } from "react-native-paper"
 
-const Categories = [
-  { id: 1, title: "Bicep" },
-  { id: 2, title: "Quad" },
-  { id: 3, title: "Plyometrics" },
-]
+type DatabaseHeadBaseProps = {
+  setSearchTriggerProp: Dispatch<SetStateAction<boolean>>
+  setShowCategories: Dispatch<SetStateAction<boolean>>
+}
 
-const DatabaseHeader = () => {
+const DatabaseHeader = ({
+  setSearchTriggerProp,
+  setShowCategories,
+}: DatabaseHeadBaseProps) => {
   const [searchQuery, setSearchQuery] = useState("")
   const [isPressed, setIsPressed] = useState(false)
   const [pressedButtonId, setPressedButtonId] = useState(null)
@@ -21,9 +23,13 @@ const DatabaseHeader = () => {
       <View className="my-2 mx-5">
         <Searchbar
           placeholder="Search"
-          onChangeText={(query) => setSearchQuery(query)}
+          onChangeText={(query) => {
+            setSearchQuery(query)
+            setSearchTriggerProp(true)
+          }}
           value={searchQuery}
         />
+        <Button onPress={() => setShowCategories(true)}>All</Button>
       </View>
     </>
   )
