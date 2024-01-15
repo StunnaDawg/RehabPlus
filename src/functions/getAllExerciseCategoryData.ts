@@ -1,21 +1,24 @@
 import { collection, doc, getDocs } from "firebase/firestore"
 import { db } from "../firebase"
-import { ExerciseDataBaseExercise } from "../@types/firestore"
+import {
+  ExerciseDataBaseCategory,
+  ExerciseDataBaseExercise,
+} from "../@types/firestore"
 import { Dispatch, SetStateAction } from "react"
 
 const getAllExerciseCategoryData = async (
-  setCategoriesState: Dispatch<SetStateAction<ExerciseDataBaseExercise[]>>
+  setCategoriesState: Dispatch<SetStateAction<ExerciseDataBaseCategory[]>>
 ) => {
   try {
     const category = collection(db, "exerciseCategories")
     const data = await getDocs(category)
 
     const filteredData = data.docs.map((doc) => ({
-      ...doc.data(),
+      ...doc.data().exercises,
       id: doc.id,
-      title: doc.data().title,
-      description: doc.data().description,
-      imageUrl: doc.data().imageUri,
+      title: doc.data().exercises.title,
+      description: doc.data().exercises.description,
+      imageUrl: doc.data().exercises.imageUri,
     }))
     console.log("filtered data get Category Exercises", filteredData)
     setCategoriesState(filteredData)

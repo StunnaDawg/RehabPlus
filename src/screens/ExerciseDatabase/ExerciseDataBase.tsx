@@ -6,6 +6,7 @@ import DatabaseCategories from "./ExerciseDataBaseComponents/DatabaseCategories"
 const ExerciseDataBase = () => {
   const [search, setSearch] = useState<boolean>(false)
   const [showAllCategories, setShowAllCategories] = useState<boolean>(false)
+  const [categoryId, setCategoryId] = useState<string>("")
 
   useEffect(() => {
     console.log("trigger")
@@ -18,6 +19,7 @@ const ExerciseDataBase = () => {
           <DatabaseHeader
             setSearchTriggerProp={setSearch}
             setShowCategories={setShowAllCategories}
+            setCategoryIdProp={setCategoryId}
           />
         </View>
 
@@ -25,6 +27,7 @@ const ExerciseDataBase = () => {
           <DatabaseCategories
             setSearchTriggerProp={setSearch}
             allCategories={showAllCategories}
+            categoryId={categoryId}
           />
         </View>
       </View>
