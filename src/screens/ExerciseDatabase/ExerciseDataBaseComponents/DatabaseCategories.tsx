@@ -16,7 +16,7 @@ import getAllExerciseCategoryData from "../../../functions/getAllExerciseCategor
 type DatabaseCategoriesProps = {
   setSearchTriggerProp: Dispatch<SetStateAction<boolean>>
   allCategories: boolean
-  categoryId?: string
+  categoryId: string
 }
 
 const DatabaseCategories = ({
@@ -24,21 +24,13 @@ const DatabaseCategories = ({
   allCategories,
   categoryId,
 }: DatabaseCategoriesProps) => {
-  const [exerciseCategories, setExerciseCategories] = useState<
-    ExerciseDataBaseCategory[]
-  >([])
   const [exercisesDisplayed, setExercisesDisplayed] = useState<
     ExerciseDataBaseExercise[]
   >([])
-
-  const [allExercisesDisplayed, setAllExercisesDisplayed] = useState<
+  const [currentExercises, setCurrentExercises] = useState<
     ExerciseDataBaseExercise[]
   >([])
-  const [currentExercises, setCurrentExercises] = useState<
-    ArrayLike<ExerciseDataBaseExercise>
-  >([])
   const [searchTriggered, setSearchTrigger] = useState<boolean>(false)
-  const exercisesCollectionRef = collection(db, "exerciseCategories")
   const isFocused = useIsFocused()
 
   // useEffect(() => {
@@ -50,7 +42,7 @@ const DatabaseCategories = ({
   }, [exercisesDisplayed])
 
   useEffect(() => {
-    if (allCategories === false && categoryId) {
+    if (allCategories === false && categoryId !== "") {
       try {
         getExerciseCategoryData(setExercisesDisplayed, categoryId)
       } catch (err) {
@@ -58,12 +50,16 @@ const DatabaseCategories = ({
       }
     } else {
       try {
-        getAllExerciseCategoryData(setExercisesDisplayed)
+        getAllExerciseCategoryData(
+          setExercisesDisplayed,
+          setCurrentExercises,
+          currentExercises
+        )
       } catch (err) {
         console.error(err)
       }
     }
-  }, [allCategories])
+  }, [categoryId])
 
   return (
     <>

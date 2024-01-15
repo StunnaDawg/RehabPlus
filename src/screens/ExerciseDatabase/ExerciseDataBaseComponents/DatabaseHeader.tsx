@@ -47,7 +47,14 @@ const DatabaseHeader = ({
           className="flex flex-row py-2"
         >
           <View className="flex flex-row">
-            <Button onPress={() => setShowCategories(true)}>All</Button>
+            <Button
+              onPress={() => {
+                setShowCategories(true)
+                setCategoryIdProp("")
+              }}
+            >
+              All
+            </Button>
             {categories?.map((categoryButton) => (
               <Button
                 onPress={() => {

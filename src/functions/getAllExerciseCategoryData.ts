@@ -5,23 +5,23 @@ import {
   ExerciseDataBaseExercise,
 } from "../@types/firestore"
 import { Dispatch, SetStateAction } from "react"
+import getExerciseCategoryData from "./getExerciseCategoriesData"
 
 const getAllExerciseCategoryData = async (
-  setCategoriesState: Dispatch<SetStateAction<ExerciseDataBaseCategory[]>>
+  setExercises: Dispatch<SetStateAction<ExerciseDataBaseExercise[]>>,
+  setCurrExercise: Dispatch<SetStateAction<ExerciseDataBaseExercise[]>>,
+  currExercise: ExerciseDataBaseExercise[]
 ) => {
   try {
     const category = collection(db, "exerciseCategories")
     const data = await getDocs(category)
 
-    const filteredData = data.docs.map((doc) => ({
-      ...doc.data().exercises,
-      id: doc.id,
-      title: doc.data().exercises.title,
-      description: doc.data().exercises.description,
-      imageUrl: doc.data().exercises.imageUri,
-    }))
+    const filteredData = data.docs.map(
+      (doc) => getExerciseCategoryData(setCurrExercise, doc.id),
+      setExercises((prev) => [...prev, ...currExercise])
+    )
+
     console.log("filtered data get Category Exercises", filteredData)
-    setCategoriesState(filteredData)
   } catch (err) {
     console.error(err)
   }
