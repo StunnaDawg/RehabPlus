@@ -20,7 +20,7 @@ const DatabaseHeader = ({
 }: DatabaseHeadBaseProps) => {
   const [searchQuery, setSearchQuery] = useState("")
   const [isPressed, setIsPressed] = useState(false)
-  const [pressedButtonId, setPressedButtonId] = useState(null)
+  const [pressedButtonId, setPressedButtonId] = useState<string>("")
   const [categories, setCategories] = useState<ExerciseDataBaseCategory[]>([])
   const categoryCollection = collection(db, "exerciseCategories")
 
@@ -51,7 +51,9 @@ const DatabaseHeader = ({
               onPress={() => {
                 setShowCategories(true)
                 setCategoryIdProp("")
+                setPressedButtonId("")
               }}
+              mode={pressedButtonId === "" ? "contained" : "outlined"}
             >
               All
             </Button>
@@ -60,8 +62,14 @@ const DatabaseHeader = ({
                 onPress={() => {
                   setShowCategories(false)
                   setCategoryIdProp(categoryButton.id)
+                  setPressedButtonId(categoryButton.id)
                 }}
                 key={categoryButton.id}
+                mode={
+                  pressedButtonId === categoryButton.id
+                    ? "contained"
+                    : "outlined"
+                }
               >
                 {categoryButton.title}
               </Button>

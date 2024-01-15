@@ -42,7 +42,7 @@ const DatabaseCategories = ({
   }, [exercisesDisplayed])
 
   useEffect(() => {
-    if (allCategories === false && categoryId !== "") {
+    if (categoryId !== "") {
       try {
         getExerciseCategoryData(setExercisesDisplayed, categoryId)
       } catch (err) {
