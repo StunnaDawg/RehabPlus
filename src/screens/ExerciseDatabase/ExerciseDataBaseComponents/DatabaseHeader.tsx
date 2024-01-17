@@ -31,34 +31,42 @@ const DatabaseHeader = ({
   return (
     <>
       <View className=" items-center my-4">
-        <Text className="text-xl font-semibold">Add Exercise</Text>
+        <Text className="text-xl font-bold">Exercise Database</Text>
       </View>
       <View className="my-2 mx-5">
-        <Searchbar
-          placeholder="Search"
-          onChangeText={(query) => {
-            setSearchQuery(query)
-            setSearchTriggerProp(true)
-          }}
-          value={searchQuery}
-        />
-        <ScrollView
-          directionalLockEnabled={true}
-          className="flex flex-row py-2"
-        >
+        <View className="mb-3">
+          <Searchbar
+            className="bg-white"
+            placeholder="Search"
+            onChangeText={(query) => {
+              setSearchQuery(query)
+              setSearchTriggerProp(true)
+            }}
+            value={searchQuery}
+          />
+        </View>
+        <ScrollView directionalLockEnabled={true} className="flex flex-row">
           <View className="flex flex-row">
             <Button
+              className={pressedButtonId === "" ? "bg-sky-400" : "bg-slate-300"}
+              textColor="black"
               onPress={() => {
                 setShowCategories(true)
                 setCategoryIdProp("")
                 setPressedButtonId("")
               }}
-              mode={pressedButtonId === "" ? "contained" : "outlined"}
+              mode={pressedButtonId === "" ? "outlined" : "contained"}
             >
               All
             </Button>
             {categories?.map((categoryButton) => (
               <Button
+                className={
+                  pressedButtonId === categoryButton.id
+                    ? "bg-sky-400 mx-1"
+                    : "bg-slate-300 mx-1"
+                }
+                textColor="black"
                 onPress={() => {
                   setShowCategories(false)
                   setCategoryIdProp(categoryButton.id)
@@ -67,8 +75,8 @@ const DatabaseHeader = ({
                 key={categoryButton.id}
                 mode={
                   pressedButtonId === categoryButton.id
-                    ? "contained"
-                    : "outlined"
+                    ? "outlined"
+                    : "contained"
                 }
               >
                 {categoryButton.title}

@@ -33,14 +33,6 @@ const DatabaseCategories = ({
   const [searchTriggered, setSearchTrigger] = useState<boolean>(false)
   const isFocused = useIsFocused()
 
-  // useEffect(() => {
-  //   console.log("database data", ...exerciseCategories)
-  // }, [exerciseCategories])
-
-  useEffect(() => {
-    console.log("display data", exercisesDisplayed)
-  }, [exercisesDisplayed])
-
   useEffect(() => {
     if (categoryId !== "") {
       try {
@@ -55,6 +47,7 @@ const DatabaseCategories = ({
           setCurrentExercises,
           currentExercises
         )
+        console.log("All exercises displayed", exercisesDisplayed)
       } catch (err) {
         console.error(err)
       }
@@ -63,12 +56,24 @@ const DatabaseCategories = ({
 
   return (
     <>
-      <ScrollView>
-        {exercisesDisplayed.map((exercises) => (
+      <ScrollView className="pb-48">
+        {exercisesDisplayed ? (
+          exercisesDisplayed.map((exercises) => (
+            <View key={exercises?.id}>
+              <DatabaseExercise
+                exerciseName={exercises?.title}
+                exerciseId={exercises?.id}
+                idOfCategory={categoryId}
+                imageUrl={exercises?.imageUrl}
+                exerciseDescription={exercises?.description}
+              />
+            </View>
+          ))
+        ) : (
           <View>
-            <Text>{exercises.id}</Text>
+            <Text>Fetching Exercise Error</Text>
           </View>
-        ))}
+        )}
       </ScrollView>
     </>
   )

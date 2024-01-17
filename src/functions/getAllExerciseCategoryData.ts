@@ -13,15 +13,19 @@ const getAllExerciseCategoryData = async (
   currExercise: ExerciseDataBaseExercise[]
 ) => {
   try {
+    setExercises([])
     const category = collection(db, "exerciseCategories")
     const data = await getDocs(category)
+    let gottenData: ExerciseDataBaseExercise[] = []
 
-    const filteredData = data.docs.map(
+    data.docs.map(
       (doc) => getExerciseCategoryData(setCurrExercise, doc.id),
-      setExercises((prev) => [...prev, ...currExercise])
+      gottenData.push(currExercise[0])
     )
 
-    console.log("filtered data get Category Exercises", filteredData)
+    setExercises(gottenData)
+
+    console.log("filtered data get Category Exercises", gottenData)
   } catch (err) {
     console.error(err)
   }

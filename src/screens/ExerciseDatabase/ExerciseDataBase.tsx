@@ -14,7 +14,7 @@ const ExerciseDataBase = () => {
 
   return (
     <>
-      <View>
+      <View className=" flex flex-1 bg-slate-500">
         <View className="my-4">
           <DatabaseHeader
             setSearchTriggerProp={setSearch}
