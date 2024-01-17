@@ -1,7 +1,7 @@
 import { Button, Modal, Portal, Text } from "react-native-paper"
 import React, { useEffect, useState } from "react"
 import { useExerciseContext } from "../../../context/exerciseContext"
-import R from "../../../assets/icon.png"
+import "../../../assets/icon.png"
 import { useNavigation } from "@react-navigation/native"
 import ViewModal from "./ViewModal"
 import { NavigationType } from "../../../@types/navigation"
@@ -85,7 +85,10 @@ const DatabaseExercise = ({
                 style={{ width: 50, height: 50 }}
               />
             ) : (
-              <Image source={{ uri: R }} style={{ width: 50, height: 50 }} />
+              <Image
+                source={{ uri: imageUrl }}
+                style={{ width: 50, height: 50 }}
+              />
             )}
           </View>
           <View className="flex flex-col mx-2">

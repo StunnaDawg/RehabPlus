@@ -1,4 +1,4 @@
-import { View } from "react-native"
+import { ScrollView, View } from "react-native"
 import React, { useEffect, useState } from "react"
 import DatabaseHeader from "./ExerciseDataBaseComponents/DatabaseHeader"
 import DatabaseCategories from "./ExerciseDataBaseComponents/DatabaseCategories"
@@ -23,13 +23,13 @@ const ExerciseDataBase = () => {
           />
         </View>
 
-        <View>
+        <ScrollView>
           <DatabaseCategories
             setSearchTriggerProp={setSearch}
             allCategories={showAllCategories}
             categoryId={categoryId}
           />
-        </View>
+        </ScrollView>
       </View>
     </>
   )
