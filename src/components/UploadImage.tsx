@@ -36,7 +36,9 @@ const UploadImage = ({ setUri, showImage }: UploadImageType) => {
       {image && showImage && (
         <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
       )}
-      <Button onPress={pickImage}>Pick an image from camera roll</Button>
+      <Button textColor="black" onPress={pickImage}>
+        Pick an image from camera roll
+      </Button>
     </View>
   )
 }

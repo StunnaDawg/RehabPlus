@@ -14,6 +14,7 @@ type DeleteButtonProps = {
   userId?: string
   docRef?: DocumentReference
   navigationLocation: string
+  deleteName: string
 }
 
 // We can probably make one delete button component
@@ -21,6 +22,7 @@ const DeleteButton = ({
   userId,
   docRef,
   navigationLocation,
+  deleteName,
 }: DeleteButtonProps) => {
   const navigation = useNavigation<TabNavigationType | NavigationType>()
 
@@ -35,7 +37,11 @@ const DeleteButton = ({
     }
   }
 
-  return <Button onPress={onSubmitDoc}>Delete Protocol</Button>
+  return (
+    <Button textColor="black" onPress={onSubmitDoc}>
+      {deleteName}
+    </Button>
+  )
 }
 
 export default DeleteButton

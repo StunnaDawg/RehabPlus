@@ -88,23 +88,26 @@ const EditExercise = () => {
   }, [newImageUrl])
 
   return (
-    <ScrollView>
-      <View className="flex flex-1 flex-row justify-between">
-        <Text className="text-xl">Edit Exercise</Text>
-        <DeleteButton
-          userId={FIREBASE_AUTH?.currentUser?.uid}
-          docRef={exerciseDocRef}
-          navigationLocation="ExerciseDataBase"
-        />
+    <ScrollView className="bg-slate-500">
+      <View className="flex flex-1 flex-row justify-center">
+        <Text className="text-xl text-center font-bold">Edit Exercise</Text>
       </View>
-      <View>
+      <DeleteButton
+        userId={FIREBASE_AUTH?.currentUser?.uid}
+        docRef={exerciseDocRef}
+        navigationLocation="ExerciseDataBase"
+        deleteName="Delete Exercise"
+      />
+      <View className="mx-2">
         <TextInput
+          className="bg-white"
           placeholder={title}
           onChangeText={(text) => setExerciseName(text)}
         ></TextInput>
       </View>
-      <View>
+      <View className="mx-2">
         <TextInput
+          className="bg-white"
           placeholder={exerciseDescription}
           onChangeText={(text) => setExerciseDescriptionState(text)}
         ></TextInput>
@@ -147,9 +150,12 @@ const EditExercise = () => {
           />
         </Modal>
       </Portal>
-      <Button onPress={showModal}>Create Category</Button>
+      <Button onPress={showModal} textColor="black">
+        Create Category
+      </Button>
       <View className="flex flex-1 flex-row justify-center">
         <Button
+          textColor="black"
           onPress={() => {
             console.log("Delete")
           }}
@@ -157,6 +163,7 @@ const EditExercise = () => {
           Back
         </Button>
         <Button
+          textColor="black"
           onPress={() => {
             console.log("Save")
           }}

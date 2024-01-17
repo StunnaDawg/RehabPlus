@@ -1,6 +1,6 @@
-import { View, FlatList, ListRenderItem } from "react-native"
-import React, { useEffect, useState } from "react"
-import { Button } from "react-native-paper"
+import { View, FlatList, ListRenderItem, ScrollView } from "react-native"
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react"
+import { Button, Text } from "react-native-paper"
 import DatabaseExercise from "./DatabaseExercise"
 import getExerciseFireStoreData from "../../../functions/getExerciseData"
 import { db } from "../../../firebase"
@@ -10,114 +10,71 @@ import {
   ExerciseDataBaseCategory,
   ExerciseDataBaseExercise,
 } from "../../../@types/firestore"
-import ExerciseDataBase from "../ExerciseDataBase"
-import GetMultipleExercise from "../../../functions/getMultipleExercises"
 import getExerciseCategoryData from "../../../functions/getExerciseCategoriesData"
+import getAllExerciseCategoryData from "../../../functions/getAllExerciseCategoryData"
 
-const DatabaseCategories = () => {
-  const [exerciseCategories, setExerciseCategories] = useState<
-    ExerciseDataBaseCategory[]
-  >([])
+type DatabaseCategoriesProps = {
+  setSearchTriggerProp: Dispatch<SetStateAction<boolean>>
+  allCategories: boolean
+  categoryId: string
+}
+
+const DatabaseCategories = ({
+  setSearchTriggerProp,
+  allCategories,
+  categoryId,
+}: DatabaseCategoriesProps) => {
   const [exercisesDisplayed, setExercisesDisplayed] = useState<
     ExerciseDataBaseExercise[]
   >([])
   const [currentExercises, setCurrentExercises] = useState<
-    ArrayLike<ExerciseDataBaseExercise>
+    ExerciseDataBaseExercise[]
   >([])
-  const [toggleButton, setButtonToggle] = useState(false)
-  const [pressedButtonId, setPressedButtonId] = useState("85ZJ5LvyxECGoN0GMjHZ")
-  const exercisesCollectionRef = collection(db, "exerciseCategories")
+  const [searchTriggered, setSearchTrigger] = useState<boolean>(false)
   const isFocused = useIsFocused()
 
   useEffect(() => {
-    const fetchFireStoredata = async () => {
+    if (categoryId !== "") {
       try {
-        // console.log("trying")
-        getExerciseFireStoreData(setExerciseCategories, exercisesCollectionRef)
-        getExerciseCategoryData(setExercisesDisplayed, pressedButtonId)
-        getExercisesForCategory(pressedButtonId)
+        getExerciseCategoryData(setExercisesDisplayed, categoryId)
+      } catch (err) {
+        console.error(err)
+      }
+    } else {
+      try {
+        getAllExerciseCategoryData(
+          setExercisesDisplayed,
+          setCurrentExercises,
+          currentExercises
+        )
+        console.log("All exercises displayed", exercisesDisplayed)
       } catch (err) {
         console.error(err)
       }
     }
-    fetchFireStoredata()
-  }, [isFocused])
-
-  // useEffect(() => {
-  //   console.log("database data", ...exerciseCategories)
-  // }, [exerciseCategories])
-
-  useEffect(() => {
-    console.log("display data", exercisesDisplayed)
-  }, [exercisesDisplayed])
-
-  useEffect(() => {}, [toggleButton])
-
-  const getExercisesForCategory = (categoryId: string) => {
-    const category = exerciseCategories.find((cat) => cat.id === categoryId)
-
-    if (category) {
-      console.log("category:", category)
-
-      return category
-    } else {
-      return [""]
-    }
-  }
-
-  const renderItem: ListRenderItem<ExerciseDataBaseCategory> = ({ item }) => (
-    <Button
-      key={item.id}
-      className="mx-1 py-0"
-      mode={pressedButtonId === item.id ? "contained" : "outlined"}
-      onPress={() => {
-        setPressedButtonId(item.id)
-        getExerciseCategoryData(setExercisesDisplayed, item.id)
-        getExercisesForCategory(item.id)
-        setButtonToggle((prevData) => !prevData)
-      }}
-    >
-      {item.title}
-    </Button>
-  )
+  }, [categoryId])
 
   return (
     <>
-      <FlatList
-        horizontal={true}
-        data={exerciseCategories}
-        renderItem={renderItem}
-        showsHorizontalScrollIndicator={false}
-      />
-      <FlatList
-        className="pb-96"
-        data={exercisesDisplayed}
-        keyExtractor={(item: ExerciseDataBaseExercise) => item.id}
-        renderItem={({ item }) => {
-          const exerciseNameKey = Object.keys(item).find((key) => key !== "id")
-
-          if (exerciseNameKey) {
-            const exerciseTitle = item.title
-            const exerciseDescritpion = item.description
-            const imageUrl = item.imageUrl
-            console.log("image url", imageUrl)
-
-            return (
-              <View key={item.id}>
-                <DatabaseExercise
-                  exerciseId={item.id}
-                  idOfCategory={pressedButtonId}
-                  exerciseName={exerciseTitle}
-                  exerciseDescription={exerciseDescritpion}
-                  imageUrl={imageUrl}
-                />
-              </View>
-            )
-          } else {
-            return null
-          }
-        }}
-      />
+      <ScrollView className="pb-48">
+        {exercisesDisplayed ? (
+          exercisesDisplayed.map((exercises) => (
+            <View key={exercises?.id}>
+              <DatabaseExercise
+                exerciseName={exercises?.title}
+                exerciseId={exercises?.id}
+                idOfCategory={categoryId}
+                imageUrl={exercises?.imageUrl}
+                exerciseDescription={exercises?.description}
+              />
+            </View>
+          ))
+        ) : (
+          <View>
+            <Text>Fetching Exercise Error</Text>
+          </View>
+        )}
+      </ScrollView>
     </>
   )
 }

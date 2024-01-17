@@ -30,6 +30,7 @@ const CreateCategoryButton = ({
   return (
     <View>
       <Button
+        textColor="black"
         onPress={() => {
           CreateCategory()
           hideModal(false)

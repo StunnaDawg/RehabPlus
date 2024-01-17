@@ -9,6 +9,7 @@ import { useSingleEditProtocolContext } from "../../../context/protocolContext"
 import { FIREBASE_AUTH } from "../../../firebase"
 import { NavigationType } from "../../../@types/navigation"
 import { Protocol } from "../../../@types/firestore"
+import "../../../assets/R.png"
 
 const ProtocolScreenWidget = ({
   title: protocolTitle,
@@ -23,68 +24,62 @@ const ProtocolScreenWidget = ({
   const navigation = useNavigation<NavigationType>()
 
   return (
-    <View>
-      <Card className="m-3">
-        <Card.Content>
-          <View className="justify-center items-center">
-            <Text className="font-bold text-2xl">
-              {" "}
-              {protocolTitle}{" "}
-              <Button
-                icon="pencil"
-                onPress={async () => {
-                  await GetSingleDoc(
-                    setProtocolEditData,
-                    protocolsCollectionRef,
-                    id
-                  )
-                  navigation.navigate("EditProtocol")
-                }}
-              >
-                Edit
-              </Button>
-            </Text>
-            <View className="flex-row">
-              <Button icon="account">Assign to Client</Button>
-              <Button
-                icon="eye"
-                onPress={async () => {
-                  {
-                    await GetSingleDoc(
-                      setProtocolEditData,
-                      protocolsCollectionRef,
-                      id
-                    )
+    <View className=" flex flex-row justify-around items-center m-3 bg-slate-300 border rounded p-3">
+      <View className="flex flex-col">
+        {imageUri ? (
+          <Image
+            source={{ uri: imageUri }}
+            style={{ width: 100, height: 100 }}
+          />
+        ) : (
+          <Image
+            source={{ uri: imageUri }}
+            style={{ width: 100, height: 100 }}
+          />
+        )}
+      </View>
+      <View className="flex flex-col items-center">
+        <Text className="font-bold text-2xl"> {protocolTitle} </Text>
+        <View className="flex flex-row">
+          <Button
+            textColor="#0277BD"
+            icon="eye"
+            onPress={async () => {
+              {
+                await GetSingleDoc(
+                  setProtocolEditData,
+                  protocolsCollectionRef,
+                  id
+                )
 
-                    navigation.navigate("ViewProtocolScreen")
-                  }
-                }}
-              >
-                {" "}
-                View{" "}
-              </Button>
-            </View>
-          </View>
-          {imageUri ? (
-            <Image
-              source={{ uri: imageUri }}
-              style={{ width: 200, height: 200 }}
-            />
-          ) : null}
-          <View className="flex-row">
-            {/* <Image source={theImage} style={{ width: 100, height: 100 }} /> */}
-            <View className="flex-1 flex-row justify-between">
-              <View className="flex-col">
-                <Text className="m-2 font-bold">Weeks: {weeks}</Text>
-                <Text className="m-2 font-bold">Description: {outline}</Text>
-                {userId !== FIREBASE_AUTH?.currentUser?.uid ? (
-                  <Text className="m-2 font-bold">Created by: {userId}</Text>
-                ) : null}
-              </View>
-            </View>
-          </View>
-        </Card.Content>
-      </Card>
+                navigation.navigate("ViewProtocolScreen")
+              }
+            }}
+          >
+            {" "}
+            View{" "}
+          </Button>
+          <Button
+            textColor="black"
+            icon="pencil"
+            onPress={async () => {
+              await GetSingleDoc(
+                setProtocolEditData,
+                protocolsCollectionRef,
+                id
+              )
+              navigation.navigate("EditProtocol")
+            }}
+          >
+            Edit
+          </Button>
+        </View>
+        <View className="flex flex-col">
+          <Button textColor="black" icon="account">
+            Assign to Client
+          </Button>
+        </View>
+      </View>
     </View>
   )
 }

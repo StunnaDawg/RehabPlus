@@ -32,6 +32,7 @@ const ProtocolScreenHeader = () => {
       <View className="flex-1 flex-row m-4 justify-between items-center">
         <Text className="font-bold text-3xl">My Protocols</Text>
         <Button
+          textColor="black"
           onPress={async () => {
             const newProtocolId = await onSubmitEmptyProtocol()
             navigation.navigate("NewProtocol", { protocolId: newProtocolId })
@@ -42,8 +43,9 @@ const ProtocolScreenHeader = () => {
         </Button>
       </View>
       <View></View>
-      <View className="flex-1">
+      <View className="flex-1 mx-2">
         <Searchbar
+          className="bg-white"
           placeholder="Search Protocols"
           onChangeText={(query) => {
             setSearchQuery(query)

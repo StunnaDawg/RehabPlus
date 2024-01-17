@@ -47,6 +47,7 @@ const CreateExerciseButton = ({
   return (
     <View>
       <Button
+        textColor="black"
         onPress={async () => {
           if (imageUri) {
             await uploadImage(

@@ -9,14 +9,14 @@ const NavBar = () => {
   const handleSignOut = () => {
     try {
       FIREBASE_AUTH.signOut()
-    } catch (error:any) {
+    } catch (error: any) {
       alert(error.message)
     }
   }
 
   return (
     <>
-      <SafeAreaView className=" flex-row justify-between">
+      <SafeAreaView className=" flex-row justify-between bg-slate-400">
         <Text
           className="text-xl px-3"
           onPress={() => navigation.navigate("Dashboard")}
@@ -25,7 +25,9 @@ const NavBar = () => {
         </Text>
         <View className="flex-row mr-3">
           <Text className="px-3">Hello {FIREBASE_AUTH.currentUser?.email}</Text>
-          <Button mode='contained' onPress={handleSignOut} icon="account">Sign Out</Button>
+          <Button mode="contained" onPress={handleSignOut} icon="account">
+            Sign Out
+          </Button>
         </View>
       </SafeAreaView>
     </>

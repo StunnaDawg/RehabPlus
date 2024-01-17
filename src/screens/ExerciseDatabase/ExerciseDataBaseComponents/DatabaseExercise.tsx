@@ -1,12 +1,12 @@
-import { Button, Card, Modal, Portal, Text } from "react-native-paper"
+import { Button, Modal, Portal, Text } from "react-native-paper"
 import React, { useEffect, useState } from "react"
 import { useExerciseContext } from "../../../context/exerciseContext"
+import "../../../assets/icon.png"
 import { useNavigation } from "@react-navigation/native"
 import ViewModal from "./ViewModal"
 import { NavigationType } from "../../../@types/navigation"
-import { WorkoutExercise } from "../../../@types/firestore"
 import AddWorkoutModal from "./AddWorkoutModal"
-import { Image } from "react-native"
+import { Image, View } from "react-native"
 
 type DatabaseExerciseProps = {
   exerciseName: string
@@ -76,38 +76,49 @@ const DatabaseExercise = ({
 
   return (
     <>
-      <Card mode="contained" className="mt-3 mx-8 ">
-        <Card.Content className="flex-1 flex-row justify-center">
-          <Text variant="titleLarge"> {exerciseName}</Text>
-          <Card.Actions>
-            <Button
-              onPress={() => {
-                navigation.navigate("EditExercise", {
-                  title: exerciseName,
-                  exerciseDescription: exerciseDescription,
-                  id: exerciseId,
-                  categoryId: idOfCategory,
-                })
-              }}
-            >
-              Edit Exercise
-            </Button>
-          </Card.Actions>
-        </Card.Content>
-        <Card.Content className="flex-1 flex-row">
-          {/* <Card.Cover className="w-20 h-20" /> */}
-          <Card.Actions className="flex-1 flex-col">
+      <View className="flex flex-row mt-3 mx-1 items-center bg-slate-300 p-3 border rounded">
+        <View className="flex flex-row items-center">
+          <View className="px-1">
             {imageUrl ? (
               <Image
                 source={{ uri: imageUrl }}
-                style={{ width: 200, height: 200 }}
+                style={{ width: 50, height: 50 }}
               />
-            ) : null}
-            <Button className="my-1" onPress={showModal}>
+            ) : (
+              <Image
+                source={{ uri: imageUrl }}
+                style={{ width: 50, height: 50 }}
+              />
+            )}
+          </View>
+          <View className="flex flex-col mx-2">
+            <Text className="font-bold text-center">
+              {" "}
+              {exerciseName ? exerciseName : "no title"}
+            </Text>
+            <Button onPress={showModal} textColor="black">
               View
             </Button>
+            {exerciseId ? (
+              <Button
+                textColor="black"
+                onPress={() => {
+                  navigation.navigate("EditExercise", {
+                    title: exerciseName,
+                    exerciseDescription: exerciseDescription,
+                    id: exerciseId,
+                    categoryId: idOfCategory,
+                  })
+                }}
+              >
+                Edit Exercise
+              </Button>
+            ) : null}
+          </View>
 
+          <View className="flex flex-row justify-end">
             <Button
+              textColor="black"
               onPress={() => {
                 showAddWorkoutModal()
                 // console.log("widget pressed")
@@ -116,9 +127,9 @@ const DatabaseExercise = ({
             >
               Add Workout
             </Button>
-          </Card.Actions>
-        </Card.Content>
-      </Card>
+          </View>
+        </View>
+      </View>
 
       <Portal>
         <Modal

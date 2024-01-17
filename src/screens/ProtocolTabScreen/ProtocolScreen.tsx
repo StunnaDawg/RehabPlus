@@ -24,12 +24,20 @@ const ProtocolScreen = () => {
   }, [isFocused])
   return (
     <>
-      <ScrollView>
+      <ScrollView className="bg-slate-500">
         <ProtocolScreenHeader />
         <View className="flex-1 flex-row-reverse items-center justify-center">
-          <Text>Show Public Protocols</Text>
-          <Switch value={listPublic} onValueChange={onToggleSwitch} />
-          <Button onPress={() => navigation.navigate("CreateExercise")}>
+          <Text>Show</Text>
+          <Switch
+            color="black"
+            value={listPublic}
+            onValueChange={onToggleSwitch}
+          />
+          <Button
+            textColor="black"
+            onPress={() => navigation.navigate("CreateExercise")}
+            icon="plus"
+          >
             Create New Exercise
           </Button>
         </View>
