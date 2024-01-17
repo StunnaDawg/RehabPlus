@@ -34,29 +34,27 @@ const ChooseCategory = ({
 
   return (
     <>
-      <View>
+      <View className="my-4">
         <View className="mx-4">
-          <List.Section title="Choose Category">
-            <List.Accordion
-              title={chosenCategory}
-              expanded={expanded}
-              onPress={handlePress}
-            >
-              {chooseExerciseCategories.map((category) => (
-                <TouchableRipple key={category.id}>
-                  <List.Item
-                    key={category.id}
-                    title={category.title}
-                    onPress={() => {
-                      setChosenCategory(category.title)
-                      setCategoryId(category.id)
-                      handlePress()
-                    }}
-                  />
-                </TouchableRipple>
-              ))}
-            </List.Accordion>
-          </List.Section>
+          <List.Accordion
+            title={chosenCategory}
+            expanded={expanded}
+            onPress={handlePress}
+          >
+            {chooseExerciseCategories.map((category) => (
+              <TouchableRipple key={category.id} className="bg-white">
+                <List.Item
+                  key={category.id}
+                  title={category.title}
+                  onPress={() => {
+                    setChosenCategory(category.title)
+                    setCategoryId(category.id)
+                    handlePress()
+                  }}
+                />
+              </TouchableRipple>
+            ))}
+          </List.Accordion>
         </View>
       </View>
     </>

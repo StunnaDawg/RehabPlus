@@ -29,21 +29,28 @@ const CreateExercise = () => {
 
   return (
     <>
-      <ScrollView>
+      <ScrollView className="bg-slate-500">
         <View>
-          <Text className="text-xl">Create a new Exercise</Text>
-          <Button onPress={() => navigation.navigate("ExerciseDataBase")}>
+          <Text className="text-xl text-center font-bold">
+            Create a new Exercise
+          </Text>
+          <Button
+            textColor="black"
+            onPress={() => navigation.navigate("ExerciseDataBase")}
+          >
             Edit Exercise Database
           </Button>
         </View>
-        <View>
+        <View className="mx-2">
           <TextInput
+            className="bg-white"
             placeholder="Name"
             onChangeText={(text) => setExerciseName(text)}
           ></TextInput>
         </View>
-        <View>
+        <View className="mx-2">
           <TextInput
+            className="bg-white"
             placeholder="Description"
             onChangeText={(text) => setExerciseDescription(text)}
           ></TextInput>
@@ -72,9 +79,12 @@ const CreateExercise = () => {
         <View>
           <UploadImage setUri={setImageUri} showImage={true} />
         </View>
-        <Button onPress={showModal}>Create Category</Button>
+        <Button onPress={showModal} textColor="black">
+          Create Category
+        </Button>
         <View className="flex flex-1 flex-row justify-center">
           <Button
+            textColor="black"
             onPress={() => {
               console.log("Delete")
             }}
@@ -82,6 +92,7 @@ const CreateExercise = () => {
             Back
           </Button>
           <Button
+            textColor="black"
             onPress={() => {
               console.log("Save")
             }}
