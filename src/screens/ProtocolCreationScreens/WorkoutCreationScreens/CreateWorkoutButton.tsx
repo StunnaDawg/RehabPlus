@@ -45,6 +45,7 @@ const CreateWorkoutButton = ({
 
   return (
     <Button
+      textColor="black"
       icon="plus"
       onPress={async () => {
         await CreateWorkout()

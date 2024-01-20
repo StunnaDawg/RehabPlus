@@ -8,12 +8,13 @@ const FinishWorkout = () => {
   const navigation = useNavigation<TabNavigationType>()
   return (
     <>
-      <View className="flex flex-1 flex-row justify-center items-center">
+      <View className="flex flex-1 flex-row justify-center items-center bg-slate-500">
         <View className="flex flex-col content-center items-center">
           <Text className="font-bold text-3xl">Nice Work!</Text>
-          <Text className="font-bold text-xl">How did the Workout go?</Text>
-          <TextInput className="p-5"></TextInput>
-          <Button onPress={() => navigation.navigate("Protocol")}>
+          <Button
+            textColor="black"
+            onPress={() => navigation.navigate("Protocol")}
+          >
             Finish
           </Button>
         </View>

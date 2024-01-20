@@ -30,33 +30,44 @@ const ViewPhases = () => {
 
   return (
     <>
-      <Text className="text-2xl m-5 font-bold">Protocol Overview</Text>
-      <Text className="text-2xl m-3 font-bold">Phases:</Text>
-      <View className="flex flex-row justify-evenly">
-        {phasesData?.map((phase: ProtocolPhase) => (
-          <>
-            <View>
-              <Button
-                mode={phase.id === buttonId ? "contained" : "outlined"}
-                onPress={() => setButtonId(phase.id)}
-              >
-                {phase.title}
-              </Button>
-            </View>
-          </>
-        ))}
-      </View>
-      <View className="flex flex-row justify-center">
-        {phasesData?.map((phase: ProtocolPhase) => (
-          <ViewPhaseCard
-            key={phase.id}
-            buttonChange={buttonId}
-            title={phase.title}
-            phaseId={phase.id}
-            description={phase.description}
-            protocolId={protocolEditData.id}
-          />
-        ))}
+      <View className="bg-slate-500 h-screen">
+        <Text className="text-2xl m-5 font-bold">Protocol Overview</Text>
+
+        <View className="flex flex-row items-center">
+          <Text className="text-2xl m-3 font-bold">Phases:</Text>
+          <View className="flex flex-row justify-center">
+            {phasesData?.map((phase: ProtocolPhase) => (
+              <>
+                <View>
+                  <Button
+                    textColor="black"
+                    className={
+                      phase.id === buttonId
+                        ? "border rounded-none bg-slate-300"
+                        : "border rounded-none bg-white"
+                    }
+                    mode={phase.id === buttonId ? "contained" : "outlined"}
+                    onPress={() => setButtonId(phase.id)}
+                  >
+                    {phase.title}
+                  </Button>
+                </View>
+              </>
+            ))}
+          </View>
+        </View>
+        <View className="flex flex-row justify-center">
+          {phasesData?.map((phase: ProtocolPhase) => (
+            <ViewPhaseCard
+              key={phase.id}
+              buttonChange={buttonId}
+              title={phase.title}
+              phaseId={phase.id}
+              description={phase.description}
+              protocolId={protocolEditData.id}
+            />
+          ))}
+        </View>
       </View>
     </>
   )
