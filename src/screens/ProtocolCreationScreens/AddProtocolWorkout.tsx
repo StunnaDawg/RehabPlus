@@ -4,7 +4,7 @@ import AddWorkout from "./WorkoutCreationScreens/AddWorkout"
 
 const AddProtocolWorkout = () => {
   return (
-    <ScrollView>
+    <ScrollView className="bg-slate-500">
       <AddWorkout />
     </ScrollView>
   )

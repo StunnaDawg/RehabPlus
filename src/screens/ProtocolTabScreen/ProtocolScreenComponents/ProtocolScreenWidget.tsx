@@ -39,7 +39,7 @@ const ProtocolScreenWidget = ({
         )}
       </View>
       <View className="flex flex-col items-center">
-        <Text className="font-bold text-2xl"> {protocolTitle} </Text>
+        <Text className="font-bold text-xl"> {protocolTitle} </Text>
         <View className="flex flex-row">
           <Button
             textColor="#0277BD"

@@ -69,6 +69,7 @@ const AddProtocolWorkout = () => {
   return (
     <>
       <ScrollView
+        className="bg-slate-500"
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
@@ -78,6 +79,7 @@ const AddProtocolWorkout = () => {
       >
         <View className="flex-1 flex-row justify-around">
           <Button
+            textColor="black"
             onPress={() => navigation.navigate("CreateWorkout")}
             icon="plus"
           >
@@ -96,7 +98,13 @@ const AddProtocolWorkout = () => {
             />
           ))
         ) : (
-          <Text>Pull to Refresh</Text>
+          <View className="flex flex-row justify-center font-bold">
+            {refreshing ? (
+              <Text className="text-2xl">Refreshing...</Text>
+            ) : (
+              <Text className="text-2xl">Create A Workout!</Text>
+            )}
+          </View>
         )}
       </ScrollView>
     </>

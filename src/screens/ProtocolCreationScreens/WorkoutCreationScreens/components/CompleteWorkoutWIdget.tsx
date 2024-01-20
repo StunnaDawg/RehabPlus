@@ -7,6 +7,7 @@ import { useEditWorkoutContext } from "../../../../context/editWorkoutContext"
 import { useCurrentPhasesIdContext } from "../../../../context/phasesIdContext"
 import { useNewProtocolDataContext } from "../../../../context/newProtocolContext"
 import GetSingleWorkout from "../../../../functions/getSingleWorkout"
+import { View } from "react-native"
 
 type CompleteWorkoutWidgetProps = {
   workoutTitle?: string
@@ -52,26 +53,24 @@ const CompleteWorkoutWidget = ({
   }, [currentWorkoutId])
 
   return (
-    <Card mode="contained" className="mt-3 mx-8 ">
-      <Card.Content className="flex-1 flex-row justify-center">
-        <Text variant="titleLarge">{workoutTitle}</Text>
-      </Card.Content>
-      <Card.Content className="flex-1 flex-row">
-        {/* <Card.Cover className="w-20 h-20" source={ExerciseImage} /> */}
-        <Card.Actions className="flex-1 flex-col">
-          <Button
-            className="my-1"
-            onPress={async () => {
-              await setId()
-              navigation.navigate("EditProtocolWorkoutScreen")
-            }}
-          >
-            View
-          </Button>
-          <Button className="my-1">Delete</Button>
-        </Card.Actions>
-      </Card.Content>
-    </Card>
+    <View className="flex flex-row justify-center mt-3 mx-8 bg-slate-300 border rounded">
+      <View className="flex flex-col items-center">
+        <Text className="text-2xl font-bold">{workoutTitle}</Text>
+        <Button
+          textColor="black"
+          className="my-1"
+          onPress={async () => {
+            await setId()
+            navigation.navigate("EditProtocolWorkoutScreen")
+          }}
+        >
+          View
+        </Button>
+        <Button textColor="black" className="my-1">
+          Delete
+        </Button>
+      </View>
+    </View>
   )
 }
 

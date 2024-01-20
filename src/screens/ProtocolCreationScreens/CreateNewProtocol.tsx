@@ -4,7 +4,7 @@ import StartPage from "./NewProtocolScreens/StartPage"
 
 const CreateNewProtocol = () => {
   return (
-    <ScrollView>
+    <ScrollView className="bg-slate-500">
       <StartPage />
     </ScrollView>
   )
