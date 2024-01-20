@@ -53,6 +53,7 @@ const UpdateWorkoutButton = ({
 
   return (
     <Button
+      textColor="black"
       icon="plus"
       onPress={async () => {
         await UpdateWorkout()

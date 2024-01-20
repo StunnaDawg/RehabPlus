@@ -42,7 +42,6 @@ const UpdateButton = ({
           title: protocolTitle,
           description: protocolOutline,
           public: protocolPublic,
-          imageUri: null,
         })
       }
       navigation.navigate("Protocol")
@@ -53,6 +52,7 @@ const UpdateButton = ({
   return (
     <View>
       <Button
+        textColor="black"
         onPress={async () => {
           if (imageUrl) {
             await uploadImage(

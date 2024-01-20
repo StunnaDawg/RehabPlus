@@ -87,6 +87,7 @@ const EditStartPage = () => {
           onChangeText={(text) => setTitleText(text)}
           placeholder={titleText}
           placeholderTextColor="black"
+          activeOutlineColor="black"
         ></TextInput>
       </View>
 
@@ -97,6 +98,7 @@ const EditStartPage = () => {
           onChangeText={(text) => setOutlineText(text)}
           placeholder={outlineText}
           placeholderTextColor="black"
+          activeOutlineColor="black"
         ></TextInput>
       </View>
 
@@ -139,7 +141,7 @@ const EditStartPage = () => {
             />
           </Modal>
         </Portal>
-        <Button icon="plus" onPress={showModal}>
+        <Button icon="plus" textColor="black" onPress={showModal}>
           Add Phase
         </Button>
         <UpdateButton

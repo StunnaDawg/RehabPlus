@@ -20,6 +20,7 @@ const DeleteImageButton = ({
   return (
     <View>
       <Button
+        textColor="black"
         onPress={() => {
           deleteImage(fileLocation, setImageUrl)
           setNewImageUrl("")

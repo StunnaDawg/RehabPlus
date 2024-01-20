@@ -42,20 +42,22 @@ const ExerciseWidget = ({
 
   return (
     <>
-      <Card mode="outlined" className=" flex-1 mt-3 mx-8 bg-blue-400">
-        <Card.Content className="flex-1 flex-row justify-center items-center">
-          <Text variant="titleMedium">
+      <View className=" flex flex-row justify-between items-center mt-3 mx-8 bg-slate-300 rounded border p-1">
+        <View>
+          <Text className="text-lg">
             {letter}
             {index}.
           </Text>
-          <Text variant="titleMedium">
+          <Text className="text-lg">
             {" "}
             {exerciseTitle ? exerciseTitle : "Loading..."}
           </Text>
+        </View>
+        <View>
           <Text>reps: {reps !== undefined ? reps : "0"}</Text>
           <Text>sets: {reps !== undefined ? sets : "0"}</Text>
-        </Card.Content>
-      </Card>
+        </View>
+      </View>
     </>
   )
 }

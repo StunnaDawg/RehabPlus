@@ -51,6 +51,7 @@ const AddPhaseButton = ({
   return (
     <>
       <Button
+        textColor="black"
         onPress={async () => {
           await onSubmitPhase()
           setRefreshKey(true)

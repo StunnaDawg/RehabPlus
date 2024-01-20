@@ -73,6 +73,7 @@ const EditCreatedWorkout = () => {
   return (
     <>
       <ScrollView
+        className="bg-slate-500"
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
@@ -108,6 +109,7 @@ const EditCreatedWorkout = () => {
         </View>
         <View className="mx-4 my-1">
           <Button
+            textColor="black"
             icon="dumbbell"
             onPress={() => navigation.navigate("ExerciseDataBase")}
           >
