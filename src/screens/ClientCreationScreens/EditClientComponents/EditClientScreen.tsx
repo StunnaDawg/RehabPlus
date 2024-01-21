@@ -4,7 +4,7 @@ import EditClient from "./EditClient"
 
 const EditClientScreen = () => {
   return (
-    <ScrollView>
+    <ScrollView className="bg-slate-500">
       <EditClient />
     </ScrollView>
   )

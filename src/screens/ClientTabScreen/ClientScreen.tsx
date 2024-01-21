@@ -11,6 +11,7 @@ import { useIsFocused } from "@react-navigation/native"
 import getFireStoreData from "../../functions/getFireStoreData"
 import GetSingleDoc from "../../functions/getSingleDoc"
 import { useAddClientProtocolContext } from "../../context/EditProtocolContext"
+import { useEditClientContext } from "../../context/clientContext"
 
 export type ClientPlusProtocolType = {
   id: string
@@ -28,6 +29,8 @@ const ClientScreen = () => {
   const [clientPlusProtocol, setClientsPlusProtocol] = useState<
     ClientPlusProtocolType[]
   >([])
+  const { setClientEditData } = useEditClientContext()
+
   const { setClientProtocol } = useAddClientProtocolContext()
   const [protocolTitle, setProtocolTitle] = useState<Protocol>({} as Protocol)
   const [refreshPlease, setRefreshPlease] = useState(false)
@@ -63,10 +66,11 @@ const ClientScreen = () => {
 
   useEffect(() => {
     setClientProtocol("")
+    setClientEditData({} as Client)
   }, [])
 
   return (
-    <ScrollView>
+    <ScrollView className="bg-slate-400">
       <ClientHeader />
       <ClientTable
         otherClientList={clientList}

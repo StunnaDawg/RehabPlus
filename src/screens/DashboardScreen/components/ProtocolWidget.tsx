@@ -1,4 +1,4 @@
-import { View, Text } from "react-native"
+import { View, Text, Image } from "react-native"
 import React, { useEffect, useState } from "react"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import { IconButton, Button, Card, Divider } from "react-native-paper"
@@ -23,7 +23,7 @@ const ProtocolWidget = () => {
       <Divider bold />
       <View className="flex-1 justify-between m-4">
         <View className=" flex-1 flex-row justify-center">
-          <Text className="text-3xl font-bold">My Protocols</Text>
+          <Text className="text-3xl pb-2 font-bold">My Protocols</Text>
           <Button
             icon="format-list-bulleted"
             onPress={() => navigation.navigate("Protocol")}
@@ -32,17 +32,32 @@ const ProtocolWidget = () => {
           </Button>
         </View>
 
-        <View className="flex-1 flex-row justify-between m-4">
+        <View className="flex flex-col">
           {protocolWidgetList?.slice(0, 3).map((protocol) => (
-            <View key={protocol.id} className="flex-row justify-between">
-              <Card>
-                <Card.Content>
-                  <Text>{protocol.title}</Text>
-                  <Button onPress={() => navigation.navigate("Protocol")}>
-                    Edit
-                  </Button>
-                </Card.Content>
-              </Card>
+            <View
+              key={protocol.id}
+              className="flex flex-row justify-around items-center bg-slate-300 p-1 border rounded"
+            >
+              {protocol.imageUri ? (
+                <Image
+                  source={{ uri: protocol.imageUri }}
+                  style={{ width: 100, height: 100 }}
+                />
+              ) : (
+                <Image
+                  source={{ uri: protocol.imageUri }}
+                  style={{ width: 100, height: 100 }}
+                />
+              )}
+              <View className="flex flex-col">
+                <Text className="text-lg font-bold">{protocol.title}</Text>
+                <Button
+                  textColor="black"
+                  onPress={() => navigation.navigate("Protocol")}
+                >
+                  Edit
+                </Button>
+              </View>
             </View>
           ))}
         </View>

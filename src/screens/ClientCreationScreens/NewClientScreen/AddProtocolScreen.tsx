@@ -18,7 +18,7 @@ const AddClientProtocolScreen = () => {
   }, [isFocused])
   return (
     <>
-      <ScrollView>
+      <ScrollView className="bg-slate-500">
         {protocolList?.map((protocol) => (
           <ProtocolAddScreenWidget
             key={protocol.id}
@@ -26,6 +26,8 @@ const AddClientProtocolScreen = () => {
             protocolTitle={protocol.title}
             outline={protocol.description}
             id={protocol.id}
+            imageUri={protocol.imageUri}
+            assigned={false}
           />
         ))}
       </ScrollView>

@@ -31,7 +31,7 @@ const ClientWidget = () => {
       </View>
 
       <ScrollView>
-        <DataTable>
+        <DataTable className="bg-slate-300 border rounded pb-1">
           <DataTable.Header>
             <DataTable.Title> </DataTable.Title>
             <DataTable.Title>Name</DataTable.Title>
@@ -39,7 +39,7 @@ const ClientWidget = () => {
             <DataTable.Title> </DataTable.Title>
           </DataTable.Header>
 
-          {clientWidgetList?.map((client) =>
+          {clientWidgetList?.slice(0, 3).map((client) =>
             client.status ? (
               <DataTable.Row key={client.id}>
                 <DataTable.Cell>

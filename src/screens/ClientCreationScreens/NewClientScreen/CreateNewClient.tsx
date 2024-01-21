@@ -4,7 +4,7 @@ import NewClient from "./NewClient"
 
 const CreateNewClient = () => {
   return (
-    <ScrollView>
+    <ScrollView className="bg-slate-500">
       <NewClient />
     </ScrollView>
   )
