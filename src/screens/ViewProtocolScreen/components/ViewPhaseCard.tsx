@@ -52,35 +52,39 @@ const ViewPhaseCard = ({
       {phaseWorkouts && buttonChange === phaseId
         ? phaseWorkouts.map((workouts) => (
             <>
-              <View key={workouts.id} className="my-10">
-                <Button
-                  onPress={() => setShowWorkout(workouts.id)}
-                  className="text-xl"
-                >
-                  {workouts.workout?.title}
-                </Button>
-                {workouts.id ? (
+              <View
+                key={workouts.id}
+                className="flex flex-row justify-center mt-3 mx-8 bg-slate-300 border rounded"
+              >
+                <View className="flex flex-col items-center">
+                  <Text>{workouts.workout?.title}</Text>
                   <Button
-                    onPress={() =>
-                      navigation.navigate("TestWorkout", {
-                        id: workouts.id,
-                        protocolId: protocolId,
-                        phaseId: phaseId,
-                      })
-                    }
+                    onPress={() => setShowWorkout(workouts.id)}
+                    className="text-xl"
                   >
-                    Test Workout
+                    Show Workouts
                   </Button>
-                ) : null}
-
-                {showWorkout === workouts.id ? (
-                  <ViewWorkoutsPhases
-                    workoutId={workouts.id}
-                    protocolId={protocolId}
-                    phaseId={phaseId}
-                  />
-                ) : null}
-                <Divider />
+                  {showWorkout === workouts.id ? (
+                    <ViewWorkoutsPhases
+                      workoutId={workouts.id}
+                      protocolId={protocolId}
+                      phaseId={phaseId}
+                    />
+                  ) : null}
+                  {workouts.id ? (
+                    <Button
+                      onPress={() =>
+                        navigation.navigate("TestWorkout", {
+                          id: workouts.id,
+                          protocolId: protocolId,
+                          phaseId: phaseId,
+                        })
+                      }
+                    >
+                      Test Workout
+                    </Button>
+                  ) : null}
+                </View>
               </View>
             </>
           ))

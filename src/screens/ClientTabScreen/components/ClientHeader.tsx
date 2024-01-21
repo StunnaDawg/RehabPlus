@@ -19,7 +19,7 @@ const ClientHeader = () => {
       </View>
       <View className="flex-1 mx-3">
         <Searchbar
-          className="flex-1"
+          className="flex-1 bg-white"
           placeholder="Search Clients"
           onChangeText={(query) => {
             setSearchQuery(query)

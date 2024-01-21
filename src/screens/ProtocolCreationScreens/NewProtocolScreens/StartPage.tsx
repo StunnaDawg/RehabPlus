@@ -93,6 +93,7 @@ const StartPage = () => {
           await onGoBackDeleteProtocol()
           navigation.goBack()
         }}
+        textColor="black"
       >
         Go Back
       </Button>
@@ -101,6 +102,7 @@ const StartPage = () => {
         <TextInput
           mode="outlined"
           onChangeText={(text) => setTitleText(text)}
+          activeOutlineColor="black"
         ></TextInput>
       </View>
 
@@ -109,6 +111,7 @@ const StartPage = () => {
         <TextInput
           mode="outlined"
           onChangeText={(text) => setOutlineText(text)}
+          activeOutlineColor="black"
         ></TextInput>
       </View>
 
@@ -142,7 +145,7 @@ const StartPage = () => {
           />
         </Modal>
       </Portal>
-      <Button icon="plus" onPress={showModal}>
+      <Button textColor="black" icon="plus" onPress={showModal}>
         Add Phase
       </Button>
       <ScrollView>

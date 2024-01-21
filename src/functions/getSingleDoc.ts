@@ -8,6 +8,7 @@ const GetSingleDoc = async (
   id: string
 ) => {
   try {
+    console.log("id trying", id)
     const docRef = doc(collectionRef, id)
     const docSnap = await getDoc(docRef)
     let protocolData = null

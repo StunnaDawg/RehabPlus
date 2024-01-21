@@ -40,66 +40,71 @@ const CreateWorkout = () => {
 
   return (
     <>
-      <View className="mx-4 my-1">
-        <CreateWorkoutButton
-          workout={{
-            title: workoutTitleText,
-            description: workoutDescriptionText,
-            exercises: exerciseData,
-          }}
-        />
-      </View>
-      <View className="mx-4 my-1">
-        <Text>Workout Title</Text>
-        <TextInput
-          mode="outlined"
-          onChangeText={(text) => setWorkoutTitleText(text)}
-        ></TextInput>
-      </View>
+      <View className="bg-slate-500">
+        <View className="mx-4 my-1">
+          <CreateWorkoutButton
+            workout={{
+              title: workoutTitleText,
+              description: workoutDescriptionText,
+              exercises: exerciseData,
+            }}
+          />
+        </View>
+        <View className="mx-4 my-1">
+          <Text>Workout Title</Text>
+          <TextInput
+            mode="outlined"
+            onChangeText={(text) => setWorkoutTitleText(text)}
+            activeOutlineColor="black"
+          ></TextInput>
+        </View>
 
-      <View className="mx-4 my-1">
-        <Text>Workout Description</Text>
-        <TextInput
-          mode="outlined"
-          onChangeText={(text) => setWorkoutDescriptionText(text)}
-        ></TextInput>
-      </View>
-      <View className="mx-4 my-1">
-        <Button
-          icon="dumbbell"
-          onPress={() => navigation.navigate("ExerciseDataBase")}
-        >
-          Add Exercise
-        </Button>
-      </View>
-      <ScrollView className="pb-96">
-        {exerciseData?.map((exercise, index) => {
-          const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        <View className="mx-4 my-1">
+          <Text>Workout Description</Text>
+          <TextInput
+            mode="outlined"
+            onChangeText={(text) => setWorkoutDescriptionText(text)}
+            activeOutlineColor="black"
+          ></TextInput>
+        </View>
+        <View className="mx-4 my-1">
+          <Button
+            textColor="black"
+            icon="dumbbell"
+            onPress={() => navigation.navigate("ExerciseDataBase")}
+          >
+            Add Exercise
+          </Button>
+        </View>
+        <ScrollView className="pb-96 bg-slate-500">
+          {exerciseData?.map((exercise, index) => {
+            const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-          const letterData = letters[index % letters.length]
+            const letterData = letters[index % letters.length]
 
-          console.log(index, exercise.exercise.id)
-          console.log(
-            "reps and sets of exercise",
-            exercise.exercise.title,
-            exercise.reps,
-            "and",
-            exercise.sets
-          )
-          return (
-            <ExerciseWidget
-              key={exercise.exercise.id}
-              id={exercise.exercise.id}
-              exerciseTitle={exercise.exercise.title}
-              categoryId={exercise.categoryId}
-              letter={letterData}
-              index={index + 1}
-              reps={exercise.reps?.toString()}
-              sets={exercise.sets?.toString()}
-            />
-          )
-        })}
-      </ScrollView>
+            console.log(index, exercise.exercise.id)
+            console.log(
+              "reps and sets of exercise",
+              exercise.exercise.title,
+              exercise.reps,
+              "and",
+              exercise.sets
+            )
+            return (
+              <ExerciseWidget
+                key={exercise.exercise.id}
+                id={exercise.exercise.id}
+                exerciseTitle={exercise.exercise.title}
+                categoryId={exercise.categoryId}
+                letter={letterData}
+                index={index + 1}
+                reps={exercise.reps?.toString()}
+                sets={exercise.sets?.toString()}
+              />
+            )
+          })}
+        </ScrollView>
+      </View>
     </>
   )
 }

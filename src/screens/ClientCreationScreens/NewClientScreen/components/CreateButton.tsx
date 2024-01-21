@@ -44,7 +44,10 @@ const CreateButton = ({
   }
   return (
     <View>
-      <Button onPress={onSubmitClient}> Create Client </Button>
+      <Button textColor="black" onPress={onSubmitClient}>
+        {" "}
+        Create Client{" "}
+      </Button>
     </View>
   )
 }

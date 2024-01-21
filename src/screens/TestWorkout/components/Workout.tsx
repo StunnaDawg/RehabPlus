@@ -85,7 +85,9 @@ const CurrentExercise = ({
               </View>
             </View>
             <View>
-              <Button onPress={() => addSetHandler()}>Add Set</Button>
+              <Button textColor="black" onPress={() => addSetHandler()}>
+                Add Set
+              </Button>
             </View>
           </View>
         </>

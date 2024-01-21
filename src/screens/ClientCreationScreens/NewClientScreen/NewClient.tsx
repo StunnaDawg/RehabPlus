@@ -6,7 +6,12 @@ import { useIsFocused, useNavigation } from "@react-navigation/native"
 import { useEditClientContext } from "../../../context/clientContext"
 import { NavigationType } from "../../../@types/navigation"
 import { useAddClientProtocolContext } from "../../../context/EditProtocolContext"
-import { DocumentData } from "firebase/firestore"
+import { DocumentData, collection } from "firebase/firestore"
+import AddClientProtocolScreen from "./AddProtocolScreen"
+import ProtocolAddScreenWidget from "./components/AddProtocolScreenWidget"
+import { db } from "../../../firebase"
+import GetSingleDoc from "../../../functions/getSingleDoc"
+import { Protocol } from "../../../@types/firestore"
 
 const NewClient = () => {
   const { newClientProtocol } = useAddClientProtocolContext()
@@ -14,6 +19,9 @@ const NewClient = () => {
   const { clientEditData } = useEditClientContext()
   const [injuryOutline, setInjuryOutline] = useState("")
   const [email, setEmail] = useState("")
+  const [currentProtocol, setCurrentProtocol] = useState<Protocol>(
+    {} as Protocol
+  )
   const [active, setActive] = useState(true)
   const [protocol, setProtocol] = useState("")
   const navigation = useNavigation<NavigationType>()
@@ -38,6 +46,16 @@ const NewClient = () => {
       isMounted = false
     }
   }, [isFocused, clientEditData])
+
+  const protocolRef = collection(db, "protocols")
+
+  useEffect(() => {
+    console.log(clientEditData.protocol)
+    const getProtocolData = async () => {
+      GetSingleDoc(setCurrentProtocol, protocolRef, newClientProtocol)
+    }
+    getProtocolData()
+  }, [newClientProtocol])
 
   return (
     <>
@@ -66,8 +84,18 @@ const NewClient = () => {
       </View>
 
       <View>
-        <Text>{`${protocol}`}</Text>
-        <Button onPress={() => navigation.navigate("AddProtocolScreen")}>
+        {newClientProtocol !== "" ? (
+          <ProtocolAddScreenWidget
+            protocolTitle={currentProtocol.title}
+            imageUri={currentProtocol.imageUri}
+            assigned={true}
+            id={currentProtocol.id}
+          />
+        ) : null}
+        <Button
+          textColor="black"
+          onPress={() => navigation.navigate("AddProtocolScreen")}
+        >
           Add Protocol
         </Button>
       </View>

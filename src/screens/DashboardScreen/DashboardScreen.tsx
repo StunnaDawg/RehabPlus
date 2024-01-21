@@ -7,10 +7,10 @@ import ProtocolWidget from "./components/ProtocolWidget"
 const DashboardScreen = () => {
   return (
     <>
-      <ScrollView className="flex-1">
+      <ScrollView className="bg-slate-500">
         <ProtocolWidget />
-        <ClientWidget />
-        <InboxWidget />
+        {/* <ClientWidget />
+        <InboxWidget /> */}
       </ScrollView>
     </>
   )

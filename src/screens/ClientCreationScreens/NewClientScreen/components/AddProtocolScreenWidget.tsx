@@ -9,6 +9,8 @@ type ProtocolAddScreenWidgetProps = {
   weeks?: string
   outline?: string
   id: string
+  imageUri?: string
+  assigned: boolean
 }
 
 const ProtocolAddScreenWidget = ({
@@ -16,18 +18,31 @@ const ProtocolAddScreenWidget = ({
   weeks,
   outline,
   id,
+  imageUri,
+  assigned,
 }: ProtocolAddScreenWidgetProps) => {
   const { setClientProtocol } = useAddClientProtocolContext()
   const navigation = useNavigation()
 
   return (
     <View>
-      <Card className="m-3">
-        <Card.Content>
-          <View className="justify-center items-center">
-            <Text className="font-bold text-2xl"> {protocolTitle} </Text>
+      <View className="flex flex-row justify-around items-center m-3 bg-slate-300 border rounded p-3">
+        {imageUri ? (
+          <Image
+            source={{ uri: imageUri }}
+            style={{ width: 100, height: 100 }}
+          />
+        ) : (
+          <Image
+            source={{ uri: imageUri }}
+            style={{ width: 100, height: 100 }}
+          />
+        )}
+        <View className="flex flex-col items-center">
+          <Text className="font-bold text-2xl"> {protocolTitle} </Text>
+          {!assigned ? (
             <Button
-              onPress={() => {
+              onPress={async () => {
                 setClientProtocol(id)
                 navigation.goBack()
               }}
@@ -35,18 +50,9 @@ const ProtocolAddScreenWidget = ({
             >
               Assign to Client
             </Button>
-          </View>
-          <View className="flex-row">
-            {/* <Image source={theImage} style={{ width: 100, height: 100 }} /> */}
-            <View className="flex-1 flex-row justify-between">
-              <View className="flex-col">
-                <Text className="m-2 font-bold">Weeks: {weeks}</Text>
-                <Text className="m-2 font-bold">Description: {outline}</Text>
-              </View>
-            </View>
-          </View>
-        </Card.Content>
-      </Card>
+          ) : null}
+        </View>
+      </View>
     </View>
   )
 }

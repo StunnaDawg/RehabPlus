@@ -3,7 +3,7 @@ import React from "react"
 import EditStartPage from "./EditStartPage"
 const EditProtocol = () => {
   return (
-    <ScrollView>
+    <ScrollView className="bg-slate-500">
       <EditStartPage />
     </ScrollView>
   )

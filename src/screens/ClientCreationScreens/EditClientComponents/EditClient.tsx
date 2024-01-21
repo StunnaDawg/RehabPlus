@@ -2,11 +2,16 @@ import { View, Text } from "react-native"
 import React, { useEffect, useState } from "react"
 import { Button, TextInput } from "react-native-paper"
 import DeleteButton from "./components/DeleteClientButton"
-import UpdateClientButton from "./components/EditButton"
+import UpdateClientButton from "./components/UpdateClientButton"
 import { useEditClientContext } from "../../../context/clientContext"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import { useAddClientProtocolContext } from "../../../context/EditProtocolContext"
 import { NavigationType } from "../../../@types/navigation"
+import ProtocolEditScreenWidget from "./components/ProtocolScreenWidget"
+import GetSingleDoc from "../../../functions/getSingleDoc"
+import { Protocol } from "../../../@types/firestore"
+import { db } from "../../../firebase"
+import { collection, doc } from "firebase/firestore"
 
 const EditClient = () => {
   const { clientEditData } = useEditClientContext()
@@ -16,34 +21,25 @@ const EditClient = () => {
     clientEditData.injuryDescription
   )
   const [email, setEmail] = useState("")
-  const [protocol, setCurrentProtocol] = useState("")
+  const [protocol, setCurrentProtocol] = useState<Protocol>({} as Protocol)
   const isFocused = useIsFocused()
   const navigation = useNavigation<NavigationType>()
-  const protocolDummy = "dummy"
-
-  // useEffect(() => {
-  //   let isMounted = true
-  //   const updateStatePLEASE = async () => {
-  //     try {
-  //       if (newClientProtocol !== null && isMounted) {
-  //         console.log("context state:", newClientProtocol)
-  //         // setCurrentProtocol(newClientProtocol)
-  //         console.log("protocol state:", protocol)
-  //       }
-  //     } catch (err) {
-  //       console.error(err)
-  //     }
-  //   }
-
-  //   updateStatePLEASE()
-  //   return () => {
-  //     isMounted = false
-  //   }
-  // }, [isFocused, newClientProtocol])
+  const protocolRef = collection(db, "protocols")
 
   useEffect(() => {
-    console.log("edit client page data:", clientEditData)
-  }, [])
+    console.log(clientEditData.protocol)
+    const getProtocolData = async () => {
+      GetSingleDoc(setCurrentProtocol, protocolRef, clientEditData.protocol)
+    }
+    getProtocolData()
+  }, [isFocused])
+
+  useEffect(() => {
+    const getProtocolData = async () => {
+      GetSingleDoc(setCurrentProtocol, protocolRef, newClientProtocol)
+    }
+    getProtocolData()
+  }, [newClientProtocol])
 
   return (
     <>
@@ -78,20 +74,31 @@ const EditClient = () => {
       </View>
 
       <View>
-        <Text>Current Protocol</Text>
-        {/* <Text>{`${protocol}`}</Text> */}
-        <Button onPress={() => navigation.navigate("ChangeProtocolScreen")}>
+        <ProtocolEditScreenWidget
+          protocolTitle={protocol.title}
+          imageUri={protocol.imageUri}
+          id={protocol.id}
+          assigned={false}
+        />
+        <Button
+          textColor="black"
+          onPress={() => navigation.navigate("ChangeProtocolScreen")}
+        >
           Change Protocol?
         </Button>
       </View>
 
       <UpdateClientButton
-        clientEmail={email}
-        clientName={clientName}
-        clientInjuryDescription={injuryOutline}
+        clientEmail={email !== "" ? email : clientEditData.email}
+        clientName={clientName !== "" ? clientName : clientEditData.name}
+        clientInjuryDescription={
+          injuryOutline !== ""
+            ? injuryOutline
+            : clientEditData.injuryDescription
+        }
         id={clientEditData.id}
         userId={clientEditData.userId}
-        protocolId={clientEditData.id}
+        protocolId={newClientProtocol !== "" ? newClientProtocol : protocol.id}
       />
 
       {/* <DeleteButton id={clientEditData.id} userId={clientEditData.userId} /> */}

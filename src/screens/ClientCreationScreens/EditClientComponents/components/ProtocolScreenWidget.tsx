@@ -1,30 +1,41 @@
-import { View, Text } from "react-native"
+import { View, Text, Image } from "react-native"
 import { Card, Button } from "react-native-paper"
 import { useNavigation } from "@react-navigation/native"
 import { useAddClientProtocolContext } from "../../../../context/EditProtocolContext"
 
 type ProtocolEditScreenWidgetProps = {
   protocolTitle: string
-  weeks?: string
-  outline?: string
   id: string
+  imageUri?: string
+  assigned: boolean
 }
 
 const ProtocolEditScreenWidget = ({
   protocolTitle,
-  weeks,
-  outline,
   id,
+  imageUri,
+  assigned,
 }: ProtocolEditScreenWidgetProps) => {
   const { setClientProtocol } = useAddClientProtocolContext()
   const navigation = useNavigation()
 
   return (
     <View>
-      <Card className="m-3">
-        <Card.Content>
-          <View className="justify-center items-center">
-            <Text className="font-bold text-2xl"> {protocolTitle} </Text>
+      <View className="flex flex-row justify-around items-center m-3 bg-slate-300 border rounded p-3">
+        {imageUri ? (
+          <Image
+            source={{ uri: imageUri }}
+            style={{ width: 100, height: 100 }}
+          />
+        ) : (
+          <Image
+            source={{ uri: imageUri }}
+            style={{ width: 100, height: 100 }}
+          />
+        )}
+        <View className="flex flex-col items-center">
+          <Text className="font-bold text-2xl"> {protocolTitle} </Text>
+          {assigned ? (
             <Button
               onPress={async () => {
                 setClientProtocol(id)
@@ -34,18 +45,10 @@ const ProtocolEditScreenWidget = ({
             >
               Assign to Client
             </Button>
-          </View>
-          <View className="flex-row">
-            {/* <Image source={theImage} style={{ width: 100, height: 100 }} /> */}
-            <View className="flex-1 flex-row justify-between">
-              <View className="flex-col">
-                <Text className="m-2 font-bold">Weeks: {weeks}</Text>
-                <Text className="m-2 font-bold">Description: {outline}</Text>
-              </View>
-            </View>
-          </View>
-        </Card.Content>
-      </Card>
+          ) : null}
+        </View>
+        <View className="flex-col"></View>
+      </View>
     </View>
   )
 }

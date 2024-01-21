@@ -28,7 +28,11 @@ const DeleteButton = ({ id, userId }: DeleteButtonProps) => {
     }
   }
 
-  return <Button onPress={onSubmitProtocol}>Delete Protocol</Button>
+  return (
+    <Button textColor="black" onPress={onSubmitProtocol}>
+      Delete Protocol
+    </Button>
+  )
 }
 
 export default DeleteButton

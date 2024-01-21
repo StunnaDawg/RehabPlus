@@ -24,7 +24,7 @@ const ProtocolScreenWidget = ({
   const navigation = useNavigation<NavigationType>()
 
   return (
-    <View className=" flex flex-row justify-around items-center m-3 bg-slate-300 border rounded p-3">
+    <View className="flex flex-row justify-around items-center m-3 bg-slate-300 border rounded p-3">
       <View className="flex flex-col">
         {imageUri ? (
           <Image
@@ -39,7 +39,7 @@ const ProtocolScreenWidget = ({
         )}
       </View>
       <View className="flex flex-col items-center">
-        <Text className="font-bold text-2xl"> {protocolTitle} </Text>
+        <Text className="font-bold text-xl"> {protocolTitle} </Text>
         <View className="flex flex-row">
           <Button
             textColor="#0277BD"

@@ -58,7 +58,9 @@ const UpdateClientButton = ({
   }
   return (
     <View>
-      <Button onPress={onSubmitProtocol}>Update Client Info</Button>
+      <Button textColor="black" onPress={onSubmitProtocol}>
+        Update Client Info
+      </Button>
     </View>
   )
 }

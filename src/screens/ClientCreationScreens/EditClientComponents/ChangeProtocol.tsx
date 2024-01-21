@@ -18,14 +18,14 @@ const ChangeClientProtocolScreen = () => {
   }, [isFocused])
   return (
     <>
-      <ScrollView>
+      <ScrollView className="bg-slate-500">
         {protocolList?.map((protocol) => (
           <ProtocolEditScreenWidget
             key={protocol.id}
-            weeks={protocol.weeks}
             protocolTitle={protocol.title}
-            outline={protocol.description}
             id={protocol.id}
+            imageUri={protocol.imageUri}
+            assigned={true}
           />
         ))}
       </ScrollView>

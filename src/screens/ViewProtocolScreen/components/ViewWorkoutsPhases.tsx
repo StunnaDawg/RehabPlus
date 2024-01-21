@@ -29,9 +29,13 @@ const ViewWorkoutsPhases = ({
   }, [])
   return (
     <View>
-      {workout.workout?.exercises?.map((exerciseInWorkout) => (
+      {workout.workout?.exercises?.map((exerciseInWorkout, index) => (
         <View key={exerciseInWorkout.exercise.id}>
-          <Text>{exerciseInWorkout.exercise.title}</Text>
+          <Text>
+            {index + 1}: {exerciseInWorkout.exercise.title}
+          </Text>
+          <Text>Sets: {exerciseInWorkout.sets}</Text>
+          <Text>Reps: {exerciseInWorkout.reps}</Text>
         </View>
       ))}
     </View>

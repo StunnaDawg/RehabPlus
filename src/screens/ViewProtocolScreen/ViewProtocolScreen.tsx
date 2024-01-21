@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from "react-native"
+import { View, Text, ScrollView, Image } from "react-native"
 import { useSingleEditProtocolContext } from "../../context/protocolContext"
 import { Button, IconButton } from "react-native-paper"
 import { useNavigation } from "@react-navigation/native"
@@ -10,10 +10,20 @@ const ViewProtocolScreen = () => {
 
   return (
     <>
-      <ScrollView>
+      <ScrollView className="bg-slate-500">
         <View className="mb-20">
           <View className="flex flex-row justify-center">
-            <IconButton icon="image-plus" size={100} />
+            {protocolEditData.imageUri ? (
+              <Image
+                source={{ uri: protocolEditData.imageUri }}
+                style={{ width: 200, height: 200 }}
+              />
+            ) : (
+              <Image
+                source={{ uri: protocolEditData.imageUri }}
+                style={{ width: 200, height: 200 }}
+              />
+            )}
           </View>
         </View>
         <View className="mb-8">
@@ -41,18 +51,19 @@ const ViewProtocolScreen = () => {
         </View>
       </ScrollView>
 
-      <View className="flex flex-1">
+      <View className="flex flex-1 bg-slate-500">
         <View className="mb-1 mx-6">
           <Button
+            textColor="black"
             onPress={() => navigation.navigate("ViewPhasesScreen")}
             mode="contained"
-            className="p-1"
+            className="p-1 bg-slate-300"
           >
             <Text className="text-lg">View Protocol</Text>
           </Button>
         </View>
         <View className="mb-1 mx-10">
-          <Button mode="outlined" className="p-1">
+          <Button mode="outlined" className="p-1" textColor="black">
             <Text className="text-lg">Assign Protocol</Text>
           </Button>
         </View>

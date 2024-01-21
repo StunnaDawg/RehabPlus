@@ -29,7 +29,7 @@ const ClientTable = ({
   }, [clientList])
 
   return (
-    <View>
+    <View className="bg-slate-300 mt-2">
       <DataTable>
         <DataTable.Header>
           <DataTable.Title> </DataTable.Title>
@@ -56,7 +56,7 @@ const ClientTable = ({
                   }
                 }}
               >
-                <Button> Account</Button>
+                <Button textColor="black"> Account</Button>
               </DataTable.Cell>
               <DataTable.Cell
                 onPress={async () => {

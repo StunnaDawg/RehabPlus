@@ -3,6 +3,7 @@ import { Button, Card, Text } from "react-native-paper"
 import { useNavigation } from "@react-navigation/native"
 import { useCurrentPhasesIdContext } from "../../../../context/phasesIdContext"
 import { NavigationType } from "../../../../@types/navigation"
+import { View } from "react-native"
 
 type PhasesWidgetProps = {
   phasesTitle: string
@@ -14,21 +15,21 @@ const PhasesWidget = ({ phasesTitle, phaseId }: PhasesWidgetProps) => {
   const navigation = useNavigation<NavigationType>()
 
   return (
-    <Card mode="contained" className="mt-3 mx-14 ">
-      <Card.Content className="flex-1 flex-row justify-center items-center">
-        <Text variant="titleLarge">{phasesTitle}</Text>
-        <Card.Actions className="flex-1 flex-row justify-center items-center">
-          <Button
-            onPress={() => {
-              setCurrentPhasesId(phaseId)
-              navigation.navigate("AddProtocolWorkoutScreen")
-            }}
-          >
-            Edit Phase
-          </Button>
-        </Card.Actions>
-      </Card.Content>
-    </Card>
+    <View className="flex flex-row justify-center mt-3 mx-14 bg-slate-300 border rounded ">
+      <View className="flex flex-col items-center">
+        <Text className="text-xl">{phasesTitle}</Text>
+
+        <Button
+          textColor="black"
+          onPress={() => {
+            setCurrentPhasesId(phaseId)
+            navigation.navigate("AddProtocolWorkoutScreen")
+          }}
+        >
+          Edit Phase
+        </Button>
+      </View>
+    </View>
   )
 }
 
