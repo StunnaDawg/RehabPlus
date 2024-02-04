@@ -5,7 +5,10 @@ import { useNavigation } from "@react-navigation/native"
 import { addDoc, collection } from "firebase/firestore"
 import { FIREBASE_AUTH, db } from "../../../../firebase"
 import { TabNavigationType } from "../../../../@types/navigation"
-import { Client } from "../../../../@types/firestore"
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth"
 
 type CreateButtonProps = {
   clientName: string
@@ -27,6 +30,9 @@ const CreateButton = ({
 
   const onSubmitClient = async () => {
     try {
+      const password = "123122"
+      const auth = FIREBASE_AUTH
+
       const newClientData = {
         name: clientName,
         injuryDescription: clientOutline,
@@ -36,12 +42,21 @@ const CreateButton = ({
         protocol: protocolId || null,
       }
 
-      await addDoc(clientsCollectionRef, newClientData)
+      await createUserWithEmailAndPassword(auth, clientEmail, password)
+
+      if (auth.currentUser) {
+        await sendEmailVerification(auth.currentUser)
+        await addDoc(clientsCollectionRef, newClientData)
+      } else {
+        console.log("auth failure")
+      }
+
       navigation.navigate("Client")
     } catch (err) {
       console.error(err)
     }
   }
+
   return (
     <View>
       <Button textColor="black" onPress={onSubmitClient}>

@@ -29,6 +29,7 @@ const LoginScreen = () => {
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View style={styles.inputContainer}>
         <TextInput
+          autoCapitalize="none"
           placeholder="Email"
           value={email}
           onChangeText={(text) => setEmail(text)}
@@ -36,6 +37,7 @@ const LoginScreen = () => {
         />
 
         <TextInput
+          autoCapitalize="none"
           placeholder="Password"
           value={password}
           onChangeText={(text) => setPassword(text)}
