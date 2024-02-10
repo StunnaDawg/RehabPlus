@@ -78,6 +78,7 @@ const NewClient = () => {
       <View className="mx-4 my-1">
         <Text>Email</Text>
         <TextInput
+          autoCapitalize="none"
           mode="outlined"
           onChangeText={(text) => setEmail(text)}
         ></TextInput>

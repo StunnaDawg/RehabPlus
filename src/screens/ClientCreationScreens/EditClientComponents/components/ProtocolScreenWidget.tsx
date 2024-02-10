@@ -47,7 +47,6 @@ const ProtocolEditScreenWidget = ({
             </Button>
           ) : null}
         </View>
-        <View className="flex-col"></View>
       </View>
     </View>
   )

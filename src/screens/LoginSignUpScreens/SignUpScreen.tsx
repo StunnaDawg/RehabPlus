@@ -7,20 +7,62 @@ import {
   View,
 } from "react-native"
 import { useState } from "react"
-import { FIREBASE_AUTH } from "../../firebase"
+import { FIREBASE_AUTH, db } from "../../firebase"
 import { createUserWithEmailAndPassword } from "firebase/auth"
 import { useNavigation } from "@react-navigation/native"
 import { NavigationType } from "../../@types/navigation"
+import { Switch } from "react-native-paper"
+import { addDoc, collection, doc, setDoc } from "firebase/firestore"
 
 const SignUpScreen = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
   const auth = FIREBASE_AUTH
   const navigation = useNavigation<NavigationType>()
+  const [isPhysician, setIsPhysician] = useState<boolean>(false)
+
+  const onToggleSwitch = () => setIsPhysician(!isPhysician)
 
   const handleSignUp = async () => {
     try {
-      await createUserWithEmailAndPassword(auth, email, password)
+      if (isPhysician) {
+        await createUserWithEmailAndPassword(auth, email, password)
+
+        const physicianId = FIREBASE_AUTH?.currentUser?.uid
+        if (physicianId) {
+          const physiciansCollectionRef = doc(db, "physicians", physicianId)
+          const newPhysiciansData = {
+            name: firstName + "" + lastName,
+            email: email,
+            physicianId: FIREBASE_AUTH?.currentUser?.uid,
+          }
+          await setDoc(physiciansCollectionRef, newPhysiciansData)
+        } else {
+          console.log("no physician id to set")
+        }
+      } else {
+        await createUserWithEmailAndPassword(auth, email, password)
+        const clientId = FIREBASE_AUTH?.currentUser?.uid
+
+        if (clientId) {
+          const clientsCollectionRef = doc(db, "clients", clientId)
+          const newClientData = {
+            name: firstName + "" + lastName,
+            injuryDescription: "N/A",
+            status: true,
+            email: email,
+            physician: null, // Use the UID from the newly created user
+            protocol: null,
+            clientId: FIREBASE_AUTH?.currentUser?.uid,
+          }
+          await setDoc(clientsCollectionRef, newClientData)
+        } else {
+          console.log("no client id to set")
+        }
+      }
+      // Add the new client data
     } catch (error) {
       console.log(error)
     }
@@ -29,6 +71,21 @@ const SignUpScreen = () => {
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View style={styles.inputContainer}>
         <TextInput
+          placeholder="First Name"
+          value={firstName}
+          onChangeText={(text) => setFirstName(text)}
+          style={styles.input}
+        />
+
+        <TextInput
+          autoCapitalize="none"
+          placeholder="Last Name"
+          value={lastName}
+          onChangeText={(text) => setLastName(text)}
+          style={styles.input}
+        />
+        <TextInput
+          autoCapitalize="none"
           placeholder="Email"
           value={email}
           onChangeText={(text) => setEmail(text)}
@@ -36,12 +93,17 @@ const SignUpScreen = () => {
         />
 
         <TextInput
+          autoCapitalize="none"
           placeholder="Password"
           value={password}
           onChangeText={(text) => setPassword(text)}
           style={styles.input}
           secureTextEntry
         />
+        <View className="flex flex-row items-center">
+          <Text>Physician</Text>
+          <Switch value={isPhysician} onValueChange={onToggleSwitch} />
+        </View>
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={handleSignUp} style={styles.button}>
