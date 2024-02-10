@@ -49,6 +49,7 @@ const Footer = () => {
 
 const NavStack = () => {
   const { isSignedIn } = useUserAuth()
+  // const { isClient } = useIsClient()
 
   return (
     <Stack.Navigator

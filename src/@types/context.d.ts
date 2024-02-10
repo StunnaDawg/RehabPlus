@@ -135,3 +135,11 @@ export type UserType = {
 export type SetUserType = {
   setUserType: Dispatch<SetStateAction<boolean>>
 }
+
+export type IsClientType = {
+  isClient: boolean
+}
+
+export type SetIsClient = {
+  setIsClient: Dispatch<SetStateAction<boolean>>
+}
