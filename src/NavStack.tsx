@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import {
   ClientScreen,
@@ -28,6 +28,8 @@ import CreateExercise from "./screens/ExerciseDatabase/CreateExerciseScreen/Crea
 import EditExercise from "./screens/ExerciseDatabase/EditExerciseScreen/EditExercise"
 import TestWorkout from "./screens/TestWorkout/TestWorkout"
 import FinishWorkout from "./screens/TestWorkout/FinishWorkout"
+import { FIREBASE_AUTH, db } from "./firebase"
+import { doc, getDoc } from "firebase/firestore"
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 const Tab = createBottomTabNavigator<TabParamList>()
@@ -50,6 +52,39 @@ const Footer = () => {
 const NavStack = () => {
   const { isSignedIn } = useUserAuth()
   // const { isClient } = useIsClient()
+  const [isClient, setIsClient] = useState<boolean>()
+
+  useEffect(() => {
+    const id = FIREBASE_AUTH.currentUser?.uid
+    if (id) {
+      const clientRef = doc(db, "clients", id)
+      const getFunction = async () => {
+        const docSnap = await getDoc(clientRef)
+        if (docSnap.exists()) {
+          setIsClient(true)
+        } else {
+          setIsClient(false)
+        }
+      }
+      getFunction()
+    }
+  }, [])
+
+  useEffect(() => {
+    const id = FIREBASE_AUTH.currentUser?.uid
+    if (id) {
+      const clientRef = doc(db, "clients", id)
+      const getFunction = async () => {
+        const docSnap = await getDoc(clientRef)
+        if (docSnap.exists()) {
+          setIsClient(true)
+        } else {
+          setIsClient(false)
+        }
+      }
+      getFunction()
+    }
+  }, [isSignedIn])
 
   return (
     <Stack.Navigator
