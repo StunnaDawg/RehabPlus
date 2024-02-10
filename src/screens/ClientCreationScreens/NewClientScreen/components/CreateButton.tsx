@@ -8,6 +8,8 @@ import { TabNavigationType } from "../../../../@types/navigation"
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
+  sendSignInLinkToEmail,
+  signInWithEmailAndPassword,
 } from "firebase/auth"
 
 type CreateButtonProps = {
@@ -30,26 +32,33 @@ const CreateButton = ({
 
   const onSubmitClient = async () => {
     try {
-      const password = "123122"
-      const auth = FIREBASE_AUTH
+      // const password = "123122"
+      // const auth = FIREBASE_AUTH
+
+      // // Create a new user without automatically signing in
+      // const userCredential = await createUserWithEmailAndPassword(
+      //   auth,
+      //   clientEmail,
+      //   password
+      // )
+
+      // // Get the user after creating the account
+      // const user = userCredential.user
+
+      // Send verification email
+      // await sendSignInLinkToEmail(FIREBASE_AUTH, clientEmail, window.location.href)
 
       const newClientData = {
         name: clientName,
         injuryDescription: clientOutline,
         status: active,
         email: clientEmail,
-        userId: FIREBASE_AUTH?.currentUser?.uid,
+        physician: FIREBASE_AUTH?.currentUser?.uid, // Use the UID from the newly created user
         protocol: protocolId || null,
       }
 
-      await createUserWithEmailAndPassword(auth, clientEmail, password)
-
-      if (auth.currentUser) {
-        await sendEmailVerification(auth.currentUser)
-        await addDoc(clientsCollectionRef, newClientData)
-      } else {
-        console.log("auth failure")
-      }
+      // Add the new client data
+      await addDoc(clientsCollectionRef, newClientData)
 
       navigation.navigate("Client")
     } catch (err) {

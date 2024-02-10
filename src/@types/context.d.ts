@@ -127,3 +127,11 @@ export type DatabaseExercisesContextType = {
 export type DatabaseExercisesContextAction = {
   setExerciseDataBase: Dispatch<SetStateAction<ExerciseDataBaseExercise[]>>
 }
+
+export type UserType = {
+  userType: boolean
+}
+
+export type SetUserType = {
+  setUserType: Dispatch<SetStateAction<boolean>>
+}

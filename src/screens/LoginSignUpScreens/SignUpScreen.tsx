@@ -7,20 +7,47 @@ import {
   View,
 } from "react-native"
 import { useState } from "react"
-import { FIREBASE_AUTH } from "../../firebase"
+import { FIREBASE_AUTH, db } from "../../firebase"
 import { createUserWithEmailAndPassword } from "firebase/auth"
 import { useNavigation } from "@react-navigation/native"
 import { NavigationType } from "../../@types/navigation"
+import { Switch } from "react-native-paper"
+import { addDoc, collection } from "firebase/firestore"
 
 const SignUpScreen = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
   const auth = FIREBASE_AUTH
   const navigation = useNavigation<NavigationType>()
+  const [isPhysician, setIsPhysician] = useState<boolean>(false)
+
+  const onToggleSwitch = () => setIsPhysician(!isPhysician)
 
   const handleSignUp = async () => {
     try {
+      if (isPhysician) {
+        const physiciansCollectionRef = collection(db, "physician")
+        const newPhysiciansData = {
+          name: firstName + "" + lastName,
+          email: email,
+        }
+        await addDoc(physiciansCollectionRef, newPhysiciansData)
+      } else {
+        const clientsCollectionRef = collection(db, "clients")
+        const newClientData = {
+          name: firstName + "" + lastName,
+          injuryDescription: "N/A",
+          status: true,
+          email: email,
+          physician: FIREBASE_AUTH?.currentUser?.uid, // Use the UID from the newly created user
+          protocol: null,
+        }
+        await addDoc(clientsCollectionRef, newClientData)
+      }
       await createUserWithEmailAndPassword(auth, email, password)
+      // Add the new client data
     } catch (error) {
       console.log(error)
     }
@@ -28,6 +55,20 @@ const SignUpScreen = () => {
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View style={styles.inputContainer}>
+        <TextInput
+          placeholder="First Name"
+          value={firstName}
+          onChangeText={(text) => setFirstName(text)}
+          style={styles.input}
+        />
+
+        <TextInput
+          autoCapitalize="none"
+          placeholder="Last Name"
+          value={lastName}
+          onChangeText={(text) => setLastName(text)}
+          style={styles.input}
+        />
         <TextInput
           autoCapitalize="none"
           placeholder="Email"
@@ -44,6 +85,10 @@ const SignUpScreen = () => {
           style={styles.input}
           secureTextEntry
         />
+        <View className="flex flex-row items-center">
+          <Text>Physician</Text>
+          <Switch value={isPhysician} onValueChange={onToggleSwitch} />
+        </View>
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={handleSignUp} style={styles.button}>

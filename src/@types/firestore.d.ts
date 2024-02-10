@@ -58,5 +58,5 @@ export type Client = {
   name: string
   protocol: string
   status: boolean
-  userId: string //the userId of phsiotherapist
+  physician: string // the userId of phsiotherapist
 }
