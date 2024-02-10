@@ -12,7 +12,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth"
 import { useNavigation } from "@react-navigation/native"
 import { NavigationType } from "../../@types/navigation"
 import { Switch } from "react-native-paper"
-import { addDoc, collection } from "firebase/firestore"
+import { addDoc, collection, doc, setDoc } from "firebase/firestore"
 
 const SignUpScreen = () => {
   const [email, setEmail] = useState("")
@@ -28,25 +28,40 @@ const SignUpScreen = () => {
   const handleSignUp = async () => {
     try {
       if (isPhysician) {
-        const physiciansCollectionRef = collection(db, "physician")
-        const newPhysiciansData = {
-          name: firstName + "" + lastName,
-          email: email,
+        await createUserWithEmailAndPassword(auth, email, password)
+
+        const physicianId = FIREBASE_AUTH?.currentUser?.uid
+        if (physicianId) {
+          const physiciansCollectionRef = doc(db, "physicians", physicianId)
+          const newPhysiciansData = {
+            name: firstName + "" + lastName,
+            email: email,
+            physicianId: FIREBASE_AUTH?.currentUser?.uid,
+          }
+          await setDoc(physiciansCollectionRef, newPhysiciansData)
+        } else {
+          console.log("no physician id to set")
         }
-        await addDoc(physiciansCollectionRef, newPhysiciansData)
       } else {
-        const clientsCollectionRef = collection(db, "clients")
-        const newClientData = {
-          name: firstName + "" + lastName,
-          injuryDescription: "N/A",
-          status: true,
-          email: email,
-          physician: FIREBASE_AUTH?.currentUser?.uid, // Use the UID from the newly created user
-          protocol: null,
+        await createUserWithEmailAndPassword(auth, email, password)
+        const clientId = FIREBASE_AUTH?.currentUser?.uid
+
+        if (clientId) {
+          const clientsCollectionRef = doc(db, "clients", clientId)
+          const newClientData = {
+            name: firstName + "" + lastName,
+            injuryDescription: "N/A",
+            status: true,
+            email: email,
+            physician: null, // Use the UID from the newly created user
+            protocol: null,
+            clientId: FIREBASE_AUTH?.currentUser?.uid,
+          }
+          await setDoc(clientsCollectionRef, newClientData)
+        } else {
+          console.log("no client id to set")
         }
-        await addDoc(clientsCollectionRef, newClientData)
       }
-      await createUserWithEmailAndPassword(auth, email, password)
       // Add the new client data
     } catch (error) {
       console.log(error)
