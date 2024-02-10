@@ -28,6 +28,7 @@ import CreateExercise from "./screens/ExerciseDatabase/CreateExerciseScreen/Crea
 import EditExercise from "./screens/ExerciseDatabase/EditExerciseScreen/EditExercise"
 import TestWorkout from "./screens/TestWorkout/TestWorkout"
 import FinishWorkout from "./screens/TestWorkout/FinishWorkout"
+import ClientDashboard from "./clientScreens/Dashboard/ClientDashboard"
 import { FIREBASE_AUTH, db } from "./firebase"
 import { doc, getDoc } from "firebase/firestore"
 
@@ -93,40 +94,47 @@ const NavStack = () => {
       }}
     >
       {isSignedIn ? (
-        <>
-          <Stack.Screen name="Footer" component={Footer} />
-          <Stack.Screen name="NewProtocol" component={CreateNewProtocol} />
-          <Stack.Screen name="EditProtocol" component={EditProtocol} />
-          <Stack.Screen name="NewClient" component={CreateNewClient} />
-          <Stack.Screen name="EditClient" component={EditClientScreen} />
-          <Stack.Screen
-            name="ChangeProtocolScreen"
-            component={ChangeClientProtocolScreen}
-          />
-          <Stack.Screen
-            name="AddProtocolScreen"
-            component={AddClientProtocolScreen}
-          />
-          <Stack.Screen
-            name="AddProtocolWorkoutScreen"
-            component={AddProtocolWorkout}
-          />
-          <Stack.Screen name="CreateWorkout" component={CreateWorkout} />
-          <Stack.Screen name="ExerciseDataBase" component={ExerciseDataBase} />
-          <Stack.Screen
-            name="EditProtocolWorkoutScreen"
-            component={EditCreatedWorkout}
-          />
-          <Stack.Screen
-            name="ViewProtocolScreen"
-            component={ViewProtocolScreen}
-          />
-          <Stack.Screen name="ViewPhasesScreen" component={ViewPhases} />
-          <Stack.Screen name="CreateExercise" component={CreateExercise} />
-          <Stack.Screen name="EditExercise" component={EditExercise} />
-          <Stack.Screen name="TestWorkout" component={TestWorkout} />
-          <Stack.Screen name="FinishWorkout" component={FinishWorkout} />
-        </>
+        !isClient ? (
+          <>
+            <Stack.Screen name="Footer" component={Footer} />
+            <Stack.Screen name="NewProtocol" component={CreateNewProtocol} />
+            <Stack.Screen name="EditProtocol" component={EditProtocol} />
+            <Stack.Screen name="NewClient" component={CreateNewClient} />
+            <Stack.Screen name="EditClient" component={EditClientScreen} />
+            <Stack.Screen
+              name="ChangeProtocolScreen"
+              component={ChangeClientProtocolScreen}
+            />
+            <Stack.Screen
+              name="AddProtocolScreen"
+              component={AddClientProtocolScreen}
+            />
+            <Stack.Screen
+              name="AddProtocolWorkoutScreen"
+              component={AddProtocolWorkout}
+            />
+            <Stack.Screen name="CreateWorkout" component={CreateWorkout} />
+            <Stack.Screen
+              name="ExerciseDataBase"
+              component={ExerciseDataBase}
+            />
+            <Stack.Screen
+              name="EditProtocolWorkoutScreen"
+              component={EditCreatedWorkout}
+            />
+            <Stack.Screen
+              name="ViewProtocolScreen"
+              component={ViewProtocolScreen}
+            />
+            <Stack.Screen name="ViewPhasesScreen" component={ViewPhases} />
+            <Stack.Screen name="CreateExercise" component={CreateExercise} />
+            <Stack.Screen name="EditExercise" component={EditExercise} />
+            <Stack.Screen name="TestWorkout" component={TestWorkout} />
+            <Stack.Screen name="FinishWorkout" component={FinishWorkout} />
+          </>
+        ) : (
+          <Stack.Screen name="ClientDashboard" component={ClientDashboard} />
+        )
       ) : (
         <>
           <Stack.Screen
